@@ -1,0 +1,53 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "taskName": "Build server",
+            "identifier": "Build server",
+            "command": "dotnet",
+            "args": [
+                "build",
+                "CappannaHelper.Api.csproj"
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}/src/cappanna-helper-api/cappanna-helper-api"
+            },
+            "type": "shell",
+            "group": "build",
+            "problemMatcher": "$msCompile",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "never",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "taskName": "Build client",
+            "identifier": "Build client",
+            "command": "yarn",
+            "args": [
+                "start"
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}/src/cappanna-helper-app"
+            },
+            "type": "shell",
+            "group": "build",
+            "problemMatcher": {
+                "owner": "custom",
+                "pattern": {
+                    "regexp": "^$"
+                },
+                "background": {
+                    "beginsPattern": "Compiling...",
+                    "endsPattern": "Compiled .*"
+                }
+            },
+            "isBackground": true,
+            "presentation": {
+                "reveal": "never",
+                "panel": "dedicated"
+            }
+        }
+    ]
+}

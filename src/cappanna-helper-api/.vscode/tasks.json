@@ -1,0 +1,44 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "taskName": "Build web api",
+            "identifier": "Build web api",
+            "command": "dotnet",
+            "args": [
+                "build",
+                "${workspaceRoot}/cappanna-helper-api/CappannaHelper.Api.csproj"
+            ],
+            "type": "shell",
+            "group": "build",
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "taskName": "Build tests",
+            "identifier": "Build tests",
+            "command": "dotnet",
+            "args": [
+                "build",
+                "${workspaceRoot}/cappanna-helper-api-tests/CappannaHelper.Api.Tests.csproj"
+            ],
+            "type": "shell",
+            "group": "build",
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "taskName": "Build all",
+            "identifier": "Build all",
+            "command": "dotnet",
+            "args": [
+                "build",
+                "${workspaceRoot}/cappanna-helper-api.sln"
+            ],
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

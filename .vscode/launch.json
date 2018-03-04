@@ -1,0 +1,39 @@
+{
+    "version": "0.2.0",
+    "compounds": [
+        {
+            "name": "Launch server and client",
+            "configurations": [
+                "Launch server",
+                "Launch client in Chrome"
+            ]
+        }
+    ],
+    "configurations": [
+        {
+            "name": "Launch server",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Build server",
+            "program": "${workspaceRoot}/src/cappanna-helper-api/cappanna-helper-api/bin/Debug/netcoreapp2.0/CappannaHelper.Api.dll",
+            "args": [],
+            "cwd": "${workspaceRoot}/src/cappanna-helper-api/cappanna-helper-api",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart",
+            "launchBrowser": {
+                "enabled": false
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        {
+            "name": "Launch client in Chrome",
+            "type": "chrome",
+            "request": "launch",
+            "preLaunchTask": "Build client",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceRoot}/src/cappanna-helper-app/src"
+        }
+    ]
+}

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CappannaHelper.Printing.Examples": {
+      "commandName": "Project",
+      "commandLineArgs": "<ENTER PRINTER NAME HERE>"
+    }
+  }
+}
