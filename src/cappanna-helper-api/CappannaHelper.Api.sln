@@ -2,9 +2,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappannaHelper.Api", "cappanna-helper-api\CappannaHelper.Api.csproj", "{2EE9D88E-CA9A-41F3-9605-32CE37D59B52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappannaHelper.Api", "CappannaHelper.Api\CappannaHelper.Api.csproj", "{2EE9D88E-CA9A-41F3-9605-32CE37D59B52}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappannaHelper.Api.Tests", "cappanna-helper-api-tests\CappannaHelper.Api.Tests.csproj", "{44744828-1842-4CCA-8EB0-9BCF2EE9B236}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappannaHelper.Api.Tests", "CappannaHelper.Api.Tests\CappannaHelper.Api.Tests.csproj", "{44744828-1842-4CCA-8EB0-9BCF2EE9B236}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappannaHelper.Printing", "CappannaHelper.Printing\CappannaHelper.Printing.csproj", "{D3C37059-533F-4A65-9D00-23F6C2BE7817}"
 EndProject
