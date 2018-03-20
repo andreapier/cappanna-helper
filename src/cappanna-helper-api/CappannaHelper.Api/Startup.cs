@@ -39,7 +39,6 @@ namespace CappannaHelper.Api
             var persistenceConfiguration = _configuration.GetSection("Persistence").Get<PersistenceConfiguration>();
 
             services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>(o => o.UseSqlite(persistenceConfiguration.ConnectionString));
-            services.AddCors();
             services.AddMvc();
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -73,7 +72,6 @@ namespace CappannaHelper.Api
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseMvc();
             app.UseAuthentication();
         }
