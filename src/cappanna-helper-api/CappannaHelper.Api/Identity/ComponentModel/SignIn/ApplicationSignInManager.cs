@@ -11,12 +11,7 @@ namespace CappannaHelper.Api.Identity.ComponentModel.SignIn
 
         public ApplicationSignInManager(SignInManager<ApplicationUser> signInManager)
         {
-            if (signInManager == null)
-            {
-                throw new ArgumentNullException(nameof(signInManager));
-            }
-
-            _signInManager = signInManager;
+            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
         }
 
         public async Task SignInAsync(ApplicationUser user, bool isPersistent, string authenticationMethod = null) => await _signInManager.SignInAsync(user, isPersistent, authenticationMethod);
