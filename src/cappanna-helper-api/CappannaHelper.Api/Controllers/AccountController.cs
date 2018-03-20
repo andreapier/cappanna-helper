@@ -17,17 +17,8 @@ namespace CappannaHelper.Api.Controllers
 
         public AccountController(IApplicationUserManager userManager, IApplicationSignInManager signInManager)
         {
-            if (userManager == null)
-            {
-                throw new ArgumentNullException(nameof(userManager));
-            }
-            if (signInManager == null)
-            {
-                throw new ArgumentNullException(nameof(signInManager));
-            }
-
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
         }
 
         [HttpPost("register")]
