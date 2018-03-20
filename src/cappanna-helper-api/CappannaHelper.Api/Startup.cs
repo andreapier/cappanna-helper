@@ -75,6 +75,7 @@ namespace CappannaHelper.Api
         {
             app.UseMvc();
             app.UseAuthentication();
+            app.UseWebSockets();
         }
     }
 }
