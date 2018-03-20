@@ -20,7 +20,6 @@ namespace CappannaHelper.Api
 
         public Startup(IHostingEnvironment env)
         {
-            _environment = env;
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json");
@@ -31,6 +30,8 @@ namespace CappannaHelper.Api
             }
 
             builder.AddEnvironmentVariables();
+
+            _environment = env;
             _configuration = builder.Build();
         }
 
