@@ -1,6 +1,8 @@
+using CappannaHelper.Api.Hubs;
 using CappannaHelper.Api.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
@@ -12,10 +14,12 @@ namespace CappannaHelper.Api.Controllers
     public class MenuDetailController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHubContext<MenuHub> _hub;
 
-        public MenuDetailController(ApplicationDbContext context)
+        public MenuDetailController(ApplicationDbContext context, IHubContext<MenuHub> hub)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _hub = hub ?? throw new ArgumentNullException(nameof(hub));
         }
 
         [HttpGet]
