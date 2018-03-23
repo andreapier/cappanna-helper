@@ -1,4 +1,5 @@
-﻿using CappannaHelper.Api.Identity.DataModel;
+﻿using CappannaHelper.Api.Hubs;
+using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Identity.Extensions;
 using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Printing;
@@ -67,6 +68,7 @@ namespace CappannaHelper.Api
                 options.Cookie.Expiration = TimeSpan.FromDays(1);
                 options.SlidingExpiration = true;
             });
+            services.AddSignalR();
 
             services.Configure<PrintingConfiguration>(_configuration.GetSection("Printing"));
             services.AddPrinting();
@@ -78,7 +80,10 @@ namespace CappannaHelper.Api
             app.UseHttpsRedirection();
             app.UseMvc();
             app.UseAuthentication();
-            app.UseWebSockets();
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<MenuHub>("/menu");
+            });
         }
     }
 }
