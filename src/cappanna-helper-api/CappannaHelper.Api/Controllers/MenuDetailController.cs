@@ -15,12 +15,7 @@ namespace CappannaHelper.Api.Controllers
 
         public MenuDetailController(ApplicationDbContext context)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         [HttpGet]
