@@ -42,17 +42,10 @@ class Notifications extends React.Component {
           cardTitle="Notifications"
           cardSubtitle={
           <P>
-            Handcrafted by our friends from{" "}
-            <A target="_blank" href="https://material-ui-next.com/">
-              Material UI
-            </A>{" "}
-            and styled by{" "}
-            <A target="_blank" href="https://www.creative-tim.com/">
-              Creative Tim
-            </A>. Please checkout the{" "}
-            <A href="#pablo" target="_blank">
-              full documentation
-            </A>.
+            Handcrafted by
+            <A target="_blank" href="https://www.linkedin.com/in/andreapier/?locale=en_US">
+              Andrea Pierangeli
+            </A>
           </P>
         }
           content={

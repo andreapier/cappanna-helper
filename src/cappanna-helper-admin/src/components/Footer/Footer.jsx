@@ -1,8 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { List, ListItem, withStyles } from "material-ui";
-
 import footerStyle from "variables/styles/footerStyle";
+import PropTypes from "prop-types";
+import React from "react";
 
 function Footer({ ...props }) {
   const { classes } = props;
@@ -33,14 +32,6 @@ function Footer({ ...props }) {
             </ListItem>
           </List>
         </div>
-        <p className={classes.right}>
-          <span>
-            &copy; {1900 + new Date().getYear()}{" "}
-            <a href="http://www.creative-tim.com" className={classes.a}>
-              Creative Tim
-            </a>, made with love for a better web
-          </span>
-        </p>
       </div>
     </footer>
   );

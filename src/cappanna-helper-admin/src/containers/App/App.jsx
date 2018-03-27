@@ -5,7 +5,7 @@ import { withStyles } from "material-ui";
 import appRoutes from "routes/app.jsx";
 import appStyle from "variables/styles/appStyle.jsx";
 import image from "assets/img/sidebar-2.jpg";
-import logo from "assets/img/reactlogo.png";
+import logo from "assets/img/logo.png";
 import PerfectScrollbar from "perfect-scrollbar";
 import PropTypes from "prop-types";
 import React from "react";
