@@ -1,7 +1,3 @@
-// ##############################
-// // // Footer styles
-// #############################
-
 import { defaultFont, container, primaryColor } from "variables/styles";
 
 const footerStyle = {
@@ -50,4 +46,5 @@ const footerStyle = {
     width: 'auto'
   }
 };
+
 export default footerStyle;

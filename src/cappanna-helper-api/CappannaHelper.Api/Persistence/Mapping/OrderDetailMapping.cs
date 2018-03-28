@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CappannaHelper.Api.Persistence.Mapping
 {
-    public class OrderDetailMapping : BaseMapping<OrderDetail>
+    public class OrderDetailMapping : EntityMapping<OrderDetail>
     {
         public OrderDetailMapping(ModelBuilder builder)
             : base(builder)

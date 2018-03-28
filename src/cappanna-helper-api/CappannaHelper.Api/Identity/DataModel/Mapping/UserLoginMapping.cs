@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CappannaHelper.Api.Persistence.Mapping
+namespace CappannaHelper.Api.Identity.DataModel.Mapping
 {
-    public class UserLoginMapping : BaseMapping<IdentityUserLogin<int>>
+    public class UserLoginMapping : EntityMapping<IdentityUserLogin<int>>
     {
         public UserLoginMapping(ModelBuilder builder)
             : base(builder)

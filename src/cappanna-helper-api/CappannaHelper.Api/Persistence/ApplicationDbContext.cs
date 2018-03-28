@@ -1,5 +1,5 @@
 using CappannaHelper.Api.Identity.DataModel;
-using CappannaHelper.Api.Persistence.Mapping;
+using CappannaHelper.Api.Identity.Extensions;
 using CappannaHelper.Api.Persistence.Modelling;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CappannaHelper.Api.Persistence
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int, IdentityUserClaim<int>, ApplicationUserRole, IdentityUserLogin<int>, ApplicationRoleClaim, IdentityUserToken<int>>
     {
         public DbSet<ChOrder> Orders { get; set; }
         public DbSet<MenuDetail> MenuDetails { get; set; }
@@ -22,9 +22,12 @@ namespace CappannaHelper.Api.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder
-                //.MapOrderEntities()
                 .MapIdentityEntities();
+            //.MapOrderEntities();
+
+            //modelBuilder.Seed();
         }
     }
 }

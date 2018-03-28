@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CappannaHelper.Api.Persistence.Mapping
+namespace CappannaHelper.Api.Identity.DataModel.Mapping
 {
-    public class UserClaimMapping : BaseMapping<IdentityUserClaim<int>>
+    public class UserClaimMapping : EntityMapping<IdentityUserClaim<int>>
     {
         public UserClaimMapping(ModelBuilder builder)
             : base(builder)

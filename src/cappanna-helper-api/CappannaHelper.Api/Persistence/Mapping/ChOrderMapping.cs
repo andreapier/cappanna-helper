@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CappannaHelper.Api.Persistence.Mapping
 {
-    public class ChOrderMapping : BaseMapping<ChOrder>
+    public class ChOrderMapping : EntityMapping<ChOrder>
     {
         public ChOrderMapping(ModelBuilder builder)
             : base(builder)

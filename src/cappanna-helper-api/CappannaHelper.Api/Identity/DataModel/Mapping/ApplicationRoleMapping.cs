@@ -1,11 +1,10 @@
 using CappannaHelper.Api.Common.DataModel.Mapping;
-using CappannaHelper.Api.Identity.DataModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CappannaHelper.Api.Persistence.Mapping
+namespace CappannaHelper.Api.Identity.DataModel.Mapping
 {
-    public class ApplicationRoleMapping : BaseMapping<ApplicationRole>
+    public class ApplicationRoleMapping : EntityMapping<ApplicationRole>
     {
         public ApplicationRoleMapping(ModelBuilder builder)
             : base(builder)
@@ -14,6 +13,9 @@ namespace CappannaHelper.Api.Persistence.Mapping
         protected override void BuildEntityConfiguration(EntityTypeBuilder<ApplicationRole> entityBuilder)
         {
             entityBuilder.ToTable("Roles");
+
+            entityBuilder.HasMany(r => r.UserRoles).WithOne().HasForeignKey(c => c.RoleId);
+            entityBuilder.HasMany(r => r.Claims).WithOne().HasForeignKey(c => c.RoleId);
         }
     }
 }

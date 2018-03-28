@@ -8,8 +8,9 @@ namespace CappannaHelper.Api.Identity.Extensions
     {
         public static void AddApplicationIdentity(this IServiceCollection services)
         {
-            services.AddScoped<IApplicationUserManager, ApplicationUserManager>();
-            services.AddScoped<IApplicationSignInManager, ApplicationSignInManager>();
+            services
+                .AddScoped<IApplicationUserManager, ApplicationUserManager>()
+                .AddScoped<IApplicationSignInManager, ApplicationSignInManager>();
         }
     }
 }

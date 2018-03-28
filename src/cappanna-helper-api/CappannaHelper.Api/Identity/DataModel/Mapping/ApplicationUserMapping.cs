@@ -3,9 +3,9 @@ using CappannaHelper.Api.Identity.DataModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CappannaHelper.Api.Persistence.Mapping
+namespace CappannaHelper.Api.Identity.DataModel.Mapping
 {
-    public class ApplicationUserMapping : BaseMapping<ApplicationUser>
+    public class ApplicationUserMapping : EntityMapping<ApplicationUser>
     {
         public ApplicationUserMapping(ModelBuilder builder)
             : base(builder)
@@ -14,8 +14,11 @@ namespace CappannaHelper.Api.Persistence.Mapping
         protected override void BuildEntityConfiguration(EntityTypeBuilder<ApplicationUser> entityBuilder)
         {
             entityBuilder.ToTable("Users");
-            entityBuilder.Property(o => o.FirstName).IsRequired().HasMaxLength(100);
-            entityBuilder.Property(o => o.Surname).IsRequired().HasMaxLength(100);
+
+            entityBuilder.Property(u => u.FirstName).IsRequired().HasMaxLength(100);
+            entityBuilder.Property(u => u.Surname).IsRequired().HasMaxLength(100);
+
+            entityBuilder.HasMany(u => u.UserRoles).WithOne().HasForeignKey(ur => ur.UserId);
         }
     }
 }

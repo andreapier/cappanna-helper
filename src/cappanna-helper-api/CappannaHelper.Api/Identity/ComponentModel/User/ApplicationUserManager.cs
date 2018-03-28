@@ -11,12 +11,7 @@ namespace CappannaHelper.Api.Identity.ComponentModel.User
 
         public ApplicationUserManager(UserManager<ApplicationUser> userManager)
         {
-            if (userManager == null)
-            {
-                throw new ArgumentNullException(nameof(userManager));
-            }
-
-            _userManager = userManager;
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         }
 
         public async Task<IdentityResult> CreateAsync(ApplicationUser user, string password) => await _userManager.CreateAsync(user, password);

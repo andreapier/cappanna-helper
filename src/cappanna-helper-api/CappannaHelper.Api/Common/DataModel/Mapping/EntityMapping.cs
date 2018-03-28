@@ -4,18 +4,13 @@ using System;
 
 namespace CappannaHelper.Api.Common.DataModel.Mapping
 {
-    public abstract class BaseMapping<T> where T : class
+    public abstract class EntityMapping<T> : IEntityMapping where T : class
     {
         private readonly ModelBuilder _builder;
 
-        protected BaseMapping(ModelBuilder builder)
+        protected EntityMapping(ModelBuilder builder)
         {
-            if (builder == null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
-
-            _builder = builder;
+            _builder = builder ?? throw new ArgumentNullException(nameof(builder));
         }
 
         public void Build()

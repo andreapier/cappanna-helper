@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CappannaHelper.Api.Persistence.Mapping
 {
-    public class MenuDetailMapping : BaseMapping<MenuDetail>
+    public class MenuDetailMapping : EntityMapping<MenuDetail>
     {
         public MenuDetailMapping(ModelBuilder builder)
             : base(builder)
