@@ -4,6 +4,7 @@ using CappannaHelper.Api.Identity.Extensions;
 using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Printing;
 using CappannaHelper.Api.Printing.Extensions;
+using CappannaHelper.Api.Setup.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -72,10 +73,12 @@ namespace CappannaHelper.Api
 
             services.Configure<PrintingConfiguration>(_configuration.GetSection("Printing"));
             services.AddPrinting();
+            services.AddSetup();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseSetupMiddleware();
             app.UseHsts();
             app.UseHttpsRedirection();
             app.UseMvc();
