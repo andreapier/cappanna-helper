@@ -1,9 +1,8 @@
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
-import TableList from "views/TableList/TableList.jsx";
+import OrderList from "views/OrderList/OrderList.jsx";
 import Typography from "views/Typography/Typography.jsx";
 import Icons from "views/Icons/Icons.jsx";
-import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 
 import {
@@ -12,7 +11,6 @@ import {
   ContentPaste,
   LibraryBooks,
   BubbleChart,
-  LocationOn,
   Notifications
 } from "material-ui-icons";
 
@@ -30,10 +28,10 @@ const appRoutes = [
     component: UserProfile
   },
   {
-    path: "/table",
-    sidebarName: "Table List",
+    path: "/orders",
+    sidebarName: "Ordini",
     icon: ContentPaste,
-    component: TableList
+    component: OrderList
   },
   {
     path: "/typography",
@@ -46,12 +44,6 @@ const appRoutes = [
     sidebarName: "Icons",
     icon: BubbleChart,
     component: Icons
-  },
-  {
-    path: "/maps",
-    sidebarName: "Maps",
-    icon: LocationOn,
-    component: Maps
   },
   {
     path: "/notifications",
