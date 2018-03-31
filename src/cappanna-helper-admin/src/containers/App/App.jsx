@@ -28,7 +28,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    if(navigator.platform.indexOf('Win') > -1){
+    if(navigator.platform.indexOf('Win') > -1) {
       // eslint-disable-next-line
       const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
@@ -42,7 +42,7 @@ class App extends React.Component {
     return this.props.location.pathname !== "/maps";
   }
 
-  handleDrawerToggle = () => {
+  handleDrawerToggle() {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   }
 
