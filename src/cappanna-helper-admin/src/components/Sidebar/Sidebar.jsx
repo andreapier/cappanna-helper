@@ -13,6 +13,7 @@ import cx from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
 import sidebarStyle from "variables/styles/sidebarStyle.jsx";
+import {withRouter } from 'react-router-dom';
 
 const Sidebar = ({ ...props }) => {
   function activeRoute(routeName) {
@@ -124,4 +125,4 @@ Sidebar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(sidebarStyle)(Sidebar);
+export default withRouter(withStyles(sidebarStyle)(Sidebar));
