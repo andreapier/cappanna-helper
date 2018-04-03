@@ -1,21 +1,21 @@
 import A from "./Typography/A.jsx";
-import Button from "./CustomButtons/Button.jsx";
+import Button from "./CustomButtons";
 import ChartCard from "./Cards/ChartCard.jsx";
 import CustomInput from "./CustomInput/CustomInput.jsx";
 import Danger from "./Typography/Danger.jsx";
-import Footer from "./Footer/Footer.jsx";
-import Header from "./Header/Header.jsx";
-import HeaderLinks from "./Header/HeaderLinks.jsx";
-import IconButton from "./CustomButtons/IconButton.jsx";
+import Header from "./Header";
+import HeaderLinks from "./Header/HeaderLinks.js";
+import IconButton from "./CustomButtons/IconButton.js";
 import Info from "./Typography/Info.jsx";
 import ItemGrid from "./Grid/ItemGrid.jsx";
 import Muted from "./Typography/Muted.jsx";
 import P from "./Typography/P.jsx";
 import Primary from "./Typography/Primary.jsx";
+import PrivateRoute from './PrivateRoute';
 import ProfileCard from "./Cards/ProfileCard.jsx";
 import Quote from "./Typography/Quote.jsx";
 import RegularCard from "./Cards/RegularCard.jsx";
-import Sidebar from "./Sidebar/Sidebar.jsx";
+import Sidebar from "./Sidebar";
 import Small from "./Typography/Small.jsx";
 import Snackbar from "./Snackbar/Snackbar.jsx";
 import SnackbarContent from "./Snackbar/SnackbarContent.jsx";
@@ -35,7 +35,6 @@ export {
   Button,
   IconButton,
   CustomInput,
-  Footer,
   ItemGrid,
   Header,
   HeaderLinks,
@@ -48,6 +47,7 @@ export {
   Quote,
   Muted,
   Primary,
+  PrivateRoute,
   Info,
   Success,
   Warning,

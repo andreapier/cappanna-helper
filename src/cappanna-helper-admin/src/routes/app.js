@@ -4,7 +4,7 @@ import OrderList from "views/OrderList/OrderList.jsx";
 import Typography from "views/Typography/Typography.jsx";
 import Icons from "views/Icons/Icons.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
-import SignIn from "views/SignIn/SignIn";
+import SignIn from "views/SignIn";
 
 import {
   Dashboard,
@@ -22,49 +22,56 @@ const appRoutes = [
     sidebarName: "Dashboard",
     icon: Dashboard,
     component: DashboardPage,
-    protected: true
+    protected: true,
+    name: 'dashboard'
   },
   {
     path: "/user",
     sidebarName: "User Profile",
     icon: Person,
     component: UserProfile,
-    protected: true
+    protected: true,
+    name: 'user'
   },
   {
     path: "/orders",
     sidebarName: "Ordini",
     icon: ContentPaste,
     component: OrderList,
-    protected: true
+    protected: true,
+    name: 'orders'
   },
   {
     path: "/typography",
     sidebarName: "Typography",
     icon: LibraryBooks,
     component: Typography,
-    protected: true
+    protected: true,
+    name: 'typography'
   },
   {
     path: "/icons",
     sidebarName: "Icons",
     icon: BubbleChart,
     component: Icons,
-    protected: true
+    protected: true,
+    name: 'icons'
   },
   {
     path: "/notifications",
     sidebarName: "Notifications",
     icon: Notifications,
     component: NotificationsPage,
-    protected: true
+    protected: true,
+    name: 'notifications'
   },
   {
     path: "/signin",
     sidebarName: "Entra",
     icon: Input,
     component: SignIn,
-    protected: false
+    protected: false,
+    name: 'signin'
   },
   { redirect: true, path: "/", to: "/dashboard" }
 ];
