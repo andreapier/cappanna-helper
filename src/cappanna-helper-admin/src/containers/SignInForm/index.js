@@ -7,7 +7,7 @@ import {
   TextField
 } from 'redux-form-material-ui';
 
-class SignIn extends React.Component {
+class SignInForm extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -28,4 +28,4 @@ class SignIn extends React.Component {
 
 export default reduxForm({
   form: 'signinForm'
-})(SignIn);
+})(SignInForm);
