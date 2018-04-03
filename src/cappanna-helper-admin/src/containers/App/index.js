@@ -1,7 +1,7 @@
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-import { Header, Footer, Sidebar } from "components";
+import Header from './../../components/Header';
 import { withStyles } from "material-ui";
-import appRoutes from "./../../routes/app.jsx";
+import appRoutes from "./../../routes/app.js";
 import appStyle from "variables/styles/appStyle.jsx";
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/logo.png";
@@ -10,12 +10,19 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import history from "./../../history";
+import { Provider } from 'react-redux';
+import ConnectedPrivateRoute from './../ConnectedPrivateRoute';
+import ConnectedSidebar from './../ConnectedSidebar';
 
 const switchRoutes = (
   <Switch>
     {appRoutes.map((prop, key) => {
       if (prop.redirect) {
         return <Redirect from={prop.path} to={prop.to} key={key} />;
+      }
+
+      if (prop.protected) {
+        return <ConnectedPrivateRoute path={prop.path} component={prop.component} key={key} />;
       }
 
       return <Route path={prop.path} component={prop.component} key={key} />;
@@ -47,9 +54,10 @@ class App extends React.Component {
     const { classes, ...rest } = this.props;
     
     return (
+      <Provider store={this.props.store}>
       <Router history={history}>
         <div className={classes.wrapper}>
-        <Sidebar
+        <ConnectedSidebar
             routes={appRoutes}
             logoText={"Cappanna Helper"}
             logo={logo}
@@ -68,18 +76,11 @@ class App extends React.Component {
             <div className={classes.content}>
               <div className={classes.container}>{switchRoutes}</div>
             </div>
-          <Footer />
         </div>
       </div>
    </Router>
+   </Provider>
     );
-
-    
-  //   <Switch>
-  //   {indexRoutes.map((prop, key) => {
-  //     return <Route path={prop.path} component={prop.component} key={key} />;
-  //   })}
-  // </Switch>
   }
 }
 

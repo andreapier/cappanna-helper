@@ -8,8 +8,8 @@ function IconCustomButton({ ...props }) {
   const { classes, color, children, customClass, ...rest } = props;
   return (
     <IconButton
-      {...rest}
-      className={
+        {...rest}
+        className={
         classes.button +
         (color ? " " + classes[color] : "") +
         (customClass ? " " + customClass : "")

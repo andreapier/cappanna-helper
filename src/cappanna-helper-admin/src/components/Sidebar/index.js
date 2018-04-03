@@ -24,8 +24,11 @@ const Sidebar = ({ ...props }) => {
   const links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
-        
         if (prop.redirect) {
+          return null;
+        }
+
+        if (prop.protected && !props.user) {
           return null;
         }
 
