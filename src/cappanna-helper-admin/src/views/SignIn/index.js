@@ -18,13 +18,11 @@ class SignIn extends React.Component {
           </P>
         }
           content={
-          <div>
-            <Grid container>
-              <ItemGrid xs={12} sm={12} md={6}>
-                <SignInForm />
-              </ItemGrid>
-            </Grid>
-          </div>
+          <Grid container justify="center">
+            <ItemGrid xs={12} sm={12} md={6}>
+              <SignInForm />
+            </ItemGrid>
+          </Grid>
         }
       />
     );

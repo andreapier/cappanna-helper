@@ -15,19 +15,17 @@ const customInputStyle = {
     "&:before": {
       backgroundColor: "#D2D2D2",
       height: "1px !important"
-    }
-  },
-  inkbar: {
+    },
     "&:after": {
       backgroundColor: primaryColor
     }
   },
-  inkbarError: {
+  underlineError: {
     "&:after": {
       backgroundColor: dangerColor
     }
   },
-  inkbarSuccess: {
+  underlineSuccess: {
     "&:after": {
       backgroundColor: successColor
     }

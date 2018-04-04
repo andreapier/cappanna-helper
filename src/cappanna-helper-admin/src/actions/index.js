@@ -7,8 +7,9 @@ import {
   ERROR_OCCURRED
 } from "./types";
 
-export function signinRequested({username, password, rememberMe}) {
-  return { type: SIGNIN_REQUESTED, payload: {username, password, rememberMe} };
+export function signinRequested({ username, password, rememberMe }) {
+  console.log('action', { username, password, rememberMe });
+  return { type: SIGNIN_REQUESTED, payload: { username, password, rememberMe } };
 }
 
 export function signinCompleted(userData) {

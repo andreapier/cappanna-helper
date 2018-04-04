@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import Button from './../../components/CustomButtons';
 import { reduxForm, Field } from 'redux-form';
 import { FormControlLabel } from 'material-ui/Form';
@@ -7,30 +7,40 @@ import {
   TextField
 } from 'redux-form-material-ui';
 import { signinRequested } from './../../actions';
+import { connect } from 'react-redux';
+import { Grid } from "material-ui";
+import { ItemGrid } from "components";
 
-class SignIn extends React.Component {
+class SignIn extends Component {
   constructor(props) {
     super(props);
     this.signin = this.signin.bind(this);
   }
 
-  signin() {
-    this.props.signinRequested({
-      username: this.props.username,
-      password: this.props.password,
-      rememberMe: this.props.rememberMe
-    });
+  signin(values) {
+    console.log('submit', values);
+    this.props.signinRequested(values);
   }
 
   render() {
     return (
-      <form>
-        <Field name="email" component={TextField} autoFocus fullWidth label="Email" />
-        <Field name="password" component={TextField} type="password" fullWidth label="Password" />
-        <FormControlLabel control={<Field name="rememberMe" component={Checkbox} />} label="Ricordami" />
-        <Button onClick={this.signin}>
-          Sign in
-        </Button>
+      <form onSubmit={this.props.handleSubmit(this.signin)}>
+        <Grid container justify="space-between">
+          <ItemGrid xs={12}>
+            <Field name="username" component={TextField} autoFocus fullWidth label="Username" />
+          </ItemGrid>
+          <ItemGrid xs={12}>
+            <Field name="password" component={TextField} type="password" fullWidth label="Password" />
+          </ItemGrid>
+          <ItemGrid xs={12} md={3}>
+            <FormControlLabel control={<Field name="rememberMe" component={Checkbox} />} label="Ricordami" />
+          </ItemGrid>
+          <ItemGrid xs={12} md={3}>
+            <Button type="submit" fullWidth>
+              Sign in
+            </Button>
+          </ItemGrid>
+        </Grid>
       </form>
     );
   }
@@ -38,10 +48,13 @@ class SignIn extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signinRequested: ({username, password, rememberMe}) => dispatch(signinRequested({username, password, rememberMe}))
+    signinRequested: ({ username, password, rememberMe }) => dispatch(signinRequested({ username, password, rememberMe }))
   };
 };
 
 export default reduxForm({
   form: 'signinForm'
-})(SignIn);
+})(connect(
+  null,
+  mapDispatchToProps
+)(SignIn));

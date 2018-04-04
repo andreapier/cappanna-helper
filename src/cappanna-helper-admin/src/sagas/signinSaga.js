@@ -7,13 +7,18 @@ import {
 } from "./../actions";
 import { SIGNIN_REQUESTED } from "./../actions/types";
 import history from "./../history";
+import localforage from 'localforage';
+
+const saveUser = user => localforage.setItem('user', user);
 
 function* signin(action) {
   try {
+    console.log('saga', action);
     yield put(loadingChanged(true, "Accesso in corso..."));
     const api = new Api();
     const userData = yield call(api.signin, action.payload);
-    yield put(signinCompleted(userData.user));
+    yield put(saveUser(userData));
+    yield put(signinCompleted(userData));
     history.push("/dashboard");
   } catch (e) {
     yield put(errorOccurred(e.message));

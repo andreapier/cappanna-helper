@@ -20,6 +20,7 @@ const checkStatus = response => {
 const post = (url, data) =>
   fetch(url, {
     method: "POST",
+    credentials: 'same-origin',
     headers,
     body: JSON.stringify(data)
   })
@@ -36,31 +37,19 @@ const get = url =>
 
 const parseJSON = response => response.json();
 
-let token;
-
 class Api {
   constructor() {
     this.signin = this.signin.bind(this);
     this.signout = this.signout.bind(this);
   }
 
-  setToken(token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  signin(signinData) {
-    return post(SIGNIN, signinData).then(json => {
-      token = json.token.value;
-      this.setToken(token);
-
-      return json;
-    });
+  signin({ username, password, rememberMe }) {
+    console.log('api', SIGNIN, { username, password, rememberMe });
+    return post(SIGNIN, { username, password, rememberMe });
   }
 
   signout() {
-    return post(SIGNOUT).then(()=> {
-      delete headers.Authorization;
-    });
+    return post(SIGNOUT);
   }
 }
 
