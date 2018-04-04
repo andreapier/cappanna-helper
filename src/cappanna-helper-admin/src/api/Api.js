@@ -44,7 +44,6 @@ class Api {
   }
 
   signin({ username, password, rememberMe }) {
-    console.log('api', SIGNIN, { username, password, rememberMe });
     return post(SIGNIN, { username, password, rememberMe });
   }
 

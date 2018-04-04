@@ -18,7 +18,6 @@ class SignIn extends Component {
   }
 
   signin(values) {
-    console.log('submit', values);
     this.props.signinRequested(values);
   }
 
