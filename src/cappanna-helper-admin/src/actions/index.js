@@ -1,26 +1,26 @@
 import {
-  LOGIN_REQUESTED,
-  LOGIN_COMPLETED,
+  SIGNIN_REQUESTED,
+  SIGNIN_COMPLETED,
   LOADING_CHANGED,
-  LOGOUT_REQUESTED,
-  LOGOUT_COMPLETED,
+  SIGNOUT_REQUESTED,
+  SIGNOUT_COMPLETED,
   ERROR_OCCURRED
 } from "./types";
 
-export function loginRequested(loginData) {
-  return { type: LOGIN_REQUESTED, payload: loginData };
+export function signinRequested({username, password, rememberMe}) {
+  return { type: SIGNIN_REQUESTED, payload: {username, password, rememberMe} };
 }
 
-export function loginCompleted(userData) {
-  return { type: LOGIN_COMPLETED, payload: userData };
+export function signinCompleted(userData) {
+  return { type: SIGNIN_COMPLETED, payload: userData };
 }
 
-export function logoutRequested() {
-  return { type: LOGOUT_REQUESTED };
+export function signoutRequested() {
+  return { type: SIGNOUT_REQUESTED };
 }
 
-export function logoutCompleted() {
-  return { type: LOGOUT_COMPLETED };
+export function signoutCompleted() {
+  return { type: SIGNOUT_COMPLETED };
 }
 
 export function loadingChanged(loading, description) {

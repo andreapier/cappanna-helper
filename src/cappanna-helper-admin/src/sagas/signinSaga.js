@@ -1,19 +1,19 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "./../api/Api";
 import {
-  loginCompleted,
+  signinCompleted,
   errorOccurred,
   loadingChanged
 } from "./../actions";
-import { LOGIN_REQUESTED } from "./../actions/types";
+import { SIGNIN_REQUESTED } from "./../actions/types";
 import history from "./../history";
 
-function* login(action) {
+function* signin(action) {
   try {
-    yield put(loadingChanged(true, "Login in corso..."));
+    yield put(loadingChanged(true, "Accesso in corso..."));
     const api = new Api();
-    const userData = yield call(api.login, action.payload);
-    yield put(loginCompleted(userData.user));
+    const userData = yield call(api.signin, action.payload);
+    yield put(signinCompleted(userData.user));
     history.push("/dashboard");
   } catch (e) {
     yield put(errorOccurred(e.message));
@@ -22,8 +22,8 @@ function* login(action) {
   }
 }
 
-function* loginSaga() {
-  yield takeLatest(LOGIN_REQUESTED, login);
+function* signinSaga() {
+  yield takeLatest(SIGNIN_REQUESTED, signin);
 }
 
-export default loginSaga;
+export default signinSaga;
