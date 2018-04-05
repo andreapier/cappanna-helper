@@ -1,20 +1,19 @@
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
 import OrderList from "views/OrderList/OrderList.jsx";
-import Typography from "views/Typography/Typography.jsx";
-import Icons from "views/Icons/Icons.jsx";
-import NotificationsPage from "views/Notifications/Notifications.jsx";
-import SignIn from "views/SignIn";
+import Menu from "views/Menu";
+import NotificationsPage from "views/Notifications";
+import SignInPage from "views/SignIn";
+import SignOutPage from "views/SignOut";
 import {
   Dashboard,
   Person,
   ContentPaste,
   LibraryBooks,
-  BubbleChart,
   Notifications,
   Input
 } from "material-ui-icons";
-import OutputIcon from './../components/OutputIcon';
+import OutputIcon from 'components/OutputIcon';
 
 const appRoutes = [
   {
@@ -27,7 +26,7 @@ const appRoutes = [
   },
   {
     path: "/user",
-    sidebarName: "User Profile",
+    sidebarName: "Utenti",
     icon: Person,
     component: UserProfile,
     protected: true,
@@ -42,24 +41,16 @@ const appRoutes = [
     name: 'orders'
   },
   {
-    path: "/typography",
-    sidebarName: "Typography",
+    path: "/menu",
+    sidebarName: "Menu",
     icon: LibraryBooks,
-    component: Typography,
+    component: Menu,
     protected: true,
-    name: 'typography'
-  },
-  {
-    path: "/icons",
-    sidebarName: "Icons",
-    icon: BubbleChart,
-    component: Icons,
-    protected: true,
-    name: 'icons'
+    name: 'menu'
   },
   {
     path: "/notifications",
-    sidebarName: "Notifications",
+    sidebarName: "Notifiche",
     icon: Notifications,
     component: NotificationsPage,
     protected: true,
@@ -69,7 +60,7 @@ const appRoutes = [
     path: "/signin",
     sidebarName: "Entra",
     icon: Input,
-    component: SignIn,
+    component: SignInPage,
     protected: false,
     name: 'signin'
   },
@@ -77,7 +68,7 @@ const appRoutes = [
     path: "/signout",
     sidebarName: "Esci",
     icon: OutputIcon,
-    component: SignIn,
+    component: SignOutPage,
     protected: true,
     name: 'signout'
   },
