@@ -13,13 +13,12 @@ import cx from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
 import sidebarStyle from "variables/styles/sidebarStyle.jsx";
-import {withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+
+const signinRoute = routeName => routeName === 'signin';
 
 const Sidebar = ({ ...props }) => {
-  function activeRoute(routeName) {
-    return props.location.pathname.indexOf(routeName) > -1 ? true : false;
-  }
-  
+  const activeRoute = routeName => props.location.pathname.indexOf(routeName) > -1 ? true : false;
   const { classes, color, logo, image, logoText, routes } = props;
   const links = (
     <List className={classes.list}>
@@ -29,6 +28,10 @@ const Sidebar = ({ ...props }) => {
         }
 
         if (prop.protected && !props.user) {
+          return null;
+        }
+        
+        if (props.user && signinRoute(prop.name)) {
           return null;
         }
 

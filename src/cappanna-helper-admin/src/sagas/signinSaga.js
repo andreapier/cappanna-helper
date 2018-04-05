@@ -13,11 +13,10 @@ const saveUser = user => localforage.setItem('user', user);
 
 function* signin(action) {
   try {
-    console.log('saga', action);
     yield put(loadingChanged(true, "Accesso in corso..."));
     const api = new Api();
     const userData = yield call(api.signin, action.payload);
-    yield put(saveUser(userData));
+    yield saveUser(userData);
     yield put(signinCompleted(userData));
     history.push("/dashboard");
   } catch (e) {

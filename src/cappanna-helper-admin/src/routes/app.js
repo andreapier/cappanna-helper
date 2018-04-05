@@ -5,7 +5,6 @@ import Typography from "views/Typography/Typography.jsx";
 import Icons from "views/Icons/Icons.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import SignIn from "views/SignIn";
-
 import {
   Dashboard,
   Person,
@@ -15,6 +14,7 @@ import {
   Notifications,
   Input
 } from "material-ui-icons";
+import OutputIcon from './../components/OutputIcon';
 
 const appRoutes = [
   {
@@ -73,7 +73,19 @@ const appRoutes = [
     protected: false,
     name: 'signin'
   },
-  { redirect: true, path: "/", to: "/dashboard" }
+  {
+    path: "/signout",
+    sidebarName: "Esci",
+    icon: OutputIcon,
+    component: SignIn,
+    protected: true,
+    name: 'signout'
+  },
+  {
+    redirect: true,
+    path: "/",
+    to: "/dashboard"
+  }
 ];
 
 export default appRoutes;

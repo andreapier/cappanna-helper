@@ -6,7 +6,7 @@
   "main": "index.js",
   "version": "0.1.0",
   "private": false,
-  "proxy": "https://localhost:44374",
+  "proxy": "http://localhost:3900",
   "dependencies": {
     "chartist": "^0.11.0",
     "classnames": "^2.2.5",
@@ -28,7 +28,7 @@
     "redux-saga": "^0.16.0"
   },
   "scripts": {
-    "start": "set HTTPS=true&&react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
