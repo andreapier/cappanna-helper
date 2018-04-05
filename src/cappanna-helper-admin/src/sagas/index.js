@@ -1,11 +1,11 @@
 import { all } from "redux-saga/effects";
-import loginSaga from "./loginSaga";
-import logoutSaga from "./logoutSaga";
+import signinSaga from "./signinSaga";
+import signoutSaga from "./signoutSaga";
 
 function* rootSaga() {
   yield all([
-    loginSaga(),
-    logoutSaga()
+    signinSaga(),
+    signoutSaga()
   ]);
 }
 

@@ -82,13 +82,13 @@ namespace CappannaHelper.Api.Tests.Controller
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.Success));
             var accountController = new AccountController(userManager.Object, signInManager.Object);
-            var loginData = new LoginData
+            var loginData = new SigninData
             {
                 Username = "test",
                 Password = "test"
             };
 
-            var httpResult = await accountController.Login(loginData);
+            var httpResult = await accountController.Signin(loginData);
 
             var ok = Assert.IsAssignableFrom<OkObjectResult>(httpResult);
             var actualUser = Assert.IsAssignableFrom<ApplicationUser>(ok.Value);
@@ -101,13 +101,13 @@ namespace CappannaHelper.Api.Tests.Controller
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.LockedOut));
             var accountController = new AccountController(new Mock<IApplicationUserManager>().Object, signInManager.Object);
-            var loginData = new LoginData
+            var loginData = new SigninData
             {
                 Username = "test",
                 Password = "test"
             };
 
-            var httpResult = await accountController.Login(loginData);
+            var httpResult = await accountController.Signin(loginData);
 
             var status = Assert.IsAssignableFrom<StatusCodeResult>(httpResult);
             Assert.Equal(429, status.StatusCode);
@@ -119,13 +119,13 @@ namespace CappannaHelper.Api.Tests.Controller
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.NotAllowed));
             var accountController = new AccountController(new Mock<IApplicationUserManager>().Object, signInManager.Object);
-            var loginData = new LoginData
+            var loginData = new SigninData
             {
                 Username = "test",
                 Password = "test"
             };
 
-            var httpResult = await accountController.Login(loginData);
+            var httpResult = await accountController.Signin(loginData);
 
             Assert.IsAssignableFrom<UnauthorizedResult>(httpResult);
         }
@@ -136,13 +136,13 @@ namespace CappannaHelper.Api.Tests.Controller
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.TwoFactorRequired));
             var accountController = new AccountController(new Mock<IApplicationUserManager>().Object, signInManager.Object);
-            var loginData = new LoginData
+            var loginData = new SigninData
             {
                 Username = "test",
                 Password = "test"
             };
 
-            await Assert.ThrowsAsync<NotImplementedException>(async () => await accountController.Login(loginData));
+            await Assert.ThrowsAsync<NotImplementedException>(async () => await accountController.Signin(loginData));
         }
 
         [Fact]
@@ -150,7 +150,7 @@ namespace CappannaHelper.Api.Tests.Controller
         {
             var accountController = new AccountController(new Mock<IApplicationUserManager>().Object, new Mock<IApplicationSignInManager>().Object);
             
-            var httpResult = await accountController.Logout();
+            var httpResult = await accountController.Signout();
 
             Assert.IsAssignableFrom<OkResult>(httpResult);
         }

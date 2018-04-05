@@ -33,7 +33,7 @@ const style = {
     width: "260px"
   }
 };
-function TypographyPage({ ...props }) {
+function MenuPage({ ...props }) {
   return (
     <RegularCard
         cardTitle={"Title"}
@@ -136,4 +136,4 @@ function TypographyPage({ ...props }) {
   );
 }
 
-export default withStyles(style)(TypographyPage);
+export default withStyles(style)(MenuPage);

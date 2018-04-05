@@ -39,7 +39,7 @@ class Notifications extends React.Component {
   render() {
     return (
       <RegularCard
-          cardTitle="Notifications"
+          cardTitle="Notifiche"
           cardSubtitle={
           <P>
             Handcrafted by

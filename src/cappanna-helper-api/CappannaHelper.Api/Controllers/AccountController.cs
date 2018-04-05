@@ -44,11 +44,17 @@ namespace CappannaHelper.Api.Controllers
             return Ok(user);
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginData loginData)
+        [HttpPost("signin")]
+        public async Task<IActionResult> Signin([FromBody] SigninData loginData)
         {
             var user = await _userManager.FindByNameAsync(loginData.Username);
-            var result = await _signInManager.PasswordSignInAsync(user, loginData.Password, true, true);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(user, loginData.Password, loginData.RememberMe, true);
 
             if (result.Succeeded)
             {
@@ -68,8 +74,8 @@ namespace CappannaHelper.Api.Controllers
             throw new NotImplementedException("Sign in result is not implemented (not 'Succeded', not 'IsLockedOut', not 'IsNotAllowed')");
         }
 
-        [HttpPost("logout")]
-        public async Task<IActionResult> Logout()
+        [HttpPost("signout")]
+        public async Task<IActionResult> Signout()
         {
             await _signInManager.SignOutAsync();
 

@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from "./endpoints";
+import { SIGNIN, SIGNOUT } from "./endpoints";
 import "whatwg-fetch";
 
 const headers = {
@@ -20,6 +20,7 @@ const checkStatus = response => {
 const post = (url, data) =>
   fetch(url, {
     method: "POST",
+    credentials: 'same-origin',
     headers,
     body: JSON.stringify(data)
   })
@@ -36,31 +37,18 @@ const get = url =>
 
 const parseJSON = response => response.json();
 
-let token;
-
 class Api {
   constructor() {
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
+    this.signin = this.signin.bind(this);
+    this.signout = this.signout.bind(this);
   }
 
-  setToken(token) {
-    headers.Authorization = `Bearer ${token}`;
+  signin({ username, password, rememberMe }) {
+    return post(SIGNIN, { username, password, rememberMe });
   }
 
-  login(loginData) {
-    return post(LOGIN, loginData).then(json => {
-      token = json.token.value;
-      this.setToken(token);
-
-      return json;
-    });
-  }
-
-  logout() {
-    return post(LOGOUT).then(()=> {
-      delete headers.Authorization;
-    });
+  signout() {
+    return post(SIGNOUT);
   }
 }
 

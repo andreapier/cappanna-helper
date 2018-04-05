@@ -12,7 +12,7 @@ const renderApp = () => ReactDOM.render(<App store={store} />, document.getEleme
 renderApp();
 
 if (module.hot) {
-  module.hot.accept("./containers/App/App", () => renderApp());
+  module.hot.accept("./containers/App", () => renderApp());
 }
 
 registerServiceWorker();

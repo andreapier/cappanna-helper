@@ -5,9 +5,9 @@ import {
   P,
   ItemGrid
 } from "components";
-import SignInForm from './../../containers/SignInForm';
+import SignInForm from 'containers/SignInForm';
 
-class SignIn extends React.Component {
+class SignInPage extends React.Component {
   render() {
     return (
       <RegularCard
@@ -18,17 +18,15 @@ class SignIn extends React.Component {
           </P>
         }
           content={
-          <div>
-            <Grid container>
-              <ItemGrid xs={12} sm={12} md={6}>
-                <SignInForm />
-              </ItemGrid>
-            </Grid>
-          </div>
+          <Grid container justify="center">
+            <ItemGrid xs={12} sm={12} md={6}>
+              <SignInForm />
+            </ItemGrid>
+          </Grid>
         }
       />
     );
   }
 }
 
-export default SignIn;
+export default SignInPage;

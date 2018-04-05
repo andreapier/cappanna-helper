@@ -4,15 +4,14 @@
     "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:3900/",
-      "sslPort": 44374
+      "sslPort": 0
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_HTTPS_PORT": "44374"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "CappannaHelper.Api": {

@@ -1,3 +1,4 @@
-const ACCOUNT = `${process.env.REACT_APP_API_ENDPOINT}/account`;
-export const LOGIN = `${ACCOUNT}/login`;
-export const LOGOUT = `${ACCOUNT}/logout`;
+const ACCOUNT = '/api/account';
+
+export const SIGNIN = `${ACCOUNT}/signin`;
+export const SIGNOUT = `${ACCOUNT}/signout`;
