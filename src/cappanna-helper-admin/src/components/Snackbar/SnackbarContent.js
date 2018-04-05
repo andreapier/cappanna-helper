@@ -3,8 +3,7 @@ import { withStyles, SnackbarContent as Snack, IconButton } from "material-ui";
 import { Close } from "material-ui-icons";
 import PropTypes from "prop-types";
 import cx from "classnames";
-
-import snackbarContentStyle from "variables/styles/snackbarContentStyle.jsx";
+import snackbarContentStyle from "variables/styles/snackbarContentStyle.js";
 
 function SnackbarContent({ ...props }) {
   const { classes, message, color, close, icon } = props;

@@ -14,6 +14,7 @@ import { Provider } from 'react-redux';
 import ConnectedPrivateRoute from './../ConnectedPrivateRoute';
 import ConnectedSidebar from './../ConnectedSidebar';
 import ConnectedWaitDialog from 'containers/ConnectedWaitDialog';
+import ConnectedErrorSnackbar from 'containers/ConnectedErrorSnackbar';
 
 const switchRoutes = (
   <Switch>
@@ -59,6 +60,7 @@ class App extends React.Component {
         <Router history={history}>
           <div className={classes.wrapper}>
             <ConnectedWaitDialog />
+            <ConnectedErrorSnackbar />
             <ConnectedSidebar
               routes={appRoutes}
               logoText={"Cappanna Helper"}
