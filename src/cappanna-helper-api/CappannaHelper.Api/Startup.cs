@@ -79,8 +79,6 @@ namespace CappannaHelper.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseSetupMiddleware();
-            app.UseHsts();
-            app.UseHttpsRedirection();
             app.UseMvc();
             app.UseAuthentication();
             app.UseSignalR(routes =>
