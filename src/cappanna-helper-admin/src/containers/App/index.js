@@ -13,6 +13,7 @@ import history from "./../../history";
 import { Provider } from 'react-redux';
 import ConnectedPrivateRoute from './../ConnectedPrivateRoute';
 import ConnectedSidebar from './../ConnectedSidebar';
+import ConnectedWaitDialog from 'containers/ConnectedWaitDialog';
 
 const switchRoutes = (
   <Switch>
@@ -55,31 +56,32 @@ class App extends React.Component {
     
     return (
       <Provider store={this.props.store}>
-      <Router history={history}>
-        <div className={classes.wrapper}>
-        <ConnectedSidebar
-            routes={appRoutes}
-            logoText={"Cappanna Helper"}
-            logo={logo}
-            image={image}
-            handleDrawerToggle={this.handleDrawerToggle}
-            open={this.state.mobileOpen}
-            color="blue"
-            {...rest}
-        />
-        <div className={classes.mainPanel} ref="mainPanel">
-          <Header
+        <Router history={history}>
+          <div className={classes.wrapper}>
+            <ConnectedWaitDialog />
+            <ConnectedSidebar
               routes={appRoutes}
+              logoText={"Cappanna Helper"}
+              logo={logo}
+              image={image}
               handleDrawerToggle={this.handleDrawerToggle}
+              open={this.state.mobileOpen}
+              color="blue"
               {...rest}
-          />
-            <div className={classes.content}>
-              <div className={classes.container}>{switchRoutes}</div>
+            />
+            <div className={classes.mainPanel} ref="mainPanel">
+              <Header
+                routes={appRoutes}
+                handleDrawerToggle={this.handleDrawerToggle}
+                {...rest}
+              />
+              <div className={classes.content}>
+                <div className={classes.container}>{switchRoutes}</div>
+              </div>
             </div>
-        </div>
-      </div>
-   </Router>
-   </Provider>
+          </div>
+        </Router>
+      </Provider>
     );
   }
 }

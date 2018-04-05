@@ -4,7 +4,8 @@ import {
   LOADING_CHANGED,
   SIGNOUT_REQUESTED,
   SIGNOUT_COMPLETED,
-  ERROR_OCCURRED
+  ERROR_OCCURRED,
+  LOAD_USER_DATA
 } from "./types";
 
 export function signinRequested({ username, password, rememberMe }) {
@@ -25,6 +26,10 @@ export function signoutCompleted() {
 
 export function loadingChanged(loading, description) {
   return { type: LOADING_CHANGED, payload: { loading, description } };
+}
+
+export function loadUserData() {
+  return { type: LOAD_USER_DATA };
 }
 
 export function errorOccurred(errorMessage) {
