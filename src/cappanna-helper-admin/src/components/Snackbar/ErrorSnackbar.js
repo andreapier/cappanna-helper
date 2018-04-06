@@ -1,13 +1,22 @@
 import React from "react";
-import { AddAlert } from "material-ui-icons";
-import { SnackbarContent } from "components";
+import Warning from "material-ui-icons/Warning";
+import Snackbar from "components/Snackbar/Snackbar";
+import SlideUpTransition from "components/Snackbar/SlideUpTransition";
 
 const ErrorSnackbar = (props) => {
     return (    
-        <SnackbarContent
-            message={props.message}
+        <Snackbar
+            onClose={props.handleClose}
+            message={<span id="message-id">{props.message}</span>}
             color="danger"
-            icon={AddAlert}
+            icon={Warning}
+            autoHideDuration={5000}
+            transition={SlideUpTransition}
+            open={!!props.message}
+            place="bc"
+            SnackbarContentProps={{
+                'aria-describedby': 'message-id'
+              }}
         />
     );
 };

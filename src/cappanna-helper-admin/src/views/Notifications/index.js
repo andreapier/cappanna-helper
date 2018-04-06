@@ -36,6 +36,7 @@ class Notifications extends React.Component {
       6000
     );
   }
+  
   render() {
     return (
       <RegularCard

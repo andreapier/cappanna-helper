@@ -4,7 +4,7 @@ import {
   LOADING_CHANGED,
   SIGNOUT_REQUESTED,
   SIGNOUT_COMPLETED,
-  ERROR_OCCURRED,
+  SET_ERROR,
   LOAD_USER_DATA
 } from "./types";
 
@@ -32,6 +32,6 @@ export function loadUserData() {
   return { type: LOAD_USER_DATA };
 }
 
-export function errorOccurred(errorMessage) {
-  return { type: ERROR_OCCURRED, payload: errorMessage };
+export function setError(message) {
+  return { type: SET_ERROR, payload: message };
 }

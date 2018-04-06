@@ -2,7 +2,7 @@ import { put, takeLatest } from "redux-saga/effects";
 import {
   signinCompleted,
   loadingChanged,
-  errorOccurred,
+  setError,
   signoutRequested
 } from "actions";
 import { LOAD_USER_DATA } from "actions/types";
@@ -16,8 +16,6 @@ function* loadUserData() {
 
     const cookieHelper = new CookieHelper();
     const cookie = cookieHelper.read('CappannaHelper');
-
-    console.log(cookie);
 
     if (!cookie) {
       return;
@@ -35,7 +33,7 @@ function* loadUserData() {
     if (e.response && e.response.status === 401) {
       yield put(signoutRequested());
     } else {
-      yield put(errorOccurred(e.message));
+      yield put(setError(e.message));
     }
   } finally {
     yield put(loadingChanged(false));

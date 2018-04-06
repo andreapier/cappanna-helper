@@ -1,9 +1,8 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "./../api/Api";
-import { signoutCompleted, errorOccurred, loadingChanged } from "./../actions";
+import { signoutCompleted, setError, loadingChanged } from "./../actions";
 import { SIGNOUT_REQUESTED } from "./../actions/types";
 import history from "./../history";
-
 
 function* signout(action) {
   try {
@@ -11,13 +10,13 @@ function* signout(action) {
     const api = new Api();
     yield call(api.signout);
   } catch (e) {
-    yield put(errorOccurred(e.message));
+    yield put(setError(e.message));
   }
 
   try {
     yield put(signoutCompleted());
   } catch (e) {
-    yield put(errorOccurred(e.message));
+    yield put(setError(e.message));
   }
 
   history.push("/");

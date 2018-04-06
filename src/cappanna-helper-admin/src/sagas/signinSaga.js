@@ -2,7 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "./../api/Api";
 import {
   signinCompleted,
-  errorOccurred,
+  setError,
   loadingChanged
 } from "./../actions";
 import { SIGNIN_REQUESTED } from "./../actions/types";
@@ -20,7 +20,7 @@ function* signin(action) {
     yield put(signinCompleted(userData));
     history.push("/dashboard");
   } catch (e) {
-    yield put(errorOccurred(e.message));
+    yield put(setError(e.message));
   } finally {
     yield put(loadingChanged(false));
   }

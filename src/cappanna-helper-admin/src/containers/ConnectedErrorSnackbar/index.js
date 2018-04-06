@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import ErrorSnackbar from 'components/Snackbar/ErrorSnackbar';
+import { setError } from 'actions';
 
 class ConnectedErrorSnackbar extends Component {
     render() {
@@ -18,4 +19,10 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(ConnectedErrorSnackbar);
+const mapDispatchToProps = dispatch => {
+    return {
+        handleClose: () => dispatch(setError(null))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectedErrorSnackbar);
