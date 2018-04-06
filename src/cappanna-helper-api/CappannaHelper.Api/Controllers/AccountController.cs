@@ -2,6 +2,7 @@ using CappannaHelper.Api.Identity.ComponentModel.SignIn;
 using CappannaHelper.Api.Identity.ComponentModel.User;
 using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace CappannaHelper.Api.Controllers
         }
 
         [HttpPost("register")]
+        [Authorize]
         public async Task<IActionResult> Register([FromBody] UserRegistrationModel model)
         {
             var user = new ApplicationUser
@@ -75,6 +77,7 @@ namespace CappannaHelper.Api.Controllers
         }
 
         [HttpPost("signout")]
+        [Authorize]
         public async Task<IActionResult> Signout()
         {
             await _signInManager.SignOutAsync();
