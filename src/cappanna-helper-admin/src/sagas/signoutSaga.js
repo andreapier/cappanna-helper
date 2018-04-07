@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import Api from "./../api/Api";
-import { signoutCompleted, setError, loadingChanged } from "./../actions";
-import { SIGNOUT_REQUESTED } from "./../actions/types";
+import Api from "api/Api";
+import { signoutCompleted, setError, loadingChanged } from "actions";
+import { SIGNOUT_REQUESTED } from "actions/types";
 import history from "./../history";
 
 function* signout(action) {

@@ -8,18 +8,10 @@ import {
 import { LOAD_USER_DATA } from "actions/types";
 import localforage from "localforage";
 import history from "./../history";
-import CookieHelper from 'helpers/cookieHelper';
 
 function* loadUserData() {
   try {
     yield put(loadingChanged(true, "Caricamento dati utente..."));
-
-    const cookieHelper = new CookieHelper();
-    const cookie = cookieHelper.read('CappannaHelper');
-
-    if (!cookie) {
-      return;
-    }
 
     const user = yield localforage.getItem("user");
 

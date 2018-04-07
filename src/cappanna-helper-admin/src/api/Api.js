@@ -5,10 +5,22 @@ import {
 } from "./endpoints";
 import "whatwg-fetch";
 
-const headers = {
+const baseHeaders = {
   "Content-Type": "application/json",
   Accept: "application/json"
 };
+
+let token;
+
+const getHeaders = () => {
+  let headers = baseHeaders;
+  
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return headers;
+}
 
 const checkStatus = response => {
   if (response.status >= 200 && response.status < 300) {
@@ -24,8 +36,7 @@ const checkStatus = response => {
 const post = (url, data) =>
   fetch(url, {
     method: "POST",
-    credentials: 'same-origin',
-    headers,
+    headers: getHeaders(),
     body: JSON.stringify(data)
   })
     .then(checkStatus)
@@ -34,7 +45,7 @@ const post = (url, data) =>
 const get = url =>
   fetch(url, {
     method: "GET",
-    headers
+    headers: getHeaders()
   })
     .then(checkStatus)
     .then(parseJSON);
@@ -49,15 +60,21 @@ class Api {
   }
 
   signin({ username, password, rememberMe }) {
-    return post(SIGNIN, { username, password, rememberMe });
+    return post(SIGNIN, { username, password, rememberMe })
+      .then(json => {
+        token = json.token;
+        return json;
+      });
   }
 
   signout() {
-    return post(SIGNOUT);
+    return post(SIGNOUT).then(json => {
+        token = undefined;
+        return json;
+      });
   }
 
   signup({ username, password, confirmPassword, firstName, lastName }) {
-    console.log({ username, password, confirmPassword, firstName, lastName });
     return post(SIGNUP, { username, password, confirmPassword, firstName, lastName });
   }
 }
