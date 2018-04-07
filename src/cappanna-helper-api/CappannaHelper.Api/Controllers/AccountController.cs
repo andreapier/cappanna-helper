@@ -22,14 +22,13 @@ namespace CappannaHelper.Api.Controllers
             _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
         }
 
-        [HttpPost("register")]
+        [HttpPost("signup")]
         [Authorize]
-        public async Task<IActionResult> Register([FromBody] UserRegistrationModel model)
+        public async Task<IActionResult> Signup([FromBody] UserSignupModel model)
         {
             var user = new ApplicationUser
             {
-                UserName = model.Email,
-                Email = model.Email,
+                UserName = model.Username,
                 FirstName = model.FirstName,
                 Surname = model.LastName
             };
@@ -40,23 +39,22 @@ namespace CappannaHelper.Api.Controllers
                 throw new Exception(string.Join("\n", result.Errors.Select(e => e.Description)));
             }
 
-            await _signInManager.SignInAsync(user, true);
             user = await _userManager.FindByNameAsync(user.UserName);
             
             return Ok(user);
         }
 
         [HttpPost("signin")]
-        public async Task<IActionResult> Signin([FromBody] SigninData loginData)
+        public async Task<IActionResult> Signin([FromBody] SigninModel signinData)
         {
-            var user = await _userManager.FindByNameAsync(loginData.Username);
+            var user = await _userManager.FindByNameAsync(signinData.Username);
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            var result = await _signInManager.PasswordSignInAsync(user, loginData.Password, loginData.RememberMe, true);
+            var result = await _signInManager.PasswordSignInAsync(user, signinData.Password, signinData.RememberMe, true);
 
             if (result.Succeeded)
             {

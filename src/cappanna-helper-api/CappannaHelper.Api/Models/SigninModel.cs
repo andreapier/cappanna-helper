@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CappannaHelper.Api.Models
 {
-    public class SigninData
+    public class SigninModel
     {
         [Required]
         public string Username { get; set; }

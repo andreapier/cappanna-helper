@@ -34,9 +34,9 @@ namespace CappannaHelper.Api.Tests.Controller
             userManager.Setup(m => m.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Success));
             userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(expectedUser));
             var accountController = new AccountController(userManager.Object, new Mock<IApplicationSignInManager>().Object);
-            var registrationData = new UserRegistrationModel
+            var registrationData = new UserSignupModel
             {
-                Email = "test@test.it",
+                Username = "test@test.it",
                 FirstName = "test",
                 LastName = "test",
                 Password = "test"
@@ -60,9 +60,9 @@ namespace CappannaHelper.Api.Tests.Controller
                 Description = expectedMessage
             })));
             var accountController = new AccountController(userManager.Object, new Mock<IApplicationSignInManager>().Object);
-            var registrationData = new UserRegistrationModel
+            var registrationData = new UserSignupModel
             {
-                Email = "test@test.it",
+                Username = "test@test.it",
                 FirstName = "test",
                 LastName = "test",
                 Password = "test"
@@ -82,7 +82,7 @@ namespace CappannaHelper.Api.Tests.Controller
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.Success));
             var accountController = new AccountController(userManager.Object, signInManager.Object);
-            var loginData = new SigninData
+            var loginData = new SigninModel
             {
                 Username = "test",
                 Password = "test"
@@ -101,7 +101,7 @@ namespace CappannaHelper.Api.Tests.Controller
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.LockedOut));
             var accountController = new AccountController(new Mock<IApplicationUserManager>().Object, signInManager.Object);
-            var loginData = new SigninData
+            var loginData = new SigninModel
             {
                 Username = "test",
                 Password = "test"
@@ -119,7 +119,7 @@ namespace CappannaHelper.Api.Tests.Controller
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.NotAllowed));
             var accountController = new AccountController(new Mock<IApplicationUserManager>().Object, signInManager.Object);
-            var loginData = new SigninData
+            var loginData = new SigninModel
             {
                 Username = "test",
                 Password = "test"
@@ -136,7 +136,7 @@ namespace CappannaHelper.Api.Tests.Controller
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.TwoFactorRequired));
             var accountController = new AccountController(new Mock<IApplicationUserManager>().Object, signInManager.Object);
-            var loginData = new SigninData
+            var loginData = new SigninModel
             {
                 Username = "test",
                 Password = "test"

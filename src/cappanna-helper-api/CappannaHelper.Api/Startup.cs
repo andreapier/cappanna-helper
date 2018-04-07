@@ -5,6 +5,7 @@ using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Printing;
 using CappannaHelper.Api.Printing.Extensions;
 using CappannaHelper.Api.Setup.Extensions;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 
 namespace CappannaHelper.Api
 {
@@ -49,6 +51,18 @@ namespace CappannaHelper.Api
                 .AddDefaultTokenProviders();
             services.AddApplicationIdentity();
 
+            services
+                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.Events.OnRedirectToLogin = context =>
+                    {
+                        context.Response.Headers["Location"] = context.RedirectUri;
+                        context.Response.StatusCode = 401;
+
+                        return Task.CompletedTask;
+                    };
+                });
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -58,8 +72,6 @@ namespace CappannaHelper.Api
 
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
                 options.Lockout.MaxFailedAccessAttempts = 5;
-
-                options.User.RequireUniqueEmail = true;
             });
 
             services.ConfigureApplicationCookie(options =>
