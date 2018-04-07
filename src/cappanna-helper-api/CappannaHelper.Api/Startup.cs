@@ -6,6 +6,7 @@ using CappannaHelper.Api.Printing;
 using CappannaHelper.Api.Printing.Extensions;
 using CappannaHelper.Api.Setup.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +14,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CappannaHelper.Api
@@ -51,18 +55,28 @@ namespace CappannaHelper.Api
                 .AddDefaultTokenProviders();
             services.AddApplicationIdentity();
 
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
             services
-                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
+                .AddAuthentication(options =>
                 {
-                    options.Events.OnRedirectToLogin = context =>
-                    {
-                        context.Response.Headers["Location"] = context.RedirectUri;
-                        context.Response.StatusCode = 401;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
-                        return Task.CompletedTask;
+                })
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = _configuration["JwtIssuer"],
+                        ValidAudience = _configuration["JwtIssuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"])),
+                        ClockSkew = TimeSpan.Zero // remove delay of token when expire
                     };
                 });
+
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -91,8 +105,8 @@ namespace CappannaHelper.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseSetupMiddleware();
-            app.UseMvc();
             app.UseAuthentication();
+            app.UseMvc();
             app.UseSignalR(routes =>
             {
                 routes.MapHub<MenuHub>("/menu");

@@ -4,8 +4,14 @@ using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CappannaHelper.Api.Controllers
@@ -15,11 +21,16 @@ namespace CappannaHelper.Api.Controllers
     {
         private readonly IApplicationUserManager _userManager;
         private readonly IApplicationSignInManager _signInManager;
+        private readonly IConfiguration _configuration;
 
-        public AccountController(IApplicationUserManager userManager, IApplicationSignInManager signInManager)
+        public AccountController(
+            IApplicationUserManager userManager,
+            IApplicationSignInManager signInManager,
+            IConfiguration configuration)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         [HttpPost("signup")]
@@ -58,7 +69,13 @@ namespace CappannaHelper.Api.Controllers
 
             if (result.Succeeded)
             {
-                return Ok(user);
+                var jwt = GenerateJwtToken(user);
+
+                return Ok(new SigninResultModel
+                {
+                    Username = user.UserName,
+                    Token = jwt
+                });
             }
 
             if (result.IsLockedOut)
@@ -82,5 +99,30 @@ namespace CappannaHelper.Api.Controllers
 
             return Ok();
         }
+
+        private string GenerateJwtToken(ApplicationUser user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["JwtExpireDays"]));
+
+            var token = new JwtSecurityToken(
+                _configuration["JwtIssuer"],
+                _configuration["JwtIssuer"],
+                claims,
+                expires: expires,
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
     }
 }
