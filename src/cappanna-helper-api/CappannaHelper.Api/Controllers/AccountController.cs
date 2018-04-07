@@ -123,6 +123,5 @@ namespace CappannaHelper.Api.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
     }
 }
