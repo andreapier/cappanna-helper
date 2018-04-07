@@ -1,4 +1,8 @@
-import { SIGNIN, SIGNOUT } from "./endpoints";
+import {
+  SIGNIN,
+  SIGNOUT,
+  SIGNUP
+} from "./endpoints";
 import "whatwg-fetch";
 
 const headers = {
@@ -41,6 +45,7 @@ class Api {
   constructor() {
     this.signin = this.signin.bind(this);
     this.signout = this.signout.bind(this);
+    this.signup = this.signup.bind(this);
   }
 
   signin({ username, password, rememberMe }) {
@@ -49,6 +54,11 @@ class Api {
 
   signout() {
     return post(SIGNOUT);
+  }
+
+  signup({ username, password, confirmPassword, firstName, lastName }) {
+    console.log({ username, password, confirmPassword, firstName, lastName });
+    return post(SIGNUP, { username, password, confirmPassword, firstName, lastName });
   }
 }
 

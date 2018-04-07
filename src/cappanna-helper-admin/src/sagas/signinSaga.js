@@ -1,11 +1,11 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import Api from "./../api/Api";
+import Api from "api/Api";
 import {
   signinCompleted,
   setError,
   loadingChanged
-} from "./../actions";
-import { SIGNIN_REQUESTED } from "./../actions/types";
+} from "actions";
+import { SIGNIN_REQUESTED } from "actions/types";
 import history from "./../history";
 import localforage from 'localforage';
 

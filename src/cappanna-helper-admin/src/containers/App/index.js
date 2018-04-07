@@ -1,7 +1,7 @@
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-import Header from './../../components/Header';
+import Header from 'components/Header';
 import { withStyles } from "material-ui";
-import appRoutes from "./../../routes/app.js";
+import appRoutes from "routes";
 import appStyle from "variables/styles/appStyle.jsx";
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/logo.png";
@@ -11,8 +11,8 @@ import React from "react";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import history from "./../../history";
 import { Provider } from 'react-redux';
-import ConnectedPrivateRoute from './../ConnectedPrivateRoute';
-import ConnectedSidebar from './../ConnectedSidebar';
+import ConnectedPrivateRoute from 'containers/ConnectedPrivateRoute';
+import ConnectedSidebar from 'containers/ConnectedSidebar';
 import ConnectedWaitDialog from 'containers/ConnectedWaitDialog';
 import ConnectedErrorSnackbar from 'containers/ConnectedErrorSnackbar';
 

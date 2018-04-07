@@ -5,7 +5,9 @@ import {
   SIGNOUT_REQUESTED,
   SIGNOUT_COMPLETED,
   SET_ERROR,
-  LOAD_USER_DATA
+  LOAD_USER_DATA,
+  SIGNUP_REQUESTED,
+  SIGNUP_COMPLETED
 } from "./types";
 
 export function signinRequested({ username, password, rememberMe }) {
@@ -34,4 +36,12 @@ export function loadUserData() {
 
 export function setError(message) {
   return { type: SET_ERROR, payload: message };
+}
+
+export function signupRequested({ username, password, confirmPassword, firstName, lastName }) {
+  return { type: SIGNUP_REQUESTED, payload: { username, password, confirmPassword, firstName, lastName } };
+}
+
+export function signupCompleted() {
+  return { type: SIGNUP_COMPLETED };
 }

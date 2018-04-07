@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import Button from './../../components/CustomButtons';
+import Button from 'components/CustomButtons';
 import { reduxForm, Field } from 'redux-form';
 import { FormControlLabel } from 'material-ui/Form';
 import {
   Checkbox,
   TextField
 } from 'redux-form-material-ui';
-import { signinRequested } from './../../actions';
+import { signinRequested } from 'actions';
 import { connect } from 'react-redux';
 import { Grid } from "material-ui";
-import { ItemGrid } from "components";
+import ItemGrid from "components/Grid/ItemGrid";
 
 class SignIn extends Component {
   constructor(props) {
