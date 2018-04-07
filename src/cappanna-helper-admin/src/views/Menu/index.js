@@ -33,6 +33,7 @@ const style = {
     width: "260px"
   }
 };
+
 function MenuPage({ ...props }) {
   return (
     <RegularCard

@@ -8,23 +8,17 @@ import SignUpForm from 'containers/SignUpForm';
 
 function Users({ ...props }) {
   return (
-    <div>
       <Grid container>
         <ItemGrid xs={12} sm={12} md={8}>
           <RegularCard
               cardTitle="Crea utente"
               cardSubtitle="Inserisci i dati per creare un nuovo utente"
               content={
-                <Grid container justify="center">
-                <ItemGrid xs={12} sm={12} md={6}>
-                  <SignUpForm />
-                </ItemGrid>
-              </Grid>
+                <SignUpForm />
             }
           />
         </ItemGrid>
       </Grid>
-    </div>
   );
 }
 

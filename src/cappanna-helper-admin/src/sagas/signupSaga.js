@@ -6,6 +6,7 @@ import {
   loadingChanged
 } from "actions";
 import { SIGNUP_REQUESTED } from "actions/types";
+import history from "./../history";
 
 function* signup(action) {
   try {
@@ -13,6 +14,7 @@ function* signup(action) {
     const api = new Api();
     const userData = yield call(api.signup, action.payload);
     yield put(signupCompleted(userData));
+    history.push('/users/signup/ok');
   } catch (e) {
     yield put(setError(e.message));
   } finally {

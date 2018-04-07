@@ -19,6 +19,10 @@ const SidebarNavigationItem = ({ routeData, location, user, classes, color }) =>
     return null;
   }
 
+  if (!routeData.sidebarName) {
+    return null;
+  }
+
   if (routeData.protected && !user) {
     return null;
   }

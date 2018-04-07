@@ -24,10 +24,10 @@ const switchRoutes = (
       }
 
       if (prop.protected) {
-        return <ConnectedPrivateRoute path={prop.path} component={prop.component} key={key} />;
+        return <ConnectedPrivateRoute path={prop.path} component={prop.component} key={key} exact />;
       }
 
-      return <Route path={prop.path} component={prop.component} key={key} />;
+      return <Route path={prop.path} component={prop.component} key={key} exact />;
     })}
   </Switch>
 );

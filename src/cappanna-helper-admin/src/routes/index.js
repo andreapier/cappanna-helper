@@ -14,6 +14,7 @@ import {
   Input
 } from "material-ui-icons";
 import OutputIcon from 'components/OutputIcon';
+import SignUpOkPage from 'views/SignUpOk';
 
 const appRoutes = [
   {
@@ -71,6 +72,12 @@ const appRoutes = [
     component: SignOutPage,
     protected: true,
     name: 'signout'
+  },
+  {
+    path: "/users/signup/ok",
+    component: SignUpOkPage,
+    protected: true,
+    name: 'signupOk'
   },
   {
     redirect: true,
