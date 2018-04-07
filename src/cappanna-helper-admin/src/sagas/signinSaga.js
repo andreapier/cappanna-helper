@@ -8,6 +8,7 @@ import {
 import { SIGNIN_REQUESTED } from "actions/types";
 import history from "./../history";
 import localforage from 'localforage';
+import { reset } from 'redux-form';
 
 const saveUser = user => localforage.setItem('user', user);
 
@@ -19,6 +20,7 @@ function* signin(action) {
     yield saveUser(userData);
     yield put(signinCompleted(userData));
     history.push("/dashboard");
+    reset('signinForm');
   } catch (e) {
     yield put(setError(e.message));
   } finally {
