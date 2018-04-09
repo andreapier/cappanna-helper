@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import Api from "api/Api";
+import Api from "api";
 import {
   signinCompleted,
   setError,

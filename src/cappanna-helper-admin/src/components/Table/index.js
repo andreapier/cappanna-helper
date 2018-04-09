@@ -7,13 +7,12 @@ import {
   TableBody,
   TableCell
 } from "material-ui";
-
 import PropTypes from "prop-types";
-
 import tableStyle from "variables/styles/tableStyle";
 
 function CustomTable({ ...props }) {
   const { classes, tableHead, tableData, tableHeaderColor } = props;
+  
   return (
     <div className={classes.tableResponsive}>
       <Table className={classes.table}>
@@ -23,8 +22,8 @@ function CustomTable({ ...props }) {
               {tableHead.map((prop, key) => {
                 return (
                   <TableCell
-                    className={classes.tableCell + " " + classes.tableHeadCell}
-                    key={key}
+                      className={classes.tableCell + " " + classes.tableHeadCell}
+                      key={key}
                   >
                     {prop}
                   </TableCell>

@@ -10,102 +10,101 @@ import {
   Tab
 } from "material-ui";
 import { BugReport, Code, Cloud } from "@material-ui/icons";
-
 import { Tasks } from "components";
-
 import { bugs, website, server } from "variables/general";
-
 import tasksCardStyle from "variables/styles/tasksCardStyle";
 
 class TasksCard extends React.Component {
   state = {
     value: 0
   };
+
   handleChange = (event, value) => {
     this.setState({ value });
   };
+  
   render() {
     const { classes } = this.props;
     return (
       <Card className={classes.card}>
         <CardHeader
-          classes={{
+            classes={{
             root: classes.cardHeader,
             title: classes.cardTitle,
             content: classes.cardHeaderContent
           }}
-          title="Tasks:"
-          action={
+            title="Tasks:"
+            action={
             <Tabs
-              classes={{
+                classes={{
                 flexContainer: classes.tabsContainer
               }}
-              value={this.state.value}
-              onChange={this.handleChange}
-              indicatorClassName={classes.displayNone}
-              textColor="inherit"
+                value={this.state.value}
+                onChange={this.handleChange}
+                indicatorClassName={classes.displayNone}
+                textColor="inherit"
             >
               <Tab
-                classes={{
+                  classes={{
                   wrapper: classes.tabWrapper,
                   rootLabelIcon: classes.labelIcon,
                   label: classes.label,
                   rootInheritSelected: classes.rootInheritSelected
                 }}
-                icon={<BugReport className={classes.tabIcon} />}
-                label={"Bugs"}
+                  icon={<BugReport className={classes.tabIcon} />}
+                  label={"Bugs"}
               />
               <Tab
-                classes={{
+                  classes={{
                   wrapper: classes.tabWrapper,
                   rootLabelIcon: classes.labelIcon,
                   label: classes.label,
                   rootInheritSelected: classes.rootInheritSelected
                 }}
-                icon={<Code className={classes.tabIcon} />}
-                label={"Website"}
+                  icon={<Code className={classes.tabIcon} />}
+                  label={"Website"}
               />
               <Tab
-                classes={{
+                  classes={{
                   wrapper: classes.tabWrapper,
                   rootLabelIcon: classes.labelIcon,
                   label: classes.label,
                   rootInheritSelected: classes.rootInheritSelected
                 }}
-                icon={<Cloud className={classes.tabIcon} />}
-                label={"Server"}
+                  icon={<Cloud className={classes.tabIcon} />}
+                  label={"Server"}
               />
             </Tabs>
           }
         />
         <CardContent>
-          {this.state.value === 0 && (
+          {this.state.value === 0 && 
             <Typography component="div">
               <Tasks
-                checkedIndexes={[0, 3]}
-                tasksIndexes={[0, 1, 2, 3]}
-                tasks={bugs}
+                  checkedIndexes={[0, 3]}
+                  tasksIndexes={[0, 1, 2, 3]}
+                  tasks={bugs}
               />
             </Typography>
-          )}
-          {this.state.value === 1 && (
+          }
+          {this.state.value === 1 && 
             <Typography component="div">
               <Tasks
-                checkedIndexes={[0]}
-                tasksIndexes={[0, 1]}
-                tasks={website}
+                  checkedIndexes={[0]}
+                  tasksIndexes={[0, 1]}
+                  tasks={website}
               />
             </Typography>
-          )}
-          {this.state.value === 2 && (
+          }
+          {this.state.value === 2 && 
             <Typography component="div">
               <Tasks
-                checkedIndexes={[1]}
-                tasksIndexes={[0, 1, 2]}
-                tasks={server}
+                  checkedIndexes={[1]}
+                  tasksIndexes={[0, 1, 2]}
+                  tasks={server}
               />
             </Typography>
-          )}
+          }
         </CardContent>
       </Card>
     );

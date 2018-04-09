@@ -30,22 +30,9 @@ import {
 import dashboardStyle from "variables/styles/dashboardStyle";
 
 class Dashboard extends React.Component {
-  state = {
-    value: 0
-  };
-
-  handleChange = (event, value) => {
-    this.setState({ value });
-  }
-
-  handleChangeIndex = index => {
-    this.setState({ value: index });
-  }
-  
   render() {
-    return (
-      <div>
-        <Grid container>
+    return [
+      <Grid container>
           <ItemGrid xs={12} sm={6} md={3}>
             <StatsCard
                 icon={ContentCopy}
@@ -88,7 +75,7 @@ class Dashboard extends React.Component {
                 statText="Just Updated"
             />
           </ItemGrid>
-        </Grid>
+        </Grid>,
         <Grid container>
           <ItemGrid xs={12} sm={12} md={4}>
             <ChartCard
@@ -155,7 +142,7 @@ class Dashboard extends React.Component {
                 statText="campaign sent 2 days ago"
             />
           </ItemGrid>
-        </Grid>
+        </Grid>,
         <Grid container>
           <ItemGrid xs={12} sm={12} md={6}>
             <TasksCard />
@@ -180,8 +167,7 @@ class Dashboard extends React.Component {
             />
           </ItemGrid>
         </Grid>
-      </div>
-    );
+    ];
   }
 }
 

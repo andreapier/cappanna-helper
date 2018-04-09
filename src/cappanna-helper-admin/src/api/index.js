@@ -1,7 +1,8 @@
 import {
   SIGNIN,
   SIGNOUT,
-  SIGNUP
+  SIGNUP,
+  MENU_DETAIL
 } from "./endpoints";
 import "whatwg-fetch";
 
@@ -57,6 +58,7 @@ class Api {
     this.signin = this.signin.bind(this);
     this.signout = this.signout.bind(this);
     this.signup = this.signup.bind(this);
+    this.getMenuDetails = this.getMenuDetails.bind(this);
   }
 
   signin({ username, password, rememberMe }) {
@@ -76,6 +78,10 @@ class Api {
 
   signup({ username, password, confirmPassword, firstName, lastName }) {
     return post(SIGNUP, { username, password, confirmPassword, firstName, lastName });
+  }
+
+  getMenuDetails() {
+    return get(MENU_DETAIL);
   }
 }
 

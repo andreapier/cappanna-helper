@@ -7,7 +7,9 @@ import {
   SET_ERROR,
   LOAD_USER_DATA,
   SIGNUP_REQUESTED,
-  SIGNUP_COMPLETED
+  SIGNUP_COMPLETED,
+  LOAD_MENU_DETAILS_REQUESTED,
+  LOAD_MENU_DETAILS_COMPLETED
 } from "./types";
 
 export function signinRequested({ username, password, rememberMe }) {
@@ -44,4 +46,12 @@ export function signupRequested({ username, password, confirmPassword, firstName
 
 export function signupCompleted() {
   return { type: SIGNUP_COMPLETED };
+}
+
+export function loadMenuDetailsRequested() {
+  return { type: LOAD_MENU_DETAILS_REQUESTED };
+}
+
+export function loadMenuDetailsCompleted(menuDetails) {
+  return { type: LOAD_MENU_DETAILS_COMPLETED, payload: menuDetails };
 }
