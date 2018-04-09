@@ -1,5 +1,5 @@
 import React from "react";
-import Warning from "material-ui-icons/Warning";
+import Warning from "@material-ui/icons/Warning";
 import Snackbar from "components/Snackbar/Snackbar";
 import SlideUpTransition from "components/Snackbar/SlideUpTransition";
 

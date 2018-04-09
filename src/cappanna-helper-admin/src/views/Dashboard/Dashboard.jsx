@@ -12,7 +12,7 @@ import {
   ArrowUpward,
   AccessTime,
   Accessibility
-} from "material-ui-icons";
+} from "@material-ui/icons";
 import { withStyles, Grid } from "material-ui";
 import {
   StatsCard,

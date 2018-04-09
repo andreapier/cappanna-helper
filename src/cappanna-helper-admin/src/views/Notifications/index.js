@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid } from "material-ui";
-import { AddAlert } from "material-ui-icons";
+import { AddAlert } from "@material-ui/icons";
 import {
   RegularCard,
   A,

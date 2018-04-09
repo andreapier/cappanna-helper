@@ -12,7 +12,7 @@ import {
   LibraryBooks,
   Notifications,
   Input
-} from "material-ui-icons";
+} from "@material-ui/icons";
 import OutputIcon from 'components/OutputIcon';
 import SignUpOkPage from 'views/SignUpOk';
 
