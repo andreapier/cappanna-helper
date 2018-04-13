@@ -1,6 +1,6 @@
-import DashboardPage from "views/Dashboard/Dashboard.jsx";
+import DashboardPage from "views/Dashboard";
 import Users from "views/Users";
-import OrderList from "views/OrderList/OrderList.jsx";
+import OrderList from "views/OrderList";
 import Menu from "views/Menu";
 import NotificationsPage from "views/Notifications";
 import SignInPage from "views/SignIn";
@@ -13,8 +13,8 @@ import {
   Notifications,
   Input
 } from "@material-ui/icons";
-import OutputIcon from 'components/OutputIcon';
-import SignUpOkPage from 'views/SignUpOk';
+import OutputIcon from "components/OutputIcon";
+import SignUpOkPage from "views/SignUpOk";
 
 const appRoutes = [
   {
@@ -23,7 +23,7 @@ const appRoutes = [
     icon: Dashboard,
     component: DashboardPage,
     protected: true,
-    name: 'dashboard'
+    name: "dashboard"
   },
   {
     path: "/users",
@@ -31,7 +31,7 @@ const appRoutes = [
     icon: Person,
     component: Users,
     protected: true,
-    name: 'users'
+    name: "users"
   },
   {
     path: "/orders",
@@ -39,7 +39,7 @@ const appRoutes = [
     icon: ContentPaste,
     component: OrderList,
     protected: true,
-    name: 'orders'
+    name: "orders"
   },
   {
     path: "/menu",
@@ -47,7 +47,7 @@ const appRoutes = [
     icon: LibraryBooks,
     component: Menu,
     protected: true,
-    name: 'menu'
+    name: "menu"
   },
   {
     path: "/notifications",
@@ -55,7 +55,7 @@ const appRoutes = [
     icon: Notifications,
     component: NotificationsPage,
     protected: true,
-    name: 'notifications'
+    name: "notifications"
   },
   {
     path: "/signin",
@@ -63,7 +63,7 @@ const appRoutes = [
     icon: Input,
     component: SignInPage,
     protected: false,
-    name: 'signin'
+    name: "signin"
   },
   {
     path: "/signout",
@@ -71,13 +71,13 @@ const appRoutes = [
     icon: OutputIcon,
     component: SignOutPage,
     protected: true,
-    name: 'signout'
+    name: "signout"
   },
   {
     path: "/users/signup/ok",
     component: SignUpOkPage,
     protected: true,
-    name: 'signupOk'
+    name: "signupOk"
   },
   {
     redirect: true,

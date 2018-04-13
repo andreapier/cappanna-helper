@@ -8,11 +8,12 @@
   "private": false,
   "proxy": "http://localhost:3900",
   "dependencies": {
+    "@aspnet/signalr": "^1.0.0-preview2-final",
+    "@material-ui/icons": "^1.0.0-beta.42",
     "chartist": "^0.11.0",
     "classnames": "^2.2.5",
     "localforage": "^1.7.1",
     "material-ui": "^1.0.0-beta.41",
-    "@material-ui/icons": "^1.0.0-beta.42",
     "perfect-scrollbar": "^1.3.0",
     "react": "^16.3.1",
     "react-chartist": "^0.13.1",
@@ -37,8 +38,5 @@
     "type": "git",
     "url": "git+https://gitlab.com/andreapier/cappanna-helper.git"
   },
-  "keywords": [
-    "admin",
-    "dashboard"
-  ]
+  "keywords": ["admin", "dashboard"]
 }

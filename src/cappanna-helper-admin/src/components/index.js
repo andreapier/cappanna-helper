@@ -11,7 +11,7 @@ import ItemGrid from "./Grid/ItemGrid.jsx";
 import Muted from "./Typography/Muted.jsx";
 import P from "./Typography/P.jsx";
 import Primary from "./Typography/Primary.jsx";
-import PrivateRoute from './PrivateRoute';
+import PrivateRoute from "./PrivateRoute";
 import ProfileCard from "./Cards/ProfileCard.jsx";
 import Quote from "./Typography/Quote.jsx";
 import RegularCard from "./Cards/RegularCard.js";

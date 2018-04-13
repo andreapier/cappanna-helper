@@ -1,5 +1,5 @@
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-import Header from 'components/Header';
+import Header from "components/Header";
 import { withStyles } from "material-ui";
 import appRoutes from "routes";
 import appStyle from "variables/styles/appStyle.jsx";
@@ -10,13 +10,13 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import history from "./../../history";
-import { Provider } from 'react-redux';
-import ConnectedPrivateRoute from 'containers/ConnectedPrivateRoute';
-import ConnectedSidebar from 'containers/ConnectedSidebar';
-import ConnectedWaitDialog from 'containers/ConnectedWaitDialog';
-import ConnectedErrorSnackbar from 'containers/ConnectedErrorSnackbar';
+import { Provider } from "react-redux";
+import ConnectedPrivateRoute from "containers/ConnectedPrivateRoute";
+import ConnectedSidebar from "containers/ConnectedSidebar";
+import ConnectedWaitDialog from "containers/ConnectedWaitDialog";
+import ConnectedErrorSnackbar from "containers/ConnectedErrorSnackbar";
 
-const switchRoutes = (
+const switchRoutes = 
   <Switch>
     {appRoutes.map((prop, key) => {
       if (prop.redirect) {
@@ -24,13 +24,22 @@ const switchRoutes = (
       }
 
       if (prop.protected) {
-        return <ConnectedPrivateRoute path={prop.path} component={prop.component} key={key} exact />;
+        return (
+          <ConnectedPrivateRoute
+              path={prop.path}
+              component={prop.component}
+              key={key}
+              exact
+          />
+        );
       }
 
-      return <Route path={prop.path} component={prop.component} key={key} exact />;
+      return (
+        <Route path={prop.path} component={prop.component} key={key} exact />
+      );
     })}
   </Switch>
-);
+;
 
 class App extends React.Component {
   state = {
@@ -38,7 +47,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    if(navigator.platform.indexOf('Win') > -1) {
+    if (navigator.platform.indexOf("Win") > -1) {
       // eslint-disable-next-line
       const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
@@ -54,7 +63,7 @@ class App extends React.Component {
 
   render() {
     const { classes, ...rest } = this.props;
-    
+
     return (
       <Provider store={this.props.store}>
         <Router history={history}>
@@ -62,20 +71,20 @@ class App extends React.Component {
             <ConnectedWaitDialog />
             <ConnectedErrorSnackbar />
             <ConnectedSidebar
-              routes={appRoutes}
-              logoText={"Cappanna Helper"}
-              logo={logo}
-              image={image}
-              handleDrawerToggle={this.handleDrawerToggle}
-              open={this.state.mobileOpen}
-              color="blue"
-              {...rest}
+                routes={appRoutes}
+                logoText={"Cappanna Helper"}
+                logo={logo}
+                image={image}
+                handleDrawerToggle={this.handleDrawerToggle}
+                open={this.state.mobileOpen}
+                color="blue"
+                {...rest}
             />
             <div className={classes.mainPanel} ref="mainPanel">
               <Header
-                routes={appRoutes}
-                handleDrawerToggle={this.handleDrawerToggle}
-                {...rest}
+                  routes={appRoutes}
+                  handleDrawerToggle={this.handleDrawerToggle}
+                  {...rest}
               />
               <div className={classes.content}>
                 <div className={classes.container}>{switchRoutes}</div>

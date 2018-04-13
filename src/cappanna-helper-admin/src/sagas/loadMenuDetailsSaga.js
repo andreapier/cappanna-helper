@@ -4,9 +4,9 @@ import {
   setError,
   loadingChanged,
   signoutRequested
-} from 'actions';
-import { LOAD_MENU_DETAILS_REQUESTED } from 'actions/types';
-import Api from 'api';
+} from "actions";
+import { LOAD_MENU_DETAILS_REQUESTED } from "actions/types";
+import Api from "api";
 
 function* loadMenuDetails(action) {
   try {
@@ -20,8 +20,7 @@ function* loadMenuDetails(action) {
     } else {
       yield put(setError(e.message));
     }
-  }
-  finally {
+  } finally {
     yield put(loadingChanged(false));
   }
 }

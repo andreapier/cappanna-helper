@@ -1,12 +1,18 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "api";
-import { signoutCompleted, setError, loadingChanged } from "actions";
+import {
+  signoutCompleted,
+  setError,
+  loadingChanged,
+  disconnectSignalR
+ } from "actions";
 import { SIGNOUT_REQUESTED } from "actions/types";
 import history from "./../history";
 
 function* signout(action) {
   try {
     yield put(loadingChanged(true, "Uscita in corso..."));
+    yield put(disconnectSignalR());
     const api = new Api();
     yield call(api.signout);
   } catch (e) {

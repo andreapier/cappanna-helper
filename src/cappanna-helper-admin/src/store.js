@@ -1,12 +1,13 @@
 import { createStore, applyMiddleware } from "redux";
-import rootReducer from "./reducers";
+import rootReducer from "reducers";
 import { composeWithDevTools } from "redux-devtools-extension";
-import rootSaga from "./sagas";
+import rootSaga from "sagas";
 import createSagaMiddleware from "redux-saga";
+import signalrMiddleware from "api/signalR/middleware";
 
 export default (initialState = {}) => {
   const sagaMiddleware = createSagaMiddleware();
-  const middlewares = [sagaMiddleware];
+  const middlewares = [signalrMiddleware, sagaMiddleware];
   const composeEnhancers = composeWithDevTools({
     actionsBlacklist: ["@@"]
   });

@@ -3,14 +3,15 @@ import Api from "api";
 import {
   signinCompleted,
   setError,
-  loadingChanged
+  loadingChanged,
+  connectSignalR
 } from "actions";
 import { SIGNIN_REQUESTED } from "actions/types";
 import history from "./../history";
-import localforage from 'localforage';
-import { reset } from 'redux-form';
+import localforage from "localforage";
+import { reset } from "redux-form";
 
-const saveUser = user => localforage.setItem('user', user);
+const saveUser = user => localforage.setItem("user", user);
 
 function* signin(action) {
   try {
@@ -18,9 +19,10 @@ function* signin(action) {
     const api = new Api();
     const userData = yield call(api.signin, action.payload);
     yield saveUser(userData);
+    yield put(connectSignalR(userData));
     yield put(signinCompleted(userData));
     history.push("/dashboard");
-    reset('signinForm');
+    reset("signinForm");
   } catch (e) {
     yield put(setError(e.message));
   } finally {
