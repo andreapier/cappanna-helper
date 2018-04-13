@@ -19,7 +19,7 @@ namespace CappannaHelper.Api.Persistence.Mapping
             entityBuilder.Property(u => u.Price).IsRequired();
             entityBuilder.Property(u => u.Group).HasMaxLength(50).IsRequired();
             entityBuilder.Property(u => u.Name).HasMaxLength(200).IsRequired();
-            entityBuilder.Property(u => u.IsAvailable).IsRequired();
+            entityBuilder.Property(u => u.UnitsInStock);
         }
     }
 }

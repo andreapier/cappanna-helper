@@ -35,7 +35,7 @@ namespace CappannaHelper.Api.Controllers
 
         [HttpPost("signup")]
         [Authorize]
-        public async Task<IActionResult> Signup([FromBody] UserSignupModel model)
+        public async Task<IActionResult> Signup([FromBody] SignupModel model)
         {
             var user = new ApplicationUser
             {

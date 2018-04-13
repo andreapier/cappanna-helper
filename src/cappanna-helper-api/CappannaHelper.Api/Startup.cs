@@ -5,7 +5,6 @@ using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Printing;
 using CappannaHelper.Api.Printing.Extensions;
 using CappannaHelper.Api.Setup.Extensions;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,7 +17,6 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CappannaHelper.Api
 {
@@ -55,7 +53,7 @@ namespace CappannaHelper.Api
                 .AddDefaultTokenProviders();
             services.AddApplicationIdentity();
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services
                 .AddAuthentication(options =>
                 {
@@ -73,7 +71,7 @@ namespace CappannaHelper.Api
                         ValidIssuer = _configuration["JwtIssuer"],
                         ValidAudience = _configuration["JwtIssuer"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"])),
-                        ClockSkew = TimeSpan.Zero // remove delay of token when expire
+                        ClockSkew = TimeSpan.Zero
                     };
                 });
 
@@ -106,11 +104,11 @@ namespace CappannaHelper.Api
         {
             app.UseSetupMiddleware();
             app.UseAuthentication();
-            app.UseMvc();
             app.UseSignalR(routes =>
             {
                 routes.MapHub<MenuHub>("/menu");
             });
+            app.UseMvc();
         }
     }
 }

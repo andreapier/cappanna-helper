@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 namespace CappannaHelper.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180328110152_CreateApplicationIdentityEntities")]
-    partial class CreateApplicationIdentityEntities
+    [Migration("20180410123940_EntitiesMigration")]
+    partial class EntitiesMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -164,11 +164,11 @@ namespace CappannaHelper.Api.Migrations
 
                     b.Property<string>("Group");
 
-                    b.Property<bool>("IsAvailable");
-
                     b.Property<string>("Name");
 
                     b.Property<decimal>("Price");
+
+                    b.Property<int?>("UnitsInStock");
 
                     b.HasKey("Id");
 

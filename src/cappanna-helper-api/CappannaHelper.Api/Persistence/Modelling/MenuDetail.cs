@@ -29,6 +29,6 @@ namespace CappannaHelper.Api.Persistence.Modelling
         public decimal Price { get; set; }
         public string Group { get; set; }
         public string Name { get; set; }
-        public bool IsAvailable { get; set; }
+        public int? UnitsInStock { get; set; }
     }
 }

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CappannaHelper.Api.Models
 {
-    public class UserSignupModel
+    public class SignupModel
     {
         [Required]
         public string Username { get; set; }

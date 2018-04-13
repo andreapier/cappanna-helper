@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CappannaHelper.Api.Migrations
 {
-    public partial class CreateApplicationIdentityEntities : Migration
+    public partial class EntitiesMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,7 @@ namespace CappannaHelper.Api.Migrations
                     Price = table.Column<decimal>(nullable: false),
                     Group = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    IsAvailable = table.Column<bool>(nullable: false)
+                    UnitsInStock = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {

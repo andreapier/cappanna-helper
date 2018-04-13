@@ -163,11 +163,11 @@ namespace CappannaHelper.Api.Migrations
 
                     b.Property<string>("Group");
 
-                    b.Property<bool>("IsAvailable");
-
                     b.Property<string>("Name");
 
                     b.Property<decimal>("Price");
+
+                    b.Property<int?>("UnitsInStock");
 
                     b.HasKey("Id");
 
