@@ -38,5 +38,12 @@
     "type": "git",
     "url": "git+https://gitlab.com/andreapier/cappanna-helper.git"
   },
-  "keywords": ["admin", "dashboard"]
+  "keywords": [
+    "admin",
+    "dashboard"
+  ],
+  "devDependencies": {
+    "eslint-plugin-prettier": "^2.6.0",
+    "prettier": "1.12.0"
+  }
 }
