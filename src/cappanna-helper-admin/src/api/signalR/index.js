@@ -1,4 +1,4 @@
-import { HubConnection, LogLevel } from "@aspnet/signalr";
+import { HubConnection } from "@aspnet/signalr";
 import { menuDetailAvailabilityChanged } from "actions";
 
 class SignalR {

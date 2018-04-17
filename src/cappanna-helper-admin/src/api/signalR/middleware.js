@@ -19,14 +19,12 @@ const signalrMiddleware = ({ dispatch }) => {
           console.log("CONNECT_SIGNALR then");
           return next(action);
         });
-        break;
 
       case DISCONNECT_SIGNALR:
         return signalR.disconnect().then(() => {
           console.log("DISCONNECT_SIGNALR then");
           return next(action);
         });
-        break;
 
       case ADD_MENU_DETAIL:
         signalR.createMenuDetail(action.payload);
