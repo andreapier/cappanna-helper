@@ -1,19 +1,15 @@
 import React, { Component } from "react";
-import AppBar from "material-ui/AppBar";
 import Drawer from "material-ui/Drawer";
-import MenuItem from "material-ui/MenuItem";
+import { MenuItem } from "material-ui/Menu";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutRequested, loadOrdersListRequested, resetOrder } from "./../../actions";
 import logo from "./logo.png";
-import ActionInput from "material-ui/svg-icons/action/input";
-import ActionLock from "material-ui/svg-icons/action/lock";
-import ActionList from "material-ui/svg-icons/action/list";
-import ContentAdd from "material-ui/svg-icons/content/add";
-
-const appBarStyle = {
-  backgroundColor: "rgb(0, 0, 128)"
-};
+import ActionInput from "@material-ui/icons/Input";
+import ActionLock from "@material-ui/icons/Lock";
+import ActionList from "@material-ui/icons/List";
+import ContentAdd from "@material-ui/icons/Add";
+import Header from "components/Header";
 
 class Navigation extends Component {
   constructor(props) {
@@ -44,10 +40,10 @@ class Navigation extends Component {
     this.handleClose();
     this.props.logoutRequested();
   }
-  
+
   handleCalculator() {
     this.handleClose();
-    this.props.history.push('/calc');
+    this.props.history.push("/calc");
   }
 
   goToNewOrder() {
@@ -86,19 +82,16 @@ class Navigation extends Component {
   render() {
     return (
       <div>
-        <AppBar
+        <Header
           title="Cappanna Helper"
           onLeftIconButtonTouchTap={this.handleToggle}
           iconElementRight={<img src={logo} alt="Logo" />}
           style={appBarStyle}
         />
-        <Drawer
-          docked={false}
-          open={this.state.open}
-          onRequestChange={this.handleClose}
-        >
-          {this.props.authenticated ? this.renderAuthenticatedUserMenuItems() : this.renderUnauthenticatedUserMenuItems()
-          }
+        <Drawer docked={false} open={this.state.open} onRequestChange={this.handleClose}>
+          {this.props.authenticated
+            ? this.renderAuthenticatedUserMenuItems()
+            : this.renderUnauthenticatedUserMenuItems()}
         </Drawer>
       </div>
     );

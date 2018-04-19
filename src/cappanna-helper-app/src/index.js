@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "components/app/App";
+import App from "containers/App";
 //import registerServiceWorker from "./registerServiceWorker";
 import storeGenerator from "./store";
 import { loadUserData } from "actions";
@@ -16,7 +16,7 @@ const renderApp = () => {
 renderApp();
 
 if (module.hot) {
-  module.hot.accept("components/app/App", () => {
+  module.hot.accept("containers/App", () => {
     renderApp();
   });
 }

@@ -5,7 +5,7 @@ import LoginForm from "./../login/LoginForm";
 import OrderForm from "./../order/OrderForm";
 import RequireAuthentication from "./../auth/RequireAuthentication";
 import { Route } from "react-router-dom";
-import LoadingIndicator from "./../loading/LoadingIndicator";
+import ConnectedWaitDialog from "containers/ConnectedWaitDialog";
 import { Router, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import OrdersList from "./../order/OrdersList";
@@ -22,8 +22,9 @@ class App extends Component {
         <Router history={history}>
           <div>
             <Navigation />
-            <LoadingIndicator />
+            <ConnectedWaitDialog />
             <ErrorSnackBar />
+
             <Route path={"/"} component={RequireAuthentication(OrdersList)} exact />
             <Route path={"/login"} component={LoginForm} />
             <Route path={"/calc"} component={Calculator} />

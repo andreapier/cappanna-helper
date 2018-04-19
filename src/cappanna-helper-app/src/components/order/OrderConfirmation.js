@@ -1,25 +1,22 @@
-import React, { Component } from 'react';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import React, { Component } from "react";
+import { Card, CardHeader, CardText } from "material-ui/Card";
 import { padLeft } from "./../../utils/string";
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from "material-ui/Button";
 import { connect } from "react-redux";
-import {
-  sendOrder,
-  setOrderNotes
-} from "./../../actions";
-import ActionDone from "material-ui/svg-icons/action/done";
-import EditorModeEdit from "material-ui/svg-icons/editor/mode-edit";
+import { sendOrder, setOrderNotes } from "./../../actions";
+import ActionDone from "@material-ui/icons/Done";
+import EditorModeEdit from "@material-ui/icons/ModeEdit";
 import { TextField } from "redux-form-material-ui";
 import { Field, reduxForm } from "redux-form";
 
 const containerStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center'
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center"
 };
 const buttonContainerStyle = {
   ...containerStyle,
-  padding: '5px'
+  padding: "5px"
 };
 
 const innerContainerStyle = {
@@ -46,7 +43,7 @@ class OrderConfirmation extends Component {
   formatPrice(price) {
     return "€ " + padLeft(price.toFixed(2), " ", 5);
   }
-  
+
   handleNotesChange(e) {
     this.props.setOrderNotes(e.target.value);
   }
@@ -55,61 +52,70 @@ class OrderConfirmation extends Component {
     return (
       <Card>
         <CardHeader>
-            <div style={containerStyle}>
-              <div>Tav: {this.props.order.header.chTable}{this.props.order.header.tableCategory ? '\\' + this.props.order.header.tableCategory : ''}</div>
-              <div>N° coperti: {this.props.order.header.seats}</div>
-              <div>Tot: {this.formatPrice(this.props.order.header.totalPrice)}</div>
+          <div style={containerStyle}>
+            <div>
+              Tav: {this.props.order.header.chTable}
+              {this.props.order.header.tableCategory ? "\\" + this.props.order.header.tableCategory : ""}
             </div>
+            <div>N° coperti: {this.props.order.header.seats}</div>
+            <div>Tot: {this.formatPrice(this.props.order.header.totalPrice)}</div>
+          </div>
         </CardHeader>
         <CardText>
           <Card>
             <CardText>
-            <div style={containerStyle}>
-              <div>Nome</div>
-              <div style={innerContainerStyle}>
-                <div style={innerItemStyle}>Prezzo</div>
-                <div style={innerItemStyle20px}>Qta</div>
-                <div style={innerItemStyle}>Tot</div>
-              </div>
-            </div>
-            </CardText>
-          </Card>
-          {this.props.order.details.filter(d => d.quantity > 0).map(d => 
-            <Card key={d.id}>
-              <CardText>
               <div style={containerStyle}>
-                <div>{d.name}</div>
+                <div>Nome</div>
                 <div style={innerContainerStyle}>
-                  <div style={innerItemStyle}>{this.formatPrice(d.price)}</div>
-                  <div style={innerItemStyle20px}>{d.quantity}</div>
-                  <div style={innerItemStyle20px}>{this.formatPrice(d.price * d.quantity)}</div>
+                  <div style={innerItemStyle}>Prezzo</div>
+                  <div style={innerItemStyle20px}>Qta</div>
+                  <div style={innerItemStyle}>Tot</div>
                 </div>
               </div>
+            </CardText>
+          </Card>
+          {this.props.order.details.filter(d => d.quantity > 0).map(d => (
+            <Card key={d.id}>
+              <CardText>
+                <div style={containerStyle}>
+                  <div>{d.name}</div>
+                  <div style={innerContainerStyle}>
+                    <div style={innerItemStyle}>{this.formatPrice(d.price)}</div>
+                    <div style={innerItemStyle20px}>{d.quantity}</div>
+                    <div style={innerItemStyle20px}>{this.formatPrice(d.price * d.quantity)}</div>
+                  </div>
+                </div>
               </CardText>
-            </Card>)}
-            <form>
-              <Card initiallyExpanded={true}>
-                <CardHeader
-                  title="Note"
-                  actAsExpander={true}
-                  showExpandableButton={true}
+            </Card>
+          ))}
+          <form>
+            <Card initiallyExpanded={true}>
+              <CardHeader title="Note" actAsExpander={true} showExpandableButton={true} />
+              <CardText expandable={true} style={{ paddingTop: "0px" }}>
+                <Field
+                  component={TextField}
+                  name="notes"
+                  floatingLabelText="Inserire le note dell'ordine"
+                  multiLine={true}
+                  rows={4}
+                  rowsMax={10}
+                  fullWidth={true}
+                  onBlur={this.handleNotesChange}
+                  style={{ marginTop: "0px" }}
                 />
-                <CardText expandable={true} style={{paddingTop: '0px'}}>
-                  <Field
-                    component={TextField}
-                    name="notes"
-                    floatingLabelText="Inserire le note dell'ordine"
-                    multiLine={true} rows={4} rowsMax={10} fullWidth={true}
-                    onBlur={this.handleNotesChange}
-                    style={{marginTop: '0px'}}
-                  />
-                </CardText>
-              </Card>
-            </form>
+              </CardText>
+            </Card>
+          </form>
         </CardText>
         <div style={buttonContainerStyle}>
-          <RaisedButton label="Modifica" onClick={this.props.history.goBack} icon={<EditorModeEdit />} />
-          <RaisedButton label="Conferma" onClick={() => this.props.sendOrder(this.props.order, this.props.user)} primary={true} icon={<ActionDone/>} />
+          <Button variant="raised" label="Modifica" onClick={this.props.history.goBack} icon={<EditorModeEdit />} />
+          <Button
+            variant="raised"
+            label="Conferma"
+            onClick={() => this.props.sendOrder(this.props.order, this.props.user)}
+            primary={true}
+            icon={<ActionDone />}
+          />
         </div>
       </Card>
     );

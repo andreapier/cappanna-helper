@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Card, CardHeader } from 'material-ui/Card';
-import { loadOrderRequested, loadOrdersListRequested, resetOrder, loadMenuDetailsRequested } from './../../actions';
-import IconButton from 'material-ui/IconButton';
-import ContentAdd from "material-ui/svg-icons/content/add";
-import ActionDone from "material-ui/svg-icons/action/done";
-import ActionSchedule from "material-ui/svg-icons/action/schedule";
-import AvPlayArrow from "material-ui/svg-icons/av/play-arrow";
-import NavigationRefresh from "material-ui/svg-icons/navigation/refresh";
-import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
-import { green500 } from 'material-ui/styles/colors';
-import ActionList from "material-ui/svg-icons/action/list";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Card, CardHeader } from "material-ui/Card";
+import { loadOrderRequested, loadOrdersListRequested, resetOrder, loadMenuDetailsRequested } from "./../../actions";
+import IconButton from "material-ui/IconButton";
+import ContentAdd from "@material-ui/icons/Add";
+import ActionDone from "@material-ui/icons/Done";
+import ActionSchedule from "@material-ui/icons/Schedule";
+import AvPlayArrow from "@material-ui/icons/PlayArrow";
+import NavigationRefresh from "@material-ui/icons/Refresh";
+import { Toolbar, ToolbarGroup } from "material-ui/Toolbar";
+import ActionList from "@material-ui/icons/List";
 
 const containerStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
   flexDirection: "column"
 };
 
@@ -28,11 +27,11 @@ class OrdersList extends Component {
 
   goToNewOrder() {
     this.props.resetOrder();
-    this.props.history.push('/order/new');
+    this.props.history.push("/order/new");
   }
 
   renderStatus(status) {
-    switch(status) {
+    switch (status) {
       case 1:
         return <ActionSchedule />;
 
@@ -40,7 +39,7 @@ class OrdersList extends Component {
         return <AvPlayArrow />;
 
       case 3:
-        return <ActionDone color={green500}/>;
+        return <ActionDone />;
 
       default:
         return null;
@@ -49,12 +48,10 @@ class OrdersList extends Component {
 
   renderOrder(order) {
     return (
-      <Card onClick={() => this.props.loadOrderRequested(order.id)} key={order.id} style={{minWidth: '350px'}}>
+      <Card onClick={() => this.props.loadOrderRequested(order.id)} key={order.id} style={{ minWidth: "350px" }}>
         <CardHeader title={`Ordine N° ${order.id} (Tav. ${order.chTable})`}>
           {this.renderStatus(order.status)}
-          <div>
-            Cameriere: {order.createdById}
-          </div>
+          <div>Cameriere: {order.createdById}</div>
         </CardHeader>
       </Card>
     );
@@ -78,10 +75,9 @@ class OrdersList extends Component {
             </IconButton>
           </ToolbarGroup>
         </Toolbar>
-        <div style={containerStyle}>
-          {this.props.orders.map(this.renderOrder)}
-        </div>
-      </div>);
+        <div style={containerStyle}>{this.props.orders.map(this.renderOrder)}</div>
+      </div>
+    );
   }
 }
 

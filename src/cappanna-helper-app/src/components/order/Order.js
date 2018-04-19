@@ -1,32 +1,31 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Card, CardHeader, CardText } from "material-ui/Card";
 import { padLeft } from "./../../utils/string";
-import ActionPrint from "material-ui/svg-icons/action/print";
+import ActionPrint from "@material-ui/icons/Print";
 import { printRequested, loadOrderRequested, setOrderStatusRequested } from "./../../actions/index";
 import Dialog from "material-ui/Dialog";
-import RaisedButton from 'material-ui/RaisedButton';
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
-import IconButton from 'material-ui/IconButton';
-import NavigationRefresh from "material-ui/svg-icons/navigation/refresh";
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
-import ActionDone from "material-ui/svg-icons/action/done";
-import ActionSchedule from "material-ui/svg-icons/action/schedule";
-import AvPlayArrow from "material-ui/svg-icons/av/play-arrow";
-import { green500 } from 'material-ui/styles/colors';
-import NavigationCancel from "material-ui/svg-icons/navigation/cancel";
-import TextField from 'material-ui/TextField';
+import Button from "material-ui/Button";
+import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from "material-ui/Toolbar";
+import IconButton from "material-ui/IconButton";
+import NavigationRefresh from "@material-ui/icons/Refresh";
+//import DropDownMenu from "material-ui/DropDownMenu";
+import { MenuItem } from "material-ui/Menu";
+import ActionDone from "@material-ui/icons/Done";
+import ActionSchedule from "@material-ui/icons/Schedule";
+import AvPlayArrow from "@material-ui/icons/PlayArrow";
+import NavigationCancel from "@material-ui/icons/Cancel";
+import TextField from "material-ui/TextField";
 
 const containerStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center'
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center"
 };
 const textBigStyle = {
-  fontSize:'24px',
-  marginTop: '10px',
-  marginBottom: '10px'
+  fontSize: "24px",
+  marginTop: "10px",
+  marginBottom: "10px"
 };
 
 class Order extends Component {
@@ -35,17 +34,17 @@ class Order extends Component {
     this.state = { confirmPrint: false };
     this.handleChange = this.handleChange.bind(this);
   }
-  
+
   renderStatus(status) {
-    switch(status) {
+    switch (status) {
       case 1:
-        return (<ActionSchedule />);
+        return <ActionSchedule />;
 
       case 2:
-        return (<AvPlayArrow />);
+        return <AvPlayArrow />;
 
       case 3:
-        return (<ActionDone color={green500}/>);
+        return <ActionDone />;
 
       default:
         return null;
@@ -70,21 +69,21 @@ class Order extends Component {
   }
 
   render() {
-    const totalPrice = this.props.order.details.reduce((a, b) => a + (b.item.price * b.quantity), 0);
+    const totalPrice = this.props.order.details.reduce((a, b) => a + b.item.price * b.quantity, 0);
 
     return (
       <div>
         <Toolbar>
           <ToolbarGroup>
             <ToolbarTitle text={`Ordine N° ${this.props.order.id}`} />
-          <ToolbarSeparator />
+            <ToolbarSeparator />
           </ToolbarGroup>
-          <ToolbarGroup firstChild={true}>
-            <DropDownMenu value={this.props.order.status} onChange={this.handleChange}>
+          <ToolbarGroup firstChild>
+            {/* <DropDownMenu value={this.props.order.status} onChange={this.handleChange}>
               <MenuItem value={1} primaryText="Inviato" leftIcon={this.renderStatus(1)} disabled={this.props.order.status === 1}/>
               <MenuItem value={2} primaryText="In corso" leftIcon={this.renderStatus(2)} disabled={this.props.order.status === 2} />
               <MenuItem value={3} primaryText="Completato" leftIcon={this.renderStatus(3)} disabled={this.props.order.status === 3} />
-            </DropDownMenu>
+            </DropDownMenu> */}
             <IconButton onClick={() => this.setState({ confirmPrint: true })}>
               <ActionPrint />
             </IconButton>
@@ -95,23 +94,19 @@ class Order extends Component {
         </Toolbar>
 
         <div style={containerStyle}>
-          <div style={textBigStyle}>
-            Tavolo: {this.props.order.chTable}
-          </div>
-          <div style={textBigStyle}>
-            N° coperti: {this.props.order.seats}
-          </div>
-          <div style={textBigStyle}>
-            {this.formatPrice(totalPrice)}
-          </div>
+          <div style={textBigStyle}>Tavolo: {this.props.order.chTable}</div>
+          <div style={textBigStyle}>N° coperti: {this.props.order.seats}</div>
+          <div style={textBigStyle}>{this.formatPrice(totalPrice)}</div>
         </div>
 
         <Card>
-          <table style={{
-            width: '100%',
-            paddingTop: '10px'
-            }}>
-            <thead  style={{textAlign: 'left'}}>
+          <table
+            style={{
+              width: "100%",
+              paddingTop: "10px"
+            }}
+          >
+            <thead style={{ textAlign: "left" }}>
               <tr>
                 <th>Nome</th>
                 <th>Prezzo</th>
@@ -120,41 +115,47 @@ class Order extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.props.order.details.map(d =>
+              {this.props.order.details.map(d => (
                 <tr key={d.id}>
                   <td>{d.item.name}</td>
                   <td>{this.formatPrice(d.item.price)}</td>
                   <td>{d.quantity}</td>
                   <td>{this.formatPrice(d.item.price * d.quantity)}</td>
-                </tr>)}
+                </tr>
+              ))}
             </tbody>
           </table>
         </Card>
 
         <Card>
-          <CardHeader
-            title="Note"
-            actAsExpander={true}
-            showExpandableButton={true}
-          />
+          <CardHeader title="Note" actAsExpander={true} showExpandableButton={true} />
           <CardText expandable={true}>
-            <TextField
-              hintText="Note"
-              multiLine={true} rows={4} rowsMax={10}
-              value={this.props.order.notes || ''}
-            />
+            <TextField hintText="Note" multiLine={true} rows={4} rowsMax={10} value={this.props.order.notes || ""} />
           </CardText>
         </Card>
 
         <Dialog modal={true} open={this.state.confirmPrint}>
           <div>
-            <div style={{ textAlign: 'center' }}>Sei sicuro di voler ristampare l'ordine?</div>
-            <div style={{
-              ...containerStyle,
-              paddingTop: '10px'
-              }}>
-              <RaisedButton label="Conferma" onClick={() => this.sendOrder()} primary={true} icon={<ActionDone color={green500} />} />
-              <RaisedButton label="Annulla" onClick={() => this.setState({ confirmPrint: false })} icon={<NavigationCancel />} />
+            <div style={{ textAlign: "center" }}>Sei sicuro di voler ristampare l'ordine?</div>
+            <div
+              style={{
+                ...containerStyle,
+                paddingTop: "10px"
+              }}
+            >
+              <Button
+                variant="raised"
+                label="Conferma"
+                onClick={() => this.sendOrder()}
+                primary={true}
+                icon={<ActionDone />}
+              />
+              <Button
+                variant="raised"
+                label="Annulla"
+                onClick={() => this.setState({ confirmPrint: false })}
+                icon={<NavigationCancel />}
+              />
             </div>
           </div>
         </Dialog>

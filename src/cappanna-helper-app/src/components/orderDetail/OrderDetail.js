@@ -1,8 +1,8 @@
 import "./OrderDetail.css";
 import React, { Component } from "react";
-import FloatingActionButton from "material-ui/FloatingActionButton";
-import ContentAdd from "material-ui/svg-icons/content/add";
-import ContentRemove from "material-ui/svg-icons/content/remove";
+import Button from "material-ui/Button";
+import ContentAdd from "@material-ui/icons/Add";
+import ContentRemove from "@material-ui/icons/Remove";
 import { padLeft } from "./../../utils/string";
 import { connect } from "react-redux";
 import { incrementOrderDetailQuantity } from "./../../actions";
@@ -40,20 +40,25 @@ class OrderDetail extends Component {
         <div style={innerContainerStyle}>
           <div style={innerItemStyle}>{this.formatPrice(this.props.detail.price)}</div>
           <div>
-            <FloatingActionButton mini={true} onClick={() => this.props.incrementOrderDetailQuantity(this.props.detail, 1)}
-              disabled={!this.props.detail.isAvailable}>
+            <Button
+              variant="fab"
+              mini={true}
+              onClick={() => this.props.incrementOrderDetailQuantity(this.props.detail, 1)}
+              disabled={!this.props.detail.isAvailable}
+            >
               <ContentAdd />
-            </FloatingActionButton>
+            </Button>
           </div>
           <div style={innerItemStyle20px}>{this.props.detail.quantity}</div>
           <div>
-            <FloatingActionButton
+            <Button
+              variant="fab"
               mini={true}
               onClick={() => this.props.incrementOrderDetailQuantity(this.props.detail, -1)}
               disabled={this.props.detail.quantity === 0 || !this.props.detail.isAvailable}
             >
               <ContentRemove />
-            </FloatingActionButton>
+            </Button>
           </div>
         </div>
       </div>

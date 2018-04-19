@@ -1,12 +1,12 @@
 import "./LoginForm.css";
-import RaisedButton from "material-ui/RaisedButton";
+import Button from "material-ui/Button";
 import { Card } from "material-ui/Card";
 import React, { Component } from "react";
 import { TextField } from "redux-form-material-ui";
 import { Field, reduxForm } from "redux-form";
 import { loginRequested } from "./../../actions";
 import { connect } from "react-redux";
-import ActionInput from "material-ui/svg-icons/action/input";
+import ActionInput from "@material-ui/icons/Input";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -25,12 +25,7 @@ class LoginForm extends Component {
           <div className="LoginForm-header">Esegui il login</div>
           <form onSubmit={this.props.handleSubmit(this.handleFormSubmit)}>
             <div>
-              <Field
-                name="username"
-                component={TextField}
-                floatingLabelText="Username"
-                fullWidth={true}
-              />
+              <Field name="username" component={TextField} floatingLabelText="Username" fullWidth={true} />
             </div>
             <div>
               <Field
@@ -47,14 +42,11 @@ class LoginForm extends Component {
                 display: this.props.errorMessage ? "block" : "none"
               }}
             >
-              {this.props.errorMessage ? (
-                <strong>Errore! {this.props.errorMessage}</strong>
-              ) : (
-                ""
-              )}
+              {this.props.errorMessage ? <strong>Errore! {this.props.errorMessage}</strong> : ""}
             </div>
             <div style={{ marginTop: "20px" }}>
-              <RaisedButton
+              <Button
+                variant="raised"
                 type="submit"
                 label="Login"
                 disabled={this.props.loading}
