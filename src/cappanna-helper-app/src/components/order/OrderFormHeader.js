@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  setOrderTable,
-  setOrderTableCategory,
-  setOrderSeats
-} from "./../../actions";
-import FloatingActionButton from "material-ui/FloatingActionButton";
+import { setOrderTable, setOrderTableCategory, setOrderSeats } from "./../../actions";
+import Button from "material-ui/Button";
 import TextField from "material-ui/TextField";
-import ContentSend from "material-ui/svg-icons/content/send";
-import { withRouter } from 'react-router';
+import ContentSend from "@material-ui/icons/Send";
+import { withRouter } from "react-router";
 
 const containerStyle = {
   display: "flex",
@@ -43,11 +39,8 @@ class OrderFormHeader extends Component {
 
   render() {
     const canConfirmOrder =
-      this.props.totalPrice > 0 &&
-      this.props.chTable > 0 &&
-      this.props.seats > 0 &&
-      this.props.tableCategory;
-      
+      this.props.totalPrice > 0 && this.props.chTable > 0 && this.props.seats > 0 && this.props.tableCategory;
+
     return (
       <div>
         <div style={containerStyle}>
@@ -85,15 +78,16 @@ class OrderFormHeader extends Component {
           </div>
           <div style={textFieldStyle}>Tot: € {this.props.totalPrice.toFixed(2)}</div>
           <div>
-            <FloatingActionButton
+            <Button
+              variant="fab"
               mini={true}
               type="submit"
               style={buttonStyle}
               disabled={!canConfirmOrder}
-              onClick={() => this.props.history.push('/order/confirm')}
+              onClick={() => this.props.history.push("/order/confirm")}
             >
               <ContentSend />
-            </FloatingActionButton>
+            </Button>
           </div>
         </div>
       </div>

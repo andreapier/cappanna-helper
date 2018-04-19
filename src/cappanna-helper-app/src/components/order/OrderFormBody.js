@@ -1,22 +1,33 @@
 import React, { Component } from "react";
 import OrderDetail from "./../orderDetail/OrderDetail";
-import {Card, CardHeader, CardText} from "material-ui";
-import {connect} from "react-redux";
+import ExpansionPanel, { ExpansionPanelSummary, ExpansionPanelDetails } from "material-ui/ExpansionPanel";
+import { connect } from "react-redux";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Typography from "material-ui/Typography";
+import { withStyles } from "material-ui/styles";
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular
+  }
+});
 
 class OrderFormBody extends Component {
   renderDishes(dishList, title) {
     return (
-      <div style={{ padding: 0 }}>
-        <Card>
-          <CardHeader
-            title={title}
-            actAsExpander={true}
-            showExpandableButton={true}
-          />
-          <CardText expandable={true} style={{ padding: 0 }}>
-            {dishList.map(i => <OrderDetail detailId={i.id} key={i.id} />)}
-          </CardText>
-        </Card>
+      <div className={this.props.classes.root}>
+        <ExpansionPanel>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography className={this.props.classes.heading}>{title}</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <div>{dishList.map(i => <OrderDetail detailId={i.id} key={i.id} />)}</div>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
       </div>
     );
   }
@@ -53,7 +64,7 @@ class OrderFormBody extends Component {
         drinks.push(i);
       }
     });
-      
+
     return (
       <div>
         {this.renderDishes(appetizers, "Antipasti")}
@@ -71,9 +82,9 @@ class OrderFormBody extends Component {
 }
 
 const mapStateToProps = state => {
-    return {
-        details: state.newOrder.details
-    };
+  return {
+    details: state.newOrder.details
+  };
 };
 
-export default connect(mapStateToProps)(OrderFormBody);
+export default connect(mapStateToProps)(withStyles(styles)(OrderFormBody));
