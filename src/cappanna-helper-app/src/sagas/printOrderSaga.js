@@ -1,12 +1,7 @@
 import { put, takeLatest, call } from "redux-saga/effects";
-import {
-  printCompleted,
-  errorOccurred,
-  loadingChanged,
-  logoutRequested
-} from "./../actions";
-import { PRINT_REQUESTED } from "./../actions/types";
-import Api from "./../api/Api";
+import { loadingChanged, setError, signoutRequested, printCompleted } from "actions";
+import { PRINT_REQUESTED } from "actions/types";
+import Api from "api";
 
 function* printOrder(action) {
   try {
@@ -16,9 +11,9 @@ function* printOrder(action) {
     yield put(printCompleted(order));
   } catch (e) {
     if (e.response && e.response.status === 401) {
-      yield put(logoutRequested());
+      yield put(signoutRequested());
     } else {
-      yield put(errorOccurred(e.message));
+      yield put(setError(e.message));
     }
   }
 

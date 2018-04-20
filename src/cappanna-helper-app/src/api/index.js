@@ -1,9 +1,21 @@
-import { LOGIN, LOGOUT, LOGIN_BY_TOKEN, ORDER, MENU_DETAIL, PRINT } from "./endpoints";
+import { SIGNIN, SIGNOUT, SIGNIN_BY_TOKEN, ORDER, MENU_DETAIL, PRINT } from "./endpoints";
 import "whatwg-fetch";
 
-const headers = {
+const baseHeaders = {
   "Content-Type": "application/json",
   Accept: "application/json"
+};
+
+let token;
+
+const getHeaders = () => {
+  let headers = baseHeaders;
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return headers;
 };
 
 const checkStatus = response => {
@@ -20,7 +32,7 @@ const checkStatus = response => {
 const post = (url, data) =>
   fetch(url, {
     method: "POST",
-    headers,
+    headers: getHeaders(),
     body: JSON.stringify(data)
   })
     .then(checkStatus)
@@ -29,47 +41,40 @@ const post = (url, data) =>
 const get = url =>
   fetch(url, {
     method: "GET",
-    headers
+    headers: getHeaders()
   })
     .then(checkStatus)
     .then(parseJSON);
 
 const parseJSON = response => response.json();
 
-let token;
-
 class Api {
   constructor() {
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
+    this.signin = this.signin.bind(this);
+    this.signout = this.signout.bind(this);
     this.getOrders = this.getOrders.bind(this);
     this.getMenuDetails = this.getMenuDetails.bind(this);
     this.sendOrder = this.sendOrder.bind(this);
   }
 
-  setToken(token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  login(loginData) {
-    return post(LOGIN, loginData).then(json => {
-      token = json.token.value;
-      this.setToken(token);
-
+  signin({ username, password, rememberMe }) {
+    return post(SIGNIN, { username, password, rememberMe }).then(json => {
+      token = json.token;
       return json;
     });
   }
-  
-  loginByToken(token) {
-    headers.Authorization = `Bearer ${token}`;
 
-    return post(LOGIN_BY_TOKEN, token);
+  signout() {
+    return post(SIGNOUT).then(json => {
+      token = undefined;
+      return json;
+    });
   }
 
-  logout() {
-    return post(LOGOUT).then(()=> {
-      delete headers.Authorization;
-    });
+  loginByToken(tokenToSave) {
+    token = tokenToSave;
+
+    return post(SIGNIN_BY_TOKEN, token);
   }
 
   getOrders() {

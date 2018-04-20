@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import Api from "./../api/Api";
-import { loadingChanged, errorOccurred, logoutRequested, setOrderStatusCompleted } from "./../actions";
-import { SET_ORDER_STATUS_REQUESTED } from "./../actions/types";
+import Api from "api";
+import { loadingChanged, setError, signoutRequested, setOrderStatusCompleted } from "actions";
+import { SET_ORDER_STATUS_REQUESTED } from "actions/types";
 
 function* setOrderStatus(action) {
   try {
@@ -11,9 +11,9 @@ function* setOrderStatus(action) {
     yield put(setOrderStatusCompleted(order));
   } catch (e) {
     if (e.response && e.response.status === 401) {
-      yield put(logoutRequested());
+      yield put(signoutRequested());
     } else {
-      yield put(errorOccurred(e.message));
+      yield put(setError(e.message));
     }
   }
 

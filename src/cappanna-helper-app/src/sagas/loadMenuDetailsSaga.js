@@ -1,13 +1,7 @@
 import { put, takeLatest, call } from "redux-saga/effects";
-import {
-  loadMenuDetailsCompleted,
-  errorOccurred,
-  loadingChanged,
-  logoutRequested,
-  createEmptyOrder
-} from "./../actions";
-import { LOAD_MENU_DETAILS_REQUESTED } from "./../actions/types";
-import Api from "./../api/Api";
+import { loadingChanged, setError, signoutRequested, loadMenuDetailsCompleted, createEmptyOrder } from "actions";
+import { LOAD_MENU_DETAILS_REQUESTED } from "actions/types";
+import Api from "api";
 
 function* loadMenuDetails(action) {
   try {
@@ -18,9 +12,9 @@ function* loadMenuDetails(action) {
     yield put(createEmptyOrder(menuDetails));
   } catch (e) {
     if (e.response && e.response.status === 401) {
-      yield put(logoutRequested());
+      yield put(signoutRequested());
     } else {
-      yield put(errorOccurred(e.message));
+      yield put(setError(e.message));
     }
   }
 

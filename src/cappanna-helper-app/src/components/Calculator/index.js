@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import Button from "material-ui/Button";
-import { Card } from "material-ui/Card";
+import RegularCard from "components/Cards/RegularCard";
 import TextField from "material-ui/TextField";
 import ActionEuroSymbol from "@material-ui/icons/EuroSymbol";
 
 class Calculator extends Component {
   render() {
     return (
-      <Card>
+      <RegularCard>
         <div>
           <TextField name="amount" floatingLabelText="Da pagare" fullWidth={true} type="number" />
         </div>
@@ -26,7 +26,7 @@ class Calculator extends Component {
         <div>
           <Button variant="raised" label="Calcola" fullWidth={true} icon={<ActionEuroSymbol />} />
         </div>
-      </Card>
+      </RegularCard>
     );
   }
 }
