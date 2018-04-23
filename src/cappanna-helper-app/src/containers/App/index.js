@@ -22,10 +22,19 @@ const switchRoutes = (
       }
 
       if (prop.protected) {
-        return <ConnectedPrivateRoute path={prop.path} component={prop.component} key={key} exact />;
+        return (
+          <ConnectedPrivateRoute
+            path={prop.path}
+            component={prop.component}
+            key={key}
+            exact
+          />
+        );
       }
 
-      return <Route path={prop.path} component={prop.component} key={key} exact />;
+      return (
+        <Route path={prop.path} component={prop.component} key={key} exact />
+      );
     })}
   </Switch>
 );
@@ -69,7 +78,11 @@ class App extends React.Component {
               {...rest}
             />
             <div className={classes.mainPanel} ref="mainPanel">
-              <Header routes={appRoutes} handleDrawerToggle={this.handleDrawerToggle} {...rest} />
+              <Header
+                routes={appRoutes}
+                handleDrawerToggle={this.handleDrawerToggle}
+                {...rest}
+              />
               <div className={classes.content}>
                 <div className={classes.container}>{switchRoutes}</div>
               </div>

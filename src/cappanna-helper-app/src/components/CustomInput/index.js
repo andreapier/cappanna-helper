@@ -29,35 +29,35 @@ function CustomInput({ ...props }) {
   const marginTop = cx({
     [classes.marginTop]: labelText === undefined
   });
-  
+
   return (
     <FormControl
-        {...formControlProps}
-        className={formControlProps.className + " " + classes.formControl}
+      {...formControlProps}
+      className={formControlProps.className + " " + classes.formControl}
     >
-      {labelText !== undefined ? 
+      {labelText !== undefined ? (
         <InputLabel
-            className={classes.labelRoot + labelClasses}
-            htmlFor={id}
-            {...labelProps}
+          className={classes.labelRoot + labelClasses}
+          htmlFor={id}
+          {...labelProps}
         >
           {labelText}
         </InputLabel>
-       : null}
+      ) : null}
       <Input
-          classes={{
+        classes={{
           root: marginTop,
           disabled: classes.disabled,
           underline: underlineClasses
         }}
-          id={id}
-          {...inputProps}
+        id={id}
+        {...inputProps}
       />
-      {error ? 
+      {error ? (
         <Clear className={classes.feedback + " " + classes.labelRootError} />
-       : success ? 
+      ) : success ? (
         <Check className={classes.feedback + " " + classes.labelRootSuccess} />
-       : null}
+      ) : null}
     </FormControl>
   );
 }

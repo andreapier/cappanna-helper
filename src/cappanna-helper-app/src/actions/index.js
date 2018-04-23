@@ -23,11 +23,26 @@ import {
   RESET_ORDER,
   SET_ORDER_STATUS_REQUESTED,
   SET_ORDER_STATUS_COMPLETED,
-  SET_ORDER_NOTES
+  SET_ORDER_NOTES,
+  SIGNUP_REQUESTED,
+  SIGNUP_COMPLETED,
+  CONNECT_SIGNALR,
+  DISCONNECT_SIGNALR,
+  ADD_MENU_DETAIL,
+  MENU_DETAIL_AVAILABILITY_CHANGED
 } from "actions/types";
 
+const signalRAction = {
+  metadata: {
+    signalR: true
+  }
+};
+
 export function signinRequested({ username, password, rememberMe }) {
-  return { type: SIGNIN_REQUESTED, payload: { username, password, rememberMe } };
+  return {
+    type: SIGNIN_REQUESTED,
+    payload: { username, password, rememberMe }
+  };
 }
 
 export function signinCompleted(userData) {
@@ -40,6 +55,23 @@ export function signoutRequested() {
 
 export function signoutCompleted() {
   return { type: SIGNOUT_COMPLETED };
+}
+
+export function signupRequested({
+  username,
+  password,
+  confirmPassword,
+  firstName,
+  lastName
+}) {
+  return {
+    type: SIGNUP_REQUESTED,
+    payload: { username, password, confirmPassword, firstName, lastName }
+  };
+}
+
+export function signupCompleted() {
+  return { type: SIGNUP_COMPLETED };
 }
 
 export function loadingChanged(loading, description) {
@@ -127,4 +159,19 @@ export function setOrderStatusCompleted(order) {
 
 export function setOrderNotes(notes) {
   return { type: SET_ORDER_NOTES, payload: notes };
+}
+
+export function addMenuDetail(menuDetail) {
+  return { type: ADD_MENU_DETAIL, payload: menuDetail, ...signalRAction };
+}
+
+export function menuDetailAvailabilityChanged(menuDetail) {
+  return { type: MENU_DETAIL_AVAILABILITY_CHANGED, payload: menuDetail };
+}
+export function connectSignalR(userData) {
+  return { type: CONNECT_SIGNALR, payload: userData, ...signalRAction };
+}
+
+export function disconnectSignalR() {
+  return { type: DISCONNECT_SIGNALR, ...signalRAction };
 }

@@ -1,4 +1,11 @@
-import { SIGNIN, SIGNOUT, SIGNIN_BY_TOKEN, ORDER, MENU_DETAIL, PRINT } from "./endpoints";
+import {
+  SIGNIN,
+  SIGNOUT,
+  SIGNUP,
+  ORDER,
+  MENU_DETAIL,
+  PRINT
+} from "./endpoints";
 import "whatwg-fetch";
 
 const baseHeaders = {
@@ -71,10 +78,14 @@ class Api {
     });
   }
 
-  loginByToken(tokenToSave) {
-    token = tokenToSave;
-
-    return post(SIGNIN_BY_TOKEN, token);
+  signup({ username, password, confirmPassword, firstName, lastName }) {
+    return post(SIGNUP, {
+      username,
+      password,
+      confirmPassword,
+      firstName,
+      lastName
+    });
   }
 
   getOrders() {
@@ -91,7 +102,9 @@ class Api {
 
   sendOrder({ order, user }) {
     const serverOrder = {
-      chTable: order.header.chTable + (order.header.tableCategory ? "/" + order.header.tableCategory : ""),
+      chTable:
+        order.header.chTable +
+        (order.header.tableCategory ? "/" + order.header.tableCategory : ""),
       seats: order.header.seats,
       details: [],
       createdById: user.id,
