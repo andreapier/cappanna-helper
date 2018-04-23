@@ -1,10 +1,11 @@
 import {
-  LOGIN_REQUESTED,
-  LOGIN_COMPLETED,
-  LOGOUT_REQUESTED,
-  LOGOUT_COMPLETED,
-  LOAD_USER_DATA,
+  SIGNIN_REQUESTED,
+  SIGNIN_COMPLETED,
   LOADING_CHANGED,
+  SIGNOUT_REQUESTED,
+  SIGNOUT_COMPLETED,
+  SET_ERROR,
+  LOAD_USER_DATA,
   LOAD_MENU_DETAILS_REQUESTED,
   LOAD_MENU_DETAILS_COMPLETED,
   CREATE_EMPTY_ORDER,
@@ -15,7 +16,6 @@ import {
   SEND_ORDER,
   LOAD_ORDERS_LIST_REQUESTED,
   LOAD_ORDERS_LIST_COMPLETED,
-  ERROR_OCCURRED,
   LOAD_ORDER_REQUESTED,
   LOAD_ORDER_COMPLETED,
   PRINT_REQUESTED,
@@ -23,31 +23,67 @@ import {
   RESET_ORDER,
   SET_ORDER_STATUS_REQUESTED,
   SET_ORDER_STATUS_COMPLETED,
-  SET_ORDER_NOTES
-} from "./types";
+  SET_ORDER_NOTES,
+  SIGNUP_REQUESTED,
+  SIGNUP_COMPLETED,
+  CONNECT_SIGNALR,
+  DISCONNECT_SIGNALR,
+  ADD_MENU_DETAIL,
+  MENU_DETAIL_AVAILABILITY_CHANGED
+} from "actions/types";
 
-export function loginRequested(loginData) {
-  return { type: LOGIN_REQUESTED, payload: loginData };
+const signalRAction = {
+  metadata: {
+    signalR: true
+  }
+};
+
+export function signinRequested({ username, password, rememberMe }) {
+  return {
+    type: SIGNIN_REQUESTED,
+    payload: { username, password, rememberMe }
+  };
 }
 
-export function loginCompleted(userData) {
-  return { type: LOGIN_COMPLETED, payload: userData };
+export function signinCompleted(userData) {
+  return { type: SIGNIN_COMPLETED, payload: userData };
 }
 
-export function logoutRequested() {
-  return { type: LOGOUT_REQUESTED };
+export function signoutRequested() {
+  return { type: SIGNOUT_REQUESTED };
 }
 
-export function logoutCompleted() {
-  return { type: LOGOUT_COMPLETED };
+export function signoutCompleted() {
+  return { type: SIGNOUT_COMPLETED };
+}
+
+export function signupRequested({
+  username,
+  password,
+  confirmPassword,
+  firstName,
+  lastName
+}) {
+  return {
+    type: SIGNUP_REQUESTED,
+    payload: { username, password, confirmPassword, firstName, lastName }
+  };
+}
+
+export function signupCompleted() {
+  return { type: SIGNUP_COMPLETED };
+}
+
+export function loadingChanged(loading, description) {
+  return { type: LOADING_CHANGED, payload: { loading, description } };
 }
 
 export function loadUserData() {
   return { type: LOAD_USER_DATA };
 }
 
-export function loadingChanged(loading, description) {
-  return { type: LOADING_CHANGED, payload: { loading, description } };
+export function setError(message) {
+  return { type: SET_ERROR, payload: message };
 }
 
 export function loadMenuDetailsRequested() {
@@ -93,10 +129,6 @@ export function loadOrdersListCompleted(orders) {
   return { type: LOAD_ORDERS_LIST_COMPLETED, payload: orders };
 }
 
-export function errorOccurred(errorMessage) {
-  return { type: ERROR_OCCURRED, payload: errorMessage };
-}
-
 export function loadOrderRequested(orderId) {
   return { type: LOAD_ORDER_REQUESTED, payload: orderId };
 }
@@ -118,7 +150,7 @@ export function resetOrder() {
 }
 
 export function setOrderStatusRequested(orderId, status) {
-  return { type: SET_ORDER_STATUS_REQUESTED, payload: { orderId, status }};
+  return { type: SET_ORDER_STATUS_REQUESTED, payload: { orderId, status } };
 }
 
 export function setOrderStatusCompleted(order) {
@@ -126,5 +158,20 @@ export function setOrderStatusCompleted(order) {
 }
 
 export function setOrderNotes(notes) {
-  return {type: SET_ORDER_NOTES, payload: notes}
+  return { type: SET_ORDER_NOTES, payload: notes };
+}
+
+export function addMenuDetail(menuDetail) {
+  return { type: ADD_MENU_DETAIL, payload: menuDetail, ...signalRAction };
+}
+
+export function menuDetailAvailabilityChanged(menuDetail) {
+  return { type: MENU_DETAIL_AVAILABILITY_CHANGED, payload: menuDetail };
+}
+export function connectSignalR(userData) {
+  return { type: CONNECT_SIGNALR, payload: userData, ...signalRAction };
+}
+
+export function disconnectSignalR() {
+  return { type: DISCONNECT_SIGNALR, ...signalRAction };
 }

@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 import cx from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
-import sidebarStyle from 'variables/styles/sidebarStyle.js';
+import sidebarStyle from 'variables/styles/sidebarStyle';
 import { withRouter } from 'react-router-dom';
 
 const signinRoute = routeName => routeName === 'signin';

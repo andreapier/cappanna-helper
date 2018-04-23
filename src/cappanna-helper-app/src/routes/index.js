@@ -5,10 +5,49 @@ import OrderPage from "views/Order";
 import CalculatorPage from "views/Calculator";
 import SignInPage from "views/SignIn";
 import SignOutPage from "views/SignOut";
-import { List, Add, Apps, Input } from "@material-ui/icons";
+import {
+  Dashboard,
+  Person,
+  ContentPaste,
+  LibraryBooks,
+  Notifications,
+  List,
+  Add,
+  Apps,
+  Input
+} from "@material-ui/icons";
 import OutputIcon from "components/OutputIcon";
+import DashboardPage from "views/Dashboard";
+import Users from "views/Users";
+import Menu from "views/Menu";
+import SignUpOkPage from "views/SignUpOk";
+import NotificationsPage from "views/Notifications";
 
 const appRoutes = [
+  {
+    path: "/dashboard",
+    sidebarName: "Dashboard",
+    icon: Dashboard,
+    component: DashboardPage,
+    protected: true,
+    name: "dashboard"
+  },
+  {
+    path: "/users",
+    sidebarName: "Utenti",
+    icon: Person,
+    component: Users,
+    protected: true,
+    name: "users"
+  },
+  {
+    path: "/menu",
+    sidebarName: "Menu",
+    icon: LibraryBooks,
+    component: Menu,
+    protected: true,
+    name: "menu"
+  },
   {
     path: "/orders",
     sidebarName: "Ordini",
@@ -45,12 +84,26 @@ const appRoutes = [
     name: "calculator"
   },
   {
+    path: "/notifications",
+    sidebarName: "Notifiche",
+    icon: Notifications,
+    component: NotificationsPage,
+    protected: true,
+    name: "notifications"
+  },
+  {
     path: "/signin",
     sidebarName: "Entra",
     icon: Input,
     component: SignInPage,
     protected: false,
     name: "signin"
+  },
+  {
+    path: "/users/signup/ok",
+    component: SignUpOkPage,
+    protected: true,
+    name: "signupOk"
   },
   {
     path: "/signout",

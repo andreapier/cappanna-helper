@@ -1,19 +1,21 @@
 import React from "react";
 import { Grid } from "material-ui";
-import { RegularCard, Table, ItemGrid } from "components";
+import RegularCard from "components/Cards/RegularCard";
+import Table from "components/Table";
+import ItemGrid from "components/Grid/ItemGrid";
 
 function OrderList({ ...props }) {
   return (
     <Grid container>
       <ItemGrid xs={12} sm={12} md={12}>
         <RegularCard
-            cardTitle="Simple Table"
-            cardSubtitle="Here is a subtitle for this table"
-            content={
+          cardTitle="Simple Table"
+          cardSubtitle="Here is a subtitle for this table"
+          content={
             <Table
-                tableHeaderColor="primary"
-                tableHead={["Name", "Country", "City", "Salary"]}
-                tableData={[
+              tableHeaderColor="primary"
+              tableHead={["Name", "Country", "City", "Salary"]}
+              tableData={[
                 ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
                 ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
                 ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],

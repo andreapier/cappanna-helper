@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "material-ui";
 
-import typographyStyle from "variables/styles/typographyStyle.js";
+import typographyStyle from "variables/styles/typographyStyle";
 
 function Warning({ ...props }) {
   const { classes, children } = props;

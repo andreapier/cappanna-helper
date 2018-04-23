@@ -3,7 +3,7 @@ import { withStyles, SnackbarContent as Snack, IconButton } from "material-ui";
 import { Close } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import cx from "classnames";
-import snackbarContentStyle from "variables/styles/snackbarContentStyle.js";
+import snackbarContentStyle from "variables/styles/snackbarContentStyle";
 
 function SnackbarContent({ ...props }) {
   const { classes, message, color, close, icon } = props;
@@ -13,12 +13,7 @@ function SnackbarContent({ ...props }) {
   });
   if (close !== undefined) {
     action = [
-      <IconButton
-        className={classes.iconButton}
-        key="close"
-        aria-label="Close"
-        color="inherit"
-      >
+      <IconButton className={classes.iconButton} key="close" aria-label="Close" color="inherit">
         <Close className={classes.close} />
       </IconButton>
     ];
