@@ -1,8 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import routes from "routes";
-
-const signinRoute = routes.filter(e => e.name === "signin")[0];
+import { signinRoute } from "routes";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route

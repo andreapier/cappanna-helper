@@ -23,6 +23,15 @@ import Menu from "views/Menu";
 import SignUpOkPage from "views/SignUpOk";
 import NotificationsPage from "views/Notifications";
 
+const signin = {
+  path: "/signin",
+  sidebarName: "Entra",
+  icon: Input,
+  component: SignInPage,
+  protected: false,
+  name: "signin"
+};
+
 const appRoutes = [
   {
     path: "/dashboard",
@@ -91,14 +100,7 @@ const appRoutes = [
     protected: true,
     name: "notifications"
   },
-  {
-    path: "/signin",
-    sidebarName: "Entra",
-    icon: Input,
-    component: SignInPage,
-    protected: false,
-    name: "signin"
-  },
+  signin,
   {
     path: "/users/signup/ok",
     component: SignUpOkPage,
@@ -119,5 +121,7 @@ const appRoutes = [
     to: "/orders"
   }
 ];
+
+export const signinRoute = signin;
 
 export default appRoutes;
