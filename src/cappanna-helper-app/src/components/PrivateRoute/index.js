@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { signinRoute } from "routes";
+import signinRoute from "routes/users/signin";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
