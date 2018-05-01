@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 
 namespace CappannaHelper.Api.Migrations
 {
@@ -18,7 +16,7 @@ namespace CappannaHelper.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-preview1-28290");
+                .HasAnnotation("ProductVersion", "2.1.0-preview2-30571");
 
             modelBuilder.Entity("CappannaHelper.Api.Identity.DataModel.ApplicationRole", b =>
                 {
@@ -258,12 +256,12 @@ namespace CappannaHelper.Api.Migrations
 
             modelBuilder.Entity("CappannaHelper.Api.Identity.DataModel.ApplicationUserRole", b =>
                 {
-                    b.HasOne("CappannaHelper.Api.Identity.DataModel.ApplicationRole")
+                    b.HasOne("CappannaHelper.Api.Identity.DataModel.ApplicationRole", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("CappannaHelper.Api.Identity.DataModel.ApplicationUser")
+                    b.HasOne("CappannaHelper.Api.Identity.DataModel.ApplicationUser", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

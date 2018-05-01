@@ -1,5 +1,6 @@
 using CappannaHelper.Api.Identity.ComponentModel.User;
 using CappannaHelper.Api.Identity.DataModel;
+using CappannaHelper.Api.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -13,6 +14,7 @@ namespace CappannaHelper.Api.Tests.Identity.ComponentModel.User
     public class ApplicationUserManagerTests
     {
         private readonly Mock<UserManager<ApplicationUser>> _manager;
+        private readonly Mock<ApplicationDbContext> _context;
 
         public ApplicationUserManagerTests()
         {
@@ -29,12 +31,20 @@ namespace CappannaHelper.Api.Tests.Identity.ComponentModel.User
                 new Mock<IServiceProvider>().Object,
                 new Mock<ILogger<UserManager<ApplicationUser>>>().Object
             );
+
+            _context = new Mock<ApplicationDbContext>();
         }
 
         [Fact]
         public void ThrowsIf_UserManager_IsNull()
         {
-            Assert.Throws<ArgumentNullException>(() => new ApplicationUserManager(null));
+            Assert.Throws<ArgumentNullException>(() => new ApplicationUserManager(null, _context.Object));
+        }
+
+        [Fact]
+        public void ThrowsIf_Context_IsNull()
+        {
+            Assert.Throws<ArgumentNullException>(() => new ApplicationUserManager(_manager.Object, null));
         }
 
         [Fact]
@@ -43,7 +53,7 @@ namespace CappannaHelper.Api.Tests.Identity.ComponentModel.User
             var called = false;
             
             _manager.Setup(m => m.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).Callback(() => called = true);
-            var userManager = new ApplicationUserManager(_manager.Object);
+            var userManager = new ApplicationUserManager(_manager.Object, _context.Object);
 
             try
             {
@@ -61,7 +71,7 @@ namespace CappannaHelper.Api.Tests.Identity.ComponentModel.User
             var called = false;
             
             _manager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Callback(() => called = true);
-            var userManager = new ApplicationUserManager(_manager.Object);
+            var userManager = new ApplicationUserManager(_manager.Object, _context.Object);
 
             try
             {

@@ -74,6 +74,7 @@ namespace CappannaHelper.Api.Controllers
                 return Ok(new SigninResultModel
                 {
                     Username = user.UserName,
+                    Roles = user.UserRoles.Select(ur => ur.Role).Select(r => r.Name),
                     Token = jwt
                 });
             }

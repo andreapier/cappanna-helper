@@ -124,10 +124,9 @@ namespace CappannaHelper.Api.Setup
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                errors.Add(e.Message);
             }
 
             return errors;
@@ -226,10 +225,9 @@ namespace CappannaHelper.Api.Setup
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                errors.Add(e.Message);
             }
 
             return errors;

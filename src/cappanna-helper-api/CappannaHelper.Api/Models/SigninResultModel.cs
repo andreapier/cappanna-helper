@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CappannaHelper.Api.Models
 {
@@ -9,5 +6,6 @@ namespace CappannaHelper.Api.Models
     {
         public string Username { get; set; }
         public string Token { get; set; }
+        public IEnumerable<string> Roles { get; set; } = new List<string>();
     }
 }
