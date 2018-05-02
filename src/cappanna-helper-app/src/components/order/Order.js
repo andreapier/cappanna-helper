@@ -1,12 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Card, CardHeader, CardText } from "material-ui/Card";
-import { padLeft } from "./../../utils/string";
+import { padLeft } from "utils/string";
 import ActionPrint from "@material-ui/icons/Print";
-import { printRequested, loadOrderRequested, setOrderStatusRequested } from "./../../actions/index";
+import {
+  printRequested,
+  loadOrderRequested,
+  setOrderStatusRequested
+} from "actions/index";
 import Dialog from "material-ui/Dialog";
 import Button from "material-ui/Button";
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from "material-ui/Toolbar";
+import {
+  Toolbar,
+  ToolbarGroup,
+  ToolbarSeparator,
+  ToolbarTitle
+} from "material-ui/Toolbar";
 import IconButton from "material-ui/IconButton";
 import NavigationRefresh from "@material-ui/icons/Refresh";
 //import DropDownMenu from "material-ui/DropDownMenu";
@@ -69,7 +78,10 @@ class Order extends Component {
   }
 
   render() {
-    const totalPrice = this.props.order.details.reduce((a, b) => a + b.item.price * b.quantity, 0);
+    const totalPrice = this.props.order.details.reduce(
+      (a, b) => a + b.item.price * b.quantity,
+      0
+    );
 
     return (
       <div>
@@ -87,7 +99,9 @@ class Order extends Component {
             <IconButton onClick={() => this.setState({ confirmPrint: true })}>
               <ActionPrint />
             </IconButton>
-            <IconButton onClick={() => this.props.loadOrderRequested(this.props.order.id)}>
+            <IconButton
+              onClick={() => this.props.loadOrderRequested(this.props.order.id)}
+            >
               <NavigationRefresh />
             </IconButton>
           </ToolbarGroup>
@@ -128,15 +142,27 @@ class Order extends Component {
         </Card>
 
         <Card>
-          <CardHeader title="Note" actAsExpander={true} showExpandableButton={true} />
+          <CardHeader
+            title="Note"
+            actAsExpander={true}
+            showExpandableButton={true}
+          />
           <CardText expandable={true}>
-            <TextField hintText="Note" multiLine={true} rows={4} rowsMax={10} value={this.props.order.notes || ""} />
+            <TextField
+              hintText="Note"
+              multiLine={true}
+              rows={4}
+              rowsMax={10}
+              value={this.props.order.notes || ""}
+            />
           </CardText>
         </Card>
 
         <Dialog modal={true} open={this.state.confirmPrint}>
           <div>
-            <div style={{ textAlign: "center" }}>Sei sicuro di voler ristampare l'ordine?</div>
+            <div style={{ textAlign: "center" }}>
+              Sei sicuro di voler ristampare l'ordine?
+            </div>
             <div
               style={{
                 ...containerStyle,
@@ -174,7 +200,8 @@ const mapDispatchToProps = dispatch => {
   return {
     printRequested: orderId => dispatch(printRequested(orderId)),
     loadOrderRequested: orderId => dispatch(loadOrderRequested(orderId)),
-    setOrderStatusRequested: (orderId, status) => dispatch(setOrderStatusRequested(orderId, status))
+    setOrderStatusRequested: (orderId, status) =>
+      dispatch(setOrderStatusRequested(orderId, status))
   };
 };
 

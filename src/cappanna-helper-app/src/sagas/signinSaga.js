@@ -1,12 +1,20 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "api";
-import { signinCompleted, setError, loadingChanged, createEmptyOrder, loadMenuDetailsCompleted } from "actions";
+import {
+  signinCompleted,
+  setError,
+  loadingChanged,
+  createEmptyOrder,
+  loadMenuDetailsCompleted
+} from "actions";
 import { SIGNIN_REQUESTED } from "actions/types";
 import localforage from "localforage";
 import history from "./../history";
 
 const saveToken = token =>
-  localforage.setItem("token", token).catch(err => console.log("Error saving token data in local storage", err));
+  localforage
+    .setItem("token", token)
+    .catch(err => console.log("Error saving token data in local storage", err));
 
 function* loadMenuDetails() {
   const api = new Api();
@@ -24,7 +32,7 @@ function* signin(action) {
     yield put(loadingChanged(true, "Caricamento menu..."));
     const menuDetails = yield loadMenuDetails();
     yield put(createEmptyOrder(menuDetails));
-    yield put(signinCompleted(userData.user));
+    yield put(signinCompleted(userData));
     history.push("/order/new");
   } catch (e) {
     yield put(setError(e.message));

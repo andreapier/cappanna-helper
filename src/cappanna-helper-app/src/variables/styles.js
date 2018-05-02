@@ -106,7 +106,6 @@ const defaultBoxShadow = {
 };
 
 export {
-  //variables
   drawerWidth,
   transition,
   container,

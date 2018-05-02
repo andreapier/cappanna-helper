@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import { Card, CardHeader } from "material-ui/Card";
-import { loadOrderRequested, loadOrdersListRequested, resetOrder, loadMenuDetailsRequested } from "./../../actions";
 import IconButton from "material-ui/IconButton";
 import ContentAdd from "@material-ui/icons/Add";
 import ActionDone from "@material-ui/icons/Done";
 import ActionSchedule from "@material-ui/icons/Schedule";
 import AvPlayArrow from "@material-ui/icons/PlayArrow";
 import NavigationRefresh from "@material-ui/icons/Refresh";
-import { Toolbar, ToolbarGroup } from "material-ui/Toolbar";
+import Toolbar from "material-ui/Toolbar";
 import ActionList from "@material-ui/icons/List";
+import { withStyles } from "material-ui";
 
 const containerStyle = {
   display: "flex",
@@ -18,16 +18,19 @@ const containerStyle = {
   flexDirection: "column"
 };
 
+const styles = {
+  root: {
+    flexGrow: 1
+  },
+  flex: {
+    flex: 1
+  }
+};
+
 class OrdersList extends Component {
   constructor(props) {
     super(props);
     this.renderOrder = this.renderOrder.bind(this);
-    this.goToNewOrder = this.goToNewOrder.bind(this);
-  }
-
-  goToNewOrder() {
-    this.props.resetOrder();
-    this.props.history.push("/order/new");
   }
 
   renderStatus(status) {
@@ -48,7 +51,11 @@ class OrdersList extends Component {
 
   renderOrder(order) {
     return (
-      <Card onClick={() => this.props.loadOrderRequested(order.id)} key={order.id} style={{ minWidth: "350px" }}>
+      <Card
+        onClick={() => this.props.loadOrderRequested(order.id)}
+        key={order.id}
+        style={{ minWidth: "350px" }}
+      >
         <CardHeader title={`Ordine N° ${order.id} (Tav. ${order.chTable})`}>
           {this.renderStatus(order.status)}
           <div>Cameriere: {order.createdById}</div>
@@ -60,40 +67,30 @@ class OrdersList extends Component {
   render() {
     return (
       <div>
-        <Toolbar>
-          <ToolbarGroup firstChild={true}>
-            <IconButton onClick={this.goToNewOrder}>
+        <div className={this.props.classes.root}>
+          <Toolbar>
+            <IconButton onClick={this.props.goToNewOrder}>
               <ContentAdd />
             </IconButton>
-            <IconButton onClick={() => this.props.loadOrdersListRequested()}>
+            <IconButton onClick={this.props.loadOrdersListRequested}>
               <NavigationRefresh />
             </IconButton>
-          </ToolbarGroup>
-          <ToolbarGroup>
-            <IconButton onClick={() => this.props.loadMenuDetailsRequested()}>
+            <span className={this.props.classes.flex} />
+            <IconButton onClick={this.props.loadMenuDetailsRequested}>
               <ActionList />
             </IconButton>
-          </ToolbarGroup>
-        </Toolbar>
-        <div style={containerStyle}>{this.props.orders.map(this.renderOrder)}</div>
+          </Toolbar>
+        </div>
+        <div style={containerStyle}>
+          {this.props.orders.map(this.renderOrder)}
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    orders: state.orders.orders
-  };
+OrdersList.propTypes = {
+  classes: PropTypes.object.isRequired
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    loadOrderRequested: orderId => dispatch(loadOrderRequested(orderId)),
-    loadOrdersListRequested: () => dispatch(loadOrdersListRequested()),
-    resetOrder: () => dispatch(resetOrder()),
-    loadMenuDetailsRequested: () => dispatch(loadMenuDetailsRequested())
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(OrdersList);
+export default withStyles(styles)(OrdersList);
