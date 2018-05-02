@@ -1,6 +1,8 @@
 ﻿using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Persistence;
+using CappannaHelper.Api.Persistence.Modelling;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,102 +28,14 @@ namespace CappannaHelper.Api.Setup
         {
             var errors = new List<string>();
 
-            errors.AddRange(await SetupAdminAsync());
-            errors.AddRange(await SetupWaiterAsync());
-
-            return errors;
-        }
-
-        private async Task<List<string>> SetupAdminAsync()
-        {
-            var errors = new List<string>();
-
-            //Create role
             try
             {
-                var role = new ApplicationRole
+                using (var transaction = await _context.Database.BeginTransactionAsync())
                 {
-                    Name = ApplicationRole.APPLICATION_ROLE_ADMIN
-                };
+                    await SetupUsersAsync(errors);
+                    await SetupMenuAsync(errors);
 
-                if (!await _roleManager.RoleExistsAsync(role.Name))
-                {
-                    var result = await _roleManager.CreateAsync(role);
-
-                    if (!result.Succeeded)
-                    {
-                        errors.AddRange(result.Errors.Select(e => e.Description));
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                errors.Add(e.Message);
-            }
-
-            //Create role claim
-            try
-            {
-                var role = await _roleManager.FindByNameAsync(ApplicationRole.APPLICATION_ROLE_ADMIN);
-                var claim = await _roleManager.GetClaimsAsync(role);
-
-                if (!claim.Any(c => c.Type == ClaimTypes.Name))
-                {
-                    var result = await _roleManager.AddClaimAsync(role, new Claim(ClaimTypes.Name, ApplicationRoleClaim.CLAIM_VALUE_ADMIN));
-
-                    if (!result.Succeeded)
-                    {
-                        errors.AddRange(result.Errors.Select(e => e.Description));
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                errors.Add(e.Message);
-            }
-
-            //Create user
-            try
-            {
-                var user = await _userManager.FindByNameAsync("admin");
-
-                if (user == null)
-                {
-                    user = new ApplicationUser
-                    {
-                        UserName = "admin",
-                        Email = "admin@cappannahelper.it",
-                        FirstName = "Admin",
-                        Surname = "Admin"
-                    };
-
-                    var result = await _userManager.CreateAsync(user, "admin12!");
-
-                    if (!result.Succeeded)
-                    {
-                        errors.AddRange(result.Errors.Select(e => e.Description));
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                errors.Add(e.Message);
-            }
-
-            //Create user role
-            try
-            {
-                var user = await _userManager.FindByNameAsync("admin");
-                var userIsInRole = await _userManager.IsInRoleAsync(user, ApplicationRole.APPLICATION_ROLE_ADMIN);
-
-                if (!userIsInRole)
-                {
-                    var result = await _userManager.AddToRoleAsync(user, ApplicationRole.APPLICATION_ROLE_ADMIN);
-
-                    if (!result.Succeeded)
-                    {
-                        errors.AddRange(result.Errors.Select(e => e.Description));
-                    }
+                    transaction.Commit();
                 }
             }
             catch (Exception e)
@@ -132,22 +46,186 @@ namespace CappannaHelper.Api.Setup
             return errors;
         }
 
-        public async Task<List<string>> SetupWaiterAsync()
+        private async Task SetupUsersAsync(List<string> errors)
         {
-            var errors = new List<string>();
+            await SetupAdminAsync(errors);
+            await SetupWaiterAsync(errors);
+        }
 
-            //Create role
+        private async Task SetupAdminAsync(List<string> errors)
+        {
+            await SetupRoleAsync(ApplicationRole.APPLICATION_ROLE_ADMIN, errors);
+            await SetupRoleClaimAsync(ApplicationRole.APPLICATION_ROLE_ADMIN, ClaimTypes.Name, ApplicationRoleClaim.CLAIM_VALUE_ADMIN, errors);
+            await SetupUserAsync("admin", "admin@cappannahelper.it", "Admin", "Admin", "admin12!", errors);
+            await SetupUserRoleAsync("admin", ApplicationRole.APPLICATION_ROLE_ADMIN, errors);
+        }
+
+        private async Task SetupWaiterAsync(List<string> errors)
+        {
+            await SetupRoleAsync(ApplicationRole.APPLICATION_ROLE_WAITER, errors);
+            await SetupRoleClaimAsync(ApplicationRole.APPLICATION_ROLE_WAITER, ClaimTypes.Name, ApplicationRoleClaim.CLAIM_VALUE_WAITER, errors);
+            await SetupUserAsync("waiter", "waiter@cappannahelper.it", "Waiter", "Waiter", "waiter12!", errors);
+            await SetupUserRoleAsync("waiter", ApplicationRole.APPLICATION_ROLE_WAITER, errors);
+        }
+
+        private async Task SetupMenuAsync(List<string> errors)
+        {
+            await SetupDishesAsync(errors);
+            await SetupDrinksAsync(errors);
+
             try
             {
-                var role = new ApplicationRole
-                {
-                    Name = ApplicationRole.APPLICATION_ROLE_WAITER
-                };
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                errors.Add(e.Message);
+            }
+        }
 
-                if (!await _roleManager.RoleExistsAsync(role.Name))
-                {
+        private async Task SetupDishesAsync(List<string> errors)
+        {
+            await SetupAppetizersAsync(errors);
+            await SetupFirstDishesAsync(errors);
+            await SetupSecondDishesAsync(errors);
+            await SetupSideDishesAsync(errors);
+            await SetupDessertDishesAsync(errors);
+        }
 
-                    var result = await _roleManager.CreateAsync(role);
+        private async Task SetupAppetizersAsync(List<string> errors)
+        {
+            await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Insalata di mare", 5.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Alici marinate", 5.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Degustazione di antipasti", 9.0M, errors);
+        }
+
+        private async Task SetupFirstDishesAsync(List<string> errors)
+        {
+            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Chitarrine dell'Adriatico", 8.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Gnocchi ai frutti di mare", 8.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Pennette alla vodka", 7.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Gnocchi alla papera", 7.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Polenta con sugo di papera", 6.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Polenta con sugo di pesce", 7.0M, errors);
+        }
+
+        private async Task SetupSecondDishesAsync(List<string> errors)
+        {
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Fritto calamari e gamberi", 10.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Seppie e piselli", 9.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Sardoncini scottadito", 6.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Stinco al forno", 6.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Piadina con prosciutto", 3.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Cresciola di polenta", 3.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Panino con salsiccia", 4.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Panino con hamburger", 4.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Panino con bistecca", 4.5M, errors);
+        }
+
+        private async Task SetupSideDishesAsync(List<string> errors)
+        {
+            await SetupMenuDetailAsync(MenuDetail.SIDE_DISH, "Olive all'ascolana", 3.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SIDE_DISH, "Cremini fritti", 3.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SIDE_DISH, "Patatine fritte", 3.0M, errors);
+        }
+
+        private async Task SetupDessertDishesAsync(List<string> errors)
+        {
+            await SetupMenuDetailAsync(MenuDetail.DESSERT_DISH, "Rose del deserto", 2.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.DESSERT_DISH, "Salame Dolce", 2.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.DESSERT_DISH, "Ciambelline all'anice", 2.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.DESSERT_DISH, "Degustazione Dolci", 2.0M, errors);
+        }
+
+        private async Task SetupDrinksAsync(List<string> errors)
+        {
+            await SetupWhiteWinesAsync(errors);
+            await SetupRedWinesAsync(errors);
+            await SetupWaterAsync(errors);
+            await SetupDrinkDetailsAsync(errors);
+        }
+
+        private async Task SetupWhiteWinesAsync(List<string> errors)
+        {
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Vino al bicchiere (Verdicchio)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Verdicchio doc 1 L", 5.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Anfora verdicchio doc", 6.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Bersò (frizzante)", 6.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Lyricus", 6.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Cuapro", 10.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Cuprese", 10.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Tufico", 12.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "San Michele", 14.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Manciano", 9.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Il Priore", 13.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Salerna", 10.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Capovolto", 13.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Fonte Cherubini", 11.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Oinochoe", 10.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Brecciole", 10.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Spumante 'Cuvee Tradition'", 10.0M, errors);
+        }
+
+        private async Task SetupRedWinesAsync(List<string> errors)
+        {
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Vino al bicchiere (Lacrima)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Vino rosso doc 1 L", 5.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Lyricus (Rosso Piceno)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Tornamagno (Rosso IGT)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Superbo (Lacrima Morro d'Alba)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Ghirola (Rosso Piceno)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Nerium (Rosso Piceno)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Visciola (bicchiere)", 2.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Visciola (bottiglia 0,5L)", 15.0M, errors);
+        }
+
+        private async Task SetupWaterAsync(List<string> errors)
+        {
+            await SetupMenuDetailAsync(MenuDetail.WATER, "Acqua mineralizzata 1L (naturale)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WATER, "Acqua mineralizzata 1L (frizzante)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WATER, "Acqua in bottiglia 0,5L (naturale)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WATER, "Acqua in bottiglia 0,5L (frizzante)", 1.0M, errors);
+        }
+
+        private async Task SetupDrinkDetailsAsync(List<string> errors)
+        {
+            await SetupMenuDetailAsync(MenuDetail.DRINK, "Coca cola", 2.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.DRINK, "Fanta", 2.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.DRINK, "Sprite", 2.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.DRINK, "Birra (bottiglia)", 2.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.DRINK, "Caffè", 1.0M, errors);
+        }
+
+        private async Task SetupMenuDetailAsync(string group, string name, decimal price, List<string> errors)
+        {
+            try
+            {
+                if (!await _context.MenuDetails.AnyAsync(d => d.Name == name && d.Group == group))
+                {
+                    await _context.AddAsync(new MenuDetail
+                    {
+                        Group = group,
+                        Name = name,
+                        Price = price
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                errors.Add(e.Message);
+            }
+        }
+
+        private async Task SetupRoleAsync(string name, List<string> errors)
+        {
+            try
+            {
+                if (!await _roleManager.RoleExistsAsync(name))
+                {
+                    var result = await _roleManager.CreateAsync(new ApplicationRole
+                    {
+                        Name = name
+                    });
 
                     if (!result.Succeeded)
                     {
@@ -159,16 +237,18 @@ namespace CappannaHelper.Api.Setup
             {
                 errors.Add(e.Message);
             }
+        }
 
-            //Create role claim
+        private async Task SetupRoleClaimAsync(string roleName, string claimName, string claimValue, List<string> errors)
+        {
             try
             {
-                var role = await _roleManager.FindByNameAsync(ApplicationRole.APPLICATION_ROLE_WAITER);
+                var role = await _roleManager.FindByNameAsync(roleName);
                 var claim = await _roleManager.GetClaimsAsync(role);
 
-                if (!claim.Any(c => c.Type == ClaimTypes.Name))
+                if (!claim.Any(c => c.Type == claimName))
                 {
-                    var result = await _roleManager.AddClaimAsync(role, new Claim(ClaimTypes.Name, ApplicationRoleClaim.CLAIM_VALUE_WAITER));
+                    var result = await _roleManager.AddClaimAsync(role, new Claim(claimName, claimValue));
 
                     if (!result.Succeeded)
                     {
@@ -180,23 +260,25 @@ namespace CappannaHelper.Api.Setup
             {
                 errors.Add(e.Message);
             }
+        }
 
-            //Create user
+        private async Task SetupUserAsync(string username, string email, string firstName, string lastName, string password, List<string> errors)
+        {
             try
             {
-                var user = await _userManager.FindByNameAsync("waiter");
+                var user = await _userManager.FindByNameAsync(username);
 
                 if (user == null)
                 {
                     user = new ApplicationUser
                     {
-                        UserName = "waiter",
-                        Email = "waiter@cappannahelper.it",
-                        FirstName = "Waiter",
-                        Surname = "Waiter"
+                        UserName = username,
+                        Email = email,
+                        FirstName = firstName,
+                        Surname = lastName
                     };
 
-                    var result = await _userManager.CreateAsync(user, "waiter12!");
+                    var result = await _userManager.CreateAsync(user, password);
 
                     if (!result.Succeeded)
                     {
@@ -208,16 +290,18 @@ namespace CappannaHelper.Api.Setup
             {
                 errors.Add(e.Message);
             }
+        }
 
-            //Create user role
+        private async Task SetupUserRoleAsync(string username, string roleName, List<string> errors)
+        {
             try
             {
-                var user = await _userManager.FindByNameAsync("waiter");
-                var userIsInRole = await _userManager.IsInRoleAsync(user, ApplicationRole.APPLICATION_ROLE_WAITER);
+                var user = await _userManager.FindByNameAsync(username);
+                var userIsInRole = await _userManager.IsInRoleAsync(user, roleName);
 
                 if (!userIsInRole)
                 {
-                    var result = await _userManager.AddToRoleAsync(user, ApplicationRole.APPLICATION_ROLE_WAITER);
+                    var result = await _userManager.AddToRoleAsync(user, roleName);
 
                     if (!result.Succeeded)
                     {
@@ -229,8 +313,6 @@ namespace CappannaHelper.Api.Setup
             {
                 errors.Add(e.Message);
             }
-
-            return errors;
         }
     }
 }

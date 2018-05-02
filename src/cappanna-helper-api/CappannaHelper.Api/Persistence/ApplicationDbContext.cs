@@ -1,5 +1,6 @@
 using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Identity.Extensions;
+using CappannaHelper.Api.Persistence.Mapping;
 using CappannaHelper.Api.Persistence.Modelling;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -24,10 +25,8 @@ namespace CappannaHelper.Api.Persistence
             base.OnModelCreating(modelBuilder);
 
             modelBuilder
-                .MapIdentityEntities();
-            //.MapOrderEntities();
-
-            //modelBuilder.Seed();
+                .MapIdentityEntities()
+                .MapOrderEntities();
         }
     }
 }
