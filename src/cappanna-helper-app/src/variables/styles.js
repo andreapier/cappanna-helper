@@ -105,6 +105,15 @@ const defaultBoxShadow = {
   transition: "all 150ms ease 0s"
 };
 
+const flex = {
+  root: {
+    flexGrow: 1
+  },
+  flex: {
+    flex: 1
+  }
+};
+
 export {
   drawerWidth,
   transition,
@@ -131,5 +140,6 @@ export {
   purpleCardHeader,
   cardActions,
   cardHeader,
-  defaultBoxShadow
+  defaultBoxShadow,
+  flex
 };

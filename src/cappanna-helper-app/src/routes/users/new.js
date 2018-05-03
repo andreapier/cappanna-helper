@@ -7,7 +7,8 @@ const users = {
   icon: Person,
   component: Users,
   protected: true,
-  name: "users"
+  name: "users",
+  headerTitle: "Nuovo utente"
 };
 
 export default users;

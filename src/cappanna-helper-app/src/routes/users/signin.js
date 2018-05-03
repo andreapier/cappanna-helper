@@ -7,7 +7,8 @@ const signin = {
   icon: Input,
   component: SignInPage,
   protected: false,
-  name: "signin"
+  name: "signin",
+  headerTitle: "Entra"
 };
 
 export default signin;

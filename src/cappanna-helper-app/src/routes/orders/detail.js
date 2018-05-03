@@ -4,7 +4,8 @@ const order = {
   path: "/order/:id",
   component: OrderPage,
   protected: true,
-  name: "order"
+  name: "order",
+  headerTitle: "Ordine"
 };
 
 export default order;

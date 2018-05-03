@@ -7,7 +7,8 @@ const newOrder = {
   icon: Add,
   component: NewOrderPage,
   protected: true,
-  name: "order-new"
+  name: "order-new",
+  headerTitle: "Nuovo ordine"
 };
 
 export default newOrder;

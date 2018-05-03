@@ -10,21 +10,13 @@ import NavigationRefresh from "@material-ui/icons/Refresh";
 import Toolbar from "material-ui/Toolbar";
 import ActionList from "@material-ui/icons/List";
 import { withStyles } from "material-ui";
+import { flex } from "variables/styles";
 
 const containerStyle = {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
   flexDirection: "column"
-};
-
-const styles = {
-  root: {
-    flexGrow: 1
-  },
-  flex: {
-    flex: 1
-  }
 };
 
 class OrdersList extends Component {
@@ -93,4 +85,4 @@ OrdersList.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(OrdersList);
+export default withStyles(flex)(OrdersList);

@@ -6,7 +6,8 @@ const calculator = {
   sidebarName: "Calcolatrice",
   icon: Apps,
   component: CalculatorPage,
-  name: "calculator"
+  name: "calculator",
+  headerTitle: "Calcolatrice"
 };
 
 export default calculator;

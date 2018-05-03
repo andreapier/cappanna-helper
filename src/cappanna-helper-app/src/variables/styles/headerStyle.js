@@ -1,9 +1,4 @@
-import {
-  container,
-  defaultFont,
-  primaryColor,
-  defaultBoxShadow
-} from "variables/styles";
+import { defaultFont, flex } from "variables/styles";
 
 const headerStyle = theme => ({
   appBar: {
@@ -27,10 +22,7 @@ const headerStyle = theme => ({
     minHeight: "50px",
     display: "block"
   },
-  container,
-  flex: {
-    flex: 1
-  },
+  flex,
   title: {
     ...defaultFont,
     lineHeight: "30px",
@@ -45,11 +37,6 @@ const headerStyle = theme => ({
   },
   appResponsive: {
     top: "8px"
-  },
-  primary: {
-    backgroundColor: primaryColor,
-    color: "#FFFFFF",
-    ...defaultBoxShadow
   }
 });
 

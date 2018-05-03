@@ -7,7 +7,8 @@ const signout = {
   icon: OutputIcon,
   component: SignOutPage,
   protected: true,
-  name: "signout"
+  name: "signout",
+  headerTitle: "Bevi poco"
 };
 
 export default signout;

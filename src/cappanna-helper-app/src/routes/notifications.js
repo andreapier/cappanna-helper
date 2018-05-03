@@ -7,7 +7,8 @@ const notifications = {
   icon: Notifications,
   component: NotificationsPage,
   protected: true,
-  name: "notifications"
+  name: "notifications",
+  headerTitle: "Notifiche"
 };
 
 export default notifications;

@@ -1,37 +1,42 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Menu } from "@material-ui/icons";
-import { withStyles, AppBar, Toolbar, IconButton, Hidden } from "material-ui";
-import cx from "classnames";
+import {
+  withStyles,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Hidden,
+  Typography
+} from "material-ui";
 import headerStyle from "variables/styles/headerStyle";
 
 function Header({ ...props }) {
-  const { classes, color } = props;
-  const appBarClasses = cx({
-    [" " + classes[color]]: color
-  });
+  const { classes, title, handleDrawerToggle } = props;
 
   return (
-    <AppBar className={classes.appBar + appBarClasses}>
-      <Hidden mdUp>
-        <Toolbar className={classes.container}>
+    <AppBar className={classes.appBar}>
+      <Toolbar>
+        <Hidden mdUp>
           <IconButton
             className={classes.appResponsive}
             color="inherit"
             aria-label="open drawer"
-            onClick={props.handleDrawerToggle}
+            onClick={handleDrawerToggle}
           >
             <Menu />
           </IconButton>
-        </Toolbar>
-      </Hidden>
+        </Hidden>
+        <Typography className={classes.title}>{title}</Typography>
+      </Toolbar>
     </AppBar>
   );
 }
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
-  color: PropTypes.oneOf(["primary", "info", "success", "warning", "danger"])
+  handleDrawerToggle: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired
 };
 
 export default withStyles(headerStyle)(Header);

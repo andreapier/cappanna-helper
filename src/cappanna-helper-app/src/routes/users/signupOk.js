@@ -4,7 +4,8 @@ const signupOk = {
   path: "/users/signup/ok",
   component: SignUpOkPage,
   protected: true,
-  name: "signupOk"
+  name: "signupOk",
+  headerTitle: "Esito registrazione"
 };
 
 export default signupOk;

@@ -7,7 +7,8 @@ const orders = {
   icon: List,
   component: OrderListPage,
   protected: true,
-  name: "orders"
+  name: "orders",
+  headerTitle: "Ordini"
 };
 
 export default orders;

@@ -7,7 +7,8 @@ const dashboard = {
   icon: Dashboard,
   component: DashboardPage,
   protected: true,
-  name: "dashboard"
+  name: "dashboard",
+  headerTitle: "Dashboard"
 };
 
 export default dashboard;

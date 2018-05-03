@@ -7,7 +7,8 @@ const menu = {
   icon: LibraryBooks,
   component: Menu,
   protected: true,
-  name: "menu"
+  name: "menu",
+  headerTitle: "Menu"
 };
 
 export default menu;

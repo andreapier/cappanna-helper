@@ -4,7 +4,8 @@ const confirmOrder = {
   path: "/order/confirm",
   component: OrderConfirmationPage,
   protected: true,
-  name: "order-confirm"
+  name: "order-confirm",
+  headerTitle: "Conferma ordine"
 };
 
 export default confirmOrder;

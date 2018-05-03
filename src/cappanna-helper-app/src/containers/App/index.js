@@ -1,4 +1,3 @@
-import Header from "components/Header";
 import { withStyles } from "material-ui";
 import appRoutes from "routes";
 import appStyle from "variables/styles/appStyle";
@@ -12,6 +11,7 @@ import ConnectedPrivateRoute from "containers/ConnectedPrivateRoute";
 import ConnectedSidebar from "containers/ConnectedSidebar";
 import ConnectedWaitDialog from "containers/ConnectedWaitDialog";
 import ConnectedErrorSnackbar from "containers/ConnectedErrorSnackbar";
+import RoutingAwareHeader from "containers/RoutingAwareHeader";
 
 const switchRoutes = (
   <Switch>
@@ -76,10 +76,9 @@ class App extends React.Component {
               {...rest}
             />
             <div className={classes.mainPanel} ref="mainPanel">
-              <Header
-                routes={appRoutes}
+              <RoutingAwareHeader
                 handleDrawerToggle={this.handleDrawerToggle}
-                {...rest}
+                routes={appRoutes}
               />
               <div className={classes.content}>
                 <div className={classes.container}>{switchRoutes}</div>
