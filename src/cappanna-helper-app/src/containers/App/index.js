@@ -12,6 +12,7 @@ import ConnectedSidebar from "containers/ConnectedSidebar";
 import ConnectedWaitDialog from "containers/ConnectedWaitDialog";
 import ConnectedErrorSnackbar from "containers/ConnectedErrorSnackbar";
 import RoutingAwareHeader from "containers/RoutingAwareHeader";
+import CssBaseline from "material-ui/CssBaseline";
 
 const switchRoutes = (
   <Switch>
@@ -64,6 +65,7 @@ class App extends React.Component {
       <Provider store={this.props.store}>
         <Router history={history}>
           <div className={classes.wrapper}>
+            <CssBaseline />
             <ConnectedWaitDialog />
             <ConnectedErrorSnackbar />
             <ConnectedSidebar

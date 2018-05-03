@@ -15,26 +15,32 @@ function Header({ ...props }) {
   const { classes, title, handleDrawerToggle } = props;
 
   return (
-    <AppBar className={classes.appBar}>
-      <Toolbar>
-        <Hidden mdUp>
-          <IconButton
-            className={classes.appResponsive}
+    <div className={classes.flex.root}>
+      <AppBar position="static" className={classes.appBar}>
+        <Toolbar>
+          <Hidden mdUp>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerToggle}
+            >
+              <Menu />
+            </IconButton>
+          </Hidden>
+          <Typography
+            variant="title"
             color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerToggle}
+            className={classes.flex.flex}
           >
-            <Menu />
-          </IconButton>
-        </Hidden>
-        <Typography className={classes.title}>{title}</Typography>
-      </Toolbar>
-    </AppBar>
+            {title}
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 }
 
 Header.propTypes = {
-  classes: PropTypes.object.isRequired,
   handleDrawerToggle: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired
 };

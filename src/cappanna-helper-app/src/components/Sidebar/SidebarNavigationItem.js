@@ -32,11 +32,8 @@ const SidebarNavigationItem = ({
     return null;
   }
 
-  const listItemClasses = cx({
-    [" " + classes[color]]: isRouteActive(routeData.path, location)
-  });
-  const whiteFontClasses = cx({
-    [" " + classes.whiteFont]: isRouteActive(routeData.path, location)
+  const selectedItemLinkClasses = cx({
+    [" " + classes.selectedItemLink]: isRouteActive(routeData.path, location)
   });
 
   return (
@@ -45,13 +42,13 @@ const SidebarNavigationItem = ({
       className={classes.item}
       activeClassName="active"
     >
-      <ListItem button className={classes.itemLink + listItemClasses}>
-        <ListItemIcon className={classes.itemIcon + whiteFontClasses}>
+      <ListItem button className={classes.itemLink + selectedItemLinkClasses}>
+        <ListItemIcon className={classes.itemIcon}>
           <routeData.icon />
         </ListItemIcon>
         <ListItemText
           primary={routeData.sidebarName}
-          className={classes.itemText + whiteFontClasses}
+          className={classes.itemText}
           disableTypography
         />
       </ListItem>

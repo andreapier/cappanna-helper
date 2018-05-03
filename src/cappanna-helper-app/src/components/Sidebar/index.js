@@ -1,9 +1,9 @@
 import { Drawer, Hidden, List, withStyles } from "material-ui";
-import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import React from "react";
 import sidebarStyle from "variables/styles/sidebarStyle";
 import SidebarNavigationItem from "./SidebarNavigationItem";
+import Logo from "./Logo";
 
 const Sidebar = ({ ...props }) => {
   const { classes, logo, logoText, routes, user } = props;
@@ -15,17 +15,6 @@ const Sidebar = ({ ...props }) => {
         return <SidebarNavigationItem {...itemProps} key={key} />;
       })}
     </List>
-  );
-
-  const brand = (
-    <div className={classes.logo}>
-      <NavLink to="dashboard" className={classes.logoLink}>
-        <div className={classes.logoImage}>
-          <img src={logo} alt="logo" className={classes.img} />
-        </div>
-        {logoText}
-      </NavLink>
-    </div>
   );
 
   return (
@@ -43,7 +32,7 @@ const Sidebar = ({ ...props }) => {
             keepMounted: true
           }}
         >
-          {brand}
+          <Logo logo={logo} logoText={logoText} />
         </Drawer>
       </Hidden>
       <Hidden smDown>
@@ -55,7 +44,7 @@ const Sidebar = ({ ...props }) => {
             paper: classes.drawerPaper
           }}
         >
-          {brand}
+          <Logo logo={logo} logoText={logoText} />
           <div className={classes.sidebarWrapper}>{links}</div>
         </Drawer>
       </Hidden>
