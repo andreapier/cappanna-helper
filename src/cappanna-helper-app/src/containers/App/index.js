@@ -2,7 +2,6 @@ import Header from "components/Header";
 import { withStyles } from "material-ui";
 import appRoutes from "routes";
 import appStyle from "variables/styles/appStyle";
-import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/logo.png";
 import PropTypes from "prop-types";
 import React from "react";
@@ -71,7 +70,6 @@ class App extends React.Component {
               routes={appRoutes}
               logoText={"Cappanna Helper"}
               logo={logo}
-              image={image}
               handleDrawerToggle={this.handleDrawerToggle}
               open={this.state.mobileOpen}
               color="blue"

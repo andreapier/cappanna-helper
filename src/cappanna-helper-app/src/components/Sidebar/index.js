@@ -6,7 +6,7 @@ import sidebarStyle from "variables/styles/sidebarStyle";
 import SidebarNavigationItem from "./SidebarNavigationItem";
 
 const Sidebar = ({ ...props }) => {
-  const { classes, logo, image, logoText, routes, user } = props;
+  const { classes, logo, logoText, routes, user } = props;
   const links = (
     <List className={classes.list}>
       {routes.map((routeData, key) => {
@@ -44,12 +44,6 @@ const Sidebar = ({ ...props }) => {
           }}
         >
           {brand}
-          {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
-            />
-          ) : null}
         </Drawer>
       </Hidden>
       <Hidden smDown>
@@ -63,12 +57,6 @@ const Sidebar = ({ ...props }) => {
         >
           {brand}
           <div className={classes.sidebarWrapper}>{links}</div>
-          {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
-            />
-          ) : null}
         </Drawer>
       </Hidden>
     </div>
