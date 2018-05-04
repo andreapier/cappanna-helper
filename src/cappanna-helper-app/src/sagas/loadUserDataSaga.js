@@ -12,11 +12,12 @@ import localforage from "localforage";
 import Api from "api";
 import history from "./../history";
 
-const loadToken = () =>
+const loadUserDataFromStorage = () =>
   localforage
-    .getItem("token")
-    .then(token => token)
-    .catch(err => console.log("Error loading token from local storage", err));
+    .getItem("userData")
+    .catch(err =>
+      console.log("Error loading user data from local storage", err)
+    );
 
 function* loadMenuDetails() {
   const api = new Api();
@@ -28,14 +29,14 @@ function* loadMenuDetails() {
 function* loadUserData() {
   try {
     yield put(loadingChanged(true, "Caricamento dati utente..."));
-    const token = yield loadToken();
+    const userData = yield loadUserDataFromStorage();
 
-    if (!token) {
+    if (!userData) {
       return;
     }
 
     const api = new Api();
-    const userData = yield call(api.signinByToken, token);
+    api.signinByToken(userData);
     yield put(loadingChanged(true, "Caricamento menu..."));
     const menuDetails = yield loadMenuDetails();
     yield put(createEmptyOrder(menuDetails));

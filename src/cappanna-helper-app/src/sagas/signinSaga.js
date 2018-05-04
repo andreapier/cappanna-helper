@@ -11,10 +11,10 @@ import { SIGNIN_REQUESTED } from "actions/types";
 import localforage from "localforage";
 import history from "./../history";
 
-const saveToken = token =>
+const saveUserData = userData =>
   localforage
-    .setItem("token", token)
-    .catch(err => console.log("Error saving token data in local storage", err));
+    .setItem("userData", userData)
+    .catch(err => console.log("Error saving user data in local storage", err));
 
 function* loadMenuDetails() {
   const api = new Api();
@@ -28,7 +28,7 @@ function* signin(action) {
     yield put(loadingChanged(true, "Login in corso..."));
     const api = new Api();
     const userData = yield call(api.signin, action.payload);
-    yield saveToken(userData.token.value);
+    yield saveUserData(userData);
     yield put(loadingChanged(true, "Caricamento menu..."));
     const menuDetails = yield loadMenuDetails();
     yield put(createEmptyOrder(menuDetails));

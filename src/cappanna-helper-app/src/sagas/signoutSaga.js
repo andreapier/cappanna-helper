@@ -5,8 +5,12 @@ import { SIGNOUT_REQUESTED } from "actions/types";
 import localforage from "localforage";
 import history from "./../history";
 
-const deleteToken = () =>
-  localforage.removeItem("token").catch(err => console.log("Error removing token from local storage", err));
+const deleteUserData = () =>
+  localforage
+    .removeItem("userData")
+    .catch(err =>
+      console.log("Error removing user data from local storage", err)
+    );
 
 function* signout(action) {
   try {
@@ -18,7 +22,7 @@ function* signout(action) {
   }
 
   try {
-    yield deleteToken();
+    yield deleteUserData();
     yield put(signoutCompleted());
   } catch (e) {
     yield put(setError(e.message));

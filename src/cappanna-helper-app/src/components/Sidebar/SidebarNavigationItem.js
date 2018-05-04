@@ -24,7 +24,7 @@ const SidebarNavigationItem = ({
     return null;
   }
 
-  if (routeData.protected && !user) {
+  if (routeData.protected && !user.token) {
     return null;
   }
 

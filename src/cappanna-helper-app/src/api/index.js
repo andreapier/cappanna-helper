@@ -71,6 +71,10 @@ class Api {
     });
   }
 
+  signinByToken(userData) {
+    token = userData.token;
+  }
+
   signout() {
     return post(SIGNOUT).then(json => {
       token = undefined;
