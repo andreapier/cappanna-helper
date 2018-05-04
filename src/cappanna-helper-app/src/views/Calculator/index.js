@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import CalculatorComponent from "components/Calculator";
+import Calculator from "components/Calculator";
 
-class Calculator extends Component {
+class CalculatorPage extends Component {
   render() {
-    return <CalculatorComponent />;
+    return <Calculator />;
   }
 }
 
-export default Calculator;
+export default CalculatorPage;
