@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setOrderTable, setOrderTableCategory, setOrderSeats } from "./../../actions";
+import {
+  setOrderTable,
+  setOrderTableCategory,
+  setOrderSeats
+} from "./../../actions";
 import Button from "material-ui/Button";
 import TextField from "material-ui/TextField";
 import ContentSend from "@material-ui/icons/Send";
@@ -39,7 +43,10 @@ class OrderFormHeader extends Component {
 
   render() {
     const canConfirmOrder =
-      this.props.totalPrice > 0 && this.props.chTable > 0 && this.props.seats > 0 && this.props.tableCategory;
+      this.props.totalPrice > 0 &&
+      this.props.chTable > 0 &&
+      this.props.seats > 0 &&
+      this.props.tableCategory;
 
     return (
       <div>
@@ -48,35 +55,46 @@ class OrderFormHeader extends Component {
             <TextField
               name="table"
               type="number"
-              floatingLabelText="Tav."
+              label="Tav."
               className="CreateOrderForm-TextField"
               style={textFieldStyle}
               value={this.props.chTable}
               onChange={this.setOrderTable}
+              InputLabelProps={{
+                shrink: true
+              }}
             />
           </div>
           <div>
             <TextField
               name="tableCategory"
-              floatingLabelText="Cat."
+              label="Cat."
               className="CreateOrderForm-TextField"
               style={textFieldStyle}
               value={this.props.tableCategory}
               onChange={e => this.props.setOrderTableCategory(e.target.value)}
+              InputLabelProps={{
+                shrink: true
+              }}
             />
           </div>
           <div>
             <TextField
               name="personNumber"
               type="number"
-              floatingLabelText="N° pers"
+              label="N° pers"
               className="CreateOrderForm-TextField"
               style={textFieldStyle}
               value={this.props.seats}
               onChange={this.setOrderSeats}
+              InputLabelProps={{
+                shrink: true
+              }}
             />
           </div>
-          <div style={textFieldStyle}>Tot: € {this.props.totalPrice.toFixed(2)}</div>
+          <div style={textFieldStyle}>
+            Tot: € {this.props.totalPrice.toFixed(2)}
+          </div>
           <div>
             <Button
               variant="fab"
@@ -107,9 +125,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setOrderTable: table => dispatch(setOrderTable(table)),
-    setOrderTableCategory: tableCategory => dispatch(setOrderTableCategory(tableCategory)),
+    setOrderTableCategory: tableCategory =>
+      dispatch(setOrderTableCategory(tableCategory)),
     setOrderSeats: seats => dispatch(setOrderSeats(seats))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(OrderFormHeader));
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withRouter(OrderFormHeader)
+);

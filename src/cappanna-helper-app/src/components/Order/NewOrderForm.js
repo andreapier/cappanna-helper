@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import OrderFormHeader from "./OrderFormHeader";
 import OrderFormBody from "./OrderFormBody";
 
-class OrderForm extends Component {
+class NewOrderForm extends Component {
   render() {
     return (
       <div>
@@ -13,4 +13,4 @@ class OrderForm extends Component {
   }
 }
 
-export default OrderForm;
+export default NewOrderForm;

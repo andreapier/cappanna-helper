@@ -1,8 +1,8 @@
 import React from "react";
-import NewOrder from "components/Order/Order";
+import NewOrderForm from "components/Order/NewOrderForm";
 
 const NewOrderPage = ({ ...props }) => {
-  return <NewOrder />;
+  return <NewOrderForm />;
 };
 
 export default NewOrderPage;

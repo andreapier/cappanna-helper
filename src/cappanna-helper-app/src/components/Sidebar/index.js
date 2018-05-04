@@ -21,8 +21,6 @@ const Sidebar = ({ ...props }) => {
     <div>
       <Hidden mdUp>
         <Drawer
-          variant="temporary"
-          anchor="right"
           open={props.open}
           classes={{
             paper: classes.drawerPaper
@@ -33,11 +31,11 @@ const Sidebar = ({ ...props }) => {
           }}
         >
           <Logo logo={logo} logoText={logoText} />
+          <div className={classes.sidebarWrapper}>{links}</div>
         </Drawer>
       </Hidden>
       <Hidden smDown>
         <Drawer
-          anchor="left"
           variant="permanent"
           open
           classes={{
