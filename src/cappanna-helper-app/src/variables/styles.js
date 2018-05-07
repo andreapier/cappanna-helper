@@ -62,27 +62,10 @@ const dangerBoxShadow = {
     "0 12px 20px -10px rgba(244, 67, 54, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(244, 67, 54, 0.2)"
 };
 
-const orangeCardHeader = {
-  background: "linear-gradient(60deg, #ffa726, #fb8c00)",
-  ...warningBoxShadow
-};
-const greenCardHeader = {
-  background: "linear-gradient(60deg, #66bb6a, #43a047)",
-  ...successBoxShadow
-};
-const redCardHeader = {
-  background: "linear-gradient(60deg, #ef5350, #e53935)",
-  ...dangerBoxShadow
-};
 const blueCardHeader = {
-  background: "linear-gradient(60deg, #26c6da, #00acc1)",
+  background: "linear-gradient(60deg, #441eff, #1e2a7c)",
   ...infoBoxShadow
 };
-const purpleCardHeader = {
-  background: "linear-gradient(60deg, #ab47bc, #8e24aa)",
-  ...primaryBoxShadow
-};
-
 const cardActions = {
   margin: "0 20px 10px",
   paddingTop: "10px",
@@ -90,7 +73,6 @@ const cardActions = {
   height: "auto",
   ...defaultFont
 };
-
 const cardHeader = {
   borderRadius: "3px",
   padding: "15px"
@@ -133,11 +115,7 @@ export {
   successBoxShadow,
   warningBoxShadow,
   dangerBoxShadow,
-  orangeCardHeader,
-  greenCardHeader,
-  redCardHeader,
   blueCardHeader,
-  purpleCardHeader,
   cardActions,
   cardHeader,
   defaultBoxShadow,

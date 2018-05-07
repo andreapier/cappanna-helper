@@ -1,16 +1,8 @@
-// ##############################
-// // // ChartCard styles
-// #############################
-
 import {
   card,
   cardHeader,
   defaultFont,
-  orangeCardHeader,
-  greenCardHeader,
-  redCardHeader,
   blueCardHeader,
-  purpleCardHeader,
   cardActions,
   grayColor,
   warningColor,
@@ -29,11 +21,7 @@ const chartCardStyle = {
     minHeight: "160px",
     ...defaultFont
   },
-  orangeCardHeader,
-  greenCardHeader,
-  redCardHeader,
   blueCardHeader,
-  purpleCardHeader,
   cardContent: {
     padding: "15px 20px"
   },

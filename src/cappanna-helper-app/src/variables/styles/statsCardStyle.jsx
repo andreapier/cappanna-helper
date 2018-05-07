@@ -1,16 +1,8 @@
-// ##############################
-// // // StatsCard styles
-// #############################
-
 import {
   card,
   cardHeader,
   defaultFont,
-  orangeCardHeader,
-  greenCardHeader,
-  redCardHeader,
   blueCardHeader,
-  purpleCardHeader,
   cardActions,
   grayColor,
   warningColor,
@@ -28,11 +20,7 @@ const statsCardStyle = {
     float: "left",
     textAlign: "center"
   },
-  orangeCardHeader,
-  greenCardHeader,
-  redCardHeader,
   blueCardHeader,
-  purpleCardHeader,
   cardContent: {
     textAlign: "right",
     paddingTop: "10px",

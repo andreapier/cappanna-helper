@@ -1,12 +1,8 @@
 import {
+  blueCardHeader,
   card,
   cardHeader,
-  defaultFont,
-  orangeCardHeader,
-  greenCardHeader,
-  redCardHeader,
-  blueCardHeader,
-  purpleCardHeader
+  defaultFont
 } from "variables/styles";
 
 const regularCardStyle = {
@@ -23,11 +19,7 @@ const regularCardStyle = {
     marginLeft: 0,
     marginRight: 0
   },
-  orangeCardHeader,
-  greenCardHeader,
-  redCardHeader,
   blueCardHeader,
-  purpleCardHeader,
   cardTitle: {
     color: "#FFFFFF",
     marginTop: "0",
