@@ -3,7 +3,7 @@ import appRoutes from "routes";
 import appStyle from "variables/styles/appStyle";
 import logo from "assets/img/logo.png";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { Component } from "react";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import history from "./../../history";
 import { Provider } from "react-redux";
@@ -39,11 +39,12 @@ const switchRoutes = (
   </Switch>
 );
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
+    this.mainPanelRef = React.createRef();
   }
 
   state = {
@@ -51,7 +52,7 @@ class App extends React.Component {
   };
 
   componentDidUpdate() {
-    this.refs.mainPanel.scrollTop = 0;
+    this.mainPanelRef.scrollTop = 0;
   }
 
   handleDrawerToggle() {
@@ -77,7 +78,7 @@ class App extends React.Component {
               color="blue"
               {...rest}
             />
-            <div className={classes.mainPanel} ref="mainPanel">
+            <div className={classes.mainPanel} ref={this.mainPanelRef}>
               <RoutingAwareHeader
                 handleDrawerToggle={this.handleDrawerToggle}
                 routes={appRoutes}
