@@ -16,19 +16,14 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0-preview2-final" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.0-preview2-final" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.0-preview2-final" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0-preview1-final" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0-rc1-final" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.0-rc1-final" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.0-rc1-final" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0-rc1-final" />
   </ItemGroup>
   
   <ItemGroup>
     <None Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.1.0-preview1-final" />
-    <!--<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.1.0-preview2-final" />-->
   </ItemGroup>
   
   <ItemGroup>
