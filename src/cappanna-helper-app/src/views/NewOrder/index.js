@@ -1,8 +1,14 @@
 import React from "react";
-import NewOrderForm from "components/Order/NewOrderForm";
+import ConnectedHeader from "containers/Orders/New/ConnectedHeader";
+import ConnectedBody from "containers/Orders/New/ConnectedBody";
 
 const NewOrderPage = ({ ...props }) => {
-  return <NewOrderForm />;
+  return (
+    <div>
+      <ConnectedHeader />
+      <ConnectedBody />
+    </div>
+  );
 };
 
 export default NewOrderPage;

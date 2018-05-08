@@ -32,23 +32,29 @@ export default function(state = null, action) {
           totalPrice: 0
         },
         details: action.payload.map(e => {
-          return { ...e, quantity: 0 };
+          return {
+            ...e,
+            quantity: 0,
+            isAvailable: !e.unitsInStock || e.unitsInStock > 0
+          };
         })
       };
 
     case INCREMENT_ORDER_DETAIL_QUANTITY:
-      const changedIndex = state.details.indexOf(action.payload.item);
-      const changedItem = state.details[changedIndex];
+      const details = [...state.details];
+      const changedIndex = details.indexOf(action.payload.item);
+      const changedItem = details[changedIndex];
       const newQuantity = changedItem.quantity + action.payload.increment;
       const deltaPrice = action.payload.increment * changedItem.price;
-      state.details[changedIndex] = { ...changedItem, quantity: newQuantity };
+
+      details[changedIndex] = { ...changedItem, quantity: newQuantity };
 
       return {
         header: {
           ...state.header,
           totalPrice: state.header.totalPrice + deltaPrice
         },
-        details: state.details
+        details: details
       };
 
     case SET_ORDER_TABLE:

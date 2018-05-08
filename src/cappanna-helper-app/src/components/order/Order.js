@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Card, CardHeader, CardText } from "material-ui/Card";
-import { padLeft } from "utils/string";
 import ActionPrint from "@material-ui/icons/Print";
 import {
   printRequested,
@@ -25,6 +24,7 @@ import ActionSchedule from "@material-ui/icons/Schedule";
 import AvPlayArrow from "@material-ui/icons/PlayArrow";
 import NavigationCancel from "@material-ui/icons/Cancel";
 import TextField from "material-ui/TextField";
+import AmountFormat from "components/AmountFormat";
 
 const containerStyle = {
   display: "flex",
@@ -58,10 +58,6 @@ class Order extends Component {
       default:
         return null;
     }
-  }
-
-  formatPrice(price) {
-    return "€ " + padLeft(price.toFixed(2), " ", 5);
   }
 
   showPrintConfirmation() {
@@ -132,9 +128,13 @@ class Order extends Component {
               {this.props.order.details.map(d => (
                 <tr key={d.id}>
                   <td>{d.item.name}</td>
-                  <td>{this.formatPrice(d.item.price)}</td>
+                  <td>
+                    <AmountFormat amount={d.item.price} />
+                  </td>
                   <td>{d.quantity}</td>
-                  <td>{this.formatPrice(d.item.price * d.quantity)}</td>
+                  <td>
+                    <AmountFormat amount={d.item.price * d.quantity} />
+                  </td>
                 </tr>
               ))}
             </tbody>

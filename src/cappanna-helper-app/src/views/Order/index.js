@@ -1,8 +1,8 @@
 import React from "react";
-import NewOrder from "components/Order/Order";
+import Order from "components/Order/Order";
 
-const NewOrderPage = ({ ...props }) => {
-  return <NewOrder />;
+const OrderPage = ({ ...props }) => {
+  return <Order />;
 };
 
-export default NewOrderPage;
+export default OrderPage;
