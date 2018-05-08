@@ -6,7 +6,17 @@ import cx from "classnames";
 import snackbarContentStyle from "variables/styles/snackbarContentStyle";
 
 function Snackbar({ ...props }) {
-  const { classes, message, color, close, icon, place, open, autoHideDuration, onClose } = props;
+  const {
+    classes,
+    message,
+    color,
+    close,
+    icon,
+    place,
+    open,
+    autoHideDuration,
+    onClose
+  } = props;
   var action = [];
   const messageClasses = cx({
     [classes.iconMessage]: icon !== undefined
@@ -28,7 +38,12 @@ function Snackbar({ ...props }) {
     <Snack
       anchorOrigin={{
         vertical: place.indexOf("t") === -1 ? "bottom" : "top",
-        horizontal: place.indexOf("l") !== -1 ? "left" : place.indexOf("c") !== -1 ? "center" : "right"
+        horizontal:
+          place.indexOf("l") !== -1
+            ? "left"
+            : place.indexOf("c") !== -1
+              ? "center"
+              : "right"
       }}
       open={open}
       message={
@@ -38,7 +53,7 @@ function Snackbar({ ...props }) {
         </div>
       }
       action={action}
-      SnackbarContentProps={{
+      ContentProps={{
         classes: {
           root: classes.root + " " + classes[color],
           message: classes.message
