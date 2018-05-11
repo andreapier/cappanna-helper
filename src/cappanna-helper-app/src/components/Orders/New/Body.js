@@ -94,7 +94,8 @@ const Body = props => {
 };
 
 Body.propTypes = {
-  dishList: PropTypes.array.isRequired
+  dishList: PropTypes.array.isRequired,
+  incrementOrderDetailQuantity: PropTypes.func.isRequired
 };
 
 export default Body;

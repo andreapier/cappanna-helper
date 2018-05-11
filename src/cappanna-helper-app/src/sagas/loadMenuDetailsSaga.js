@@ -1,5 +1,11 @@
 import { put, takeLatest, call } from "redux-saga/effects";
-import { loadingChanged, setError, signoutRequested, loadMenuDetailsCompleted, createEmptyOrder } from "actions";
+import {
+  loadingChanged,
+  setError,
+  signoutRequested,
+  loadMenuDetailsCompleted,
+  createEmptyOrder
+} from "actions";
 import { LOAD_MENU_DETAILS_REQUESTED } from "actions/types";
 import Api from "api";
 

@@ -48,7 +48,8 @@ const DishList = props => {
 
 DishList.propTypes = {
   title: PropTypes.string.isRequired,
-  dishList: PropTypes.array.isRequired
+  dishList: PropTypes.array.isRequired,
+  incrementOrderDetailQuantity: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(DishList);

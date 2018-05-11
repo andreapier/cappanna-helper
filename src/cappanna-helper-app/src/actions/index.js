@@ -98,10 +98,10 @@ export function createEmptyOrder(menu) {
   return { type: CREATE_EMPTY_ORDER, payload: menu };
 }
 
-export function incrementOrderDetailQuantity(item, increment) {
+export function incrementOrderDetailQuantity(itemId, quantity, price) {
   return {
     type: INCREMENT_ORDER_DETAIL_QUANTITY,
-    payload: { item, increment }
+    payload: { itemId, quantity, price }
   };
 }
 

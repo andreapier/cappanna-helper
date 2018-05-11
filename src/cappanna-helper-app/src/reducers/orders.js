@@ -2,7 +2,7 @@ import {
   LOAD_ORDERS_LIST_COMPLETED,
   LOAD_ORDER_COMPLETED,
   SET_ORDER_STATUS_COMPLETED
-} from "./../actions/types";
+} from "actions/types";
 
 export default function(state = { orders: [] }, action) {
   switch (action.type) {

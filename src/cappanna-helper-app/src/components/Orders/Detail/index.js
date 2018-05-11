@@ -38,7 +38,13 @@ const Detail = props => {
           <Button
             variant="fab"
             mini={true}
-            onClick={() => props.incrementOrderDetailQuantity(props.item, 1)}
+            onClick={() =>
+              props.incrementOrderDetailQuantity(
+                props.item.id,
+                1,
+                props.item.price
+              )
+            }
             disabled={!props.item.isAvailable}
           >
             <ContentAdd />
@@ -49,7 +55,13 @@ const Detail = props => {
           <Button
             variant="fab"
             mini={true}
-            onClick={() => props.incrementOrderDetailQuantity(props.item, -1)}
+            onClick={() =>
+              props.incrementOrderDetailQuantity(
+                props.item.id,
+                -1,
+                props.item.price
+              )
+            }
             disabled={props.item.quantity === 0 || !props.item.isAvailable}
           >
             <ContentRemove />

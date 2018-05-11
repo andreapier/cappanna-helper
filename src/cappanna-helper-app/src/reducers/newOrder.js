@@ -8,16 +8,21 @@ import {
   SET_ORDER_NOTES
 } from "actions/types";
 
-export default function(state = null, action) {
+export const initialState = {
+  header: {
+    seats: 2,
+    chTable: 1,
+    tableCategory: "",
+    totalPrice: 0
+  },
+  details: []
+};
+
+export default function(state = initialState, action) {
   switch (action.type) {
     case RESET_ORDER:
       return {
-        header: {
-          seats: 2,
-          chTable: 1,
-          tableCategory: "",
-          totalPrice: 0
-        },
+        header: initialState.header,
         details: state.details.map(e => {
           return { ...e, quantity: 0 };
         })
@@ -25,36 +30,35 @@ export default function(state = null, action) {
 
     case CREATE_EMPTY_ORDER:
       return {
-        header: {
-          seats: 2,
-          chTable: 1,
-          tableCategory: "",
-          totalPrice: 0
-        },
+        header: initialState.header,
         details: action.payload.map(e => {
           return {
-            ...e,
-            quantity: 0,
-            isAvailable: !e.unitsInStock || e.unitsInStock > 0
+            id: e.id,
+            quantity: 0
           };
         })
       };
 
     case INCREMENT_ORDER_DETAIL_QUANTITY:
-      const details = [...state.details];
-      const changedIndex = details.indexOf(action.payload.item);
-      const changedItem = details[changedIndex];
-      const newQuantity = changedItem.quantity + action.payload.increment;
-      const deltaPrice = action.payload.increment * changedItem.price;
+      const details = state.details.map(e => {
+        if (e.id === action.payload.itemId) {
+          return {
+            ...e,
+            quantity: e.quantity + action.payload.quantity
+          };
+        }
 
-      details[changedIndex] = { ...changedItem, quantity: newQuantity };
+        return e;
+      });
+
+      const deltaPrice = action.payload.quantity * action.payload.price;
 
       return {
         header: {
           ...state.header,
           totalPrice: state.header.totalPrice + deltaPrice
         },
-        details: details
+        details
       };
 
     case SET_ORDER_TABLE:
