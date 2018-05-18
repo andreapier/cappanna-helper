@@ -1,4 +1,9 @@
-import { ListItem, ListItemIcon, ListItemText, withStyles } from "material-ui";
+import {
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  withStyles
+} from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import cx from "classnames";
 import PropTypes from "prop-types";

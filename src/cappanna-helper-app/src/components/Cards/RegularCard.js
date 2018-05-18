@@ -5,7 +5,7 @@ import {
   CardContent,
   CardHeader,
   withStyles
-} from "material-ui";
+} from "@material-ui/core";
 import PropTypes from "prop-types";
 import React from "react";
 import regularCardStyle from "variables/styles/regularCardStyle";

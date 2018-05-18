@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Card, CardHeader } from "material-ui/Card";
-import IconButton from "material-ui/IconButton";
+import { Card, CardHeader } from "@material-ui/core/Card";
+import IconButton from "@material-ui/core/IconButton";
 import ContentAdd from "@material-ui/icons/Add";
 import ActionDone from "@material-ui/icons/Done";
 import ActionSchedule from "@material-ui/icons/Schedule";
 import AvPlayArrow from "@material-ui/icons/PlayArrow";
 import NavigationRefresh from "@material-ui/icons/Refresh";
-import Toolbar from "material-ui/Toolbar";
+import Toolbar from "@material-ui/core/Toolbar";
 import ActionList from "@material-ui/icons/List";
-import { withStyles } from "material-ui";
+import { withStyles } from "@material-ui/core";
 import { flex } from "variables/styles";
 
 const containerStyle = {

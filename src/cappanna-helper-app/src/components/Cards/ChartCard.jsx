@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardActions,
   Typography
-} from "material-ui";
+} from "@material-ui/core";
 import PropTypes from "prop-types";
 
 import chartCardStyle from "variables/styles/chartCardStyle";
@@ -25,16 +25,16 @@ function ChartCard({ ...props }) {
   return (
     <Card className={classes.card}>
       <CardHeader
-          className={
+        className={
           classes.cardHeader + " " + classes[chartColor + "CardHeader"]
         }
-          subheader={chart}
+        subheader={chart}
       />
       <CardContent className={classes.cardContent}>
         <Typography
-            variant="title"
-            component="h4"
-            className={classes.cardTitle}
+          variant="title"
+          component="h4"
+          className={classes.cardTitle}
         >
           {title}
         </Typography>
@@ -45,19 +45,19 @@ function ChartCard({ ...props }) {
       <CardActions className={classes.cardActions}>
         <div className={classes.cardStats}>
           <props.statIcon
-              className={
+            className={
               classes.cardStatsIcon +
               " " +
               classes[statIconColor + "CardStatsIcon"]
             }
           />{" "}
-          {statLink !== undefined ? 
+          {statLink !== undefined ? (
             <a href={statLink.href} className={classes.cardStatsLink}>
               {statLink.text}
             </a>
-           : statText !== undefined ? 
+          ) : statText !== undefined ? (
             statText
-           : null}
+          ) : null}
         </div>
       </CardActions>
     </Card>

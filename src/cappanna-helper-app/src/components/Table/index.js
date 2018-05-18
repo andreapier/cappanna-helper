@@ -5,7 +5,7 @@ import {
   TableHead,
   TableRow,
   withStyles
-} from "material-ui";
+} from "@material-ui/core";
 import PropTypes from "prop-types";
 import React from "react";
 import tableStyle from "variables/styles/tableStyle";

@@ -1,4 +1,4 @@
-import { withStyles } from "material-ui";
+import { withStyles } from "@material-ui/core";
 import appRoutes from "routes";
 import appStyle from "variables/styles/appStyle";
 import logo from "assets/img/logo.png";
@@ -12,7 +12,7 @@ import ConnectedSidebar from "containers/ConnectedSidebar";
 import ConnectedWaitDialog from "containers/ConnectedWaitDialog";
 import ConnectedErrorSnackbar from "containers/ConnectedErrorSnackbar";
 import RoutingAwareHeader from "containers/RoutingAwareHeader";
-import CssBaseline from "material-ui/CssBaseline";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const switchRoutes = (
   <Switch>

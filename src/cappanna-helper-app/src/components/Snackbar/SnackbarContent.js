@@ -1,5 +1,9 @@
 import React from "react";
-import { withStyles, SnackbarContent as Snack, IconButton } from "material-ui";
+import {
+  withStyles,
+  SnackbarContent as Snack,
+  IconButton
+} from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import cx from "classnames";
@@ -13,7 +17,12 @@ function SnackbarContent({ ...props }) {
   });
   if (close !== undefined) {
     action = [
-      <IconButton className={classes.iconButton} key="close" aria-label="Close" color="inherit">
+      <IconButton
+        className={classes.iconButton}
+        key="close"
+        aria-label="Close"
+        color="inherit"
+      >
         <Close className={classes.close} />
       </IconButton>
     ];

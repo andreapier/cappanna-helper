@@ -1,29 +1,29 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Card, CardHeader, CardText } from "material-ui/Card";
+import { Card, CardHeader, CardText } from "@material-ui/core/Card";
 import ActionPrint from "@material-ui/icons/Print";
 import {
   printRequested,
   loadOrderRequested,
   setOrderStatusRequested
 } from "actions/index";
-import Dialog from "material-ui/Dialog";
-import Button from "material-ui/Button";
+import Dialog from "@material-ui/core/Dialog";
+import Button from "@material-ui/core/Button";
 import {
   Toolbar,
   ToolbarGroup,
   ToolbarSeparator,
   ToolbarTitle
-} from "material-ui/Toolbar";
-import IconButton from "material-ui/IconButton";
+} from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
 import NavigationRefresh from "@material-ui/icons/Refresh";
-//import DropDownMenu from "material-ui/DropDownMenu";
-import { MenuItem } from "material-ui/Menu";
+//import DropDownMenu from "@material-ui/core/DropDownMenu";
+import { MenuItem } from "@material-ui/core/Menu";
 import ActionDone from "@material-ui/icons/Done";
 import ActionSchedule from "@material-ui/icons/Schedule";
 import AvPlayArrow from "@material-ui/icons/PlayArrow";
 import NavigationCancel from "@material-ui/icons/Cancel";
-import TextField from "material-ui/TextField";
+import TextField from "@material-ui/core/TextField";
 import AmountFormat from "components/AmountFormat";
 
 const containerStyle = {

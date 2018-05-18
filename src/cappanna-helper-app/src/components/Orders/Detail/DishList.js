@@ -2,12 +2,12 @@ import React from "react";
 import ExpansionPanel, {
   ExpansionPanelSummary,
   ExpansionPanelDetails
-} from "material-ui/ExpansionPanel";
+} from "@material-ui/core/ExpansionPanel";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Typography from "material-ui/Typography";
+import Typography from "@material-ui/core/Typography";
 import OrderDetail from "components/Orders/Detail";
 import PropTypes from "prop-types";
-import { withStyles } from "material-ui/styles";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   root: {

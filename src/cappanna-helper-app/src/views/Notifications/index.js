@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "material-ui";
+import { Grid } from "@material-ui/core";
 import { AddAlert } from "@material-ui/icons";
 import {
   RegularCard,
@@ -36,20 +36,23 @@ class Notifications extends React.Component {
       6000
     );
   }
-  
+
   render() {
     return (
       <RegularCard
-          cardTitle="Notifiche"
-          cardSubtitle={
+        cardTitle="Notifiche"
+        cardSubtitle={
           <P>
             Handcrafted by
-            <A target="_blank" href="https://www.linkedin.com/in/andreapier/?locale=en_US">
+            <A
+              target="_blank"
+              href="https://www.linkedin.com/in/andreapier/?locale=en_US"
+            >
               Andrea Pierangeli
             </A>
           </P>
         }
-          content={
+        content={
           <div>
             <Grid container>
               <ItemGrid xs={12} sm={12} md={6}>
@@ -58,22 +61,22 @@ class Notifications extends React.Component {
                 <SnackbarContent message={"This is a plain notification"} />
                 <br />
                 <SnackbarContent
-                    message={"This is a notification with close button."}
-                    close
+                  message={"This is a notification with close button."}
+                  close
                 />
                 <br />
                 <SnackbarContent
-                    message={"This is a notification with close button and icon."}
-                    close
-                    icon={AddAlert}
+                  message={"This is a notification with close button and icon."}
+                  close
+                  icon={AddAlert}
                 />
                 <br />
                 <SnackbarContent
-                    message={
+                  message={
                     "This is a notification with close button and icon and have many lines. You can see that the icon and the close button are always vertically aligned. This is a beautiful notification. So you don't have to worry about the style."
                   }
-                    close
-                    icon={AddAlert}
+                  close
+                  icon={AddAlert}
                 />
                 <br />
               </ItemGrid>
@@ -81,43 +84,43 @@ class Notifications extends React.Component {
                 <h5>Notifications States</h5>
                 <br />
                 <SnackbarContent
-                    message={
+                  message={
                     'INFO - This is a regular notification made with color="info"'
                   }
-                    close
-                    color="info"
+                  close
+                  color="info"
                 />
                 <br />
                 <SnackbarContent
-                    message={
+                  message={
                     'SUCCESS - This is a regular notification made with color="success"'
                   }
-                    close
-                    color="success"
+                  close
+                  color="success"
                 />
                 <br />
                 <SnackbarContent
-                    message={
+                  message={
                     'WARNING - This is a regular notification made with color="warning"'
                   }
-                    close
-                    color="warning"
+                  close
+                  color="warning"
                 />
                 <br />
                 <SnackbarContent
-                    message={
+                  message={
                     'DANGER - This is a regular notification made with color="danger"'
                   }
-                    close
-                    color="danger"
+                  close
+                  color="danger"
                 />
                 <br />
                 <SnackbarContent
-                    message={
+                  message={
                     'PRIMARY - This is a regular notification made with color="primary"'
                   }
-                    close
-                    color="primary"
+                  close
+                  color="primary"
                 />
                 <br />
               </ItemGrid>
@@ -137,56 +140,56 @@ class Notifications extends React.Component {
                 <Grid container>
                   <ItemGrid xs={12} sm={12} md={4}>
                     <Button
-                        fullWidth
-                        color="primary"
-                        onClick={() => this.showNotification("tl")}
+                      fullWidth
+                      color="primary"
+                      onClick={() => this.showNotification("tl")}
                     >
                       Top Left
                     </Button>
                     <Snackbar
-                        place="tl"
-                        color="info"
-                        icon={AddAlert}
-                        message="Example"
-                        open={this.state.tl}
-                        closeNotification={() => this.setState({ tl: false })}
-                        close
+                      place="tl"
+                      color="info"
+                      icon={AddAlert}
+                      message="Example"
+                      open={this.state.tl}
+                      closeNotification={() => this.setState({ tl: false })}
+                      close
                     />
                   </ItemGrid>
                   <ItemGrid xs={12} sm={12} md={4}>
                     <Button
-                        fullWidth
-                        color="primary"
-                        onClick={() => this.showNotification("tc")}
+                      fullWidth
+                      color="primary"
+                      onClick={() => this.showNotification("tc")}
                     >
                       Top Center
                     </Button>
                     <Snackbar
-                        place="tc"
-                        color="info"
-                        icon={AddAlert}
-                        message="Example"
-                        open={this.state.tc}
-                        closeNotification={() => this.setState({ tc: false })}
-                        close
+                      place="tc"
+                      color="info"
+                      icon={AddAlert}
+                      message="Example"
+                      open={this.state.tc}
+                      closeNotification={() => this.setState({ tc: false })}
+                      close
                     />
                   </ItemGrid>
                   <ItemGrid xs={12} sm={12} md={4}>
                     <Button
-                        fullWidth
-                        color="primary"
-                        onClick={() => this.showNotification("tr")}
+                      fullWidth
+                      color="primary"
+                      onClick={() => this.showNotification("tr")}
                     >
                       Top Right
                     </Button>
                     <Snackbar
-                        place="tr"
-                        color="info"
-                        icon={AddAlert}
-                        message="Example"
-                        open={this.state.tr}
-                        closeNotification={() => this.setState({ tr: false })}
-                        close
+                      place="tr"
+                      color="info"
+                      icon={AddAlert}
+                      message="Example"
+                      open={this.state.tr}
+                      closeNotification={() => this.setState({ tr: false })}
+                      close
                     />
                   </ItemGrid>
                 </Grid>
@@ -197,56 +200,56 @@ class Notifications extends React.Component {
                 <Grid container>
                   <ItemGrid xs={12} sm={12} md={4}>
                     <Button
-                        fullWidth
-                        color="primary"
-                        onClick={() => this.showNotification("bl")}
+                      fullWidth
+                      color="primary"
+                      onClick={() => this.showNotification("bl")}
                     >
                       Bottom Left
                     </Button>
                     <Snackbar
-                        place="bl"
-                        color="info"
-                        icon={AddAlert}
-                        message="Example"
-                        open={this.state.bl}
-                        closeNotification={() => this.setState({ bl: false })}
-                        close
+                      place="bl"
+                      color="info"
+                      icon={AddAlert}
+                      message="Example"
+                      open={this.state.bl}
+                      closeNotification={() => this.setState({ bl: false })}
+                      close
                     />
                   </ItemGrid>
                   <ItemGrid xs={12} sm={12} md={4}>
                     <Button
-                        fullWidth
-                        color="primary"
-                        onClick={() => this.showNotification("bc")}
+                      fullWidth
+                      color="primary"
+                      onClick={() => this.showNotification("bc")}
                     >
                       Bottom Center
                     </Button>
                     <Snackbar
-                        place="bc"
-                        color="info"
-                        icon={AddAlert}
-                        message="Example"
-                        open={this.state.bc}
-                        closeNotification={() => this.setState({ bc: false })}
-                        close
+                      place="bc"
+                      color="info"
+                      icon={AddAlert}
+                      message="Example"
+                      open={this.state.bc}
+                      closeNotification={() => this.setState({ bc: false })}
+                      close
                     />
                   </ItemGrid>
                   <ItemGrid xs={12} sm={12} md={4}>
                     <Button
-                        fullWidth
-                        color="primary"
-                        onClick={() => this.showNotification("br")}
+                      fullWidth
+                      color="primary"
+                      onClick={() => this.showNotification("br")}
                     >
                       Bottom Right
                     </Button>
                     <Snackbar
-                        place="br"
-                        color="info"
-                        icon={AddAlert}
-                        message="Example"
-                        open={this.state.br}
-                        closeNotification={() => this.setState({ br: false })}
-                        close
+                      place="br"
+                      color="info"
+                      icon={AddAlert}
+                      message="Example"
+                      open={this.state.br}
+                      closeNotification={() => this.setState({ br: false })}
+                      close
                     />
                   </ItemGrid>
                 </Grid>

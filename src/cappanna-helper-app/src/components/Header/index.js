@@ -8,7 +8,7 @@ import {
   IconButton,
   Hidden,
   Typography
-} from "material-ui";
+} from "@material-ui/core";
 import headerStyle from "variables/styles/headerStyle";
 
 function Header({ ...props }) {

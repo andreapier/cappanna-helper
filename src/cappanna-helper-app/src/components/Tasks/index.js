@@ -8,7 +8,7 @@ import {
   TableCell,
   TableRow,
   Tooltip
-} from "material-ui";
+} from "@material-ui/core";
 import { Edit, Close, Check } from "@material-ui/icons";
 
 import PropTypes from "prop-types";
@@ -19,7 +19,7 @@ class Tasks extends React.Component {
   state = {
     checked: this.props.checkedIndexes
   };
-  
+
   handleToggle = value => () => {
     const { checked } = this.state;
     const currentIndex = checked.indexOf(value);
@@ -45,13 +45,13 @@ class Tasks extends React.Component {
             <TableRow key={value} className={classes.tableRow}>
               <TableCell className={classes.tableCell}>
                 <Checkbox
-                    checked={this.state.checked.indexOf(value) !== -1}
-                    tabIndex={-1}
-                    onClick={this.handleToggle(value)}
-                    checkedIcon={<Check className={classes.checkedIcon} />}
-                    icon={<Check className={classes.uncheckedIcon} />}
-                    classes={{
-                      checked: classes.checked
+                  checked={this.state.checked.indexOf(value) !== -1}
+                  tabIndex={-1}
+                  onClick={this.handleToggle(value)}
+                  checkedIcon={<Check className={classes.checkedIcon} />}
+                  icon={<Check className={classes.uncheckedIcon} />}
+                  classes={{
+                    checked: classes.checked
                   }}
                 />
               </TableCell>
@@ -60,34 +60,34 @@ class Tasks extends React.Component {
               </TableCell>
               <TableCell className={classes.tableActions}>
                 <Tooltip
-                    id="tooltip-top"
-                    title="Edit Task"
-                    placement="top"
-                    classes={{ tooltip: classes.tooltip }}
+                  id="tooltip-top"
+                  title="Edit Task"
+                  placement="top"
+                  classes={{ tooltip: classes.tooltip }}
                 >
                   <IconButton
-                      aria-label="Edit"
-                      className={classes.tableActionButton}
+                    aria-label="Edit"
+                    className={classes.tableActionButton}
                   >
                     <Edit
-                        className={
+                      className={
                         classes.tableActionButtonIcon + " " + classes.edit
                       }
                     />
                   </IconButton>
                 </Tooltip>
                 <Tooltip
-                    id="tooltip-top-start"
-                    title="Remove"
-                    placement="top"
-                    classes={{ tooltip: classes.tooltip }}
+                  id="tooltip-top-start"
+                  title="Remove"
+                  placement="top"
+                  classes={{ tooltip: classes.tooltip }}
                 >
                   <IconButton
-                      aria-label="Close"
-                      className={classes.tableActionButton}
+                    aria-label="Close"
+                    className={classes.tableActionButton}
                   >
                     <Close
-                        className={
+                      className={
                         classes.tableActionButtonIcon + " " + classes.close
                       }
                     />

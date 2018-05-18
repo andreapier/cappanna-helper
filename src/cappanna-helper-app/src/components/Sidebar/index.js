@@ -1,4 +1,4 @@
-import { Drawer, Hidden, List, withStyles } from "material-ui";
+import { Drawer, Hidden, List, withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
 import React from "react";
 import sidebarStyle from "variables/styles/sidebarStyle";

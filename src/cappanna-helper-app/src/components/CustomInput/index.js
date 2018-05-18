@@ -1,5 +1,5 @@
 import { Clear, Check } from "@material-ui/icons";
-import { withStyles, FormControl, InputLabel, Input } from "material-ui";
+import { withStyles, FormControl, InputLabel, Input } from "@material-ui/core";
 import customInputStyle from "variables/styles/customInputStyle";
 import cx from "classnames";
 import PropTypes from "prop-types";

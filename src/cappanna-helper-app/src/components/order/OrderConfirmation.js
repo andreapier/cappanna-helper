@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Card, CardHeader, CardText } from "material-ui/Card";
-import Button from "material-ui/Button";
+import { Card, CardHeader, CardText } from "@material-ui/core/Card";
+import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import { sendOrder, setOrderNotes } from "actions";
 import ActionDone from "@material-ui/icons/Done";

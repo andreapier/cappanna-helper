@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "material-ui/Button";
+import Button from "@material-ui/core/Button";
 import ContentAdd from "@material-ui/icons/Add";
 import ContentRemove from "@material-ui/icons/Remove";
 import AmountFormat from "components/AmountFormat";
