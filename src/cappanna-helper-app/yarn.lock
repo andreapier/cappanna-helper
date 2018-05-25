@@ -5767,9 +5767,9 @@ redux-devtools-extension@^2.13.2:
   version "2.13.2"
   resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.2.tgz#e0f9a8e8dfca7c17be92c7124958a3b94eb2911d"
 
-redux-form-material-ui@^5.0.0-beta.2:
-  version "5.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/redux-form-material-ui/-/redux-form-material-ui-5.0.0-beta.2.tgz#4a9186d0a6216fbb5871b07156fb0e7f591fb3e8"
+redux-form-material-ui@^5.0.0-beta.3:
+  version "5.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/redux-form-material-ui/-/redux-form-material-ui-5.0.0-beta.3.tgz#448121031ffce11886d33c93155fbab51b31a6b8"
 
 redux-form@^7.3.0:
   version "7.3.0"
