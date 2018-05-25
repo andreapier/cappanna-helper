@@ -10,7 +10,8 @@ class ConnectedWaitDialog extends Component {
 
 const mapStateToProps = state => {
   return {
-    loading: state.api.loading
+    loading: state.api.loading,
+    message: state.api.message
   };
 };
 

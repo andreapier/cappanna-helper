@@ -74,8 +74,8 @@ export function signupCompleted() {
   return { type: SIGNUP_COMPLETED };
 }
 
-export function loadingChanged(loading, description) {
-  return { type: LOADING_CHANGED, payload: { loading, description } };
+export function loadingChanged(loading, message = "") {
+  return { type: LOADING_CHANGED, payload: { loading, message } };
 }
 
 export function loadUserData() {

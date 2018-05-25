@@ -1,4 +1,4 @@
-import { withStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
 import appRoutes from "routes";
 import appStyle from "variables/styles/appStyle";
 import logo from "assets/img/logo.png";

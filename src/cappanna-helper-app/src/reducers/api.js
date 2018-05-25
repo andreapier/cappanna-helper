@@ -1,6 +1,8 @@
-import { LOADING_CHANGED } from "./../actions/types";
+import { LOADING_CHANGED } from "actions/types";
 
-export default function(state = { loading: false }, action) {
+export const initialState = { loading: false, message: "" };
+
+export default function(state = initialState, action) {
   switch (action.type) {
     case LOADING_CHANGED:
       return { ...action.payload };

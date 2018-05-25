@@ -9,7 +9,7 @@ import AvPlayArrow from "@material-ui/icons/PlayArrow";
 import NavigationRefresh from "@material-ui/icons/Refresh";
 import Toolbar from "@material-ui/core/Toolbar";
 import ActionList from "@material-ui/icons/List";
-import { withStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
 import { flex } from "variables/styles";
 
 const containerStyle = {
