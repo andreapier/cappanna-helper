@@ -38,7 +38,6 @@ const sidebarStyle = theme => ({
       display: "block",
       top: "0",
       height: "100vh",
-      right: "0",
       left: "auto",
       zIndex: "1032",
       visibility: "visible",
