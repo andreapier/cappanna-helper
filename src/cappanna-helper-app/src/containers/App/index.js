@@ -52,7 +52,7 @@ class App extends Component {
   };
 
   componentDidUpdate() {
-    this.mainPanelRef.scrollTop = 0;
+    this.mainPanelRef.current.scrollTop = 0;
   }
 
   handleDrawerToggle() {
