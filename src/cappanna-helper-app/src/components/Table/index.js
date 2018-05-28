@@ -33,13 +33,15 @@ function CustomTable({ ...props }) {
           </TableHead>
         ) : null}
         <TableBody>
-          {tableData.map((prop, key) => {
+          {tableData.map((item, itemKey) => {
+            const itemKeys = item.map ? item : Object.keys(item);
+
             return (
-              <TableRow key={key}>
-                {prop.map((prop, key) => {
+              <TableRow key={itemKey}>
+                {itemKeys.map((prop, key) => {
                   return (
                     <TableCell className={classes.tableCell} key={key}>
-                      {prop}
+                      {item.map ? prop : item[prop]}
                     </TableCell>
                   );
                 })}
@@ -68,7 +70,9 @@ CustomTable.propTypes = {
     "gray"
   ]),
   tableHead: PropTypes.arrayOf(PropTypes.string),
-  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
+  tableData: PropTypes.arrayOf(
+    PropTypes.oneOf([PropTypes.arrayOf(PropTypes.string), PropTypes.object])
+  )
 };
 
 export default withStyles(tableStyle)(CustomTable);

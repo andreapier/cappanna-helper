@@ -1,8 +1,8 @@
-import { padLeft } from "utils/string";
+import { formatAmount } from "utils/string";
 import PropTypes from "prop-types";
 
 const AmountFormat = props => {
-  return "€ " + padLeft(props.amount.toFixed(2), " ", 5);
+  return formatAmount(props.amount);
 };
 
 AmountFormat.propTypes = {

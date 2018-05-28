@@ -2,7 +2,6 @@ import React from "react";
 import { withStyles, Button } from "@material-ui/core";
 import PropTypes from "prop-types";
 import cx from "classnames";
-
 import buttonStyle from "variables/styles/buttonStyle";
 
 function RegularButton({ ...props }) {

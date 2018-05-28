@@ -19,12 +19,11 @@ const mapStateToProps = state => {
     canConfirm:
       state.newOrder.header.totalPrice > 0 &&
       state.newOrder.header.chTable > 0 &&
-      state.newOrder.header.seats > 0 &&
-      state.newOrder.header.tableCategory !== ""
+      state.newOrder.header.seats > 0
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = dispatch => {
   return {
     setOrderTable: table => dispatch(setOrderTable(table)),
     setOrderTableCategory: tableCategory =>
