@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setOrderTable, setOrderTableCategory, setOrderSeats } from "actions";
-import { withRouter } from "react-router";
 import Header from "components/Orders/New/Header";
+import history from "./../../../history";
 
 class ConnectedHeader extends Component {
   render() {
@@ -30,10 +30,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     setOrderTableCategory: tableCategory =>
       dispatch(setOrderTableCategory(tableCategory)),
     setOrderSeats: seats => dispatch(setOrderSeats(seats)),
-    goToConfirm: () => ownProps.history.push("/order/confirm")
+    goToConfirm: () => history.push("/order/confirm")
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(ConnectedHeader)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConnectedHeader);
