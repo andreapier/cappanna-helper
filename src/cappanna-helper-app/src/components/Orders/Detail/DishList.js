@@ -11,10 +11,6 @@ import { withStyles } from "@material-ui/core/styles";
 const styles = theme => ({
   root: {
     flexGrow: 1
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular
   }
 });
 
@@ -23,9 +19,7 @@ const DishList = props => {
     <div className={props.classes.root}>
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography className={props.classes.heading}>
-            {props.title}
-          </Typography>
+          <Typography>{props.title}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <div>

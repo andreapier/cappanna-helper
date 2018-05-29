@@ -13,7 +13,7 @@ import {
   SET_ORDER_TABLE,
   SET_ORDER_TABLE_CATEGORY,
   SET_ORDER_SEATS,
-  SEND_ORDER,
+  CONFIRM_ORDER,
   LOAD_ORDERS_LIST_REQUESTED,
   LOAD_ORDERS_LIST_COMPLETED,
   LOAD_ORDER_REQUESTED,
@@ -117,8 +117,8 @@ export function setOrderSeats(seats) {
   return { type: SET_ORDER_SEATS, payload: seats };
 }
 
-export function sendOrder(order, user) {
-  return { type: SEND_ORDER, payload: { order, user } };
+export function confirmOrder(order, userId) {
+  return { type: CONFIRM_ORDER, payload: { order, userId } };
 }
 
 export function loadOrdersListRequested() {

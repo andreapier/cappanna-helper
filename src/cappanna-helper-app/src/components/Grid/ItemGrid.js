@@ -1,5 +1,6 @@
 import React from "react";
-import { withStyles, Grid } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
 
 const style = {
   grid: {
@@ -7,13 +8,14 @@ const style = {
   }
 };
 
-function ItemGrid({ ...props }) {
+const ItemGrid = props => {
   const { classes, children, ...rest } = props;
+
   return (
     <Grid item {...rest} className={classes.grid}>
       {children}
     </Grid>
   );
-}
+};
 
 export default withStyles(style)(ItemGrid);

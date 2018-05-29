@@ -61,14 +61,16 @@ class Api {
     this.signout = this.signout.bind(this);
     this.getOrders = this.getOrders.bind(this);
     this.getMenuDetails = this.getMenuDetails.bind(this);
-    this.sendOrder = this.sendOrder.bind(this);
+    this.createOrder = this.createOrder.bind(this);
   }
 
-  signin({ username, password, rememberMe }) {
-    return post(SIGNIN, { username, password, rememberMe }).then(json => {
-      token = json.token;
-      return json;
-    });
+  signin({ userId, username, password, rememberMe }) {
+    return post(SIGNIN, { userId, username, password, rememberMe }).then(
+      json => {
+        token = json.token;
+        return json;
+      }
+    );
   }
 
   signinByToken(userData) {
@@ -104,14 +106,14 @@ class Api {
     return get(MENU_DETAIL);
   }
 
-  sendOrder({ order, user }) {
+  createOrder({ order, userId }) {
     const serverOrder = {
       chTable:
         order.header.chTable +
         (order.header.tableCategory ? "/" + order.header.tableCategory : ""),
       seats: order.header.seats,
       details: [],
-      createdById: user.id,
+      createdById: userId,
       notes: order.header.notes ? order.header.notes : null
     };
     order.details.filter(e => e.quantity > 0).map(e =>

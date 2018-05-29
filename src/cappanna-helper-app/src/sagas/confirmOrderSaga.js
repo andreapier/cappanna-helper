@@ -1,13 +1,19 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "api";
-import { loadingChanged, setError, signoutRequested, loadOrderRequested, resetOrder } from "actions";
-import { SEND_ORDER } from "actions/types";
+import {
+  loadingChanged,
+  setError,
+  signoutRequested,
+  loadOrderRequested,
+  resetOrder
+} from "actions";
+import { CONFIRM_ORDER } from "actions/types";
 
-function* sendOrder(action) {
+function* confirmOrder(action) {
   try {
     yield put(loadingChanged(true, "Ordine in corso..."));
     const api = new Api();
-    const order = yield call(api.sendOrder, action.payload);
+    const order = yield call(api.createOrder, action.payload);
     yield put(loadOrderRequested(order.id));
     yield put(resetOrder());
   } catch (e) {
@@ -16,11 +22,13 @@ function* sendOrder(action) {
     } else {
       yield put(setError(e.message));
     }
+
+    yield put(loadingChanged(false));
   }
 }
 
-function* sendOrderSaga() {
-  yield takeLatest(SEND_ORDER, sendOrder);
+function* confirmOrderSaga() {
+  yield takeLatest(CONFIRM_ORDER, confirmOrder);
 }
 
-export default sendOrderSaga;
+export default confirmOrderSaga;
