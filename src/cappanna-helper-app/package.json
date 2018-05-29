@@ -39,6 +39,6 @@
   "keywords": ["cappanna", "order taking"],
   "devDependencies": {
     "eslint-plugin-prettier": "^2.6.0",
-    "prettier": "^1.13.0"
+    "prettier": "^1.13.2"
   }
 }
