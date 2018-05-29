@@ -34,7 +34,7 @@ const SidebarNavigationItem = ({
     return null;
   }
 
-  if (user && signinRoute(routeData.name)) {
+  if (user.token && signinRoute(routeData.name)) {
     return null;
   }
 

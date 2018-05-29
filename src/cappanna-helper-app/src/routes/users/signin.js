@@ -6,7 +6,6 @@ const signin = {
   sidebarName: "Entra",
   icon: Input,
   component: SignInPage,
-  protected: false,
   name: "signin",
   headerTitle: "Entra"
 };
