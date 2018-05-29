@@ -1,21 +1,21 @@
-import { Drawer, Hidden, List, withStyles } from "@material-ui/core";
+import Drawer from "@material-ui/core/Drawer";
+import Hidden from "@material-ui/core/Hidden";
+import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React from "react";
 import sidebarStyle from "variables/styles/sidebarStyle";
-import SidebarNavigationItem from "./SidebarNavigationItem";
+import Links from "./Links";
 import Logo from "./Logo";
 
-const Sidebar = ({ ...props }) => {
-  const { classes, logo, logoText, routes, user } = props;
-  const links = (
-    <List className={classes.list}>
-      {routes.map((routeData, key) => {
-        const itemProps = { routeData, user };
-
-        return <SidebarNavigationItem {...itemProps} key={key} />;
-      })}
-    </List>
-  );
+const Sidebar = props => {
+  const {
+    classes,
+    logo,
+    logoText,
+    routes,
+    user,
+    handleSidebarNavigationItemClick
+  } = props;
 
   return (
     <div>
@@ -31,7 +31,11 @@ const Sidebar = ({ ...props }) => {
           }}
         >
           <Logo logo={logo} logoText={logoText} />
-          <div className={classes.sidebarWrapper}>{links}</div>
+          <Links
+            routes={routes}
+            user={user}
+            handleSidebarNavigationItemClick={handleSidebarNavigationItemClick}
+          />
         </Drawer>
       </Hidden>
       <Hidden smDown>
@@ -43,7 +47,7 @@ const Sidebar = ({ ...props }) => {
           }}
         >
           <Logo logo={logo} logoText={logoText} />
-          <div className={classes.sidebarWrapper}>{links}</div>
+          <Links routes={routes} user={user} />
         </Drawer>
       </Hidden>
     </div>

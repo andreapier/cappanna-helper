@@ -44,6 +44,9 @@ class App extends Component {
     super(props);
 
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
+    this.handleSidebarNavigationItemClick = this.handleSidebarNavigationItemClick.bind(
+      this
+    );
     this.mainPanelRef = React.createRef();
   }
 
@@ -57,6 +60,10 @@ class App extends Component {
 
   handleDrawerToggle() {
     this.setState({ mobileOpen: !this.state.mobileOpen });
+  }
+
+  handleSidebarNavigationItemClick() {
+    this.setState({ mobileOpen: false });
   }
 
   render() {
@@ -74,6 +81,9 @@ class App extends Component {
               logoText={"Cappanna Helper"}
               logo={logo}
               handleDrawerToggle={this.handleDrawerToggle}
+              handleSidebarNavigationItemClick={
+                this.handleSidebarNavigationItemClick
+              }
               open={this.state.mobileOpen}
               color="blue"
               {...rest}

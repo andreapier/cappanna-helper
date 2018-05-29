@@ -19,7 +19,8 @@ const SidebarNavigationItem = ({
   location,
   user,
   classes,
-  color
+  color,
+  handleSidebarNavigationItemClick
 }) => {
   if (routeData.redirect) {
     return null;
@@ -46,6 +47,7 @@ const SidebarNavigationItem = ({
       to={routeData.path}
       className={classes.item}
       activeClassName="active"
+      onClick={handleSidebarNavigationItemClick}
     >
       <ListItem button className={classes.itemLink + selectedItemLinkClasses}>
         <ListItemIcon className={classes.itemIcon}>
@@ -62,7 +64,8 @@ const SidebarNavigationItem = ({
 };
 
 SidebarNavigationItem.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  handleSidebarNavigationItemClick: PropTypes.func.isRequired
 };
 
 export default withRouter(withStyles(sidebarStyle)(SidebarNavigationItem));
