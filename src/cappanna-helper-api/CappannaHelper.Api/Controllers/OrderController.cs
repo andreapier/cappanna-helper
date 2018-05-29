@@ -63,9 +63,19 @@ namespace CappannaHelper.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ChOrder order)
         {
-            if (order == null || order.Id > 0)
+            if (order == null)
+            {
+                return BadRequest("Dati dell'ordine non specificati");
+            }
+
+            if (order.Id > 0)
             {
                 return BadRequest("Impossibile inviare un ordine con il campo Id valorizzato");
+            }
+
+            if (order.CreatedById <= 0)
+            {
+                return BadRequest("Impossibile inviare un ordine senza Id utente");
             }
 
             if (order.ChTable == null)
@@ -78,55 +88,29 @@ namespace CappannaHelper.Api.Controllers
                 return BadRequest("Impossibile inviare un ordine senza numero di coperti");
             }
 
+            EntityEntry<ChOrder> result;
+
             using (var transaction = _context.Database.BeginTransaction())
             {
-                EntityEntry<ChOrder> result;
-
                 try
                 {
                     result = await _context.Orders.AddAsync(order);
                     await _context.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Impossibile salvare l'ordine. L'ordine NON è stato salvato. Reinviare l'ordine", e);
-                }
-                
-                try
-                {
-                    var fullOrder = await _context.Orders
-                        .Include(o => o.CreatedBy)
-                        .Include(o => o.Details)
-                        .ThenInclude(d => d.Item)
-                        .FirstOrDefaultAsync(o => o.Id == result.Entity.Id);
-                    await _printService.PrintAsync(fullOrder);
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Impossibile stampare l'ordine. L'ordine NON è stato salvato. Reinviare l'ordine", e);
-                }
-                
-                try
-                {
                     transaction.Commit();
                 }
                 catch (Exception e)
                 {
                     throw new Exception("Impossibile salvare l'ordine. L'ordine NON è stato salvato. Reinviare l'ordine", e);
                 }
-
-                return Ok(result.Entity);
             }
+
+            return Ok(result.Entity);
         }
 
         [Route("{id}")]
         public async Task<IActionResult> SetStatus(int id, [FromBody] int status)
         {
-            var order = await _context.Orders
-                .Include(o => o.CreatedBy)
-                .Include(o => o.Details)
-                .ThenInclude(d => d.Item)
-                .FirstOrDefaultAsync(o => o.Id == id);
+            var order = await _context.Orders.SingleOrDefaultAsync(o => o.Id == id);
 
             if (order == null)
             {
