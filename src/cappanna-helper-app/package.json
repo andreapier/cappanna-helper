@@ -9,7 +9,7 @@
   "proxy": "http://localhost:3900",
   "dependencies": {
     "@aspnet/signalr": "^1.0.0-rc1-update1",
-    "@material-ui/core": "^1.1.0",
+    "@material-ui/core": "^1.2.0",
     "@material-ui/icons": "^1.1.0",
     "chartist": "^0.11.0",
     "localforage": "^1.7.1",
@@ -39,6 +39,6 @@
   "keywords": ["cappanna", "order taking"],
   "devDependencies": {
     "eslint-plugin-prettier": "^2.6.0",
-    "prettier": "^1.13.2"
+    "prettier": "^1.13.4"
   }
 }
