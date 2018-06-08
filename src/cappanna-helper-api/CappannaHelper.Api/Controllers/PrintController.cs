@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CappannaHelper.Api.Persistence;
+﻿using CappannaHelper.Api.Persistence;
+using CappannaHelper.Api.Persistence.Modelling;
 using CappannaHelper.Api.Printing;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace CappannaHelper.Api.Controllers
 {
@@ -28,6 +26,7 @@ namespace CappannaHelper.Api.Controllers
         {
             var order = await _context.Orders
                 .Include(o => o.CreatedBy)
+                .Include(o => o.Operations)
                 .Include(o => o.Details)
                 .ThenInclude(d => d.Item)
                 .FirstOrDefaultAsync(o => o.Id == id);
@@ -40,12 +39,26 @@ namespace CappannaHelper.Api.Controllers
             try
             {
                 await _printService.PrintAsync(order);
-                return Ok(order);
             }
             catch (Exception e)
             {
                 throw new Exception("Impossibile ristampare l'ordine", e);
             }
+
+            try
+            {
+                order.Operations.Add(new ChOrderOperation
+                {
+                    OperationTimestamp = DateTime.Now,
+                    TypeId = (int)OperationTypes.Print
+                });
+            }
+            catch
+            {
+                //TODO: Log
+            }
+
+            return Ok(order);
         }
     }
 }

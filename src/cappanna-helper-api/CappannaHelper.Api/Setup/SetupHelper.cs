@@ -318,8 +318,8 @@ namespace CappannaHelper.Api.Setup
 
         private async Task SetupOperationTypesAsync(List<string> errors)
         {
-            await SetupOperationTypeAsync(1, "creation", errors);
-            await SetupOperationTypeAsync(2, "print", errors);
+            await SetupOperationTypeAsync(OperationTypes.Creation, "creation", errors);
+            await SetupOperationTypeAsync(OperationTypes.Print, "print", errors);
 
             try
             {
@@ -331,10 +331,11 @@ namespace CappannaHelper.Api.Setup
             }
         }
         
-        private async Task SetupOperationTypeAsync(int id, string description, List<string> errors)
+        private async Task SetupOperationTypeAsync(OperationTypes type, string description, List<string> errors)
         {
             try
             {
+                var id = (int)type;
                 if (!await _context.OperationTypes.AnyAsync(d => d.Id == id))
                 {
                     await _context.AddAsync(new OperationType

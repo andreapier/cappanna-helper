@@ -107,6 +107,7 @@ namespace CappannaHelper.Api
             app.UseSignalR(routes =>
             {
                 routes.MapHub<MenuHub>("/menu");
+                routes.MapHub<OrderHub>("/order");
             });
             app.UseMvc();
         }

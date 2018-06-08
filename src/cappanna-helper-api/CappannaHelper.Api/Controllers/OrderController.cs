@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using CappannaHelper.Api.Printing;
+using Microsoft.AspNetCore.SignalR;
+using CappannaHelper.Api.Hubs;
 
 namespace CappannaHelper.Api.Controllers
 {
@@ -17,20 +19,13 @@ namespace CappannaHelper.Api.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IPrintService _printService;
+        private readonly IHubContext<OrderHub> _hub;
 
-        public OrderController(ApplicationDbContext context, IPrintService printService)
+        public OrderController(ApplicationDbContext context, IPrintService printService, IHubContext<OrderHub> hub)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-            if (printService == null)
-            {
-                throw new ArgumentNullException(nameof(printService));
-            }
-
-            _context = context;
-            _printService = printService;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _printService = printService ?? throw new ArgumentNullException(nameof(printService));
+            _hub = hub ?? throw new ArgumentNullException(nameof(hub));
         }
 
         [HttpGet]
@@ -48,13 +43,14 @@ namespace CappannaHelper.Api.Controllers
         {
             var order = await _context
                 .Orders
+                .Include(o => o.Operations)
                 .Include(o => o.Details)
                 .ThenInclude(d => d.Item)
                 .FirstOrDefaultAsync(o => o.Id == id);
 
             if (order == null)
             {
-                return NotFound($"L'ordine con Id '{id} non esiste");
+                return NotFound($"L'ordine con Id '{id}' non esiste");
             }
 
             return Ok(order);
@@ -94,15 +90,28 @@ namespace CappannaHelper.Api.Controllers
             {
                 try
                 {
+                    var creationOperationId = (int)OperationTypes.Creation;
+
+                    if (!order.Operations.Any(o => o.Type.Id == creationOperationId || o.TypeId == creationOperationId))
+                    {
+                        order.Operations.Add(new ChOrderOperation
+                        {
+                            OperationTimestamp = DateTime.Now,
+                            TypeId = creationOperationId
+                        });
+                    }
+
                     result = await _context.Orders.AddAsync(order);
                     await _context.SaveChangesAsync();
                     transaction.Commit();
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Impossibile salvare l'ordine. L'ordine NON è stato salvato. Reinviare l'ordine", e);
+                    throw new Exception("Impossibile salvare l'ordine. Reinviare l'ordine", e);
                 }
             }
+
+            await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_CREATED, order);
 
             return Ok(result.Entity);
         }
@@ -127,31 +136,6 @@ namespace CappannaHelper.Api.Controllers
             catch (Exception e)
             {
                 throw new Exception("Impossibile impostare lo stato dell'ordine", e);
-            }
-        }
-
-        [Route("{id}/print")]
-        public async Task<IActionResult> GetPrint(int id)
-        {
-            var order = await _context.Orders
-                .Include(o => o.CreatedBy)
-                .Include(o => o.Details)
-                .ThenInclude(d => d.Item)
-                .FirstOrDefaultAsync(o => o.Id == id);
-
-            if (order == null)
-            {
-                return NotFound($"L'ordine con Id '{id}' non esiste");
-            }
-
-            try
-            {        
-                await _printService.PrintAsync(order);
-                return Ok(order);
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Impossibile ristampare l'ordine", e);
             }
         }
     }
