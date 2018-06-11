@@ -15,10 +15,12 @@ namespace CappannaHelper.Api.Persistence.Modelling
         public DateTime CreationTimestamp { get; set; }
         public int Status { get; set; }
         public string Notes { get; set; }
+        public IList<ChOrderOperation> Operations { get; set; }
 
         public ChOrder()
         {
             Details = new List<OrderDetail>();
+            Operations = new List<ChOrderOperation>();
         }
     }
 }

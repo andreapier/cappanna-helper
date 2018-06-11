@@ -8,6 +8,8 @@ namespace CappannaHelper.Api.Persistence.Mapping
         {
             return builder
                 .MapChOrder()
+                .MapChOrderOperation()
+                .MapOperationType()
                 .MapMenuDetail()
                 .MapOrderDetail();
         }
@@ -15,6 +17,20 @@ namespace CappannaHelper.Api.Persistence.Mapping
         public static ModelBuilder MapChOrder(this ModelBuilder builder)
         {
             var mapping = new ChOrderMapping(builder);
+            mapping.Build();
+            return builder;
+        }
+
+        public static ModelBuilder MapChOrderOperation(this ModelBuilder builder)
+        {
+            var mapping = new ChOrderOperationMapping(builder);
+            mapping.Build();
+            return builder;
+        }
+
+        public static ModelBuilder MapOperationType(this ModelBuilder builder)
+        {
+            var mapping = new OperationTypeMapping(builder);
             mapping.Build();
             return builder;
         }

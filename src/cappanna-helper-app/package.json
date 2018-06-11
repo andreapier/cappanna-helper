@@ -8,8 +8,8 @@
   "private": true,
   "proxy": "http://localhost:3900",
   "dependencies": {
-    "@aspnet/signalr": "^1.0.0-rc1-update1",
-    "@material-ui/core": "^1.1.0",
+    "@aspnet/signalr": "^1.0.0",
+    "@material-ui/core": "^1.2.0",
     "@material-ui/icons": "^1.1.0",
     "chartist": "^0.11.0",
     "localforage": "^1.7.1",
@@ -17,13 +17,14 @@
     "react-chartist": "^0.13.1",
     "react-dom": "^16.4.0",
     "react-redux": "^5.0.7",
-    "react-router-dom": "^4.2.2",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "^1.1.4",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.2",
     "redux-form": "^7.3.0",
     "redux-form-material-ui": "^5.0.0-beta.3",
-    "redux-saga": "^0.16.0"
+    "redux-saga": "^0.16.0",
+    "tslib": "^1.9.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -39,6 +40,6 @@
   "keywords": ["cappanna", "order taking"],
   "devDependencies": {
     "eslint-plugin-prettier": "^2.6.0",
-    "prettier": "^1.13.2"
+    "prettier": "^1.13.4"
   }
 }
