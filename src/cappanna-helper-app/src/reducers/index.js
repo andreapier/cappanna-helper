@@ -6,6 +6,7 @@ import menuDetails from "./menuDetails";
 import orders from "./orders";
 import error from "./error";
 import newOrder from "./newOrder";
+import selectedOrder from "./selectedOrder";
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   menuDetails,
   orders,
   newOrder,
-  error
+  error,
+  selectedOrder
 });
 
 export default rootReducer;

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Header from "components/Orders/Confirmation/Header";
-import { formatAmount } from "utils/string";
 
 class ConnectedHeader extends Component {
   render() {
@@ -17,7 +16,7 @@ const mapStateToProps = state => {
         ? "\\" + state.newOrder.header.tableCategory
         : ""),
     seats: state.newOrder.header.seats,
-    totalPrice: formatAmount(state.newOrder.header.totalPrice, false)
+    totalPrice: state.newOrder.header.totalPrice
   };
 };
 

@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import tableStyle from "variables/styles/tableStyle";
 
-function CustomTable({ ...props }) {
+const CustomTable = props => {
   const { classes, tableHead, tableData, tableHeaderColor } = props;
 
   return (
@@ -52,7 +52,7 @@ function CustomTable({ ...props }) {
       </Table>
     </div>
   );
-}
+};
 
 CustomTable.defaultProps = {
   tableHeaderColor: "gray"
@@ -70,9 +70,7 @@ CustomTable.propTypes = {
     "gray"
   ]),
   tableHead: PropTypes.arrayOf(PropTypes.string),
-  tableData: PropTypes.arrayOf(
-    PropTypes.oneOf([PropTypes.arrayOf(PropTypes.string), PropTypes.object])
-  )
+  tableData: PropTypes.arrayOf(PropTypes.array)
 };
 
 export default withStyles(tableStyle)(CustomTable);

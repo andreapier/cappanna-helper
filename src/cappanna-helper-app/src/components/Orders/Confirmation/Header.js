@@ -2,15 +2,18 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import Table from "components/Table";
+import { formatAmount } from "utils/string";
 
-const styles = theme => ({});
+const styles = {};
 
 const Header = props => {
   return (
     <Table
       tableHeaderColor="primary"
       tableHead={["Tav.", "N° coperti", "Tot (€)"]}
-      tableData={[[props.table, "" + props.seats, props.totalPrice]]}
+      tableData={[
+        [props.table, "" + props.seats, formatAmount(props.totalPrice, false)]
+      ]}
     />
   );
 };

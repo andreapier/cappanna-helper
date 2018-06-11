@@ -2,7 +2,7 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import { RegularCard, ItemGrid } from "components";
 import SignUpOk from "components/SignUpOk";
-import history from "./../../history";
+import { withRouter } from "react-router-dom";
 
 class SignUpOkPage extends React.Component {
   render() {
@@ -12,7 +12,9 @@ class SignUpOkPage extends React.Component {
         content={
           <Grid container justify="center">
             <ItemGrid xs={12} sm={12} md={6}>
-              <SignUpOk handleClick={() => history.push("/dasboard")} />
+              <SignUpOk
+                handleClick={() => this.props.history.push("/dasboard")}
+              />
             </ItemGrid>
           </Grid>
         }
@@ -21,4 +23,4 @@ class SignUpOkPage extends React.Component {
   }
 }
 
-export default SignUpOkPage;
+export default withRouter(SignUpOkPage);

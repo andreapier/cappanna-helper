@@ -18,6 +18,7 @@ function* signout(action) {
     const api = new Api();
     yield call(api.signout);
   } catch (e) {
+    console.error(e);
     yield put(setError(e.message));
   }
 

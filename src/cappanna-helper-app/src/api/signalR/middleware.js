@@ -15,7 +15,7 @@ const signalrMiddleware = ({ dispatch }) => {
 
     switch (action.type) {
       case CONNECT_SIGNALR:
-        return signalR.connect({ ...action.payload }).then(() => {
+        return signalR.connect({ token: action.payload.token }).then(() => {
           console.log("CONNECT_SIGNALR then");
           return next(action);
         });

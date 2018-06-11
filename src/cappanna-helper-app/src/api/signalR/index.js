@@ -1,27 +1,51 @@
-import { HubConnection } from "@aspnet/signalr";
+import { HubConnectionBuilder, LogLevel } from "@aspnet/signalr";
 import { menuDetailAvailabilityChanged } from "actions";
+
+const getOptions = token => {
+  return {
+    accessTokenFactory: () => token
+  };
+};
 
 class SignalR {
   constructor(dispatch) {
     this.dispatch = dispatch;
-    this.connection = "";
   }
 
   connect({ token }) {
-    const options = {
-      accessTokenFactory: () => token
-    };
+    const options = getOptions(token);
+    this.menuHubConnection = new HubConnectionBuilder()
+      .withUrl("/hubs/menu", options)
+      .configureLogging(LogLevel.Trace)
+      .build();
+    this.orderHubConnection = new HubConnectionBuilder()
+      .withUrl("/hubs/order", options)
+      .configureLogging(LogLevel.Trace)
+      .build();
 
-    this.connection = new HubConnection("/menu", options);
-    this.connection.on("NotifyAvailability", data =>
+    this.menuHubConnection.on("NotifyAvailability", data =>
       this.dispatch(menuDetailAvailabilityChanged(data))
     );
+    this.orderHubConnection.on("NotifyOrderCreated", data =>
+      //this.dispatch(orderCreated(data))
+      console.log(data)
+    );
 
-    return this.connection.start();
+    return Promise.all([
+      this.menuHubConnection
+        .start()
+        .catch(err => console.error(err.toString())),
+      this.orderHubConnection
+        .start()
+        .catch(err => console.error(err.toString()))
+    ]);
   }
 
   disconnect() {
-    return this.connection.stop();
+    return Promise.all([
+      this.menuHubConnection.stop(),
+      this.orderHubConnection.stop()
+    ]);
   }
 
   createMenuDetail(menuDetail) {

@@ -1,5 +1,5 @@
 import React from "react";
-import DishList from "components/Orders/Detail/DishList";
+import DishList from "components/Orders/New/DishList";
 import PropTypes from "prop-types";
 
 const Body = props => {

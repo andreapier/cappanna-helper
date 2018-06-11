@@ -20,6 +20,7 @@ function* loadMenuDetails(action) {
     if (e.response && e.response.status === 401) {
       yield put(signoutRequested());
     } else {
+      console.error(e);
       yield put(setError(e.message));
     }
   }

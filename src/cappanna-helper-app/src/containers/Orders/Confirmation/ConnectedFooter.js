@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Footer from "components/Orders/Confirmation/Footer";
-import history from "./../../../history";
 import { confirmOrder } from "actions";
+import { withRouter } from "react-router-dom";
 
 class ConnectedFooter extends Component {
   render() {
@@ -17,14 +17,16 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    goBack: history.goBack,
+    goBack: ownProps.history.goBack,
     confirmOrder: (order, userId) => dispatch(confirmOrder(order, userId))
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ConnectedFooter);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ConnectedFooter)
+);

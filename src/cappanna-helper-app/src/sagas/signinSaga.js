@@ -5,7 +5,8 @@ import {
   setError,
   loadingChanged,
   createEmptyOrder,
-  loadMenuDetailsCompleted
+  loadMenuDetailsCompleted,
+  connectSignalR
 } from "actions";
 import { SIGNIN_REQUESTED } from "actions/types";
 import localforage from "localforage";
@@ -33,8 +34,10 @@ function* signin(action) {
     const menuDetails = yield loadMenuDetails();
     yield put(createEmptyOrder(menuDetails));
     yield put(signinCompleted(userData));
+    yield put(connectSignalR(userData));
     history.push("/order/new");
   } catch (e) {
+    console.error(e);
     yield put(setError(e.message));
   } finally {
     yield put(loadingChanged(false));

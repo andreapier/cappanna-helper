@@ -5,7 +5,8 @@ import {
   createEmptyOrder,
   loadMenuDetailsCompleted,
   setError,
-  signoutRequested
+  signoutRequested,
+  connectSignalR
 } from "actions";
 import { LOAD_USER_DATA } from "actions/types";
 import localforage from "localforage";
@@ -40,12 +41,14 @@ function* loadUserData() {
     yield put(loadingChanged(true, "Caricamento menu..."));
     const menuDetails = yield loadMenuDetails();
     yield put(createEmptyOrder(menuDetails));
-    yield put(signinCompleted(userData.user));
+    yield put(signinCompleted(userData));
+    yield put(connectSignalR(userData));
     history.push("/order/new");
   } catch (e) {
     if (e.response && e.response.status === 401) {
       yield put(signoutRequested());
     } else {
+      console.error(e);
       yield put(setError(e.message));
     }
   } finally {
