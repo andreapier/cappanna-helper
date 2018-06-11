@@ -111,7 +111,7 @@ namespace CappannaHelper.Api.Controllers
                 }
             }
 
-            await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_CREATED, order);
+            //await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_CREATED, order);
 
             return Ok(result.Entity);
         }
