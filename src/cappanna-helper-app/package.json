@@ -21,7 +21,7 @@
     "react-scripts": "^1.1.4",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.2",
-    "redux-form": "^7.3.0",
+    "redux-form": "^7.4.0",
     "redux-form-material-ui": "^5.0.0-beta.3",
     "redux-saga": "^0.16.0",
     "tslib": "^1.9.2"
@@ -37,7 +37,10 @@
     "type": "git",
     "url": "git+https://gitlab.com/andreapier/cappanna-helper.git"
   },
-  "keywords": ["cappanna", "order taking"],
+  "keywords": [
+    "cappanna",
+    "order taking"
+  ],
   "devDependencies": {
     "eslint-plugin-prettier": "^2.6.0",
     "prettier": "^1.13.5"
