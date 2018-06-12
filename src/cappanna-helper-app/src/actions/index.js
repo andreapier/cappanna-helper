@@ -29,7 +29,8 @@ import {
   CONNECT_SIGNALR,
   DISCONNECT_SIGNALR,
   ADD_MENU_DETAIL,
-  MENU_DETAIL_AVAILABILITY_CHANGED
+  MENU_DETAIL_AVAILABILITY_CHANGED,
+  ORDER_CREATED
 } from "actions/types";
 
 const signalRAction = {
@@ -174,4 +175,8 @@ export function connectSignalR(userData) {
 
 export function disconnectSignalR() {
   return { type: DISCONNECT_SIGNALR, ...signalRAction };
+}
+
+export function orderCreated(order) {
+  return { type: ORDER_CREATED, payload: order };
 }
