@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Main from "components/Orders/Confirmation/Main";
+import Main from "components/Orders/New/Confirmation/Main";
 
 class ConnectedMain extends Component {
   render() {

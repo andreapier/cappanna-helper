@@ -192,7 +192,7 @@ class Order extends Component {
 
 const mapStateToProps = state => {
   return {
-    order: state.orders.selected
+    order: state.selectedOrder
   };
 };
 
@@ -205,4 +205,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Order);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Order);

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Footer from "components/Orders/Confirmation/Footer";
+import Footer from "components/Orders/New/Confirmation/Footer";
 import { confirmOrder } from "actions";
 import { withRouter } from "react-router-dom";
 

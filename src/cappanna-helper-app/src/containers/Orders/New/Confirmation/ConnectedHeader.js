@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Header from "components/Orders/Confirmation/Header";
+import Header from "components/Orders/New/Confirmation/Header";
 
 class ConnectedHeader extends Component {
   render() {
