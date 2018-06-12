@@ -27,8 +27,7 @@ const Links = props => {
 
 Links.propTypes = {
   classes: PropTypes.object.isRequired,
-  routes: PropTypes.array.isRequired,
-  handleSidebarNavigationItemClick: PropTypes.func.isRequired
+  routes: PropTypes.array.isRequired
 };
 
 export default withStyles(sidebarStyle)(Links);

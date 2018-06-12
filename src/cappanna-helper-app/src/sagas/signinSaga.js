@@ -1,21 +1,20 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "api";
 import {
-    signinCompleted,
-    setError,
-    loadingChanged,
-    loadMenuDetailsRequested
+  signinCompleted,
+  setError,
+  loadingChanged,
+  loadMenuDetailsRequested,
+  connectSignalR
 } from "actions";
 import { SIGNIN_REQUESTED } from "actions/types";
 import localforage from "localforage";
 import history from "./../history";
 
 const saveUserData = userData =>
-    localforage
-        .setItem("userData", userData)
-        .catch(err =>
-            console.log("Error saving user data in local storage", err)
-        );
+  localforage
+    .setItem("userData", userData)
+    .catch(err => console.log("Error saving user data in local storage", err));
 
 function* signin(action) {
   try {
@@ -24,8 +23,7 @@ function* signin(action) {
     const userData = yield call(api.signin, action.payload);
     yield saveUserData(userData);
     yield put(loadingChanged(true, "Caricamento menu..."));
-    const menuDetails = yield loadMenuDetails();
-    yield put(createEmptyOrder(menuDetails));
+    yield put(loadMenuDetailsRequested());
     yield put(signinCompleted(userData));
     yield put(connectSignalR(userData));
     history.push("/order/new");
@@ -38,7 +36,7 @@ function* signin(action) {
 }
 
 function* signinSaga() {
-    yield takeLatest(SIGNIN_REQUESTED, signin);
+  yield takeLatest(SIGNIN_REQUESTED, signin);
 }
 
 export default signinSaga;

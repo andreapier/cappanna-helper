@@ -55,7 +55,8 @@ const Sidebar = props => {
 };
 
 Sidebar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  handleSidebarNavigationItemClick: PropTypes.func.isRequired
 };
 
 export default withStyles(sidebarStyle)(Sidebar);

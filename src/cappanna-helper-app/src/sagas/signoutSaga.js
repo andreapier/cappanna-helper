@@ -6,14 +6,15 @@ import localforage from "localforage";
 import history from "./../history";
 
 const deleteUserData = () =>
-    localforage
-        .removeItem("userData")
-        .catch(err =>
-            console.log("Error removing user data from local storage", err)
-        );
+  localforage
+    .removeItem("userData")
+    .catch(err =>
+      console.log("Error removing user data from local storage", err)
+    );
 
 function* signout(action) {
   try {
+    yield deleteUserData();
     yield put(loadingChanged(true, "Logout in corso..."));
     const api = new Api();
     yield call(api.signout);
@@ -22,13 +23,13 @@ function* signout(action) {
     yield put(setError(e.message));
   }
 
-    yield put(signoutCompleted());
-    history.push("/");
-    yield put(loadingChanged(false));
+  yield put(signoutCompleted());
+  history.push("/");
+  yield put(loadingChanged(false));
 }
 
 function* signoutSaga() {
-    yield takeLatest(SIGNOUT_REQUESTED, signout);
+  yield takeLatest(SIGNOUT_REQUESTED, signout);
 }
 
 export default signoutSaga;

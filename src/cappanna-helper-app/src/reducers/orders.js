@@ -1,4 +1,4 @@
-import { LOAD_ORDERS_LIST_COMPLETED } from "actions/types";
+import { LOAD_ORDERS_LIST_COMPLETED, ORDER_CREATED } from "actions/types";
 
 const initialStatus = [];
 
@@ -8,7 +8,7 @@ export default function(state = initialStatus, action) {
       return [...action.payload];
 
     case ORDER_CREATED:
-      return {...state, orders: [...state.orders, action.payload]}
+      return [...state, action.payload];
 
     default:
       return state;
