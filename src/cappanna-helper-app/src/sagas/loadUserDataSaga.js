@@ -1,10 +1,10 @@
 import { put, takeLatest, call } from "redux-saga/effects";
 import {
-    signinCompleted,
-    loadingChanged,
-    loadMenuDetailsRequested,
-    setError,
-    signoutRequested
+  signinCompleted,
+  loadingChanged,
+  setError,
+  signoutRequested,
+  connectSignalR
 } from "actions";
 import { LOAD_USER_DATA } from "actions/types";
 import localforage from "localforage";
@@ -30,6 +30,7 @@ function* loadUserData() {
         const api = new Api();
         yield call(api.signinByToken, userData);
         yield put(signinCompleted(userData));
+        yield put(connectSignalR(userData));
         history.push("/order/new");
         yield put(loadMenuDetailsRequested());
     } catch (e) {

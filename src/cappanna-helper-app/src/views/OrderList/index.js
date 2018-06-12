@@ -1,6 +1,14 @@
 import React from "react";
-import ConnectedOrdersList from "containers/Orders/ConnectedOrdersList";
+import ConnectedHeader from "containers/Orders/List/ConnectedHeader";
+import ConnectedOrdersList from "containers/Orders/List/ConnectedOrdersList";
 
-const OrderList = props => <ConnectedOrdersList {...props} />;
+const OrderList = () => {
+  return (
+    <div>
+      <ConnectedHeader />
+      <ConnectedOrdersList />
+    </div>
+  );
+};
 
 export default OrderList;

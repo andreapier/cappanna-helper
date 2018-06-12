@@ -102,12 +102,13 @@ namespace CappannaHelper.Api
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseStaticFiles();
             app.UseSetupMiddleware();
             app.UseAuthentication();
             app.UseSignalR(routes =>
             {
-                routes.MapHub<MenuHub>("/menu");
-                routes.MapHub<OrderHub>("/order");
+                routes.MapHub<MenuHub>("/hubs/menu");
+                routes.MapHub<OrderHub>("/hubs/order");
             });
             app.UseMvc();
         }

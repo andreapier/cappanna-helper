@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Main from "components/Orders/Confirmation/Main";
-import { formatAmount } from "utils/string";
 
 class ConnectedMain extends Component {
   render() {
@@ -17,9 +16,9 @@ const mapStateToProps = state => {
 
         return {
           name: menuDetail.name,
-          price: formatAmount(menuDetail.price, false),
+          price: menuDetail.price,
           quantity: e.quantity,
-          totalPrice: formatAmount(menuDetail.price * e.quantity, false)
+          totalPrice: menuDetail.price * e.quantity
         };
       })
       .filter(e => e.quantity > 0)

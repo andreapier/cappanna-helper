@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Card, CardHeader } from "@material-ui/core/Card";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
 import IconButton from "@material-ui/core/IconButton";
 import ContentAdd from "@material-ui/icons/Add";
 import ActionDone from "@material-ui/icons/Done";

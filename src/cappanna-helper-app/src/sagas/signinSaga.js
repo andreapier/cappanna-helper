@@ -18,22 +18,23 @@ const saveUserData = userData =>
         );
 
 function* signin(action) {
-    try {
-        yield put(loadingChanged(true, "Login in corso..."));
-        const api = new Api();
-        const userData = yield call(api.signin, action.payload);
-
-        if (action.payload.rememberMe) {
-            yield saveUserData(userData);
-        }
-
-        yield put(signinCompleted(userData));
-        history.push("/order/new");
-    } catch (e) {
-        yield put(setError(e.message));
-    }
-
-    yield put(loadMenuDetailsRequested());
+  try {
+    yield put(loadingChanged(true, "Login in corso..."));
+    const api = new Api();
+    const userData = yield call(api.signin, action.payload);
+    yield saveUserData(userData);
+    yield put(loadingChanged(true, "Caricamento menu..."));
+    const menuDetails = yield loadMenuDetails();
+    yield put(createEmptyOrder(menuDetails));
+    yield put(signinCompleted(userData));
+    yield put(connectSignalR(userData));
+    history.push("/order/new");
+  } catch (e) {
+    console.error(e);
+    yield put(setError(e.message));
+  } finally {
+    yield put(loadingChanged(false));
+  }
 }
 
 function* signinSaga() {

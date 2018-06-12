@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setOrderTable, setOrderTableCategory, setOrderSeats } from "actions";
 import Header from "components/Orders/New/Header";
-import history from "./../../../history";
+import { withRouter } from "react-router-dom";
 
 class ConnectedHeader extends Component {
   render() {
@@ -23,17 +23,19 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     setOrderTable: table => dispatch(setOrderTable(table)),
     setOrderTableCategory: tableCategory =>
       dispatch(setOrderTableCategory(tableCategory)),
     setOrderSeats: seats => dispatch(setOrderSeats(seats)),
-    goToConfirm: () => history.push("/order/confirm")
+    goToConfirm: () => ownProps.history.push("/order/confirm")
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ConnectedHeader);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ConnectedHeader)
+);

@@ -13,14 +13,14 @@ const deleteUserData = () =>
         );
 
 function* signout(action) {
-    try {
-        yield put(loadingChanged(true, "Logout in corso..."));
-        const api = new Api();
-        yield call(api.signout);
-        yield deleteUserData();
-    } catch (e) {
-        yield put(setError(e.message));
-    }
+  try {
+    yield put(loadingChanged(true, "Logout in corso..."));
+    const api = new Api();
+    yield call(api.signout);
+  } catch (e) {
+    console.error(e);
+    yield put(setError(e.message));
+  }
 
     yield put(signoutCompleted());
     history.push("/");

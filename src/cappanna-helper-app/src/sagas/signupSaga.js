@@ -14,6 +14,7 @@ function* signup(action) {
     history.push("/users/signup/ok");
     reset("signupForm");
   } catch (e) {
+    console.error(e);
     yield put(setError(e.message));
   } finally {
     yield put(loadingChanged(false));
