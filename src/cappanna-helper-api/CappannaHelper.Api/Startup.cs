@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -47,7 +48,9 @@ namespace CappannaHelper.Api
             var persistenceConfiguration = _configuration.GetSection("Persistence").Get<PersistenceConfiguration>();
 
             services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>(o => o.UseSqlite(persistenceConfiguration.ConnectionString));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+                .AddJsonOptions(o => o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -102,15 +105,17 @@ namespace CappannaHelper.Api
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseStaticFiles();
-            app.UseSetupMiddleware();
-            app.UseAuthentication();
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<MenuHub>("/hubs/menu");
-                routes.MapHub<OrderHub>("/hubs/order");
-            });
-            app.UseMvc();
+            app
+                .UseDefaultFiles()
+                .UseStaticFiles()
+                .UseSetupMiddleware()
+                .UseAuthentication()
+                .UseSignalR(routes =>
+                {
+                    routes.MapHub<MenuHub>("/hubs/menu");
+                    routes.MapHub<OrderHub>("/hubs/order");
+                })
+                .UseMvc();
         }
     }
 }
