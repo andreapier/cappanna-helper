@@ -9,6 +9,16 @@
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Persistence\CappannaHelper.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Persistence\CappannaHelper.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   
   <ItemGroup>
     <Folder Include="Migrations\" />
