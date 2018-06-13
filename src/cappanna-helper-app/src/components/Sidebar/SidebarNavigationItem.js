@@ -19,7 +19,6 @@ const SidebarNavigationItem = ({
   location,
   user,
   classes,
-  color,
   handleSidebarNavigationItemClick
 }) => {
   if (routeData.redirect) {

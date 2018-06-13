@@ -22,13 +22,9 @@ const Sidebar = props => {
       <Hidden mdUp>
         <Drawer
           open={props.open}
-          classes={{
-            paper: classes.drawerPaper
-          }}
+          classes={{ paper: classes.drawerPaper }}
           onClose={props.handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true
-          }}
+          ModalProps={{ keepMounted: true }}
         >
           <Logo logo={logo} logoText={logoText} />
           <Links
@@ -42,12 +38,14 @@ const Sidebar = props => {
         <Drawer
           variant="permanent"
           open
-          classes={{
-            paper: classes.drawerPaper
-          }}
+          classes={{ paper: classes.drawerPaper }}
         >
           <Logo logo={logo} logoText={logoText} />
-          <Links routes={routes} user={user} />
+          <Links
+            routes={routes}
+            user={user}
+            handleSidebarNavigationItemClick={handleSidebarNavigationItemClick}
+          />
         </Drawer>
       </Hidden>
     </div>
@@ -55,8 +53,7 @@ const Sidebar = props => {
 };
 
 Sidebar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  handleSidebarNavigationItemClick: PropTypes.func.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(sidebarStyle)(Sidebar);
