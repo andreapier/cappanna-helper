@@ -42,7 +42,7 @@ class SignIn extends Component {
           </ItemGrid>
           <ItemGrid xs={12} md={3}>
             <FormControlLabel
-              control={<Field name="rememberMe" component={Checkbox} />}
+              control={<Field name="rememberMe" color="primary" component={Checkbox} />}
               label="Ricordami"
             />
           </ItemGrid>

@@ -9,8 +9,7 @@ import {
   dangerColor,
   successColor,
   infoColor,
-  primaryColor,
-  roseColor
+  primaryColor
 } from "variables/styles";
 
 const chartCardStyle = {
@@ -68,9 +67,6 @@ const chartCardStyle = {
   },
   infoCardStatsIcon: {
     color: infoColor
-  },
-  roseCardStatsIcon: {
-    color: roseColor
   },
   grayCardStatsIcon: {
     color: grayColor

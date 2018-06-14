@@ -1,19 +1,17 @@
 import {
   grayColor,
-  roseColor,
   primaryColor,
   infoColor,
   successColor,
   warningColor,
-  dangerColor
+  dangerColor,
+  infoBoxShadow
 } from "variables/styles";
 
 const buttonStyle = {
   button: {
     backgroundColor: grayColor,
     color: "#FFFFFF",
-    boxShadow:
-      "0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12)",
     border: "none",
     borderRadius: "3px",
     position: "relative",
@@ -43,8 +41,6 @@ const buttonStyle = {
   },
   primary: {
     backgroundColor: primaryColor,
-    boxShadow:
-      "0 2px 2px 0 rgba(156, 39, 176, 0.14), 0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12)",
     "&:hover": {
       backgroundColor: primaryColor,
       boxShadow:
@@ -53,18 +49,13 @@ const buttonStyle = {
   },
   info: {
     backgroundColor: infoColor,
-    boxShadow:
-      "0 2px 2px 0 rgba(0, 188, 212, 0.14), 0 3px 1px -2px rgba(0, 188, 212, 0.2), 0 1px 5px 0 rgba(0, 188, 212, 0.12)",
     "&:hover": {
       backgroundColor: infoColor,
-      boxShadow:
-        "0 14px 26px -12px rgba(0, 188, 212, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 188, 212, 0.2)"
+      boxShadow: infoBoxShadow
     }
   },
   success: {
     backgroundColor: successColor,
-    boxShadow:
-      "0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2), 0 1px 5px 0 rgba(76, 175, 80, 0.12)",
     "&:hover": {
       backgroundColor: successColor,
       boxShadow:
@@ -73,8 +64,6 @@ const buttonStyle = {
   },
   warning: {
     backgroundColor: warningColor,
-    boxShadow:
-      "0 2px 2px 0 rgba(255, 152, 0, 0.14), 0 3px 1px -2px rgba(255, 152, 0, 0.2), 0 1px 5px 0 rgba(255, 152, 0, 0.12)",
     "&:hover": {
       backgroundColor: warningColor,
       boxShadow:
@@ -83,22 +72,10 @@ const buttonStyle = {
   },
   danger: {
     backgroundColor: dangerColor,
-    boxShadow:
-      "0 2px 2px 0 rgba(244, 67, 54, 0.14), 0 3px 1px -2px rgba(244, 67, 54, 0.2), 0 1px 5px 0 rgba(244, 67, 54, 0.12)",
     "&:hover": {
       backgroundColor: dangerColor,
       boxShadow:
         "0 14px 26px -12px rgba(244, 67, 54, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(244, 67, 54, 0.2)"
-    }
-  },
-  rose: {
-    backgroundColor: roseColor,
-    boxShadow:
-      "0 2px 2px 0 rgba(233, 30, 99, 0.14), 0 3px 1px -2px rgba(233, 30, 99, 0.2), 0 1px 5px 0 rgba(233, 30, 99, 0.12)",
-    "&:hover": {
-      backgroundColor: roseColor,
-      boxShadow:
-        "0 14px 26px -12px rgba(233, 30, 99, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(233, 30, 99, 0.2)"
     }
   },
   white: {

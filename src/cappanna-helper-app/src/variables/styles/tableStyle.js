@@ -1,14 +1,9 @@
-// ##############################
-// // // Table styles
-// #############################
-
 import {
   warningColor,
   primaryColor,
   dangerColor,
   successColor,
   infoColor,
-  roseColor,
   grayColor,
   defaultFont
 } from "variables/styles";
@@ -28,9 +23,6 @@ const tableStyle = theme => ({
   },
   infoTableHeader: {
     color: infoColor
-  },
-  roseTableHeader: {
-    color: roseColor
   },
   grayTableHeader: {
     color: grayColor
