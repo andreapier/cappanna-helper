@@ -1,31 +1,24 @@
-import { LOAD_ORDERS_LIST_COMPLETED, ORDER_CREATED } from "actions/types";
+import {
+  LOAD_ORDERS_LIST_REQUESTED,
+  LOAD_ORDERS_LIST_COMPLETED,
+  ORDER_CREATED
+} from "actions/types";
 
-const initialStatus = [];
-const areEqual = (prev, next) => {
-  if (prev.length !== next.length) {
-    return false;
-  }
-
-  for (let i = 0, l = prev.length; i < l; i++) {
-    console.log(prev[i].id, next[i].id);
-    if (prev[i].id !== next[i].id) {
-      return false;
-    }
-  }
-
-  return true;
+const initialStatus = {
+  loading: false,
+  loaded: false,
+  items: []
 };
 
 export default function(state = initialStatus, action) {
   switch (action.type) {
+    case LOAD_ORDERS_LIST_REQUESTED:
+      return { ...state, loading: true };
     case LOAD_ORDERS_LIST_COMPLETED:
-      if (!areEqual(state, action.payload)) {
-        return [...action.payload];
-      }
-      return state;
+      return { loading: false, loaded: true, items: action.payload };
 
     case ORDER_CREATED:
-      return [...state, action.payload];
+      return { ...state, items: [...state.items, action.payload] };
 
     default:
       return state;

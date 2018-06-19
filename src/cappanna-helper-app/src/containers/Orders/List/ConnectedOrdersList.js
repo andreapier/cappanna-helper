@@ -4,14 +4,26 @@ import { loadOrderRequested, loadOrdersListRequested } from "actions";
 import List from "components/Orders/List";
 
 class ConnectedOrdersList extends Component {
+  componentDidMount() {
+    if (this.props.shouldLoad) {
+      this.props.loadOrdersListRequested();
+    }
+  }
+
   render() {
-    return <List {...this.props} />;
+    return (
+      <List
+        orders={this.props.orders}
+        loadOrderRequested={this.props.loadOrderRequested}
+      />
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    orders: state.orders
+    shouldLoad: !state.orders.loading && !state.orders.loaded,
+    orders: state.orders.items
   };
 };
 
