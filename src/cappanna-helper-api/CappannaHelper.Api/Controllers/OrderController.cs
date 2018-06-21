@@ -31,8 +31,9 @@ namespace CappannaHelper.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            var limit = DateTime.Now.AddHours(-12);
             var orders = await _context.Orders
-                .Where(o => o.CreationTimestamp >= DateTime.Now.AddHours(-12))
+                .Where(o => o.CreationTimestamp >= limit)
                 .ToListAsync();
 
             return Ok(orders);
