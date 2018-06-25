@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
+import IconButton from "components/CustomButtons/IconButton";
 import TextField from "@material-ui/core/TextField";
 import ContentSend from "@material-ui/icons/Send";
 import AmountFormat from "components/AmountFormat";
@@ -13,10 +13,6 @@ const containerStyle = {
 
 const textFieldStyle = {
   width: "60px"
-};
-
-const buttonStyle = {
-  margin: "auto auto auto 5px"
 };
 
 const Header = props => {
@@ -68,16 +64,13 @@ const Header = props => {
           Tot: <AmountFormat amount={props.totalPrice} />
         </div>
         <div>
-          <Button
-            variant="fab"
-            mini={true}
+          <IconButton
             type="submit"
-            style={buttonStyle}
             disabled={!props.canConfirm}
             onClick={props.goToConfirm}
           >
             <ContentSend />
-          </Button>
+          </IconButton>
         </div>
       </div>
     </div>

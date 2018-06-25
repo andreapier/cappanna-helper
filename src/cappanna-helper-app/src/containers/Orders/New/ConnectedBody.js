@@ -12,7 +12,7 @@ class ConnectedBody extends Component {
 const mapStateToProps = state => {
   return {
     dishList: state.newOrder.details.map(e => {
-      const menuDetail = state.menuDetails.filter(d => d.id === e.id)[0];
+      const menuDetail = state.menuDetails.items.find(d => d.id === e.id);
 
       return {
         ...menuDetail,

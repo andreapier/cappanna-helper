@@ -9,7 +9,6 @@ const styles = {};
 const Main = props => {
   return (
     <Table
-      tableHeaderColor="primary"
       tableHead={["Nome", "Prezzo (€)", "Qta", "Tot (€)"]}
       tableData={props.orderData.map(e => [
         e.name,

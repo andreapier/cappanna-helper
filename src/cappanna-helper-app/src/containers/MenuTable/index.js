@@ -1,37 +1,33 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Table from "components/Table";
 import { loadMenuDetailsRequested } from "actions";
+import List from "components/Menu/List";
 
 class MenuTable extends Component {
-    componentWillMount() {
-        this.props.loadMenuDetailsRequested();
+  componentDidMount() {
+    if (this.props.shouldLoad) {
+      this.props.loadMenuDetailsRequested();
     }
+  }
 
-    render() {
-        return (
-            <Table
-                tableHeaderColor="primary"
-                tableHead={["Id", "Prezzo", "Nome", "Gruppo"]}
-                {...this.props}
-            />
-        );
-    }
+  render() {
+    return <List dishList={this.props.dishList} />;
+  }
 }
 
 const mapStateToProps = state => {
-    return {
-        tableData: state.menuDetails
-    };
+  return {
+    dishList: state.menuDetails.items
+  };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        loadMenuDetailsRequested: () => dispatch(loadMenuDetailsRequested())
-    };
+  return {
+    loadMenuDetailsRequested: () => dispatch(loadMenuDetailsRequested())
+  };
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(MenuTable);

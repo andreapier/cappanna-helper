@@ -55,7 +55,7 @@ const CustomTable = props => {
 };
 
 CustomTable.defaultProps = {
-  tableHeaderColor: "gray"
+  tableHeaderColor: "info"
 };
 
 CustomTable.propTypes = {

@@ -12,7 +12,9 @@ const mapStateToProps = state => {
   return {
     orderData: state.newOrder.details
       .map(e => {
-        const menuDetail = state.menuDetails.filter(d => d.id === e.id)[0];
+        const menuDetail = state.menuDetails.items.filter(
+          d => d.id === e.id
+        )[0];
 
         return {
           name: menuDetail.name,

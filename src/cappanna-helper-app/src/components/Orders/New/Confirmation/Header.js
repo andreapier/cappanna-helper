@@ -9,7 +9,6 @@ const styles = {};
 const Header = props => {
   return (
     <Table
-      tableHeaderColor="primary"
       tableHead={["Tav.", "N° coperti", "Tot (€)"]}
       tableData={[
         [props.table, "" + props.seats, formatAmount(props.totalPrice, false)]

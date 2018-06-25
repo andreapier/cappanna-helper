@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
+import IconButton from "components/CustomButtons/IconButton";
 import ContentAdd from "@material-ui/icons/Add";
 import ContentRemove from "@material-ui/icons/Remove";
 import AmountFormat from "components/AmountFormat";
@@ -35,9 +35,7 @@ const Detail = props => {
           <AmountFormat amount={props.item.price} />
         </div>
         <div>
-          <Button
-            variant="fab"
-            mini={true}
+          <IconButton
             onClick={() =>
               props.incrementOrderDetailQuantity(
                 props.item.id,
@@ -48,13 +46,11 @@ const Detail = props => {
             disabled={!props.item.isAvailable}
           >
             <ContentAdd />
-          </Button>
+          </IconButton>
         </div>
         <div style={innerItemStyle20px}>{props.item.quantity}</div>
         <div>
-          <Button
-            variant="fab"
-            mini={true}
+          <IconButton
             onClick={() =>
               props.incrementOrderDetailQuantity(
                 props.item.id,
@@ -65,7 +61,7 @@ const Detail = props => {
             disabled={props.item.quantity === 0 || !props.item.isAvailable}
           >
             <ContentRemove />
-          </Button>
+          </IconButton>
         </div>
       </div>
     </div>

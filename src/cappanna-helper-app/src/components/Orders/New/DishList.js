@@ -8,11 +8,11 @@ import OrderDetail from "components/Orders/New/MenuItemDetail";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
-const styles = theme => ({
+const styles = {
   root: {
     flexGrow: 1
   }
-});
+};
 
 const DishList = props => {
   return (

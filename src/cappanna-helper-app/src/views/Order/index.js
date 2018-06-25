@@ -1,8 +1,14 @@
 import React from "react";
-import Order from "components/Order/Order";
+import ConnectedHeader from "containers/Orders/Detail/ConnectedHeader";
+import ConnectedBody from "containers/Orders/Detail/ConnectedBody";
 
-const OrderPage = ({ ...props }) => {
-  return <Order />;
+const OrderPage = () => {
+  return (
+    <div>
+      <ConnectedHeader />
+      <ConnectedBody />
+    </div>
+  );
 };
 
 export default OrderPage;

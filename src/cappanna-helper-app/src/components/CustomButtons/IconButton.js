@@ -1,11 +1,11 @@
 import React from "react";
 import { withStyles, IconButton } from "@material-ui/core";
 import PropTypes from "prop-types";
-
 import iconButtonStyle from "variables/styles/iconButtonStyle";
 
-function IconCustomButton({ ...props }) {
+const IconCustomButton = props => {
   const { classes, color, children, customClass, ...rest } = props;
+
   return (
     <IconButton
       {...rest}
@@ -18,7 +18,11 @@ function IconCustomButton({ ...props }) {
       {children}
     </IconButton>
   );
-}
+};
+
+IconCustomButton.defaultProps = {
+  color: "info"
+};
 
 IconCustomButton.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -28,7 +32,6 @@ IconCustomButton.propTypes = {
     "success",
     "warning",
     "danger",
-    "rose",
     "white",
     "simple"
   ]),

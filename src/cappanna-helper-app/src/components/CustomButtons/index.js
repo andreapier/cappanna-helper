@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import cx from "classnames";
 import buttonStyle from "variables/styles/buttonStyle";
 
-function RegularButton({ ...props }) {
+const RegularButton = props => {
   const {
     classes,
     color,
@@ -25,7 +25,10 @@ function RegularButton({ ...props }) {
       {children}
     </Button>
   );
-}
+};
+RegularButton.defaultProps = {
+  color: "info"
+};
 
 RegularButton.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -35,7 +38,6 @@ RegularButton.propTypes = {
     "success",
     "warning",
     "danger",
-    "rose",
     "white",
     "simple",
     "transparent"
