@@ -24,7 +24,7 @@
     "redux-form": "^7.4.2",
     "redux-form-material-ui": "^5.0.0-beta.3",
     "redux-saga": "^0.16.0",
-    "tslib": "^1.9.2"
+    "tslib": "^1.9.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -42,7 +42,7 @@
     "order taking"
   ],
   "devDependencies": {
-    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-prettier": "^2.6.1",
     "prettier": "^1.13.5"
   }
 }
