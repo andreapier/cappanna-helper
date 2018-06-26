@@ -5,13 +5,13 @@ import iconButtonStyle from "variables/styles/iconButtonStyle";
 
 const IconCustomButton = props => {
   const { classes, color, children, customClass, ...rest } = props;
+  const colorWithDisabled = props.disabled ? "" : color;
 
   return (
     <IconButton
       {...rest}
       className={
-        classes.button +
-        (color ? " " + classes[color] : "") +
+        classes.button + " " + classes[colorWithDisabled] +
         (customClass ? " " + customClass : "")
       }
     >

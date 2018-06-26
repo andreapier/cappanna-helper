@@ -51,6 +51,7 @@ const iconButtonStyle = {
   },
   info: {
     backgroundColor: infoColor,
+    color: "#FFFFFF",
     "&:hover": {
       backgroundColor: infoColor,
       boxShadow:

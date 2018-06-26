@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import regularCardStyle from "variables/styles/regularCardStyle";
 
-function RegularCard({ ...props }) {
+const RegularCard = props => {
   const {
     classes,
     plainCard,
