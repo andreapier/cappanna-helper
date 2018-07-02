@@ -16,11 +16,11 @@ class SignalR {
     const options = getOptions(token);
     this.menuHubConnection = new HubConnectionBuilder()
       .withUrl("/hubs/menu", options)
-      .configureLogging(LogLevel.Trace)
+      .configureLogging(LogLevel.Info)
       .build();
     this.orderHubConnection = new HubConnectionBuilder()
       .withUrl("/hubs/order", options)
-      .configureLogging(LogLevel.Trace)
+      .configureLogging(LogLevel.Info)
       .build();
 
     this.menuHubConnection.on("NotifyAvailability", data =>

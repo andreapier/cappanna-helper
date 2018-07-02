@@ -192,7 +192,7 @@ class Order extends Component {
 
 const mapStateToProps = state => {
   return {
-    order: state.selectedOrder
+    order: state.selectedOrder.item
   };
 };
 

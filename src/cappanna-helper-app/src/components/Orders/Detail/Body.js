@@ -8,7 +8,7 @@ const buildTableRow = dish => [
   dish.name,
   formatAmount(dish.price, false),
   dish.quantity,
-  formatAmount(dish.totalPrice)
+  formatAmount(dish.totalPrice, false)
 ];
 
 const Body = props => {

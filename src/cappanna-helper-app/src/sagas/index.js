@@ -5,7 +5,7 @@ import signupSaga from "./signupSaga";
 import loadUserDataSaga from "./loadUserDataSaga";
 import confirmOrderSaga from "./confirmOrderSaga";
 import loadOrdersListSaga from "./loadOrdersListSaga";
-import loadOrderSaga from "./loadOrderSaga";
+import loadSelectedOrderSaga from "./loadSelectedOrderSaga";
 import printOrderSaga from "./printOrderSaga";
 import setOrderStatusSaga from "./setOrderStatusSaga";
 import loadMenuDetailsSaga from "./loadMenuDetailsSaga";
@@ -18,7 +18,7 @@ function* rootSaga() {
     loadUserDataSaga(),
     confirmOrderSaga(),
     loadOrdersListSaga(),
-    loadOrderSaga(),
+    loadSelectedOrderSaga(),
     printOrderSaga(),
     setOrderStatusSaga(),
     loadMenuDetailsSaga()

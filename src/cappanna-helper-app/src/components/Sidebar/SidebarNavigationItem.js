@@ -5,22 +5,20 @@ import {
   withStyles
 } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
-import cx from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
 import sidebarStyle from "variables/styles/sidebarStyle";
-import { withRouter } from "react-router-dom";
-import { isRouteActive } from "routes/helpers";
 
 const signinRoute = routeName => routeName === "signin";
 
-const SidebarNavigationItem = ({
-  routeData,
-  location,
-  user,
-  classes,
-  handleSidebarNavigationItemClick
-}) => {
+const SidebarNavigationItem = props => {
+  const {
+    routeData,
+    user,
+    classes,
+    handleSidebarNavigationItemClick,
+    active
+  } = props;
   if (routeData.redirect) {
     return null;
   }
@@ -37,9 +35,7 @@ const SidebarNavigationItem = ({
     return null;
   }
 
-  const selectedItemLinkClasses = cx({
-    [" " + classes.selectedItemLink]: isRouteActive(routeData.path, location)
-  });
+  const selectedItemLinkClasses = active ? classes.selectedItemLink : "";
 
   return (
     <NavLink
@@ -64,7 +60,8 @@ const SidebarNavigationItem = ({
 
 SidebarNavigationItem.propTypes = {
   classes: PropTypes.object.isRequired,
-  handleSidebarNavigationItemClick: PropTypes.func.isRequired
+  handleSidebarNavigationItemClick: PropTypes.func.isRequired,
+  active: PropTypes.bool.isRequired
 };
 
-export default withRouter(withStyles(sidebarStyle)(SidebarNavigationItem));
+export default withStyles(sidebarStyle)(SidebarNavigationItem);

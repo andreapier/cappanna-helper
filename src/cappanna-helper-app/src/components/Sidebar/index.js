@@ -4,17 +4,17 @@ import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React from "react";
 import sidebarStyle from "variables/styles/sidebarStyle";
-import Links from "./Links";
-import Logo from "./Logo";
+import Links from "components/Sidebar/Links";
+import Logo from "components/Sidebar/Logo";
 
 const Sidebar = props => {
   const {
     classes,
-    logo,
-    logoText,
     routes,
     user,
-    handleSidebarNavigationItemClick
+    handleSidebarNavigationItemClick,
+    location,
+    match
   } = props;
 
   return (
@@ -26,11 +26,13 @@ const Sidebar = props => {
           onClose={props.handleDrawerToggle}
           ModalProps={{ keepMounted: true }}
         >
-          <Logo logo={logo} logoText={logoText} />
+          <Logo />
           <Links
             routes={routes}
             user={user}
             handleSidebarNavigationItemClick={handleSidebarNavigationItemClick}
+            location={location}
+            match={match}
           />
         </Drawer>
       </Hidden>
@@ -40,11 +42,13 @@ const Sidebar = props => {
           open
           classes={{ paper: classes.drawerPaper }}
         >
-          <Logo logo={logo} logoText={logoText} />
+          <Logo />
           <Links
             routes={routes}
             user={user}
             handleSidebarNavigationItemClick={handleSidebarNavigationItemClick}
+            location={location}
+            match={match}
           />
         </Drawer>
       </Hidden>

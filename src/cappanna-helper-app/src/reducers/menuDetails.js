@@ -12,7 +12,7 @@ const initialStatus = {
 export default function(state = initialStatus, action) {
   switch (action.type) {
     case LOAD_MENU_DETAILS_REQUESTED:
-      return { ...state, loading: true };
+      return { ...state, loading: true, loaded: false };
 
     case LOAD_MENU_DETAILS_COMPLETED:
       return {

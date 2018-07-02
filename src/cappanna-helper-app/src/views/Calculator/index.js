@@ -1,10 +1,11 @@
-import React, { Component } from "react";
-import Calculator from "components/Calculator";
+import React from "react";
+import Loadable from "react-loadable";
+import WaitDialog from "components/WaitDialog";
 
-class CalculatorPage extends Component {
-  render() {
-    return <Calculator />;
-  }
-}
+const LoadableCalculatorPage = Loadable({
+  loader: () => import("components/Calculator"),
+  loading: WaitDialog,
+  delay: 300
+});
 
-export default CalculatorPage;
+export default LoadableCalculatorPage;

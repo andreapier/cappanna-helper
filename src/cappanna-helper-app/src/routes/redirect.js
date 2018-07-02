@@ -1,7 +1,7 @@
 const redirect = {
   redirect: true,
   path: "/",
-  to: "/orders"
+  to: "/order"
 };
 
 export default redirect;

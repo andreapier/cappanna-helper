@@ -4,7 +4,7 @@ import {
   loadingChanged,
   setError,
   signoutRequested,
-  loadOrderRequested,
+  loadSelectedOrderRequested,
   resetOrder
 } from "actions";
 import { CONFIRM_ORDER } from "actions/types";
@@ -14,7 +14,7 @@ function* confirmOrder(action) {
     yield put(loadingChanged(true, "Ordine in corso..."));
     const api = new Api();
     const order = yield call(api.createOrder, action.payload);
-    yield put(loadOrderRequested(order.id));
+    yield put(loadSelectedOrderRequested(order.id));
     yield put(resetOrder());
   } catch (e) {
     if (e.response && e.response.status === 401) {

@@ -33,7 +33,7 @@ namespace CappannaHelper.Api.Controllers
         {
             var limit = DateTime.Now.AddHours(-12);
             var orders = await _context.Orders
-                .Where(o => o.CreationTimestamp >= limit)
+                //.Where(o => o.CreationTimestamp >= limit)
                 .ToListAsync();
 
             return Ok(orders);

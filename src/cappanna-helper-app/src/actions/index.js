@@ -16,8 +16,10 @@ import {
   CONFIRM_ORDER,
   LOAD_ORDERS_LIST_REQUESTED,
   LOAD_ORDERS_LIST_COMPLETED,
-  LOAD_ORDER_REQUESTED,
-  LOAD_ORDER_COMPLETED,
+  INVALIDATE_ORDERS_LIST,
+  LOAD_SELECTED_ORDER_REQUESTED,
+  LOAD_SELECTED_ORDER_COMPLETED,
+  INVALIDATE_SELECTED_ORDER,
   PRINT_REQUESTED,
   PRINT_COMPLETED,
   RESET_ORDER,
@@ -130,12 +132,20 @@ export function loadOrdersListCompleted(orders) {
   return { type: LOAD_ORDERS_LIST_COMPLETED, payload: orders };
 }
 
-export function loadOrderRequested(orderId) {
-  return { type: LOAD_ORDER_REQUESTED, payload: orderId };
+export function invalidateOrdersList() {
+  return { type: INVALIDATE_ORDERS_LIST };
 }
 
-export function loadOrderCompleted(order) {
-  return { type: LOAD_ORDER_COMPLETED, payload: order };
+export function loadSelectedOrderRequested(orderId) {
+  return { type: LOAD_SELECTED_ORDER_REQUESTED, payload: orderId };
+}
+
+export function loadSelectedOrderCompleted(order) {
+  return { type: LOAD_SELECTED_ORDER_COMPLETED, payload: order };
+}
+
+export function invalidateSelectedOrder() {
+  return { type: INVALIDATE_SELECTED_ORDER };
 }
 
 export function printRequested(orderId) {

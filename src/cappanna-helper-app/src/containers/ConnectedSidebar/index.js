@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Sidebar from "./../../components/Sidebar";
+import Sidebar from "components/Sidebar";
+import { withRouter } from "react-router-dom";
 
 class ConnectedSidebar extends Component {
   render() {
@@ -8,10 +9,12 @@ class ConnectedSidebar extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user
+    user: state.user,
+    location: ownProps.location,
+    match: ownProps.match
   };
 };
 
-export default connect(mapStateToProps)(ConnectedSidebar);
+export default withRouter(connect(mapStateToProps)(ConnectedSidebar));

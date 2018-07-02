@@ -1,9 +1,5 @@
-const isRouteActive = (routeName, location) =>
-  location.pathname.indexOf(routeName) > -1 ? true : false;
+const isRouteActive = (routeName, match) => match.name === routeName;
 
-const getActiveRoute = (routes, location) => {
-  var matching = routes.filter(r => location.pathname.indexOf(r.path) > -1);
-  return matching && matching.length > 0 ? matching[0] : undefined;
-};
+const getActiveRoute = (routes, location) => routes.find(r => location.pathname.indexOf(r.path) > -1);
 
 export { isRouteActive, getActiveRoute };

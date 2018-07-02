@@ -1,7 +1,6 @@
 import { withStyles } from "@material-ui/core/styles";
 import appRoutes from "routes";
 import appStyle from "variables/styles/appStyle";
-import logo from "assets/img/logo.png";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
@@ -67,7 +66,7 @@ class App extends Component {
   }
 
   render() {
-    const { classes, ...rest } = this.props;
+    const { classes } = this.props;
 
     return (
       <Provider store={this.props.store}>
@@ -78,15 +77,11 @@ class App extends Component {
             <ConnectedErrorSnackbar />
             <ConnectedSidebar
               routes={appRoutes}
-              logoText={"Cappanna Helper"}
-              logo={logo}
               handleDrawerToggle={this.handleDrawerToggle}
               handleSidebarNavigationItemClick={
                 this.handleSidebarNavigationItemClick
               }
               open={this.state.mobileOpen}
-              color="blue"
-              {...rest}
             />
             <div className={classes.mainPanel} ref={this.mainPanelRef}>
               <RoutingAwareHeader

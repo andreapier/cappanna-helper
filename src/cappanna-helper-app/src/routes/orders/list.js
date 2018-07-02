@@ -2,7 +2,7 @@ import OrderListPage from "views/OrderList";
 import { List } from "@material-ui/icons";
 
 const orders = {
-  path: "/orders",
+  path: "/order",
   sidebarName: "Ordini",
   icon: List,
   component: OrderListPage,
