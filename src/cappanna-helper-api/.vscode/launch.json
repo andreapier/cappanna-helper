@@ -6,9 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "Build web api",
-            "program": "${workspaceRoot}/cappanna-helper-api/bin/Debug/netcoreapp2.0/CappannaHelper.Api.dll",
+            "program": "${workspaceRoot}/CappannaHelper.Api/bin/Debug/netcoreapp2.1/CappannaHelper.Api.dll",
             "args": [],
-            "cwd": "${workspaceRoot}/cappanna-helper-api",
+            "cwd": "${workspaceRoot}/CappannaHelper.Api",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {
