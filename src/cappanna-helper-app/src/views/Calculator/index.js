@@ -1,11 +1,6 @@
 import React from "react";
-import Loadable from "react-loadable";
-import WaitDialog from "components/WaitDialog";
+import Calculator from "components/Calculator";
 
-const LoadableCalculatorPage = Loadable({
-  loader: () => import("components/Calculator"),
-  loading: WaitDialog,
-  delay: 300
-});
+const CalculatorPage = () => <Calculator />;
 
-export default LoadableCalculatorPage;
+export default CalculatorPage;

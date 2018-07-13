@@ -1,11 +1,11 @@
-import SignInPage from "views/SignIn";
+import AsyncSignIn from "views/SignIn/AsyncSignIn";
 import { Input } from "@material-ui/icons";
 
 const signin = {
   path: "/signin",
   sidebarName: "Entra",
   icon: Input,
-  component: SignInPage,
+  component: AsyncSignIn,
   name: "signin",
   headerTitle: "Entra"
 };

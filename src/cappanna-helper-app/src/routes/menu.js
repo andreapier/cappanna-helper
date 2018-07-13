@@ -1,11 +1,11 @@
-import Menu from "views/Menu";
+import AsyncMenu from "views/Menu/AsyncMenu";
 import { LibraryBooks } from "@material-ui/icons";
 
 const menu = {
   path: "/menu",
   sidebarName: "Menu",
   icon: LibraryBooks,
-  component: Menu,
+  component: AsyncMenu,
   protected: true,
   name: "menu",
   headerTitle: "Menu"

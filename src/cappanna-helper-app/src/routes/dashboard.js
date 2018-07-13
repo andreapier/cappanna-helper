@@ -1,11 +1,11 @@
-import DashboardPage from "views/Dashboard";
+import AsyncDashboard from "views/Dashboard/AsyncDashboard";
 import { Dashboard } from "@material-ui/icons";
 
 const dashboard = {
   path: "/dashboard",
   sidebarName: "Dashboard",
   icon: Dashboard,
-  component: DashboardPage,
+  component: AsyncDashboard,
   protected: true,
   name: "dashboard",
   headerTitle: "Dashboard"

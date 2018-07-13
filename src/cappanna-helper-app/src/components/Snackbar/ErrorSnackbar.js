@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Warning from "@material-ui/icons/Warning";
 import Snackbar from "components/Snackbar/Snackbar";
 import SlideUpTransition from "components/Snackbar/SlideUpTransition";
@@ -19,6 +20,10 @@ const ErrorSnackbar = props => {
       }}
     />
   );
+};
+
+ErrorSnackbar.propTypes = {
+  message: PropTypes.string.isRequired
 };
 
 export default ErrorSnackbar;

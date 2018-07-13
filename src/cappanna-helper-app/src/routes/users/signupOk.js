@@ -1,8 +1,8 @@
-import SignUpOkPage from "views/SignUpOk";
+import AsyncSignUpOk from "views/SignUpOk/AsyncSignUpOk";
 
 const signupOk = {
   path: "/users/signup/ok",
-  component: SignUpOkPage,
+  component: AsyncSignUpOk,
   protected: true,
   name: "signupOk",
   headerTitle: "Esito registrazione"

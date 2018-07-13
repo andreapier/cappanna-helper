@@ -1,8 +1,8 @@
-import OrderPage from "views/Order";
+import AsyncOrder from "views/Order/AsyncOrder";
 
 const order = {
   path: "/order/:id",
-  component: OrderPage,
+  component: AsyncOrder,
   protected: true,
   name: "order",
   headerTitle: "Ordine"
