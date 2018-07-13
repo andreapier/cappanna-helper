@@ -13,30 +13,33 @@ import ConnectedErrorSnackbar from "containers/ConnectedErrorSnackbar";
 import RoutingAwareHeader from "containers/RoutingAwareHeader";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-const switchRoutes = (
-  <Switch>
-    {appRoutes.map((prop, key) => {
-      if (prop.redirect) {
-        return <Redirect from={prop.path} to={prop.to} key={key} />;
-      }
+const switchRoutes = routes =>
+  routes.map((route, key) => {
+    if (route.redirect) {
+      return <Redirect from={route.path} to={route.to} key={key} />;
+    }
 
-      if (prop.protected) {
-        return (
-          <ConnectedPrivateRoute
-            path={prop.path}
-            component={prop.component}
-            key={key}
-            exact
-          />
-        );
-      }
+    if (route.subroutes && route.subroutes.length > 0) {
+      return switchRoutes(route.subroutes);
+    }
 
+    if (route.protected) {
       return (
-        <Route path={prop.path} component={prop.component} key={key} exact />
+        <ConnectedPrivateRoute
+          path={route.path}
+          component={route.component}
+          key={key}
+          exact
+        />
       );
-    })}
-  </Switch>
-);
+    }
+
+    return (
+      <Route path={route.path} component={route.component} key={key} exact />
+    );
+  });
+
+const renderRoutes = <Switch>{switchRoutes(appRoutes)}</Switch>;
 
 class App extends Component {
   constructor(props) {
@@ -66,12 +69,10 @@ class App extends Component {
   }
 
   render() {
-    const { classes } = this.props;
-
     return (
       <Provider store={this.props.store}>
         <Router history={history}>
-          <div className={classes.wrapper}>
+          <div className={this.props.classes.wrapper}>
             <CssBaseline />
             <ConnectedWaitDialog />
             <ConnectedErrorSnackbar />
@@ -83,13 +84,18 @@ class App extends Component {
               }
               open={this.state.mobileOpen}
             />
-            <div className={classes.mainPanel} ref={this.mainPanelRef}>
+            <div
+              className={this.props.classes.mainPanel}
+              ref={this.mainPanelRef}
+            >
               <RoutingAwareHeader
                 handleDrawerToggle={this.handleDrawerToggle}
                 routes={appRoutes}
               />
-              <div className={classes.content}>
-                <div className={classes.container}>{switchRoutes}</div>
+              <div className={this.props.classes.content}>
+                <div className={this.props.classes.container}>
+                  {renderRoutes()}
+                </div>
               </div>
             </div>
           </div>

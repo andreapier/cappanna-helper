@@ -5,6 +5,7 @@ import List from "@material-ui/core/List";
 import { withStyles } from "@material-ui/core/styles";
 import sidebarStyle from "variables/styles/sidebarStyle";
 import { isRouteActive } from "routes/helpers";
+import { flatten } from "utils/array";
 
 const Links = props => {
   const {
@@ -20,13 +21,13 @@ const Links = props => {
   return (
     <div className={classes.sidebarWrapper}>
       <List className={classes.list}>
-        {routes.map((routeData, key) => {
+        {flatten(routes).map((routeData, key) => {
           const itemProps = {
             routeData,
             user,
             handleSidebarNavigationItemClick
-            //active: isRouteActive(routeData.name, match)
           };
+          //active: isRouteActive(routeData.name, match)
 
           return <SidebarNavigationItem {...itemProps} key={key} />;
         })}
