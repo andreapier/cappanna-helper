@@ -4,6 +4,7 @@ import Table from "components/Table";
 import { formatAmount } from "utils/string";
 
 const buildTableRow = dish => [
+  dish.id,
   dish.group,
   dish.name,
   formatAmount(dish.price, false)
@@ -12,7 +13,7 @@ const buildTableRow = dish => [
 const List = props => {
   return (
     <Table
-      tableHead={["Gruppo", "Nome", "Prezzo"]}
+      tableHead={["Id", "Gruppo", "Nome", "Prezzo (€)"]}
       tableData={props.dishList.map(buildTableRow)}
     />
   );
