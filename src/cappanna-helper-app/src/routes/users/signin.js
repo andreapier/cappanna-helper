@@ -7,7 +7,8 @@ const signin = {
   icon: Input,
   component: AsyncSignIn,
   name: "signin",
-  headerTitle: "Entra"
+  headerTitle: "Entra",
+  roles: []
 };
 
 export default signin;

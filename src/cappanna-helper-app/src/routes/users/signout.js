@@ -8,7 +8,8 @@ const signout = {
   component: AsyncSignOut,
   protected: true,
   name: "signout",
-  headerTitle: "Bevi poco"
+  headerTitle: "Bevi poco",
+  roles: ["waiter", "admin"]
 };
 
 export default signout;

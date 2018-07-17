@@ -8,7 +8,8 @@ const users = {
   component: AsyncUsers,
   protected: true,
   name: "users",
-  headerTitle: "Nuovo utente"
+  headerTitle: "Nuovo utente",
+  roles: ["admin"]
 };
 
 export default users;

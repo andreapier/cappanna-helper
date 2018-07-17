@@ -5,7 +5,8 @@ const signupOk = {
   component: AsyncSignUpOk,
   protected: true,
   name: "signupOk",
-  headerTitle: "Esito registrazione"
+  headerTitle: "Esito registrazione",
+  roles: ["admin"]
 };
 
 export default signupOk;

@@ -8,7 +8,8 @@ const newOrder = {
   component: AsyncNewOrder,
   protected: true,
   name: "order-new",
-  headerTitle: "Nuovo ordine"
+  headerTitle: "Nuovo ordine",
+  roles: ["waiter", "admin"]
 };
 
 export default newOrder;

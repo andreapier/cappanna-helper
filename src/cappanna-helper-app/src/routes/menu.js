@@ -8,7 +8,8 @@ const menu = {
   component: AsyncMenu,
   protected: true,
   name: "menu",
-  headerTitle: "Menu"
+  headerTitle: "Menu",
+  roles: ["waiter", "admin"]
 };
 
 export default menu;

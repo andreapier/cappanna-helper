@@ -5,7 +5,8 @@ const confirmOrder = {
   component: AsyncOrderConfirmation,
   protected: true,
   name: "order-confirm",
-  headerTitle: "Conferma ordine"
+  headerTitle: "Conferma ordine",
+  roles: ["waiter", "admin"]
 };
 
 export default confirmOrder;

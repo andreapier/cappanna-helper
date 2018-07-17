@@ -31,6 +31,13 @@ const SidebarNavigationItem = props => {
     return null;
   }
 
+  if (
+    routeData.protected &&
+    !routeData.roles.some(r => user.roles.includes(r))
+  ) {
+    return null;
+  }
+
   if (user.token && signinRoute(routeData.name)) {
     return null;
   }
@@ -61,7 +68,19 @@ const SidebarNavigationItem = props => {
 SidebarNavigationItem.propTypes = {
   classes: PropTypes.object.isRequired,
   handleSidebarNavigationItemClick: PropTypes.func.isRequired,
-  active: PropTypes.bool.isRequired
+  active: PropTypes.bool.isRequired,
+  user: PropTypes.shape({
+    roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+    token: PropTypes.string
+  }).isRequired,
+  routeData: PropTypes.shape({
+    redirect: PropTypes.bool,
+    sidebarName: PropTypes.string,
+    protected: PropTypes.bool,
+    roles: PropTypes.arrayOf(PropTypes.string),
+    name: PropTypes.string,
+    path: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default withStyles(sidebarStyle)(SidebarNavigationItem);

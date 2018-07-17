@@ -8,7 +8,8 @@ const dashboard = {
   component: AsyncDashboard,
   protected: true,
   name: "dashboard",
-  headerTitle: "Dashboard"
+  headerTitle: "Dashboard",
+  roles: ["admin"]
 };
 
 export default dashboard;

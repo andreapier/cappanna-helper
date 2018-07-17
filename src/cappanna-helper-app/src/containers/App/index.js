@@ -13,33 +13,31 @@ import ConnectedErrorSnackbar from "containers/ConnectedErrorSnackbar";
 import RoutingAwareHeader from "containers/RoutingAwareHeader";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-const switchRoutes = routes =>
-  routes.map((route, key) => {
-    if (route.redirect) {
-      return <Redirect from={route.path} to={route.to} key={key} />;
-    }
+const switchRoutes = routes => (
+  <Switch>
+    {routes.map((route, key) => {
+      if (route.redirect) {
+        return <Redirect from={route.path} to={route.to} key={key} />;
+      }
 
-    if (route.subroutes && route.subroutes.length > 0) {
-      return switchRoutes(route.subroutes);
-    }
+      if (route.protected) {
+        return (
+          <ConnectedPrivateRoute
+            roles={route.roles}
+            path={route.path}
+            component={route.component}
+            key={key}
+            exact
+          />
+        );
+      }
 
-    if (route.protected) {
       return (
-        <ConnectedPrivateRoute
-          path={route.path}
-          component={route.component}
-          key={key}
-          exact
-        />
+        <Route path={route.path} component={route.component} key={key} exact />
       );
-    }
-
-    return (
-      <Route path={route.path} component={route.component} key={key} exact />
-    );
-  });
-
-const renderRoutes = <Switch>{switchRoutes(appRoutes)}</Switch>;
+    })}
+  </Switch>
+);
 
 class App extends Component {
   constructor(props) {
@@ -94,7 +92,7 @@ class App extends Component {
               />
               <div className={this.props.classes.content}>
                 <div className={this.props.classes.container}>
-                  {renderRoutes()}
+                  {switchRoutes(appRoutes)}
                 </div>
               </div>
             </div>

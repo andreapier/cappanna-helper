@@ -8,7 +8,8 @@ const notifications = {
   component: AsyncNotifications,
   protected: true,
   name: "notifications",
-  headerTitle: "Notifiche"
+  headerTitle: "Notifiche",
+  roles: ["admin"]
 };
 
 export default notifications;

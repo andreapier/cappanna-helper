@@ -5,7 +5,8 @@ const order = {
   component: AsyncOrder,
   protected: true,
   name: "order",
-  headerTitle: "Ordine"
+  headerTitle: "Ordine",
+  roles: ["waiter", "admin"]
 };
 
 export default order;

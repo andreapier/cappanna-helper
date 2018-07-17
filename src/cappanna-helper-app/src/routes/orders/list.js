@@ -8,7 +8,8 @@ const orders = {
   component: AsyncOrderList,
   protected: true,
   name: "orders",
-  headerTitle: "Ordini"
+  headerTitle: "Ordini",
+  roles: ["waiter", "admin"]
 };
 
 export default orders;
