@@ -68,7 +68,7 @@ const SidebarNavigationItem = props => {
 SidebarNavigationItem.propTypes = {
   classes: PropTypes.object.isRequired,
   handleSidebarNavigationItemClick: PropTypes.func.isRequired,
-  active: PropTypes.bool.isRequired,
+  //active: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     roles: PropTypes.arrayOf(PropTypes.string).isRequired,
     token: PropTypes.string

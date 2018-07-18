@@ -26,7 +26,7 @@ const PrivateRoute = ({ component: Component, user, roles, ...rest }) => (
 );
 
 PrivateRoute.propTypes = {
-  component: PropTypes.element.isRequired,
+  component: PropTypes.func.isRequired,
   user: PropTypes.shape({
     roles: PropTypes.arrayOf(PropTypes.string).isRequired,
     token: PropTypes.string

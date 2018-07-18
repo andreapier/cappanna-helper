@@ -4,16 +4,16 @@ import SidebarNavigationItem from "./SidebarNavigationItem";
 import List from "@material-ui/core/List";
 import { withStyles } from "@material-ui/core/styles";
 import sidebarStyle from "variables/styles/sidebarStyle";
-import { isRouteActive } from "routes/helpers";
+// import { isRouteActive } from "routes/helpers";
 
 const Links = props => {
   const {
     classes,
     routes,
     user,
-    handleSidebarNavigationItemClick,
-    match,
-    location
+    handleSidebarNavigationItemClick
+    // match,
+    // location
   } = props;
 
   return (
@@ -36,10 +36,10 @@ const Links = props => {
 
 Links.propTypes = {
   classes: PropTypes.object.isRequired,
-  routes: PropTypes.array.isRequired,
-  location: PropTypes.shape({
-    path: PropTypes.string.isRequired
-  }).isRequired
+  routes: PropTypes.array.isRequired
+  // location: PropTypes.shape({
+  //   path: PropTypes.string.isRequired
+  // }).isRequired
 };
 
 export default withStyles(sidebarStyle)(Links);
