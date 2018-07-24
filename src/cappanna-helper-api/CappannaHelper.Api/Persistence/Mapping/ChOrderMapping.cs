@@ -23,7 +23,7 @@ namespace CappannaHelper.Api.Persistence.Mapping
             entityBuilder.HasMany(o => o.Details).WithOne().HasForeignKey(d => d.OrderId).IsRequired();
             entityBuilder.HasOne(o => o.CreatedBy).WithMany().HasForeignKey(o => o.CreatedById).IsRequired();
             entityBuilder.Property(o => o.Notes).HasMaxLength(-1);
-            entityBuilder.HasMany(o => o.Operations).WithOne(o => o.Order).HasForeignKey(d => d.OrderId).IsRequired();
+            entityBuilder.HasMany(o => o.Operations).WithOne().HasForeignKey(d => d.OrderId).IsRequired();
 
             entityBuilder.HasIndex(o => o.CreationTimestamp);
             entityBuilder.HasIndex(o => o.Status);

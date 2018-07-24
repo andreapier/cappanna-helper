@@ -1,15 +1,15 @@
+using CappannaHelper.Api.Hubs;
 using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Persistence.Modelling;
+using CappannaHelper.Api.Printing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using CappannaHelper.Api.Printing;
-using Microsoft.AspNetCore.SignalR;
-using CappannaHelper.Api.Hubs;
 
 namespace CappannaHelper.Api.Controllers
 {

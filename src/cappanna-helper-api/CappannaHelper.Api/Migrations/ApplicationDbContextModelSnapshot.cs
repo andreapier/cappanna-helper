@@ -14,7 +14,7 @@ namespace CappannaHelper.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799");
+                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846");
 
             modelBuilder.Entity("CappannaHelper.Api.Identity.DataModel.ApplicationRole", b =>
                 {
@@ -330,7 +330,7 @@ namespace CappannaHelper.Api.Migrations
 
             modelBuilder.Entity("CappannaHelper.Api.Persistence.Modelling.ChOrderOperation", b =>
                 {
-                    b.HasOne("CappannaHelper.Api.Persistence.Modelling.ChOrder", "Order")
+                    b.HasOne("CappannaHelper.Api.Persistence.Modelling.ChOrder")
                         .WithMany("Operations")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);

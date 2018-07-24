@@ -19,7 +19,6 @@ namespace CappannaHelper.Api.Persistence.Mapping
             entityBuilder.Property(o => o.OrderId).IsRequired();
             entityBuilder.Property(o => o.TypeId).IsRequired();
             entityBuilder.Property(o => o.OperationTimestamp).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
-            entityBuilder.HasOne(o => o.Order).WithMany(o => o.Operations).HasForeignKey(o => o.OrderId).IsRequired();
             entityBuilder.HasOne(o => o.Type).WithMany().HasForeignKey(o => o.TypeId).IsRequired();
         }
     }

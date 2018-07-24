@@ -47,11 +47,16 @@ namespace CappannaHelper.Api
         {
             var persistenceConfiguration = _configuration.GetSection("Persistence").Get<PersistenceConfiguration>();
 
-            services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>(o => o.UseSqlite(persistenceConfiguration.ConnectionString));
-            services.AddMvc()
-                .AddJsonOptions(o => o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+            services
+                .AddEntityFrameworkSqlite()
+                .AddDbContext<ApplicationDbContext>(o => o.UseSqlite(persistenceConfiguration.ConnectionString));
+
+            services
+                .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
+
+            services
+                .AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             services.AddApplicationIdentity();
