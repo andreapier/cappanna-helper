@@ -13,10 +13,7 @@ class SignalR {
       .withHubProtocol(new JsonHubProtocol())
       .build();
 
-    this.orderHubConnection.on("NotifyOrderCreated", data => {
-      console.log(data);
-      this.dispatch(orderCreated(data));
-    });
+    this.orderHubConnection.on("NotifyOrderCreated", data => this.dispatch(orderCreated(data)));
   }
 
   connect() {

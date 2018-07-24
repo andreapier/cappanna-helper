@@ -17,7 +17,6 @@ export default function(state = initialStatus, action) {
       return { ...state, loading: true, loaded: false, items: [] };
 
     case LOAD_ORDERS_LIST_COMPLETED:
-      console.log(action.payload);
       return { loading: false, loaded: true, items: action.payload };
 
     case INVALIDATE_ORDERS_LIST:
