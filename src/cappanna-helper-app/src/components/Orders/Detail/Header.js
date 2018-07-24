@@ -25,9 +25,7 @@ const Header = props => {
             className="CreateOrderForm-TextField"
             style={textFieldStyle}
             value={props.chTable}
-            InputLabelProps={{
-              shrink: true
-            }}
+            InputLabelProps={{ shrink: true }}
             readOnly
           />
         </div>
@@ -38,9 +36,7 @@ const Header = props => {
             className="CreateOrderForm-TextField"
             style={textFieldStyle}
             value={props.tableCategory}
-            InputLabelProps={{
-              shrink: true
-            }}
+            InputLabelProps={{ shrink: true }}
             readOnly
           />
         </div>
@@ -52,9 +48,7 @@ const Header = props => {
             className="CreateOrderForm-TextField"
             style={textFieldStyle}
             value={props.seats}
-            InputLabelProps={{
-              shrink: true
-            }}
+            InputLabelProps={{ shrink: true }}
             readOnly
           />
         </div>

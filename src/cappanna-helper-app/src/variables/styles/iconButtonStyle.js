@@ -14,7 +14,6 @@ const iconButtonStyle = {
     width: "40px",
     borderRadius: "50%",
     fontSize: "24px",
-    margin: "auto",
     padding: "0",
     overflow: "hidden",
     position: "relative",

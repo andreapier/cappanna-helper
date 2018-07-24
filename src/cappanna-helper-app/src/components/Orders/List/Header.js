@@ -2,16 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import Toolbar from "@material-ui/core/Toolbar";
 import ContentAdd from "@material-ui/icons/Add";
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from "components/CustomButtons/IconButton";
 import NavigationRefresh from "@material-ui/icons/Refresh";
 
 const Header = props => {
   return (
     <Toolbar>
-      <IconButton onClick={props.goToNewOrder}>
+      <IconButton
+        onClick={props.goToNewOrder}
+        color="white"
+        style={{ marginRight: "10px" }}
+      >
         <ContentAdd />
       </IconButton>
-      <IconButton onClick={props.loadOrdersListRequested}>
+      <IconButton onClick={props.loadOrdersListRequested} color="white">
         <NavigationRefresh />
       </IconButton>
     </Toolbar>
