@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import Button from "components/CustomButtons";
 import ActionDone from "@material-ui/icons/Done";
-import EditorModeEdit from "@material-ui/icons/ModeEdit";
+import Create from "@material-ui/icons/Create";
 import ContainerGrid from "components/Grid/ContainerGrid";
 import ItemGrid from "components/Grid/ItemGrid";
 import { flex } from "variables/styles";
@@ -20,7 +20,7 @@ const Footer = props => {
     <ContainerGrid className={props.classes.root}>
       <ItemGrid sx={12} md={6}>
         <Button variant="raised" onClick={props.goBack}>
-          <EditorModeEdit />
+          <Create />
           Modifica
         </Button>
       </ItemGrid>

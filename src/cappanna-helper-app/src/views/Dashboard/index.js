@@ -2,9 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ChartistGraph from "react-chartist";
 import {
-  ContentCopy,
   Store,
-  InfoOutline,
   Warning,
   DateRange,
   LocalOffer,
@@ -35,7 +33,6 @@ class Dashboard extends React.Component {
       <Grid container key={1}>
         <ItemGrid xs={12} sm={6} md={3}>
           <StatsCard
-            icon={ContentCopy}
             iconColor="orange"
             title="Used Space"
             description="49/50"
@@ -57,7 +54,6 @@ class Dashboard extends React.Component {
         </ItemGrid>
         <ItemGrid xs={12} sm={6} md={3}>
           <StatsCard
-            icon={InfoOutline}
             iconColor="red"
             title="Fixed Issues"
             description="75"

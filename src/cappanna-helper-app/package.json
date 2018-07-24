@@ -12,13 +12,13 @@
     },
     "/hubs": {
       "target": "http://localhost:3900",
-      "ws":true
+      "ws": true
     }
   },
   "dependencies": {
     "@aspnet/signalr": "^1.0.2",
     "@material-ui/core": "^1.4.1",
-    "@material-ui/icons": "^1.1.0",
+    "@material-ui/icons": "^2.0.0",
     "chartist": "^0.11.0",
     "localforage": "^1.7.2",
     "react": "^16.4.1",
