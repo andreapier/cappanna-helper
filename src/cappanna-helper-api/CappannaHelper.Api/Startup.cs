@@ -14,7 +14,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -59,6 +58,7 @@ namespace CappannaHelper.Api
                 .AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
             services.AddApplicationIdentity();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -101,7 +101,10 @@ namespace CappannaHelper.Api
                 options.Cookie.Expiration = TimeSpan.FromDays(1);
                 options.SlidingExpiration = true;
             });
-            services.AddSignalR();
+
+            services
+                .AddSignalR()
+                .AddJsonProtocol();
 
             services.Configure<PrintingConfiguration>(_configuration.GetSection("Printing"));
             services.AddPrinting();

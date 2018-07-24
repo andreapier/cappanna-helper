@@ -1,7 +1,8 @@
 import {
   LOAD_ORDERS_LIST_REQUESTED,
   LOAD_ORDERS_LIST_COMPLETED,
-  INVALIDATE_ORDERS_LIST
+  INVALIDATE_ORDERS_LIST,
+  ORDER_CREATED
 } from "actions/types";
 
 const initialStatus = {
@@ -16,10 +17,14 @@ export default function(state = initialStatus, action) {
       return { ...state, loading: true, loaded: false, items: [] };
 
     case LOAD_ORDERS_LIST_COMPLETED:
+      console.log(action.payload);
       return { loading: false, loaded: true, items: action.payload };
 
     case INVALIDATE_ORDERS_LIST:
       return initialStatus;
+
+    case ORDER_CREATED:
+      return { ...state, items: state.items.concat([action.payload]) };
 
     default:
       return state;

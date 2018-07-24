@@ -1,8 +1,4 @@
-import {
-  CONNECT_SIGNALR,
-  DISCONNECT_SIGNALR,
-  ADD_MENU_DETAIL
-} from "actions/types";
+import { CONNECT_SIGNALR, DISCONNECT_SIGNALR } from "actions/types";
 import SignalR from "api/signalR";
 
 const signalrMiddleware = ({ dispatch }) => {
@@ -15,26 +11,14 @@ const signalrMiddleware = ({ dispatch }) => {
 
     switch (action.type) {
       case CONNECT_SIGNALR:
-        return signalR.connect({ token: action.payload.token }).then(() => {
-          console.log("CONNECT_SIGNALR then");
-          return next(action);
-        });
+        return signalR.connect().then(() => next(action));
 
       case DISCONNECT_SIGNALR:
-        return signalR.disconnect().then(() => {
-          console.log("DISCONNECT_SIGNALR then");
-          return next(action);
-        });
-
-      case ADD_MENU_DETAIL:
-        signalR.createMenuDetail(action.payload);
-        break;
+        return signalR.disconnect().then(() => next(action));
 
       default:
-        break;
+        return next(action);
     }
-
-    return next(action);
   };
 };
 

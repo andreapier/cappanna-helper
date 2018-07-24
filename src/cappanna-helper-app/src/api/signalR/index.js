@@ -1,43 +1,48 @@
-import { HubConnectionBuilder } from "@aspnet/signalr";
-
-const getOptions = token => {
-  return {
-    accessTokenFactory: () => token
-  };
-};
+import { HubConnectionBuilder, JsonHubProtocol } from "@aspnet/signalr";
+import { orderCreated } from "actions";
 
 class SignalR {
   constructor(dispatch) {
     this.dispatch = dispatch;
-  }
-
-  connect({ token }) {
-    const options = getOptions(token);
     this.menuHubConnection = new HubConnectionBuilder()
-      .withUrl("/hubs/menu", options)
+      .withUrl("/hubs/menu")
+      .withHubProtocol(new JsonHubProtocol())
       .build();
     this.orderHubConnection = new HubConnectionBuilder()
-      .withUrl("/hubs/order", options)
+      .withUrl("/hubs/order")
+      .withHubProtocol(new JsonHubProtocol())
       .build();
 
-    this.orderHubConnection.on("NotifyOrderCreated", data =>
-      //this.dispatch(orderCreated(data))
-      console.log(data)
-    );
+    this.orderHubConnection.on("NotifyOrderCreated", data => {
+      console.log(data);
+      this.dispatch(orderCreated(data));
+    });
+  }
 
-    this.menuHubConnection
-      .start()
-      .then(() => console.log("connected menu hub"))
-      .catch(err => console.error(err.toString()));
-
-    this.orderHubConnection
-      .start()
-      .then(() => console.log("connected order hub"))
-      .catch(err => console.error(err.toString()));
+  connect() {
+    return Promise.all([
+      this.menuHubConnection
+        .start()
+        .then(() => console.log("menuHubConnection connected"))
+        .catch(err => console.error(err)),
+      this.orderHubConnection
+        .start()
+        .then(() => console.log("orderHubConnection connected"))
+        .catch(err => console.error(err))
+    ]);
   }
 
   disconnect() {
-    this.orderHubConnection.stop();
+    return Promise.all([
+      this.menuHubConnection
+        .stop()
+        .then(() => console.log("menuHubConnection disconnected"))
+        .catch(err => console.error(err)),
+      this.orderHubConnection
+        .stop()
+        .then(() => console.log("menuHubConnection disconnected"))
+        .catch(err => console.error(err))
+    ]);
   }
 }
 
