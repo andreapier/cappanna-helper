@@ -123,6 +123,15 @@ namespace CappannaHelper.Api
                     routes.MapHub<MenuHub>("/hubs/menu");
                     routes.MapHub<OrderHub>("/hubs/order");
                 })
+				.Use(async (context, next) =>
+				 {
+					if (!context.Request.Path.Value.Contains("/api") && !context.Request.Path.Value.Contains("/hubs"))
+					{
+						context.Response.Redirect("/");
+						return;
+					}
+					await next();
+				 })
                 .UseMvc();
         }
     }
