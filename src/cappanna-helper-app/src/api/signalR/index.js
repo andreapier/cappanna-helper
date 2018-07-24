@@ -13,32 +13,22 @@ class SignalR {
       .withHubProtocol(new JsonHubProtocol())
       .build();
 
-    this.orderHubConnection.on("NotifyOrderCreated", data => this.dispatch(orderCreated(data)));
+    this.orderHubConnection.on("NotifyOrderCreated", data =>
+      this.dispatch(orderCreated(data))
+    );
   }
 
   connect() {
     return Promise.all([
-      this.menuHubConnection
-        .start()
-        .then(() => console.log("menuHubConnection connected"))
-        .catch(err => console.error(err)),
-      this.orderHubConnection
-        .start()
-        .then(() => console.log("orderHubConnection connected"))
-        .catch(err => console.error(err))
+      this.menuHubConnection.start().catch(err => console.error(err)),
+      this.orderHubConnection.start().catch(err => console.error(err))
     ]);
   }
 
   disconnect() {
     return Promise.all([
-      this.menuHubConnection
-        .stop()
-        .then(() => console.log("menuHubConnection disconnected"))
-        .catch(err => console.error(err)),
-      this.orderHubConnection
-        .stop()
-        .then(() => console.log("menuHubConnection disconnected"))
-        .catch(err => console.error(err))
+      this.menuHubConnection.stop().catch(err => console.error(err)),
+      this.orderHubConnection.stop().catch(err => console.error(err))
     ]);
   }
 }

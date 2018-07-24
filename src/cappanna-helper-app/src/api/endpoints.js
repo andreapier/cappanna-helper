@@ -6,4 +6,4 @@ export const SIGNOUT = `${ACCOUNT}/signout`;
 export const SIGNUP = `${ACCOUNT}/signup`;
 export const MENU_DETAIL = `${API}/menuDetail`;
 export const ORDER = `${API}/order`;
-export const PRINT = "print";
+export const PRINT = `${API}/print`;

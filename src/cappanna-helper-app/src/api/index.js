@@ -5,7 +5,7 @@ import {
   ORDER,
   MENU_DETAIL,
   PRINT
-} from "./endpoints";
+} from "api/endpoints";
 import "whatwg-fetch";
 
 const baseHeaders = {
@@ -99,7 +99,7 @@ class Api {
   }
 
   getOrder(orderId) {
-    return get(`${ORDER}\\${orderId}`);
+    return get(`${ORDER}/${orderId}`);
   }
 
   getMenuDetails() {
@@ -126,11 +126,11 @@ class Api {
   }
 
   printOrder(orderId) {
-    return get(`${ORDER}\\${orderId}\\${PRINT}`);
+    return get(`${PRINT}/order/${orderId}`);
   }
 
   setOrderStatus({ orderId, status }) {
-    return post(`${ORDER}\\${orderId}`, status);
+    return post(`${ORDER}/${orderId}`, status);
   }
 }
 

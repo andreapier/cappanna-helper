@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Header from "components/Orders/Detail/Header";
+import { printRequested } from "actions";
 
 class ConnectedHeader extends Component {
   render() {
@@ -11,6 +12,7 @@ class ConnectedHeader extends Component {
 const mapStateToProps = state => {
   return state.selectedOrder.item
     ? {
+        id: state.selectedOrder.item.id,
         totalPrice: state.selectedOrder.item.details.reduce(
           (acc, e) => acc + e.quantity * e.item.price,
           0
@@ -19,7 +21,14 @@ const mapStateToProps = state => {
         tableCategory: state.selectedOrder.item.chTable.split("/")[1] || "",
         seats: state.selectedOrder.item.seats
       }
-    : { totalPrice: 0, chTable: "", tableCategory: "", seats: 0 };
+    : { id: 0, totalPrice: 0, chTable: "", tableCategory: "", seats: 0 };
 };
 
-export default connect(mapStateToProps)(ConnectedHeader);
+const mapDispatchToProps = dispatch => {
+  return { printRequested: orderId => dispatch(printRequested(orderId)) };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConnectedHeader);

@@ -2,6 +2,9 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import AmountFormat from "components/AmountFormat";
 import PropTypes from "prop-types";
+import Toolbar from "@material-ui/core/Toolbar";
+import Print from "@material-ui/icons/Print";
+import IconButton from "components/CustomButtons/IconButton";
 
 const containerStyle = {
   display: "flex",
@@ -16,6 +19,11 @@ const textFieldStyle = {
 const Header = props => {
   return (
     <div>
+      <Toolbar>
+        <IconButton onClick={() => props.printRequested(id)} color="white">
+          <Print />
+        </IconButton>
+      </Toolbar>
       <div style={containerStyle}>
         <div>
           <TextField
@@ -64,7 +72,8 @@ Header.propTypes = {
   totalPrice: PropTypes.number.isRequired,
   chTable: PropTypes.string.isRequired,
   tableCategory: PropTypes.string,
-  seats: PropTypes.number.isRequired
+  seats: PropTypes.number.isRequired,
+  printRequested: PropTypes.func.isRequired
 };
 
 export default Header;
