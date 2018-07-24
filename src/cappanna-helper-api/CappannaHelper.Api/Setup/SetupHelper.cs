@@ -209,6 +209,8 @@ namespace CappannaHelper.Api.Setup
                         Name = name,
                         Price = price
                     });
+
+                    await _context.SaveChangesAsync();
                 }
             }
             catch (Exception e)

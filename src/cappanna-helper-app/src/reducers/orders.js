@@ -23,7 +23,7 @@ export default function(state = initialStatus, action) {
       return initialStatus;
 
     case ORDER_CREATED:
-      return { ...state, items: state.items.concat([action.payload]) };
+      return { ...state, items: [action.payload].concat(state.items) };
 
     default:
       return state;
