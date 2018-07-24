@@ -67,7 +67,10 @@ const Header = props => {
 };
 
 Header.propTypes = {
-  totalPrice: PropTypes.number.isRequired
+  totalPrice: PropTypes.number.isRequired,
+  chTable: PropTypes.string.isRequired,
+  tableCategory: PropTypes.string,
+  seats: PropTypes.number.isRequired
 };
 
 export default Header;
