@@ -20,7 +20,7 @@ const Header = props => {
   return (
     <div>
       <Toolbar>
-        <IconButton onClick={() => props.printRequested(id)} color="white">
+        <IconButton onClick={() => props.printRequested(props.id)} color="white">
           <Print />
         </IconButton>
       </Toolbar>

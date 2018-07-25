@@ -240,12 +240,15 @@ namespace CappannaHelper.Api.Printing
 
         private void SetNotes(string notes)
         {
-            AddMenuItemCategoryHeader("NOTE");
+            if (!string.IsNullOrEmpty(notes))
+            {
+                AddMenuItemCategoryHeader("NOTE");
 
-            var section = _document.LastPage.CreateSection();
-            section.SetSize(16);
-            section.CreateLabel().SetContent(notes);
-            section.NewLine();
+                var section = _document.LastPage.CreateSection();
+                section.SetSize(16);
+                section.CreateLabel().SetContent(notes);
+                section.NewLine();
+            }
         }
     }
 }
