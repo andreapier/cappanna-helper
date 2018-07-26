@@ -24,41 +24,49 @@ namespace CappannaHelper.Api.Controllers
         [Route("order/{id}")]
         public async Task<IActionResult> GetPrint(int id)
         {
-            var order = await _context.Orders
-                .Include(o => o.CreatedBy)
-                .Include(o => o.Operations)
-                .Include(o => o.Details)
-                .ThenInclude(d => d.Item)
-                .FirstOrDefaultAsync(o => o.Id == id);
+            ChOrder result;
 
-            if (order == null)
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                return NotFound($"L'ordine con Id '{id}' non esiste");
-            }
+                result = await _context.Orders
+                    .Include(o => o.CreatedBy)
+                    .Include(o => o.Operations)
+                    .Include(o => o.Details)
+                    .ThenInclude(d => d.Item)
+                    .FirstOrDefaultAsync(o => o.Id == id);
 
-            try
-            {
-                await _printService.PrintAsync(order);
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Impossibile ristampare l'ordine", e);
-            }
-
-            try
-            {
-                order.Operations.Add(new ChOrderOperation
+                if (result == null)
                 {
-                    OperationTimestamp = DateTime.Now,
-                    TypeId = (int)OperationTypes.Print
-                });
-            }
-            catch
-            {
-                //TODO: Log
-            }
+                    return NotFound($"L'ordine con Id '{id}' non esiste");
+                }
 
-            return Ok(order);
+                //try
+                //{
+                //    await _printService.PrintAsync(order);
+                //}
+                //catch (Exception e)
+                //{
+                //    throw new Exception("Impossibile ristampare l'ordine", e);
+                //}
+
+                try
+                {
+                    var printOperationId = (int) OperationTypes.Print;
+                    result.Operations.Add(new ChOrderOperation {
+                        OperationTimestamp = DateTime.Now,
+                        TypeId = printOperationId
+                    });
+                    result.Status = printOperationId;
+                    await _context.SaveChangesAsync();
+                    transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Impossibile salvare l'operazione di stampa dell'ordine", e);
+                }
+
+                return Ok(result);
+            }
         }
     }
 }

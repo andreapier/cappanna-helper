@@ -103,6 +103,7 @@ namespace CappannaHelper.Api.Controllers
                         });
                     }
 
+                    order.Status = creationOperationId;
                     result = await _context.Orders.AddAsync(order);
                     await _context.SaveChangesAsync();
                     transaction.Commit();
@@ -116,29 +117,6 @@ namespace CappannaHelper.Api.Controllers
             await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_CREATED, order);
 
             return Ok(result.Entity);
-        }
-
-        [Route("{id}")]
-        public async Task<IActionResult> SetStatus(int id, [FromBody] int status)
-        {
-            var order = await _context.Orders.SingleOrDefaultAsync(o => o.Id == id);
-
-            if (order == null)
-            {
-                return NotFound($"L'ordine con Id '{id}' non esiste");
-            }
-
-            try
-            {        
-                order.Status = status;
-                await _context.SaveChangesAsync();
-
-                return Ok(order);
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Impossibile impostare lo stato dell'ordine", e);
-            }
         }
     }
 }

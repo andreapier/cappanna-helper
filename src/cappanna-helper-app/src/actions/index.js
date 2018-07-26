@@ -9,6 +9,7 @@ import {
   LOAD_MENU_DETAILS_REQUESTED,
   LOAD_MENU_DETAILS_COMPLETED,
   CREATE_EMPTY_ORDER,
+  EDIT_ORDER,
   INCREMENT_ORDER_DETAIL_QUANTITY,
   SET_ORDER_TABLE,
   SET_ORDER_TABLE_CATEGORY,
@@ -99,6 +100,10 @@ export function loadMenuDetailsCompleted(menuDetails) {
 
 export function createEmptyOrder(menu) {
   return { type: CREATE_EMPTY_ORDER, payload: menu };
+}
+
+export function editOrder(orderId) {
+  return { type: EDIT_ORDER, payload: { id: orderId } };
 }
 
 export function incrementOrderDetailQuantity(itemId, quantity, price) {

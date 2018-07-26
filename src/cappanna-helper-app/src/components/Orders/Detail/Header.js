@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Toolbar from "@material-ui/core/Toolbar";
 import Print from "@material-ui/icons/Print";
 import IconButton from "components/CustomButtons/IconButton";
+import Create from "@material-ui/icons/Create";
 
 const containerStyle = {
   display: "flex",
@@ -20,7 +21,14 @@ const Header = props => {
   return (
     <div>
       <Toolbar>
-        <IconButton onClick={() => props.printRequested(props.id)} color="white">
+        {props.orde}
+        <IconButton
+          onClick={() => props.editOrder(props.order.id)}
+          disabled={props.order.status === 1}
+        >
+          <Create />
+        </IconButton>
+        <IconButton onClick={() => props.printRequested(props.order.id)}>
           <Print />
         </IconButton>
       </Toolbar>
@@ -32,7 +40,7 @@ const Header = props => {
             label="Tav."
             className="CreateOrderForm-TextField"
             style={textFieldStyle}
-            value={props.chTable}
+            value={props.order.chTable}
             InputLabelProps={{ shrink: true }}
             readOnly
           />
@@ -43,7 +51,7 @@ const Header = props => {
             label="Cat."
             className="CreateOrderForm-TextField"
             style={textFieldStyle}
-            value={props.tableCategory}
+            value={props.order.tableCategory}
             InputLabelProps={{ shrink: true }}
             readOnly
           />
@@ -55,13 +63,13 @@ const Header = props => {
             label="N° pers"
             className="CreateOrderForm-TextField"
             style={textFieldStyle}
-            value={props.seats}
+            value={props.order.seats}
             InputLabelProps={{ shrink: true }}
             readOnly
           />
         </div>
         <div style={textFieldStyle}>
-          Tot: <AmountFormat amount={props.totalPrice} />
+          Tot: <AmountFormat amount={props.order.totalPrice} />
         </div>
       </div>
     </div>
@@ -69,11 +77,16 @@ const Header = props => {
 };
 
 Header.propTypes = {
-  totalPrice: PropTypes.number.isRequired,
-  chTable: PropTypes.string.isRequired,
-  tableCategory: PropTypes.string,
-  seats: PropTypes.number.isRequired,
-  printRequested: PropTypes.func.isRequired
+  order: PropTypes.shape({
+    id: PropTypes.number.required,
+    totalPrice: PropTypes.number.isRequired,
+    chTable: PropTypes.string.isRequired,
+    tableCategory: PropTypes.string,
+    seats: PropTypes.number.isRequired,
+    status: PropTypes.number.isRequired
+  }).isRequired,
+  printRequested: PropTypes.func.isRequired,
+  editOrder: PropTypes.func.isRequired
 };
 
 export default Header;

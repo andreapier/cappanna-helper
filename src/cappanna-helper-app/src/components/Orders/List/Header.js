@@ -8,14 +8,10 @@ import NavigationRefresh from "@material-ui/icons/Refresh";
 const Header = props => {
   return (
     <Toolbar>
-      <IconButton
-        onClick={props.goToNewOrder}
-        color="white"
-        style={{ marginRight: "10px" }}
-      >
+      <IconButton onClick={props.goToNewOrder} style={{ marginRight: "10px" }}>
         <ContentAdd />
       </IconButton>
-      <IconButton onClick={props.loadOrdersListRequested} color="white">
+      <IconButton onClick={props.loadOrdersListRequested}>
         <NavigationRefresh />
       </IconButton>
     </Toolbar>
