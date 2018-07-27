@@ -24,7 +24,7 @@ const Header = props => {
         {props.orde}
         <IconButton
           onClick={() => props.editOrder(props.order.id)}
-          disabled={props.order.status === 1}
+          disabled={props.order.status !== 2} style={{ marginRight: "10px" }}
         >
           <Create />
         </IconButton>

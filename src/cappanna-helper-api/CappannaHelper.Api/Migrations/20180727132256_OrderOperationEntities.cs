@@ -28,7 +28,8 @@ namespace CappannaHelper.Api.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     OperationTimestamp = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     OrderId = table.Column<int>(nullable: false),
-                    TypeId = table.Column<int>(nullable: false)
+                    TypeId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,6 +46,12 @@ namespace CappannaHelper.Api.Migrations
                         principalTable: "OperationTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChOrderOperations_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -56,6 +63,11 @@ namespace CappannaHelper.Api.Migrations
                 name: "IX_ChOrderOperations_TypeId",
                 table: "ChOrderOperations",
                 column: "TypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChOrderOperations_UserId",
+                table: "ChOrderOperations",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

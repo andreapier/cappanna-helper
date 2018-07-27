@@ -20,6 +20,7 @@ const mapStateToProps = state => {
       status: 0
     }
   };
+  
   if (state.selectedOrder.item) {
     result.order.id = state.selectedOrder.item.id;
     result.order.totalPrice = state.selectedOrder.item.details.reduce(
@@ -32,6 +33,8 @@ const mapStateToProps = state => {
     result.order.seats = state.selectedOrder.item.seats;
     result.order.status = state.selectedOrder.item.status;
   }
+
+  return result;
 };
 
 const mapDispatchToProps = dispatch => {

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CappannaHelper.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180723120421_OrderOperationEntities")]
+    [Migration("20180727132256_OrderOperationEntities")]
     partial class OrderOperationEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -180,11 +180,15 @@ namespace CappannaHelper.Api.Migrations
 
                     b.Property<int>("TypeId");
 
+                    b.Property<int>("UserId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
                     b.HasIndex("TypeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ChOrderOperations");
                 });
@@ -340,6 +344,11 @@ namespace CappannaHelper.Api.Migrations
                     b.HasOne("CappannaHelper.Api.Persistence.Modelling.OperationType", "Type")
                         .WithMany()
                         .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CappannaHelper.Api.Identity.DataModel.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

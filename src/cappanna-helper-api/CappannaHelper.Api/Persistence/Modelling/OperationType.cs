@@ -9,6 +9,7 @@
     public enum OperationTypes
     {
         Creation = 1,
-        Print = 2
+        Edit = 2,
+        Print = 3
     }
 }

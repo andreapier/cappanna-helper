@@ -4,6 +4,7 @@ using CappannaHelper.Api.Printing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CappannaHelper.Api.Controllers
@@ -54,7 +55,8 @@ namespace CappannaHelper.Api.Controllers
                     var printOperationId = (int) OperationTypes.Print;
                     result.Operations.Add(new ChOrderOperation {
                         OperationTimestamp = DateTime.Now,
-                        TypeId = printOperationId
+                        TypeId = printOperationId,
+                        UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
                     });
                     result.Status = printOperationId;
                     await _context.SaveChangesAsync();

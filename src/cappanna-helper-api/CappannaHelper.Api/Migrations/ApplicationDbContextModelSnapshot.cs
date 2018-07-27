@@ -178,11 +178,15 @@ namespace CappannaHelper.Api.Migrations
 
                     b.Property<int>("TypeId");
 
+                    b.Property<int>("UserId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
                     b.HasIndex("TypeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ChOrderOperations");
                 });
@@ -338,6 +342,11 @@ namespace CappannaHelper.Api.Migrations
                     b.HasOne("CappannaHelper.Api.Persistence.Modelling.OperationType", "Type")
                         .WithMany()
                         .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CappannaHelper.Api.Identity.DataModel.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
