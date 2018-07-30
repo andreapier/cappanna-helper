@@ -23,8 +23,9 @@ const Header = props => {
       <Toolbar>
         {props.orde}
         <IconButton
-          onClick={() => props.editOrder(props.order.id)}
-          disabled={props.order.status !== 2} style={{ marginRight: "10px" }}
+          onClick={() => props.editOrder(props.order)}
+          disabled={props.order.status === 3}
+          style={{ marginRight: "10px" }}
         >
           <Create />
         </IconButton>
@@ -83,7 +84,17 @@ Header.propTypes = {
     chTable: PropTypes.string.isRequired,
     tableCategory: PropTypes.string,
     seats: PropTypes.number.isRequired,
-    status: PropTypes.number.isRequired
+    status: PropTypes.number.isRequired,
+    notes: PropTypes.string,
+    details: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.required,
+        price: PropTypes.number.required,
+        group: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        quantity: PropTypes.number.required
+      })
+    ).isRequired
   }).isRequired,
   printRequested: PropTypes.func.isRequired,
   editOrder: PropTypes.func.isRequired

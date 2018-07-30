@@ -38,7 +38,7 @@ const Detail = props => {
           <IconButton
             onClick={() =>
               props.incrementOrderDetailQuantity(
-                props.item.id,
+                props.item.itemId,
                 1,
                 props.item.price
               )
@@ -53,7 +53,7 @@ const Detail = props => {
           <IconButton
             onClick={() =>
               props.incrementOrderDetailQuantity(
-                props.item.id,
+                props.item.itemId,
                 -1,
                 props.item.price
               )
@@ -70,7 +70,7 @@ const Detail = props => {
 
 Detail.propTypes = {
   item: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    itemId: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     quantity: PropTypes.number.isRequired,

@@ -102,8 +102,8 @@ export function createEmptyOrder(menu) {
   return { type: CREATE_EMPTY_ORDER, payload: menu };
 }
 
-export function editOrder(orderId) {
-  return { type: EDIT_ORDER, payload: { id: orderId } };
+export function editOrder(order) {
+  return { type: EDIT_ORDER, payload: order };
 }
 
 export function incrementOrderDetailQuantity(itemId, quantity, price) {

@@ -5,7 +5,8 @@ import {
   SET_ORDER_TABLE_CATEGORY,
   SET_ORDER_SEATS,
   RESET_ORDER,
-  SET_ORDER_NOTES
+  SET_ORDER_NOTES,
+  EDIT_ORDER
 } from "actions/types";
 
 export const initialState = {
@@ -33,7 +34,7 @@ export default function(state = initialState, action) {
         header: initialState.header,
         details: action.payload.map(e => {
           return {
-            id: e.id,
+            itemId: e.itemId,
             quantity: 0
           };
         })
@@ -41,7 +42,7 @@ export default function(state = initialState, action) {
 
     case INCREMENT_ORDER_DETAIL_QUANTITY:
       const details = state.details.map(e => {
-        if (e.id === action.payload.itemId) {
+        if (e.itemId === action.payload.itemId) {
           return {
             ...e,
             quantity: e.quantity + action.payload.quantity
@@ -95,6 +96,22 @@ export default function(state = initialState, action) {
           ...state.header,
           notes: action.payload
         }
+      };
+
+    case EDIT_ORDER:
+      return {
+        header: {
+          id: action.payload.id,
+          chTable: action.payload.chTable,
+          tableCategory: action.payload.tableCategory,
+          seats: action.payload.seats,
+          notes: action.payload.notes,
+          totalPrice: action.payload.details.reduce(
+            (acc, e) => acc + e.quantity * e.price,
+            0
+          )
+        },
+        details: [...action.payload.details]
       };
 
     default:

@@ -53,7 +53,32 @@ const get = url =>
     .then(checkStatus)
     .then(parseJSON);
 
+const put = (url, data) =>
+  fetch(url, {
+    method: "PUT",
+    headers: getHeaders(),
+    body: JSON.stringify(data)
+  })
+    .then(checkStatus)
+    .then(parseJSON);
+
 const parseJSON = response => response.json();
+
+const getServerOrder = order => {
+  return {
+    chTable:
+      order.header.chTable +
+      (order.header.tableCategory ? "/" + order.header.tableCategory : ""),
+    seats: order.header.seats,
+    details: order.details.filter(e => e.quantity > 0).map(e =>{
+      return {
+        quantity: e.quantity,
+        itemId: e.itemId
+      }
+    }),
+    notes: order.header.notes ? order.header.notes : null
+  };
+};
 
 class Api {
   constructor() {
@@ -106,23 +131,16 @@ class Api {
     return get(MENU_DETAIL);
   }
 
-  createOrder({ order, userId }) {
-    const serverOrder = {
-      chTable:
-        order.header.chTable +
-        (order.header.tableCategory ? "/" + order.header.tableCategory : ""),
-      seats: order.header.seats,
-      details: [],
-      createdById: userId,
-      notes: order.header.notes ? order.header.notes : null
-    };
-    order.details.filter(e => e.quantity > 0).map(e =>
-      serverOrder.details.push({
-        quantity: e.quantity,
-        itemId: e.id
-      })
-    );
+  createOrder(order) {
+    const serverOrder = getServerOrder(order);
+    
     return post(ORDER, serverOrder);
+  }
+
+  editOrder(order){
+    const serverOrder = getServerOrder(order);
+
+    return put(ORDER, serverOrder);
   }
 
   printOrder(orderId) {

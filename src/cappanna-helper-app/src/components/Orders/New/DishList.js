@@ -25,7 +25,7 @@ const DishList = props => {
           <div>
             {props.dishList.map(i => (
               <OrderDetail
-                key={i.id}
+                key={i.itemId}
                 item={i}
                 incrementOrderDetailQuantity={
                   props.incrementOrderDetailQuantity

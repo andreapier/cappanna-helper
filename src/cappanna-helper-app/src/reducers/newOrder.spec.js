@@ -22,59 +22,25 @@ describe("new order reducer", () => {
         tableCategory: "whatever",
         totalPrice: 100
       },
-      details: [
-        {
-          id: 1,
-          quantity: 1
-        },
-        {
-          id: 2,
-          quantity: 2
-        }
-      ]
+      details: [{ itemId: 1, quantity: 1 }, { itemId: 2, quantity: 2 }]
     };
     const expectedState = {
       header: initialState.header,
-      details: [
-        {
-          id: 1,
-          quantity: 0
-        },
-        {
-          id: 2,
-          quantity: 0
-        }
-      ]
+      details: [{ itemId: 1, quantity: 0 }, { itemId: 2, quantity: 0 }]
     };
 
     expect(newOrderReducer(state, resetOrder())).toEqual(expectedState);
   });
 
   it("should set details from payload", () => {
-    const details = [
-      {
-        id: 1
-      },
-      {
-        id: 2
-      }
-    ];
+    const details = [{ itemId: 1 }, { itemId: 2 }];
     const state = {
       header: initialState.header,
       details: []
     };
     const expectedState = {
       header: initialState.header,
-      details: [
-        {
-          id: 1,
-          quantity: 0
-        },
-        {
-          id: 2,
-          quantity: 0
-        }
-      ]
+      details: [{ itemId: 1, quantity: 0 }, { itemId: 2, quantity: 0 }]
     };
     expect(newOrderReducer(state, createEmptyOrder(details))).toEqual(
       expectedState
@@ -86,14 +52,8 @@ describe("new order reducer", () => {
     const state = {
       header: initialState.header,
       details: [
-        {
-          id: 1,
-          quantity: initialQuantity
-        },
-        {
-          id: 2,
-          quantity: 0
-        }
+        { itemId: 1, quantity: initialQuantity },
+        { itemId: 2, quantity: 0 }
       ]
     };
     const quantity = 1;
@@ -104,20 +64,14 @@ describe("new order reducer", () => {
         totalPrice: initialState.header.totalPrice + price
       },
       details: [
-        {
-          id: 1,
-          quantity: initialQuantity + quantity
-        },
-        {
-          id: 2,
-          quantity: 0
-        }
+        { itemId: 1, quantity: initialQuantity + quantity },
+        { itemId: 2, quantity: 0 }
       ]
     };
     expect(
       newOrderReducer(
         state,
-        incrementOrderDetailQuantity(state.details[0].id, quantity, price)
+        incrementOrderDetailQuantity(state.details[0].itemId, quantity, price)
       )
     ).toEqual(expectedState);
   });
