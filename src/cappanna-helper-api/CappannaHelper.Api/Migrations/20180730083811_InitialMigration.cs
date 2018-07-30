@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CappannaHelper.Api.Migrations
 {
-    public partial class EntitiesMigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,6 +21,19 @@ namespace CappannaHelper.Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MenuDetails", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OperationTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Description = table.Column<string>(maxLength: 200, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OperationTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -200,6 +212,40 @@ namespace CappannaHelper.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ChOrderOperations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    OperationTimestamp = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    OrderId = table.Column<int>(nullable: false),
+                    TypeId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChOrderOperations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ChOrderOperations_ChOrders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "ChOrders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChOrderOperations_OperationTypes_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "OperationTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChOrderOperations_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrderDetails",
                 columns: table => new
                 {
@@ -231,6 +277,21 @@ namespace CappannaHelper.Api.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
                 table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChOrderOperations_OrderId",
+                table: "ChOrderOperations",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChOrderOperations_TypeId",
+                table: "ChOrderOperations",
+                column: "TypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChOrderOperations_UserId",
+                table: "ChOrderOperations",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -297,6 +358,9 @@ namespace CappannaHelper.Api.Migrations
                 name: "AspNetUserClaims");
 
             migrationBuilder.DropTable(
+                name: "ChOrderOperations");
+
+            migrationBuilder.DropTable(
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
@@ -310,6 +374,9 @@ namespace CappannaHelper.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserTokens");
+
+            migrationBuilder.DropTable(
+                name: "OperationTypes");
 
             migrationBuilder.DropTable(
                 name: "MenuDetails");

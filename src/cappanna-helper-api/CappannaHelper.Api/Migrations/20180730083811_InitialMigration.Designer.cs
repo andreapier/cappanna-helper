@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CappannaHelper.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180727132256_OrderOperationEntities")]
-    partial class OrderOperationEntities
+    [Migration("20180730083811_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -316,11 +316,11 @@ namespace CappannaHelper.Api.Migrations
             modelBuilder.Entity("CappannaHelper.Api.Identity.DataModel.ApplicationUserRole", b =>
                 {
                     b.HasOne("CappannaHelper.Api.Identity.DataModel.ApplicationRole", "Role")
-                        .WithMany("UserRoles")
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("CappannaHelper.Api.Identity.DataModel.ApplicationUser", "User")
+                    b.HasOne("CappannaHelper.Api.Identity.DataModel.ApplicationUser")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

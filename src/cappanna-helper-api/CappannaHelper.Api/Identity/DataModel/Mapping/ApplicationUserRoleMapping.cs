@@ -13,9 +13,8 @@ namespace CappannaHelper.Api.Identity.DataModel.Mapping
         protected override void BuildEntityConfiguration(EntityTypeBuilder<ApplicationUserRole> entityBuilder)
         {
             entityBuilder.ToTable("UserRoles");
-
-            entityBuilder.HasOne(ur => ur.User).WithMany(u => u.UserRoles).HasForeignKey(ur => ur.UserId);
-            entityBuilder.HasOne(ur => ur.Role).WithMany(r => r.UserRoles).HasForeignKey(ur => ur.RoleId);
+            
+            entityBuilder.HasOne(ur => ur.Role).WithMany().HasForeignKey(ur => ur.RoleId);
         }
     }
 }
