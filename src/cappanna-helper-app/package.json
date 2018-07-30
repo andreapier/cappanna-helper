@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@aspnet/signalr": "^1.0.2",
-    "@material-ui/core": "^1.4.1",
+    "@material-ui/core": "^1.4.2",
     "@material-ui/icons": "^2.0.0",
     "chartist": "^0.11.0",
     "localforage": "^1.7.2",
@@ -52,6 +52,6 @@
   ],
   "devDependencies": {
     "eslint-plugin-prettier": "^2.6.2",
-    "prettier": "^1.13.7"
+    "prettier": "^1.14.0"
   }
 }
