@@ -98,8 +98,8 @@ class Api {
     );
   }
 
-  signinByToken(userData) {
-    token = userData.token;
+  setToken(aToken) {
+    token = aToken;
   }
 
   signout() {

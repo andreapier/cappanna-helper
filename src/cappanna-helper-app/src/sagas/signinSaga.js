@@ -2,7 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "api";
 import {
   signinCompleted,
-  setError,
+  signalApiError,
   loadingChanged,
   loadMenuDetailsRequested,
   connectSignalR
@@ -28,8 +28,7 @@ function* signin(action) {
     yield put(connectSignalR(userData));
     history.push("/order/new");
   } catch (e) {
-    console.error(e);
-    yield put(setError(e.message));
+    signalApiError(e);
   } finally {
     yield put(loadingChanged(false));
   }

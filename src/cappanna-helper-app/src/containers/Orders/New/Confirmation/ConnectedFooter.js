@@ -12,15 +12,14 @@ class ConnectedFooter extends Component {
 
 const mapStateToProps = state => {
   return {
-    order: state.newOrder,
-    userId: state.user.userId
+    order: state.newOrder
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     goBack: ownProps.history.goBack,
-    confirmOrder: (order, userId) => dispatch(confirmOrder(order, userId))
+    confirmOrder: order => dispatch(confirmOrder(order))
   };
 };
 

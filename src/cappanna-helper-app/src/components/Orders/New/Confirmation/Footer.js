@@ -27,7 +27,7 @@ const Footer = props => {
       <ItemGrid sx={12} md={6}>
         <Button
           variant="raised"
-          onClick={() => props.confirmOrder(props.order, props.userId)}
+          onClick={() => props.confirmOrder(props.order)}
         >
           <ActionDone />
           Conferma
@@ -41,8 +41,7 @@ Footer.propTypes = {
   goBack: PropTypes.func.isRequired,
   confirmOrder: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  order: PropTypes.object.isRequired,
-  userId: PropTypes.number.isRequired
+  order: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Footer);

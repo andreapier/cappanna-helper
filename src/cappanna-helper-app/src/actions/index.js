@@ -5,6 +5,7 @@ import {
   SIGNOUT_REQUESTED,
   SIGNOUT_COMPLETED,
   SET_ERROR,
+  SIGNAL_API_ERROR,
   LOAD_USER_DATA,
   LOAD_MENU_DETAILS_REQUESTED,
   LOAD_MENU_DETAILS_COMPLETED,
@@ -88,6 +89,10 @@ export function loadUserData() {
 
 export function setError(message) {
   return { type: SET_ERROR, payload: message };
+}
+
+export function signalApiError(error) {
+  return { type: SIGNAL_API_ERROR, payload: error };
 }
 
 export function loadMenuDetailsRequested() {

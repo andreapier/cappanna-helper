@@ -2,7 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "api/";
 import {
   signoutCompleted,
-  setError,
+  signalApiError,
   loadingChanged,
   disconnectSignalR
 } from "actions";
@@ -25,8 +25,7 @@ function* signout(action) {
     const api = new Api();
     yield call(api.signout);
   } catch (e) {
-    console.error(e);
-    yield put(setError(e.message));
+    signalApiError(e);
   }
 
   yield put(signoutCompleted());

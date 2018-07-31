@@ -18,6 +18,7 @@ const Header = props => {
 };
 
 Header.propTypes = {
+  id: PropTypes.number,
   table: PropTypes.string.isRequired,
   seats: PropTypes.number.isRequired,
   totalPrice: PropTypes.number.isRequired,

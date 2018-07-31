@@ -2,8 +2,7 @@ import { put, takeLatest, call } from "redux-saga/effects";
 import {
   signinCompleted,
   loadingChanged,
-  setError,
-  signoutRequested,
+  signalApiError,
   loadMenuDetailsRequested,
   connectSignalR
 } from "actions";
@@ -29,17 +28,13 @@ function* loadUserData() {
     }
 
     const api = new Api();
-    yield call(api.signinByToken, userData);
+    api.setToken(userData.token);
     yield put(signinCompleted(userData));
     yield put(connectSignalR(userData));
     history.push("/order/new");
     yield put(loadMenuDetailsRequested());
   } catch (e) {
-    if (e.response && e.response.status === 401) {
-      yield put(signoutRequested());
-    } else {
-      yield put(setError(e.message));
-    }
+    signalApiError(e);
   } finally {
     yield put(loadingChanged(false));
   }

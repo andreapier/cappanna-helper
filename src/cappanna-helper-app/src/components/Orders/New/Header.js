@@ -67,7 +67,7 @@ const Header = props => {
           <IconButton
             type="submit"
             disabled={!props.canConfirm}
-            onClick={props.goToConfirm}
+            onClick={() => props.goToConfirm(props.id)}
           >
             <ContentSend />
           </IconButton>
@@ -78,6 +78,7 @@ const Header = props => {
 };
 
 Header.propTypes = {
+  id: PropTypes.number,
   setOrderTable: PropTypes.func.isRequired,
   setOrderTableCategory: PropTypes.func.isRequired,
   setOrderSeats: PropTypes.func.isRequired,

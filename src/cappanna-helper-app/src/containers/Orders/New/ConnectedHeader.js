@@ -12,6 +12,7 @@ class ConnectedHeader extends Component {
 
 const mapStateToProps = state => {
   return {
+    id: state.newOrder.header.id,
     totalPrice: state.newOrder.header.totalPrice,
     chTable: state.newOrder.header.chTable,
     tableCategory: state.newOrder.header.tableCategory,
@@ -24,12 +25,14 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  const confirmLocation = ownProps.location === "/order/new" ? "/order/new/confirm" : "/order/_ORDER_ID_/edit/confirm";
+  
   return {
     setOrderTable: table => dispatch(setOrderTable(table)),
     setOrderTableCategory: tableCategory =>
       dispatch(setOrderTableCategory(tableCategory)),
     setOrderSeats: seats => dispatch(setOrderSeats(seats)),
-    goToConfirm: () => ownProps.history.push("/order/confirm")
+    goToConfirm: id => ownProps.history.push(confirmLocation.replace("_ORDER_ID_", id))
   };
 };
 

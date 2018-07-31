@@ -1,8 +1,7 @@
 import { put, takeLatest, call } from "redux-saga/effects";
 import {
   loadingChanged,
-  setError,
-  signoutRequested,
+  signalApiError,
   loadSelectedOrderCompleted
 } from "actions";
 import { LOAD_SELECTED_ORDER_REQUESTED } from "actions/types";
@@ -17,12 +16,7 @@ function* loadSelectedOrder(action) {
     yield put(loadSelectedOrderCompleted(order));
     history.push(`/order/${order.id}`);
   } catch (e) {
-    if (e.response && e.response.status === 401) {
-      yield put(signoutRequested());
-    } else {
-      console.error(e);
-      yield put(setError(e.message));
-    }
+    signalApiError(e);
   }
 
   yield put(loadingChanged(false));

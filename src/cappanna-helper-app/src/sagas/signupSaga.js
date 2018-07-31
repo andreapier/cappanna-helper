@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "api";
-import { signupCompleted, setError, loadingChanged } from "actions";
+import { signupCompleted, signalApiError, loadingChanged } from "actions";
 import { SIGNUP_REQUESTED } from "actions/types";
 import history from "./../history";
 import { reset } from "redux-form";
@@ -14,8 +14,7 @@ function* signup(action) {
     history.push("/users/signup/ok");
     reset("signupForm");
   } catch (e) {
-    console.error(e);
-    yield put(setError(e.message));
+    signalApiError(e);
   } finally {
     yield put(loadingChanged(false));
   }
