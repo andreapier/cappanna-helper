@@ -16,16 +16,14 @@ describe("new order reducer", () => {
 
   it("should reset header data to initial and details' quantity", () => {
     const state = {
-      header: {
-        seats: 10,
-        chTable: 10,
-        tableCategory: "whatever",
-        totalPrice: 100
-      },
+      seats: 10,
+      chTable: 10,
+      tableCategory: "whatever",
+      totalPrice: 100,
       details: [{ itemId: 1, quantity: 1 }, { itemId: 2, quantity: 2 }]
     };
     const expectedState = {
-      header: initialState.header,
+      ...initialState,
       details: [{ itemId: 1, quantity: 0 }, { itemId: 2, quantity: 0 }]
     };
 
@@ -33,13 +31,13 @@ describe("new order reducer", () => {
   });
 
   it("should set details from payload", () => {
-    const details = [{ itemId: 1 }, { itemId: 2 }];
+    const details = [{ id: 1 }, { id: 2 }];
     const state = {
-      header: initialState.header,
+      ...initialState,
       details: []
     };
     const expectedState = {
-      header: initialState.header,
+      ...initialState,
       details: [{ itemId: 1, quantity: 0 }, { itemId: 2, quantity: 0 }]
     };
     expect(newOrderReducer(state, createEmptyOrder(details))).toEqual(
@@ -50,7 +48,7 @@ describe("new order reducer", () => {
   it("should increment a detail's quantity and total price", () => {
     const initialQuantity = 0;
     const state = {
-      header: initialState.header,
+      ...initialState,
       details: [
         { itemId: 1, quantity: initialQuantity },
         { itemId: 2, quantity: 0 }
@@ -59,10 +57,8 @@ describe("new order reducer", () => {
     const quantity = 1;
     const price = 5;
     const expectedState = {
-      header: {
-        ...initialState.header,
-        totalPrice: initialState.header.totalPrice + price
-      },
+      ...initialState,
+      totalPrice: initialState.totalPrice + price,
       details: [
         { itemId: 1, quantity: initialQuantity + quantity },
         { itemId: 2, quantity: 0 }
@@ -79,7 +75,8 @@ describe("new order reducer", () => {
   it("should set table", () => {
     const table = 1;
     const expectedState = {
-      header: { ...initialState.header, chTable: table },
+      ...initialState,
+      chTable: table,
       details: initialState.details
     };
 
@@ -91,7 +88,8 @@ describe("new order reducer", () => {
   it("should set table category", () => {
     const category = "whatever";
     const expectedState = {
-      header: { ...initialState.header, tableCategory: category },
+      ...initialState,
+      tableCategory: category,
       details: initialState.details
     };
 
@@ -103,7 +101,8 @@ describe("new order reducer", () => {
   it("should set seats number", () => {
     const seats = 1;
     const expectedState = {
-      header: { ...initialState.header, seats },
+      ...initialState,
+      seats,
       details: initialState.details
     };
 
@@ -115,7 +114,8 @@ describe("new order reducer", () => {
   it("should set notes", () => {
     const notes = 1;
     const expectedState = {
-      header: { ...initialState.header, notes },
+      ...initialState,
+      notes,
       details: initialState.details
     };
 

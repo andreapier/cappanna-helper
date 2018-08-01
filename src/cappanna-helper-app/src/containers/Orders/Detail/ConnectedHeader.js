@@ -29,28 +29,27 @@ const mapStateToProps = state => {
       (acc, e) => acc + e.quantity * e.item.price,
       0
     );
-    result.order.chTable = state.selectedOrder.item.chTable.split("/")[0];
+    result.order.chTable = parseInt(state.selectedOrder.item.chTable.split("\\")[0], 10);
     result.order.tableCategory =
-      state.selectedOrder.item.chTable.split("/")[1] || "";
+      state.selectedOrder.item.chTable.split("\\")[1] || "";
     result.order.seats = state.selectedOrder.item.seats;
     result.order.status = state.selectedOrder.item.status;
     result.order.details = state.selectedOrder.item.details
       .map(e => {
         return {
-          id: e.item.id,
-          group: e.item.group,
-          name: e.item.name,
+          id: e.id,
           quantity: e.quantity,
-          price: e.item.price
+          itemId: e.item.id
         };
       })
       .concat(
         state.menuDetails.items
-          .filter(d => state.selectedOrder.item.details.find(e => e.id === d.id))
+          .filter(d => !state.selectedOrder.item.details.find(e => e.itemId === d.id))
           .map(e => {
             return {
-              ...e,
-              quantity: 0
+              id: 0,
+              quantity: 0,
+              itemId: e.id
             };
           })
       );

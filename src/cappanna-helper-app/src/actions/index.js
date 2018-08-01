@@ -130,8 +130,8 @@ export function setOrderSeats(seats) {
   return { type: SET_ORDER_SEATS, payload: seats };
 }
 
-export function confirmOrder(order, userId) {
-  return { type: CONFIRM_ORDER, payload: { order, userId } };
+export function confirmOrder(order) {
+  return { type: CONFIRM_ORDER, payload: order };
 }
 
 export function loadOrdersListRequested() {

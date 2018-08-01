@@ -12,27 +12,31 @@ class ConnectedHeader extends Component {
 
 const mapStateToProps = state => {
   return {
-    id: state.newOrder.header.id,
-    totalPrice: state.newOrder.header.totalPrice,
-    chTable: state.newOrder.header.chTable,
-    tableCategory: state.newOrder.header.tableCategory,
-    seats: state.newOrder.header.seats,
+    id: state.newOrder.id,
+    totalPrice: state.newOrder.totalPrice,
+    chTable: state.newOrder.chTable,
+    tableCategory: state.newOrder.tableCategory,
+    seats: state.newOrder.seats,
     canConfirm:
-      state.newOrder.header.totalPrice > 0 &&
-      state.newOrder.header.chTable > 0 &&
-      state.newOrder.header.seats > 0
+      state.newOrder.totalPrice > 0 &&
+      state.newOrder.chTable > 0 &&
+      state.newOrder.seats > 0
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const confirmLocation = ownProps.location === "/order/new" ? "/order/new/confirm" : "/order/_ORDER_ID_/edit/confirm";
-  
+  const confirmLocation =
+    ownProps.location.pathname === "/order/new"
+      ? "/order/new/confirm"
+      : "/order/_ORDER_ID_/edit/confirm";
+
   return {
     setOrderTable: table => dispatch(setOrderTable(table)),
     setOrderTableCategory: tableCategory =>
       dispatch(setOrderTableCategory(tableCategory)),
     setOrderSeats: seats => dispatch(setOrderSeats(seats)),
-    goToConfirm: id => ownProps.history.push(confirmLocation.replace("_ORDER_ID_", id))
+    goToConfirm: id =>
+      ownProps.history.push(confirmLocation.replace("_ORDER_ID_", id))
   };
 };
 

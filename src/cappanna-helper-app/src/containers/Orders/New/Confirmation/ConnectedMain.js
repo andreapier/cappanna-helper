@@ -10,15 +10,19 @@ class ConnectedMain extends Component {
 
 const mapStateToProps = state => {
   return {
-    orderData: state.newOrder.details.filter(e => e.quantity > 0).map(e => {
+    details: state.newOrder.details.filter(e => e.quantity > 0).map(e => {
       const menuDetail = state.menuDetails.items.find(d => d.id === e.itemId);
 
       return {
-        itemId: e.itemId,
-        name: menuDetail.name,
-        price: menuDetail.price,
+        id: e.id,
         quantity: e.quantity,
-        totalPrice: menuDetail.price * e.quantity
+        totalPrice: menuDetail.price * e.quantity,
+        item: {
+          id: e.itemId,
+          name: menuDetail.name,
+          price: menuDetail.price,
+          group: menuDetail.group
+        }
       };
     })
   };

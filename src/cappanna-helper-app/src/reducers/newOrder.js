@@ -10,12 +10,11 @@ import {
 } from "actions/types";
 
 export const initialState = {
-  header: {
-    seats: 2,
-    chTable: 1,
-    tableCategory: "",
-    totalPrice: 0
-  },
+  id: 0,
+  seats: 2,
+  chTable: 1,
+  tableCategory: "",
+  totalPrice: 0,
   details: []
 };
 
@@ -23,7 +22,7 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case RESET_ORDER:
       return {
-        header: initialState.header,
+        ...initialState,
         details: state.details.map(e => {
           return { ...e, quantity: 0 };
         })
@@ -31,10 +30,10 @@ export default function(state = initialState, action) {
 
     case CREATE_EMPTY_ORDER:
       return {
-        header: initialState.header,
+        ...initialState,
         details: action.payload.map(e => {
           return {
-            itemId: e.itemId,
+            itemId: e.id,
             quantity: 0
           };
         })
@@ -55,63 +54,50 @@ export default function(state = initialState, action) {
       const deltaPrice = action.payload.quantity * action.payload.price;
 
       return {
-        header: {
-          ...state.header,
-          totalPrice: state.header.totalPrice + deltaPrice
-        },
+        ...state,
+        totalPrice: state.totalPrice + deltaPrice,
         details
       };
 
     case SET_ORDER_TABLE:
       return {
         ...state,
-        header: {
-          ...state.header,
-          chTable: action.payload
-        }
+        chTable: action.payload
       };
 
     case SET_ORDER_TABLE_CATEGORY:
       return {
         ...state,
-        header: {
-          ...state.header,
-          tableCategory: action.payload
-        }
+        tableCategory: action.payload
       };
 
     case SET_ORDER_SEATS:
       return {
         ...state,
-        header: {
-          ...state.header,
-          seats: action.payload
-        }
+        seats: action.payload
       };
 
     case SET_ORDER_NOTES:
       return {
         ...state,
-        header: {
-          ...state.header,
-          notes: action.payload
-        }
+        notes: action.payload
       };
 
     case EDIT_ORDER:
       return {
-        header: {
-          id: action.payload.id,
-          chTable: action.payload.chTable,
-          tableCategory: action.payload.tableCategory,
-          seats: action.payload.seats,
-          notes: action.payload.notes,
-          totalPrice: action.payload.details.reduce(
-            (acc, e) => acc + e.quantity * e.price,
-            0
-          )
-        },
-        details: [...action.payload.details]
+        id: action.payload.id,
+        chTable: action.payload.chTable,
+        tableCategory: action.payload.tableCategory,
+        seats: action.payload.seats,
+        notes: action.payload.notes,
+        totalPrice: action.payload.totalPrice,
+        details: action.payload.details.map(e => {
+          return {
+            id: e.id,
+            itemId: e.itemId,
+            quantity: e.quantity
+          };
+        })
       };
 
     default:

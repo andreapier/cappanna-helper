@@ -67,16 +67,17 @@ const parseJSON = response => response.json();
 const getServerOrder = order => {
   return {
     chTable:
-      order.header.chTable +
-      (order.header.tableCategory ? "/" + order.header.tableCategory : ""),
-    seats: order.header.seats,
+      order.chTable +
+      (order.tableCategory ? "/" + order.tableCategory : ""),
+    seats: order.seats,
     details: order.details.filter(e => e.quantity > 0).map(e =>{
       return {
+        id: e.id,
         quantity: e.quantity,
         itemId: e.itemId
       }
     }),
-    notes: order.header.notes ? order.header.notes : null
+    notes: order.notes
   };
 };
 

@@ -16,10 +16,10 @@ function* loadSelectedOrder(action) {
     yield put(loadSelectedOrderCompleted(order));
     history.push(`/order/${order.id}`);
   } catch (e) {
-    signalApiError(e);
+    yield put(signalApiError(e));
+  } finally {
+    yield put(loadingChanged(false));
   }
-
-  yield put(loadingChanged(false));
 }
 
 function* loadSelectedOrderSaga() {

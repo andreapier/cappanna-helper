@@ -26,39 +26,41 @@ const innerItemStyle20px = {
   minWidth: "20px"
 };
 
-const Detail = props => {
+const MenuItemDetail = props => {
   return (
     <div style={containerStyle}>
-      <div>{props.item.name}</div>
+      <div>{props.detail.item.name}</div>
       <div style={innerContainerStyle}>
         <div style={innerItemStyle}>
-          <AmountFormat amount={props.item.price} />
+          <AmountFormat amount={props.detail.item.price} />
         </div>
         <div>
           <IconButton
             onClick={() =>
               props.incrementOrderDetailQuantity(
-                props.item.itemId,
+                props.detail.item.id,
                 1,
-                props.item.price
+                props.detail.item.price
               )
             }
-            disabled={!props.item.isAvailable}
+            disabled={!props.detail.item.isAvailable}
           >
             <ContentAdd />
           </IconButton>
         </div>
-        <div style={innerItemStyle20px}>{props.item.quantity}</div>
+        <div style={innerItemStyle20px}>{props.detail.quantity}</div>
         <div>
           <IconButton
             onClick={() =>
               props.incrementOrderDetailQuantity(
-                props.item.itemId,
+                props.detail.item.id,
                 -1,
-                props.item.price
+                props.detail.item.price
               )
             }
-            disabled={props.item.quantity === 0 || !props.item.isAvailable}
+            disabled={
+              props.detail.quantity === 0 || !props.detail.item.isAvailable
+            }
           >
             <ContentRemove />
           </IconButton>
@@ -68,15 +70,18 @@ const Detail = props => {
   );
 };
 
-Detail.propTypes = {
-  item: PropTypes.shape({
-    itemId: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
+MenuItemDetail.propTypes = {
+  detail: PropTypes.shape({
+    id: PropTypes.number,
     quantity: PropTypes.number.isRequired,
-    isAvailable: PropTypes.bool.isRequired
-  }),
+    item: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      isAvailable: PropTypes.bool.isRequired
+    }).isRequired
+  }).isRequired,
   incrementOrderDetailQuantity: PropTypes.func.isRequired
 };
 
-export default Detail;
+export default MenuItemDetail;

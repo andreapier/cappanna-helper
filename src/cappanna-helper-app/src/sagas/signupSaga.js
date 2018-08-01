@@ -14,7 +14,7 @@ function* signup(action) {
     history.push("/users/signup/ok");
     reset("signupForm");
   } catch (e) {
-    signalApiError(e);
+    yield put(signalApiError(e));
   } finally {
     yield put(loadingChanged(false));
   }

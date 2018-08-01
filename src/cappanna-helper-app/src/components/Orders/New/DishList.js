@@ -4,7 +4,7 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Typography from "@material-ui/core/Typography";
-import OrderDetail from "components/Orders/New/MenuItemDetail";
+import MenuItemDetail from "components/Orders/New/MenuItemDetail";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -23,10 +23,10 @@ const DishList = props => {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <div>
-            {props.dishList.map(i => (
-              <OrderDetail
-                key={i.itemId}
-                item={i}
+            {props.details.map(i => (
+              <MenuItemDetail
+                key={i.item.id}
+                detail={i}
                 incrementOrderDetailQuantity={
                   props.incrementOrderDetailQuantity
                 }
@@ -41,7 +41,13 @@ const DishList = props => {
 
 DishList.propTypes = {
   title: PropTypes.string.isRequired,
-  dishList: PropTypes.array.isRequired,
+  details: PropTypes.arrayOf(
+    PropTypes.shape({
+      item: PropTypes.shape({
+        id: PropTypes.number.isRequired
+      }).isRequired
+    }).isRequired
+  ).isRequired,
   incrementOrderDetailQuantity: PropTypes.func.isRequired
 };
 

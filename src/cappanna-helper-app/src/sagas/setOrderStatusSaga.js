@@ -14,10 +14,10 @@ function* setOrderStatus(action) {
     const order = yield call(api.setOrderStatus, action.payload);
     yield put(setOrderStatusCompleted(order));
   } catch (e) {
-    signalApiError(e);
+    yield put(signalApiError(e));
+  } finally {
+    yield put(loadingChanged(false));
   }
-
-  yield put(loadingChanged(false));
 }
 
 function* setOrderStatusSaga() {

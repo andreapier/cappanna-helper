@@ -28,7 +28,7 @@ function* signin(action) {
     yield put(connectSignalR(userData));
     history.push("/order/new");
   } catch (e) {
-    signalApiError(e);
+    yield put(signalApiError(e));
   } finally {
     yield put(loadingChanged(false));
   }

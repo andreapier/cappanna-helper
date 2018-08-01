@@ -1,9 +1,5 @@
 import { put, takeLatest, call } from "redux-saga/effects";
-import {
-  loadingChanged,
-  signalApiError,
-  printCompleted
-} from "actions";
+import { loadingChanged, signalApiError, printCompleted } from "actions";
 import { PRINT_REQUESTED } from "actions/types";
 import Api from "api";
 
@@ -14,10 +10,10 @@ function* printOrder(action) {
     const order = yield call(api.printOrder, action.payload);
     yield put(printCompleted(order));
   } catch (e) {
-    signalApiError(e);
+    yield put(signalApiError(e));
+  } finally {
+    yield put(loadingChanged(false));
   }
-
-  yield put(loadingChanged(false));
 }
 
 function* printOrderSaga() {

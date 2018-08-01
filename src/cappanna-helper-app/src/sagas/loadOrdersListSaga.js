@@ -1,6 +1,7 @@
 import { put, takeLatest, call } from "redux-saga/effects";
 import {
-  loadingChanged, signalApiError,
+  loadingChanged,
+  signalApiError,
   loadOrdersListCompleted
 } from "actions";
 import { LOAD_ORDERS_LIST_REQUESTED } from "actions/types";
@@ -15,10 +16,10 @@ function* loadOrdersList(action) {
     yield put(loadOrdersListCompleted(orders));
     history.push("/order");
   } catch (e) {
-    signalApiError(e);
+    yield put(signalApiError(e));
+  } finally {
+    yield put(loadingChanged(false));
   }
-
-  yield put(loadingChanged(false));
 }
 
 function* loadOrdersListSaga() {

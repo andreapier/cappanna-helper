@@ -17,10 +17,10 @@ function* loadMenuDetails(action) {
     yield put(loadMenuDetailsCompleted(menuDetails));
     yield put(createEmptyOrder(menuDetails));
   } catch (e) {
-    signalApiError(e);
+    yield put(signalApiError(e));
+  } finally {
+    yield put(loadingChanged(false));
   }
-
-  yield put(loadingChanged(false));
 }
 
 function* loadMenuDetailsSaga() {

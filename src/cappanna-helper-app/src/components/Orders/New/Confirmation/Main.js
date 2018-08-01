@@ -10,9 +10,9 @@ const Main = props => {
   return (
     <Table
       tableHead={["Nome", "Prezzo (€)", "Qta", "Tot (€)"]}
-      tableData={props.orderData.map(e => [
-        e.name,
-        formatAmount(e.price, false),
+      tableData={props.details.map(e => [
+        e.item.name,
+        formatAmount(e.item.price, false),
         e.quantity,
         formatAmount(e.totalPrice, false)
       ])}
@@ -21,13 +21,15 @@ const Main = props => {
 };
 
 Main.propTypes = {
-  orderData: PropTypes.arrayOf(
+  details: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
       quantity: PropTypes.number.isRequired,
-      totalPrice: PropTypes.number.isRequired
-    })
+      totalPrice: PropTypes.number.isRequired,
+      item: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired
+      }).isRequired
+    }).isRequired
   ).isRequired,
   classes: PropTypes.object.isRequired
 };

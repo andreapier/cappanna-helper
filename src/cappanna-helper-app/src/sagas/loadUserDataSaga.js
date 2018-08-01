@@ -1,4 +1,4 @@
-import { put, takeLatest, call } from "redux-saga/effects";
+import { put, takeLatest } from "redux-saga/effects";
 import {
   signinCompleted,
   loadingChanged,
@@ -34,12 +34,10 @@ function* loadUserData() {
     history.push("/order/new");
     yield put(loadMenuDetailsRequested());
   } catch (e) {
-    signalApiError(e);
+    yield put(signalApiError(e));
   } finally {
     yield put(loadingChanged(false));
   }
-
-  yield put(loadingChanged(false));
 }
 
 function* loadUserDataSaga() {

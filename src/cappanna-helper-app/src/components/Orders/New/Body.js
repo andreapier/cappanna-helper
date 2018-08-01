@@ -13,24 +13,24 @@ const Body = props => {
   const waters = [];
   const drinks = [];
 
-  props.dishList.forEach(i => {
-    if (i.group === "Antipasti") {
+  props.details.forEach(i => {
+    if (i.item.group === "Antipasti") {
       appetizers.push(i);
-    } else if (i.group === "Primi piatti") {
+    } else if (i.item.group === "Primi piatti") {
       firstDishes.push(i);
-    } else if (i.group === "Secondi piatti") {
+    } else if (i.item.group === "Secondi piatti") {
       secondDishes.push(i);
-    } else if (i.group === "Contorni") {
+    } else if (i.item.group === "Contorni") {
       sideDishes.push(i);
-    } else if (i.group === "Dolci") {
+    } else if (i.item.group === "Dolci") {
       desserts.push(i);
-    } else if (i.group === "Vini Bianchi") {
+    } else if (i.item.group === "Vini Bianchi") {
       whiteWines.push(i);
-    } else if (i.group === "Vini Rossi") {
+    } else if (i.item.group === "Vini Rossi") {
       redWines.push(i);
-    } else if (i.group === "Acqua") {
+    } else if (i.item.group === "Acqua") {
       waters.push(i);
-    } else if (i.group === "Bibite") {
+    } else if (i.item.group === "Bibite") {
       drinks.push(i);
     }
   });
@@ -38,55 +38,55 @@ const Body = props => {
   return [
     <DishList
       key={1}
-      dishList={appetizers}
+      details={appetizers}
       title="Antipasti"
       incrementOrderDetailQuantity={props.incrementOrderDetailQuantity}
     />,
     <DishList
       key={2}
-      dishList={firstDishes}
+      details={firstDishes}
       title="Primi"
       incrementOrderDetailQuantity={props.incrementOrderDetailQuantity}
     />,
     <DishList
       key={3}
-      dishList={secondDishes}
+      details={secondDishes}
       title="Secondi"
       incrementOrderDetailQuantity={props.incrementOrderDetailQuantity}
     />,
     <DishList
       key={4}
-      dishList={sideDishes}
+      details={sideDishes}
       title="Contorni"
       incrementOrderDetailQuantity={props.incrementOrderDetailQuantity}
     />,
     <DishList
       key={5}
-      dishList={desserts}
+      details={desserts}
       title="Dolci"
       incrementOrderDetailQuantity={props.incrementOrderDetailQuantity}
     />,
     <DishList
       key={6}
-      dishList={whiteWines}
+      details={whiteWines}
       title="Vini Bianchi"
       incrementOrderDetailQuantity={props.incrementOrderDetailQuantity}
     />,
     <DishList
       key={7}
-      dishList={redWines}
+      details={redWines}
       title="Vini Rossi"
       incrementOrderDetailQuantity={props.incrementOrderDetailQuantity}
     />,
     <DishList
       key={8}
-      dishList={waters}
+      details={waters}
       title="Acqua"
       incrementOrderDetailQuantity={props.incrementOrderDetailQuantity}
     />,
     <DishList
       key={9}
-      dishList={drinks}
+      details={drinks}
       title="Bibite"
       incrementOrderDetailQuantity={props.incrementOrderDetailQuantity}
     />
@@ -94,7 +94,13 @@ const Body = props => {
 };
 
 Body.propTypes = {
-  dishList: PropTypes.array.isRequired,
+  details: PropTypes.arrayOf(
+    PropTypes.shape({
+      item: PropTypes.shape({
+        group: PropTypes.string.isRequired
+      })
+    })
+  ).isRequired,
   incrementOrderDetailQuantity: PropTypes.func.isRequired
 };
 

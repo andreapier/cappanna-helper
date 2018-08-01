@@ -79,11 +79,14 @@ const Header = props => {
 
 Header.propTypes = {
   id: PropTypes.number,
+  totalPrice: PropTypes.number.isRequired,
+  chTable: PropTypes.number.isRequired,
+  tableCategory: PropTypes.string,
+  seats: PropTypes.number.isRequired,
+  canConfirm: PropTypes.bool.isRequired,
   setOrderTable: PropTypes.func.isRequired,
   setOrderTableCategory: PropTypes.func.isRequired,
   setOrderSeats: PropTypes.func.isRequired,
-  totalPrice: PropTypes.number.isRequired,
-  canConfirm: PropTypes.bool.isRequired,
   goToConfirm: PropTypes.func.isRequired
 };
 

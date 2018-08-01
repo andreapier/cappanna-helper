@@ -25,7 +25,7 @@ function* signout(action) {
     const api = new Api();
     yield call(api.signout);
   } catch (e) {
-    signalApiError(e);
+    yield put(signalApiError(e));
   }
 
   yield put(signoutCompleted());
