@@ -13,7 +13,6 @@ const mapStateToProps = state => {
   return {
     details: state.newOrder.details.map(e => {
       const menuDetail = state.menuDetails.items.find(d => d.id === e.itemId);
-      console.log(e.itemId, menuDetail);
 
       return {
         id: e.id,

@@ -81,7 +81,7 @@ Header.propTypes = {
   order: PropTypes.shape({
     id: PropTypes.number.required,
     totalPrice: PropTypes.number.isRequired,
-    chTable: PropTypes.string.isRequired,
+    chTable: PropTypes.number.isRequired,
     tableCategory: PropTypes.string,
     seats: PropTypes.number.isRequired,
     status: PropTypes.number.isRequired,

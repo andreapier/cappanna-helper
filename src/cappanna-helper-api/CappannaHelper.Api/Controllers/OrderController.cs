@@ -137,11 +137,6 @@ namespace CappannaHelper.Api.Controllers
                 return BadRequest("Impossibile modificare un ordine senza specificare l'Id");
             }
 
-            if (order.CreatedById <= 0)
-            {
-                return BadRequest("Impossibile modificare un ordine senza specificare l'Id utente");
-            }
-
             if (order.ChTable == null)
             {
                 return BadRequest("Impossibile modificare un ordine senza specificare il tavolo");
@@ -157,7 +152,7 @@ namespace CappannaHelper.Api.Controllers
                 return BadRequest("Impossibile modificare un ordine senza specificare i piatti");
             }
 
-            ChOrder result;
+            EntityEntry<ChOrder> result;
 
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -165,33 +160,50 @@ namespace CappannaHelper.Api.Controllers
                 {
                     var operationId = (int) OperationTypes.Edit;
 
-                    result = await _context.Orders
+                    var dbOrder = await _context.Orders
                         .Include(o => o.Operations)
                         .FirstOrDefaultAsync(o => o.Id == order.Id);
 
-                    result.Notes = order.Notes;
-                    result.Seats = order.Seats;
-                    result.ChTable = order.ChTable;
-                    result.Status = operationId;
-                    result.Details = order.Details;
+                    dbOrder.ChTable = order.ChTable;
+                    dbOrder.Notes = order.Notes;
+                    dbOrder.Seats = order.Seats;
+                    dbOrder.Status = operationId;
+                    dbOrder.Details.Clear();
+                    
+                    foreach(var detail in order.Details)
+                    {
+                        var dbDetail = dbOrder.Details.FirstOrDefault(d => d.ItemId == detail.ItemId);
+                        
+                        if (dbDetail == null)
+                        {
+                            dbOrder.Details.Add(detail);
+                        }
+                        else
+                        {
+                            dbDetail.Quantity = detail.Quantity;
+                        }
+                    }
 
-                    result.Operations.Add(new ChOrderOperation {
+                    dbOrder.Operations.Add(new ChOrderOperation
+                    {
                         OperationTimestamp = DateTime.Now,
                         TypeId = operationId,
                         UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
                     });
 
+                    result = _context.Orders.Update(dbOrder);
                     await _context.SaveChangesAsync();
                     transaction.Commit();
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     throw new Exception("Impossibile salvare l'ordine. Ripetere l'operazione", e);
                 }
             }
 
-            await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_CHANGED, order);
+            await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_CHANGED, result.Entity);
 
-            return Ok(result);
+            return Ok(result.Entity);
         }
     }
 }

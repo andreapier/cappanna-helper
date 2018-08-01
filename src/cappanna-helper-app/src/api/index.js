@@ -53,9 +53,9 @@ const get = url =>
     .then(checkStatus)
     .then(parseJSON);
 
-const put = (url, data) =>
+const patch = (url, data) =>
   fetch(url, {
-    method: "PUT",
+    method: "PATCH",
     headers: getHeaders(),
     body: JSON.stringify(data)
   })
@@ -66,9 +66,10 @@ const parseJSON = response => response.json();
 
 const getServerOrder = order => {
   return {
+    id: order.id,
     chTable:
       order.chTable +
-      (order.tableCategory ? "/" + order.tableCategory : ""),
+      (order.tableCategory ? "\\" + order.tableCategory : ""),
     seats: order.seats,
     details: order.details.filter(e => e.quantity > 0).map(e =>{
       return {
@@ -141,7 +142,7 @@ class Api {
   editOrder(order){
     const serverOrder = getServerOrder(order);
 
-    return put(ORDER, serverOrder);
+    return patch(ORDER, serverOrder);
   }
 
   printOrder(orderId) {
