@@ -152,7 +152,7 @@ namespace CappannaHelper.Api.Controllers
                 return BadRequest("Impossibile modificare un ordine senza specificare i piatti");
             }
 
-            EntityEntry<ChOrder> result;
+            ChOrder result;
 
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -160,23 +160,23 @@ namespace CappannaHelper.Api.Controllers
                 {
                     var operationId = (int) OperationTypes.Edit;
 
-                    var dbOrder = await _context.Orders
+                    result = await _context.Orders
                         .Include(o => o.Operations)
                         .FirstOrDefaultAsync(o => o.Id == order.Id);
 
-                    dbOrder.ChTable = order.ChTable;
-                    dbOrder.Notes = order.Notes;
-                    dbOrder.Seats = order.Seats;
-                    dbOrder.Status = operationId;
-                    dbOrder.Details.Clear();
+                    result.ChTable = order.ChTable;
+                    result.Notes = order.Notes;
+                    result.Seats = order.Seats;
+                    result.Status = operationId;
+                    result.Details.Clear();
                     
                     foreach(var detail in order.Details)
                     {
-                        var dbDetail = dbOrder.Details.FirstOrDefault(d => d.ItemId == detail.ItemId);
+                        var dbDetail = result.Details.FirstOrDefault(d => d.ItemId == detail.ItemId);
                         
                         if (dbDetail == null)
                         {
-                            dbOrder.Details.Add(detail);
+                            result.Details.Add(detail);
                         }
                         else
                         {
@@ -184,14 +184,13 @@ namespace CappannaHelper.Api.Controllers
                         }
                     }
 
-                    dbOrder.Operations.Add(new ChOrderOperation
+                    result.Operations.Add(new ChOrderOperation
                     {
                         OperationTimestamp = DateTime.Now,
                         TypeId = operationId,
                         UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
                     });
 
-                    result = _context.Orders.Update(dbOrder);
                     await _context.SaveChangesAsync();
                     transaction.Commit();
                 }
@@ -201,9 +200,9 @@ namespace CappannaHelper.Api.Controllers
                 }
             }
 
-            await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_CHANGED, result.Entity);
+            await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_CHANGED, result);
 
-            return Ok(result.Entity);
+            return Ok(result);
         }
     }
 }
