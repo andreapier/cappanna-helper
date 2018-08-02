@@ -6,6 +6,6 @@ export default function(state = null, action) {
       return action.payload;
 
     default:
-      return null;
+      return state;
   }
 }

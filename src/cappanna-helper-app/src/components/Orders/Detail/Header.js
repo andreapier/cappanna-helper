@@ -21,7 +21,6 @@ const Header = props => {
   return (
     <div>
       <Toolbar>
-        {props.orde}
         <IconButton
           onClick={() => props.editOrder(props.order)}
           disabled={props.order.status === 3}
@@ -85,16 +84,6 @@ Header.propTypes = {
     tableCategory: PropTypes.string,
     seats: PropTypes.number.isRequired,
     status: PropTypes.number.isRequired,
-    notes: PropTypes.string,
-    details: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.required,
-        price: PropTypes.number.required,
-        group: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        quantity: PropTypes.number.required
-      })
-    ).isRequired
   }).isRequired,
   printRequested: PropTypes.func.isRequired,
   editOrder: PropTypes.func.isRequired

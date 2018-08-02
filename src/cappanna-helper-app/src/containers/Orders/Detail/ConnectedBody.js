@@ -12,7 +12,7 @@ class ConnectedBody extends Component {
   }
 
   render() {
-    return <Body dishList={this.props.dishList} />;
+    return <Body dishList={this.props.dishList} notes={this.props.notes} />;
   }
 
   componentWillUnmount() {
@@ -38,7 +38,8 @@ const mapStateToProps = state => {
           };
         })
       : [],
-    loaded: state.selectedOrder.loaded
+    loaded: state.selectedOrder.loaded,
+    notes: state.selectedOrder.item ? state.selectedOrder.item.notes : ""
   };
 };
 

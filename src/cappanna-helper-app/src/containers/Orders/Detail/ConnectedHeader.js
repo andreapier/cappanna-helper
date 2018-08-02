@@ -15,7 +15,7 @@ const mapStateToProps = state => {
     order: {
       id: 0,
       totalPrice: 0,
-      chTable: "",
+      chTable: 0,
       tableCategory: "",
       seats: 0,
       status: 0,
@@ -29,11 +29,15 @@ const mapStateToProps = state => {
       (acc, e) => acc + e.quantity * e.item.price,
       0
     );
-    result.order.chTable = parseInt(state.selectedOrder.item.chTable.split("\\")[0], 10);
+    result.order.chTable = parseInt(
+      state.selectedOrder.item.chTable.split("\\")[0],
+      10
+    );
     result.order.tableCategory =
       state.selectedOrder.item.chTable.split("\\")[1] || "";
     result.order.seats = state.selectedOrder.item.seats;
     result.order.status = state.selectedOrder.item.status;
+    result.order.notes = state.selectedOrder.item.notes;
     result.order.details = state.selectedOrder.item.details
       .map(e => {
         return {
@@ -44,7 +48,9 @@ const mapStateToProps = state => {
       })
       .concat(
         state.menuDetails.items
-          .filter(d => !state.selectedOrder.item.details.find(e => e.itemId === d.id))
+          .filter(
+            d => !state.selectedOrder.item.details.find(e => e.itemId === d.id)
+          )
           .map(e => {
             return {
               id: 0,

@@ -68,15 +68,14 @@ const getServerOrder = order => {
   return {
     id: order.id,
     chTable:
-      order.chTable +
-      (order.tableCategory ? "\\" + order.tableCategory : ""),
+      order.chTable + (order.tableCategory ? "\\" + order.tableCategory : ""),
     seats: order.seats,
-    details: order.details.filter(e => e.quantity > 0).map(e =>{
+    details: order.details.filter(e => e.quantity > 0).map(e => {
       return {
         id: e.id,
         quantity: e.quantity,
         itemId: e.itemId
-      }
+      };
     }),
     notes: order.notes
   };
@@ -135,11 +134,11 @@ class Api {
 
   createOrder(order) {
     const serverOrder = getServerOrder(order);
-    
+
     return post(ORDER, serverOrder);
   }
 
-  editOrder(order){
+  editOrder(order) {
     const serverOrder = getServerOrder(order);
 
     return patch(ORDER, serverOrder);

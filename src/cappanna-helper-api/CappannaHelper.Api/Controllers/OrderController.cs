@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -162,13 +163,13 @@ namespace CappannaHelper.Api.Controllers
 
                     result = await _context.Orders
                         .Include(o => o.Operations)
+                        .Include(o => o.Details)
                         .FirstOrDefaultAsync(o => o.Id == order.Id);
 
                     result.ChTable = order.ChTable;
                     result.Notes = order.Notes;
                     result.Seats = order.Seats;
                     result.Status = operationId;
-                    result.Details.Clear();
                     
                     foreach(var detail in order.Details)
                     {
@@ -182,6 +183,21 @@ namespace CappannaHelper.Api.Controllers
                         {
                             dbDetail.Quantity = detail.Quantity;
                         }
+                    }
+
+                    var toBeRemoveDetails = new List<OrderDetail>();
+
+                    foreach (var detail in result.Details)
+                    {
+                        if (!order.Details.Any(d => d.ItemId==detail.ItemId))
+                        {
+                            toBeRemoveDetails.Add(detail);
+                        }
+                    }
+
+                    foreach(var detail in toBeRemoveDetails)
+                    {
+                        result.Details.Remove(detail);
                     }
 
                     result.Operations.Add(new ChOrderOperation
