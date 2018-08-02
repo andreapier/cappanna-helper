@@ -8,10 +8,10 @@
   "private": true,
   "proxy": {
     "/api": {
-      "target": "http://localhost:5000"
+      "target": "http://localhost:3900"
     },
     "/hubs": {
-      "target": "http://localhost:5000",
+      "target": "http://localhost:3900",
       "ws": true
     }
   },
@@ -21,9 +21,9 @@
     "@material-ui/icons": "^2.0.0",
     "chartist": "^0.11.0",
     "localforage": "^1.7.2",
-    "react": "^16.4.1",
+    "react": "^16.4.2",
     "react-chartist": "^0.13.1",
-    "react-dom": "^16.4.1",
+    "react-dom": "^16.4.2",
     "react-loadable": "^5.4.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
