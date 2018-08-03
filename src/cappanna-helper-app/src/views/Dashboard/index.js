@@ -1,16 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ChartistGraph from "react-chartist";
-import {
-  Store,
-  Warning,
-  DateRange,
-  LocalOffer,
-  Update,
-  ArrowUpward,
-  AccessTime,
-  Accessibility
-} from "@material-ui/icons";
+import Store from "@material-ui/icons/Store";
+import Warning from "@material-ui/icons/Warning";
+import DateRange from "@material-ui/icons/DateRange";
+import LocalOffer from "@material-ui/icons/LocalOffer";
+import Update from "@material-ui/icons/Update";
+import ArrowUpward from "@material-ui/icons/ArrowUpward";
+import AccessTime from "@material-ui/icons/AccessTime";
+import Accessibility from "@material-ui/icons/Accessibility";
 import { withStyles, Grid } from "@material-ui/core";
 import {
   StatsCard,

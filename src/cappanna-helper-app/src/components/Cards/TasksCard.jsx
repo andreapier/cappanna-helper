@@ -9,7 +9,9 @@ import {
   Tabs,
   Tab
 } from "@material-ui/core";
-import { BugReport, Code, Cloud } from "@material-ui/icons";
+import BugReport from "@material-ui/icons/BugReport";
+import Code from "@material-ui/icons/Code";
+import Cloud from "@material-ui/icons/Cloud";
 import { Tasks } from "components";
 import { bugs, website, server } from "variables/general";
 import tasksCardStyle from "variables/styles/tasksCardStyle";

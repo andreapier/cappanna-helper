@@ -34,7 +34,9 @@ import {
   DISCONNECT_SIGNALR,
   ADD_MENU_DETAIL,
   MENU_DETAIL_AVAILABILITY_CHANGED,
-  ORDER_CREATED
+  ORDER_CREATED,
+  ORDER_CHANGED,
+  ORDER_PRINTED
 } from "actions/types";
 
 const signalRAction = {
@@ -199,4 +201,12 @@ export function disconnectSignalR() {
 
 export function orderCreated(order) {
   return { type: ORDER_CREATED, payload: order };
+}
+
+export function orderChanged(order) {
+  return { type: ORDER_CHANGED, payload: order };
+}
+
+export function orderPrinted(order) {
+  return { type: ORDER_PRINTED, payload: order };
 }

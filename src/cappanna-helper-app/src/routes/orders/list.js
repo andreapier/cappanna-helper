@@ -1,5 +1,5 @@
 import AsyncOrderList from "views/OrderList/AsyncOrderList";
-import { List } from "@material-ui/icons";
+import List from "@material-ui/icons/List";
 
 const orders = {
   path: "/order",

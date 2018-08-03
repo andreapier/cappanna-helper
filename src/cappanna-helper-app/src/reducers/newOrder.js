@@ -6,7 +6,9 @@ import {
   SET_ORDER_SEATS,
   RESET_ORDER,
   SET_ORDER_NOTES,
-  EDIT_ORDER
+  EDIT_ORDER,
+  ORDER_CHANGED,
+  ORDER_PRINTED
 } from "actions/types";
 
 export const initialState = {
@@ -99,6 +101,34 @@ export default function(state = initialState, action) {
           };
         })
       };
+
+    case ORDER_CHANGED:
+	  if (state.id !== action.payload.id) {
+		  return state;
+	  }
+	  
+	  return {
+        id: action.payload.id,
+        chTable: action.payload.chTable,
+        tableCategory: action.payload.tableCategory,
+        seats: action.payload.seats,
+        notes: action.payload.notes,
+        totalPrice: action.payload.totalPrice,
+        details: action.payload.details.map(e => {
+          return {
+            id: e.id,
+            itemId: e.itemId,
+            quantity: e.quantity
+          };
+        })
+      };
+
+    case ORDER_PRINTED:
+	  if (state.id !== action.payload.id) {
+		  return state;
+	  }
+	  
+	  return { ...initialState };
 
     default:
       return state;

@@ -2,6 +2,7 @@
 using CappannaHelper.Api.Persistence.Modelling;
 using CappannaHelper.Api.Printing;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Security.Claims;
@@ -15,11 +16,13 @@ namespace CappannaHelper.Api.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IPrintService _printService;
+        private readonly IHubContext<OrderHub> _hub;
 
-        public PrintController(ApplicationDbContext context, IPrintService printService)
+        public PrintController(ApplicationDbContext context, IPrintService printService, IHubContext<OrderHub> hub)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _printService = printService ?? throw new ArgumentNullException(nameof(printService));
+            _hub = hub ?? throw new ArgumentNullException(nameof(hub));
         }
 
         [Route("order/{id}")]
@@ -53,6 +56,7 @@ namespace CappannaHelper.Api.Controllers
                 try
                 {
                     var printOperationId = (int) OperationTypes.Print;
+					
                     result.Operations.Add(new ChOrderOperation {
                         OperationTimestamp = DateTime.Now,
                         TypeId = printOperationId,
@@ -66,6 +70,8 @@ namespace CappannaHelper.Api.Controllers
                 {
                     throw new Exception("Impossibile salvare l'operazione di stampa dell'ordine", e);
                 }
+
+				await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_PRINTED, order);
 
                 return Ok(result);
             }

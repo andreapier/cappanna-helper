@@ -1,5 +1,5 @@
 import AsyncMenu from "views/Menu/AsyncMenu";
-import { LibraryBooks } from "@material-ui/icons";
+import LibraryBooks from "@material-ui/icons/LibraryBooks";
 
 const menu = {
   path: "/menu",

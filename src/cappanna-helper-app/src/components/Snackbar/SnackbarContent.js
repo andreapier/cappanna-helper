@@ -4,7 +4,7 @@ import {
   SnackbarContent as Snack,
   IconButton
 } from "@material-ui/core";
-import { Close } from "@material-ui/icons";
+import Close from "@material-ui/icons/Close";
 import PropTypes from "prop-types";
 import cx from "classnames";
 import snackbarContentStyle from "variables/styles/snackbarContentStyle";
