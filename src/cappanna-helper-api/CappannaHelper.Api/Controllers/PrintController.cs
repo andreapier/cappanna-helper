@@ -1,4 +1,5 @@
-﻿using CappannaHelper.Api.Persistence;
+﻿using CappannaHelper.Api.Hubs;
+using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Persistence.Modelling;
 using CappannaHelper.Api.Printing;
 using Microsoft.AspNetCore.Mvc;
@@ -71,7 +72,7 @@ namespace CappannaHelper.Api.Controllers
                     throw new Exception("Impossibile salvare l'operazione di stampa dell'ordine", e);
                 }
 
-				await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_PRINTED, order);
+				await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_PRINTED, result);
 
                 return Ok(result);
             }
