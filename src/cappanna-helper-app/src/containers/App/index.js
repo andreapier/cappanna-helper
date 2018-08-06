@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import ConnectedPrivateRoute from "containers/ConnectedPrivateRoute";
 import ConnectedSidebar from "containers/ConnectedSidebar";
 import ConnectedWaitDialog from "containers/ConnectedWaitDialog";
-import ConnectedErrorSnackbar from "containers/ConnectedErrorSnackbar";
+import ConnectedNotificationSnackbar from "containers/ConnectedNotificationSnackbar";
 import RoutingAwareHeader from "containers/RoutingAwareHeader";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
@@ -73,7 +73,7 @@ class App extends Component {
           <div className={this.props.classes.wrapper}>
             <CssBaseline />
             <ConnectedWaitDialog />
-            <ConnectedErrorSnackbar />
+            <ConnectedNotificationSnackbar />
             <ConnectedSidebar
               routes={appRoutes}
               handleDrawerToggle={this.handleDrawerToggle}

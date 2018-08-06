@@ -22,7 +22,7 @@ const Body = props => {
       <TextField
         label="Note"
         multiline
-        readonly
+        readOnly
         fullWidth
         value={props.notes}
         style={{ marginTop: "20px" }}

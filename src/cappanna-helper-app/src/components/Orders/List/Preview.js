@@ -20,7 +20,7 @@ const Preview = props => {
           disableTypography
         />
         <ListItemIcon>
-          {props.order.status === 1 ? <PrintDisabled /> : <Print />}
+          {props.order.status === 3 ? <Print /> : <PrintDisabled />}
         </ListItemIcon>
       </ListItem>
     </NavLink>

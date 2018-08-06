@@ -24,7 +24,7 @@ export default function(state = initialStatus, action) {
 
     case ORDER_CHANGED:
     case ORDER_PRINTED:
-	  if (state.item.id !== action.payload.id) {
+	  if (state.item && state.item.id !== action.payload.id) {
 		  return state;
 	  }
 	  

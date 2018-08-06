@@ -1,5 +1,5 @@
 import { put, takeLatest } from "redux-saga/effects";
-import { setError, signoutRequested } from "actions";
+import { notifyError, signoutRequested } from "actions";
 import { SIGNAL_API_ERROR } from "actions/types";
 
 function* signalApiError(error) {
@@ -7,7 +7,7 @@ function* signalApiError(error) {
     yield put(signoutRequested());
   } else {
     console.error(error);
-    yield put(setError(error.message));
+    yield put(notifyError(error.message));
   }
 }
 

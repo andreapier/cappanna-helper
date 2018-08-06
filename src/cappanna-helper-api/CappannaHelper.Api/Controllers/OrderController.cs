@@ -161,23 +161,23 @@ namespace CappannaHelper.Api.Controllers
                 {
                     var operationId = (int) OperationTypes.Edit;
 
-                    result = await _context.Orders
+                    var dbOrder = await _context.Orders
                         .Include(o => o.Operations)
                         .Include(o => o.Details)
                         .FirstOrDefaultAsync(o => o.Id == order.Id);
 
-                    result.ChTable = order.ChTable;
-                    result.Notes = order.Notes;
-                    result.Seats = order.Seats;
-                    result.Status = operationId;
+                    dbOrder.ChTable = order.ChTable;
+                    dbOrder.Notes = order.Notes;
+                    dbOrder.Seats = order.Seats;
+                    dbOrder.Status = operationId;
                     
                     foreach(var detail in order.Details)
                     {
-                        var dbDetail = result.Details.FirstOrDefault(d => d.ItemId == detail.ItemId);
+                        var dbDetail = dbOrder.Details.FirstOrDefault(d => d.ItemId == detail.ItemId);
                         
                         if (dbDetail == null)
                         {
-                            result.Details.Add(detail);
+                            dbOrder.Details.Add(detail);
                         }
                         else
                         {
@@ -187,7 +187,7 @@ namespace CappannaHelper.Api.Controllers
 
                     var toBeRemoveDetails = new List<OrderDetail>();
 
-                    foreach (var detail in result.Details)
+                    foreach (var detail in dbOrder.Details)
                     {
                         if (!order.Details.Any(d => d.ItemId==detail.ItemId))
                         {
@@ -197,10 +197,10 @@ namespace CappannaHelper.Api.Controllers
 
                     foreach(var detail in toBeRemoveDetails)
                     {
-                        result.Details.Remove(detail);
+                        dbOrder.Details.Remove(detail);
                     }
 
-                    result.Operations.Add(new ChOrderOperation
+                    dbOrder.Operations.Add(new ChOrderOperation
                     {
                         OperationTimestamp = DateTime.Now,
                         TypeId = operationId,
@@ -208,6 +208,13 @@ namespace CappannaHelper.Api.Controllers
                     });
 
                     await _context.SaveChangesAsync();
+
+                    result = await _context.Orders
+                        .Include(o => o.Operations)
+                        .Include(o => o.Details)
+                        .ThenInclude(d => d.Item)
+                        .FirstOrDefaultAsync(o => o.Id == order.Id);
+
                     transaction.Commit();
                 }
                 catch (Exception e)

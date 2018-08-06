@@ -1,14 +1,14 @@
 import React from "react";
 import WaitDialog from "components/WaitDialog";
-import ErrorSnackbar from "components/Snackbar/ErrorSnackbar";
+import NotificationSnackbar from "components/Snackbar/NotificationSnackbar";
 
 const WaitLoader = props => {
   if (props.error) {
-    const errorSnackbarProps = {
+    const snackbarProps = {
       message: "Attendere..."
     };
 
-    return <ErrorSnackbar {...errorSnackbarProps} />;
+    return <NotificationSnackbar {...snackbarProps} />;
   } else if (props.pastDelay) {
     const waitDialogProps = {
       loading: true,

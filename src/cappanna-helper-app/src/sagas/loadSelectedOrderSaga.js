@@ -6,7 +6,6 @@ import {
 } from "actions";
 import { LOAD_SELECTED_ORDER_REQUESTED } from "actions/types";
 import Api from "api";
-import history from "./../history";
 
 function* loadSelectedOrder(action) {
   try {
@@ -14,7 +13,6 @@ function* loadSelectedOrder(action) {
     const api = new Api();
     const order = yield call(api.getOrder, action.payload);
     yield put(loadSelectedOrderCompleted(order));
-    history.push(`/order/${order.id}`);
   } catch (e) {
     yield put(signalApiError(e));
   } finally {

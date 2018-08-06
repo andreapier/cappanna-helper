@@ -3,10 +3,10 @@ import Api from "api";
 import {
   loadingChanged,
   signalApiError,
-  loadSelectedOrderRequested,
   resetOrder
 } from "actions";
 import { CONFIRM_ORDER } from "actions/types";
+import history from "./../history";
 
 function* confirmOrder(action) {
   try {
@@ -17,8 +17,8 @@ function* confirmOrder(action) {
       action.payload.id > 0 ? api.editOrder : api.createOrder,
       action.payload
     );
-    yield put(loadSelectedOrderRequested(order.id));
     yield put(resetOrder());
+    history.push(`/order/${order.id}`);
   } catch (e) {
     yield put(signalApiError(e));
   } finally {

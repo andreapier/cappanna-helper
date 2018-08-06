@@ -4,7 +4,7 @@ import user from "./user";
 import api from "./api";
 import menuDetails from "./menuDetails";
 import orders from "./orders";
-import error from "./error";
+import notification from "./notification";
 import newOrder from "./newOrder";
 import selectedOrder from "./selectedOrder";
 
@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
   menuDetails,
   orders,
   newOrder,
-  error,
+  notification,
   selectedOrder
 });
 
