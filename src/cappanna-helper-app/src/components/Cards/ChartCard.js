@@ -14,8 +14,6 @@ import chartCardStyle from "variables/styles/chartCardStyle";
 function ChartCard({ ...props }) {
   const {
     classes,
-    chartColor,
-    statIconColor,
     chart,
     title,
     text,
@@ -26,7 +24,7 @@ function ChartCard({ ...props }) {
     <Card className={classes.card}>
       <CardHeader
         className={
-          classes.cardHeader + " " + classes[chartColor + "CardHeader"]
+          classes.cardHeader + " " + classes.blueCardHeader
         }
         subheader={chart}
       />
@@ -48,7 +46,7 @@ function ChartCard({ ...props }) {
             className={
               classes.cardStatsIcon +
               " " +
-              classes[statIconColor + "CardStatsIcon"]
+              classes.grayCardStatsIcon
             }
           />{" "}
           {statLink !== undefined ? (
@@ -64,27 +62,12 @@ function ChartCard({ ...props }) {
   );
 }
 
-ChartCard.defaultProps = {
-  statIconColor: "gray",
-  chartColor: "purple"
-};
-
 ChartCard.propTypes = {
   classes: PropTypes.object.isRequired,
   chart: PropTypes.object.isRequired,
   title: PropTypes.node,
   text: PropTypes.node,
   statIcon: PropTypes.func.isRequired,
-  statIconColor: PropTypes.oneOf([
-    "warning",
-    "primary",
-    "danger",
-    "success",
-    "info",
-    "rose",
-    "gray"
-  ]),
-  chartColor: PropTypes.oneOf(["orange", "green", "red", "blue", "purple"]),
   statLink: PropTypes.object,
   statText: PropTypes.node
 };

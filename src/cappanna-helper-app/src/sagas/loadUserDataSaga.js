@@ -10,6 +10,7 @@ import { LOAD_USER_DATA } from "actions/types";
 import localforage from "localforage";
 import Api from "api";
 import history from "./../history";
+import { getDefaultRoute } from "routes/helpers";
 
 const loadUserDataFromStorage = () =>
   localforage
@@ -31,8 +32,10 @@ function* loadUserData() {
     api.setToken(userData.token);
     yield put(signinCompleted(userData));
     yield put(connectSignalR(userData));
-    history.push("/order/new");
     yield put(loadMenuDetailsRequested());
+
+    const route = getDefaultRoute(userData.roles[0]);
+    history.push(route);
   } catch (e) {
     yield put(signalApiError(e));
   } finally {

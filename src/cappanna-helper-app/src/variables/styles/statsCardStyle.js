@@ -5,10 +5,6 @@ import {
   blueCardHeader,
   cardActions,
   grayColor,
-  warningColor,
-  dangerColor,
-  successColor,
-  infoColor,
   primaryColor
 } from "variables/styles";
 
@@ -66,21 +62,6 @@ const statsCardStyle = {
     top: "4px",
     width: "16px",
     height: "16px"
-  },
-  warningCardStatsIcon: {
-    color: warningColor
-  },
-  primaryCardStatsIcon: {
-    color: primaryColor
-  },
-  dangerCardStatsIcon: {
-    color: dangerColor
-  },
-  successCardStatsIcon: {
-    color: successColor
-  },
-  infoCardStatsIcon: {
-    color: infoColor
   },
   grayCardStatsIcon: {
     color: grayColor

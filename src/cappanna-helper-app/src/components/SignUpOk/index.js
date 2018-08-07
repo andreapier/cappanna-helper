@@ -1,5 +1,5 @@
 import React from "react";
-import { P } from "components";
+import P from "components/Typography/P";
 import Button from "components/CustomButtons";
 import { Grid } from "@material-ui/core";
 import ItemGrid from "components/Grid/ItemGrid";
@@ -8,7 +8,7 @@ const SignUpOk = props => {
   return (
     <Grid container justify="space-between">
       <ItemGrid xs={12}>
-        <P keu={1}>Registrazione eseguita con successo!</P>
+        <P key={1}>Registrazione eseguita con successo!</P>
       </ItemGrid>
       <ItemGrid xs={12}>
         <P key={2}>Stai al top!</P>
