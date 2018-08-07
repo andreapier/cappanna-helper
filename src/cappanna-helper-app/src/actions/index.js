@@ -6,20 +6,16 @@ import {
   SIGNUP_REQUESTED,
   SIGNUP_COMPLETED,
   LOAD_USER_DATA,
-
   LOADING_CHANGED,
   SIGNAL_API_ERROR,
   NOTIFY_INFO,
   NOTIFY_WARNING,
   NOTIFY_ERROR,
   RESET_NOTIFICATION,
-
   LOAD_MENU_DETAILS_REQUESTED,
   LOAD_MENU_DETAILS_COMPLETED,
-
   CONNECT_SIGNALR,
   DISCONNECT_SIGNALR,
-
   CREATE_EMPTY_ORDER,
   EDIT_ORDER,
   RESET_ORDER,
@@ -35,10 +31,10 @@ import {
   LOAD_ORDERS_LIST_REQUESTED,
   LOAD_ORDERS_LIST_COMPLETED,
   INVALIDATE_ORDERS_LIST,
+  TOGGLE_ORDERS_LIST_FILTER,
   LOAD_SELECTED_ORDER_REQUESTED,
   LOAD_SELECTED_ORDER_COMPLETED,
   INVALIDATE_SELECTED_ORDER,
-
   PRINT_REQUESTED,
   PRINT_COMPLETED
 } from "actions/types";
@@ -89,8 +85,6 @@ export function loadUserData() {
   return { type: LOAD_USER_DATA };
 }
 
-
-
 export function loadingChanged(loading, message = "") {
   return { type: LOADING_CHANGED, payload: { loading, message } };
 }
@@ -115,8 +109,6 @@ export function resetNotification() {
   return { type: RESET_NOTIFICATION };
 }
 
-
-
 export function loadMenuDetailsRequested() {
   return { type: LOAD_MENU_DETAILS_REQUESTED };
 }
@@ -125,8 +117,6 @@ export function loadMenuDetailsCompleted(menuDetails) {
   return { type: LOAD_MENU_DETAILS_COMPLETED, payload: menuDetails };
 }
 
-
-
 export function connectSignalR(userData) {
   return { type: CONNECT_SIGNALR, payload: userData, ...signalRAction };
 }
@@ -134,8 +124,6 @@ export function connectSignalR(userData) {
 export function disconnectSignalR() {
   return { type: DISCONNECT_SIGNALR, ...signalRAction };
 }
-
-
 
 export function createEmptyOrder(menu) {
   return { type: CREATE_EMPTY_ORDER, payload: menu };
@@ -165,8 +153,6 @@ export function orderPrinted(order) {
   return { type: ORDER_PRINTED, payload: order };
 }
 
-
-
 export function setOrderTable(table) {
   return { type: SET_ORDER_TABLE, payload: table };
 }
@@ -190,8 +176,6 @@ export function incrementOrderDetailQuantity(itemId, quantity, price) {
   };
 }
 
-
-
 export function loadOrdersListRequested() {
   return { type: LOAD_ORDERS_LIST_REQUESTED };
 }
@@ -204,7 +188,9 @@ export function invalidateOrdersList() {
   return { type: INVALIDATE_ORDERS_LIST };
 }
 
-
+export function toggleOrdersListFilter() {
+  return { type: TOGGLE_ORDERS_LIST_FILTER };
+}
 
 export function loadSelectedOrderRequested(orderId) {
   return { type: LOAD_SELECTED_ORDER_REQUESTED, payload: orderId };
@@ -217,8 +203,6 @@ export function loadSelectedOrderCompleted(order) {
 export function invalidateSelectedOrder() {
   return { type: INVALIDATE_SELECTED_ORDER };
 }
-
-
 
 export function printRequested(orderId) {
   return { type: PRINT_REQUESTED, payload: orderId };
