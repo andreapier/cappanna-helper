@@ -10,6 +10,7 @@ import printOrderSaga from "./printOrderSaga";
 import loadMenuDetailsSaga from "./loadMenuDetailsSaga";
 import signalApiErrorSaga from "./signalApiErrorSaga";
 import orderChangedSaga from "./orderChangedSaga";
+import loadNotificationsListSaga from "./loadNotificationsListSaga";
 
 function* rootSaga() {
   yield all([
@@ -23,7 +24,8 @@ function* rootSaga() {
     printOrderSaga(),
     loadMenuDetailsSaga(),
     signalApiErrorSaga(),
-    orderChangedSaga()
+    orderChangedSaga(),
+    loadNotificationsListSaga()
   ]);
 }
 

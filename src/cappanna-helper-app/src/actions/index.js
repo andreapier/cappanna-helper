@@ -36,7 +36,10 @@ import {
   LOAD_SELECTED_ORDER_COMPLETED,
   INVALIDATE_SELECTED_ORDER,
   PRINT_REQUESTED,
-  PRINT_COMPLETED
+  PRINT_COMPLETED,
+  LOAD_NOTIFICATIONS_LIST_REQUESTED,
+  LOAD_NOTIFICATIONS_LIST_COMPLETED,
+  INVALIDATE_NOTIFICATIONS_LIST
 } from "actions/types";
 
 const signalRAction = {
@@ -210,4 +213,16 @@ export function printRequested(orderId) {
 
 export function printCompleted() {
   return { type: PRINT_COMPLETED };
+}
+
+export function loadNotificationsListRequested() {
+  return { type: LOAD_NOTIFICATIONS_LIST_REQUESTED };
+}
+
+export function loadNotificationsListCompleted(notifications) {
+  return { type: LOAD_NOTIFICATIONS_LIST_COMPLETED, payload: notifications };
+}
+
+export function invalidateNotificationsList() {
+  return { type: INVALIDATE_NOTIFICATIONS_LIST };
 }

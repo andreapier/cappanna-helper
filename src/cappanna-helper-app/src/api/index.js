@@ -4,7 +4,8 @@ import {
   SIGNUP,
   ORDER,
   MENU_DETAIL,
-  PRINT
+  PRINT,
+  NOTIFICATION
 } from "api/endpoints";
 import "whatwg-fetch";
 
@@ -150,6 +151,10 @@ class Api {
 
   setOrderStatus({ orderId, status }) {
     return post(`${ORDER}/${orderId}`, status);
+  }
+
+  getNotifications() {
+    return get(NOTIFICATION);
   }
 }
 
