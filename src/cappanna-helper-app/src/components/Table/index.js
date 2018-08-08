@@ -1,11 +1,9 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  withStyles
-} from "@material-ui/core";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 import React from "react";
 import tableStyle from "variables/styles/tableStyle";

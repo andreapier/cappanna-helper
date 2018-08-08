@@ -1,4 +1,4 @@
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from "@material-ui/core/styles/withStyles";
 import appRoutes from "routes";
 import appStyle from "variables/styles/appStyle";
 import PropTypes from "prop-types";

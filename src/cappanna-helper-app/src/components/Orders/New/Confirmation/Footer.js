@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 import Button from "components/CustomButtons";
 import ActionDone from "@material-ui/icons/Done";

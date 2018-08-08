@@ -1,7 +1,7 @@
 import { signinRequested } from "actions";
 import Button from "components/CustomButtons";
 import ItemGrid from "components/Grid/ItemGrid";
-import { Grid } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import React, { Component } from "react";
 import { connect } from "react-redux";

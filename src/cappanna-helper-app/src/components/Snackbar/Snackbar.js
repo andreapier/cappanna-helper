@@ -1,11 +1,13 @@
 import React from "react";
-import { withStyles, Snackbar as Snack, IconButton } from "@material-ui/core";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import withStyles from "@material-ui/core/styles/withStyles";
 import Close from "@material-ui/icons/Close";
 import PropTypes from "prop-types";
 import cx from "classnames";
 import snackbarContentStyle from "variables/styles/snackbarContentStyle";
 
-function Snackbar({ ...props }) {
+function CustomSnackbar({ ...props }) {
   const {
     classes,
     message,
@@ -35,7 +37,7 @@ function Snackbar({ ...props }) {
     ];
   }
   return (
-    <Snack
+    <Snackbar
       anchorOrigin={{
         vertical: place.indexOf("t") === -1 ? "bottom" : "top",
         horizontal:
@@ -65,7 +67,7 @@ function Snackbar({ ...props }) {
   );
 }
 
-Snackbar.propTypes = {
+CustomSnackbar.propTypes = {
   classes: PropTypes.object.isRequired,
   message: PropTypes.node.isRequired,
   color: PropTypes.oneOf(["info", "success", "warning", "danger", "primary"]),
@@ -75,4 +77,4 @@ Snackbar.propTypes = {
   open: PropTypes.bool
 };
 
-export default withStyles(snackbarContentStyle)(Snackbar);
+export default withStyles(snackbarContentStyle)(CustomSnackbar);

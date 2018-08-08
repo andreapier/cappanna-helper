@@ -1,18 +1,13 @@
-import React from "react";
-import { Grid } from "@material-ui/core";
+import React, { Component } from "react";
+import Grid from "@material-ui/core/Grid";
 import AddAlert from "@material-ui/icons/AddAlert";
-import {
-  RegularCard,
-  A,
-  P,
-  Small,
-  Button,
-  SnackbarContent,
-  Snackbar,
-  ItemGrid
-} from "components";
+import RegularCard from "components/Cards/RegularCard";
+import Button from "components/CustomButtons";
+import SnackbarContent from "components/Snackbar/SnackbarContent";
+import Snackbar from "components/Snackbar/Snackbar";
+import ItemGrid from "components/Grid/ItemGrid";
 
-class Notifications extends React.Component {
+class Notifications extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,17 +36,6 @@ class Notifications extends React.Component {
     return (
       <RegularCard
         cardTitle="Notifiche"
-        cardSubtitle={
-          <P>
-            Handcrafted by
-            <A
-              target="_blank"
-              href="https://www.linkedin.com/in/andreapier/?locale=en_US"
-            >
-              Andrea Pierangeli
-            </A>
-          </P>
-        }
         content={
           <div>
             <Grid container>
@@ -131,7 +115,7 @@ class Notifications extends React.Component {
               <ItemGrid xs={12} sm={12} md={6} style={{ textAlign: "center" }}>
                 <h5>
                   Notifications Places
-                  <Small>Click to view notifications</Small>
+                  Click to view notifications
                 </h5>
               </ItemGrid>
             </Grid>

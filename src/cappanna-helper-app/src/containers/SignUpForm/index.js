@@ -4,7 +4,7 @@ import { reduxForm, Field } from "redux-form";
 import { TextField } from "redux-form-material-ui";
 import { signupRequested } from "actions";
 import { connect } from "react-redux";
-import { Grid } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 import ItemGrid from "components/Grid/ItemGrid";
 
 class SignUp extends Component {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 import RegularCard from "components/Cards/RegularCard";
 import P from "components/Typography/P";
 import ItemGrid from "components/Grid/ItemGrid";

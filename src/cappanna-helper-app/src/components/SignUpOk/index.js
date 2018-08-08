@@ -1,7 +1,7 @@
 import React from "react";
 import P from "components/Typography/P";
 import Button from "components/CustomButtons";
-import { Grid } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 import ItemGrid from "components/Grid/ItemGrid";
 
 const SignUpOk = props => {
