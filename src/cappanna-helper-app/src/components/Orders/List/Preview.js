@@ -10,7 +10,7 @@ import Print from "@material-ui/icons/Print";
 import PrintDisabled from "@material-ui/icons/PrintDisabled";
 
 const Preview = props => {
-  const text = `Ordine N° ${props.order.id} (Tav. ${props.order.chTable})`;
+  const text = `Ordine N° ${props.order.id} - ${props.order.createdBy.userName} (Tav. ${props.order.chTable})`;
   return (
     <NavLink to={`/order/${props.order.id}`} className={props.classes.item}>
       <ListItem button className={props.classes.itemLink}>
@@ -31,7 +31,10 @@ Preview.propTypes = {
   order: PropTypes.shape({
     id: PropTypes.number.required,
     chTable: PropTypes.string.isRequired,
-    status: PropTypes.number.isRequired
+    status: PropTypes.number.isRequired,
+    createdBy: PropTypes.shape({
+      userName: PropTypes.object.isRequired
+    }).isRequired
   }).isRequired,
   classes: PropTypes.object.isRequired
 };
