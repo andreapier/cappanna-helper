@@ -7,6 +7,7 @@ import IconButton from "components/CustomButtons/IconButton";
 
 const buildTableRow = (notification, printRequested)  => [
   notification.orderId,
+  notification.username,
   formatAmount(notification.totalPrice, false),
   (<IconButton onClick={() => printRequested(notification.orderId)}>
     <Print />
@@ -16,7 +17,7 @@ const buildTableRow = (notification, printRequested)  => [
 const ToBePrintedOrdersNotifications = props => {
   return (
     <Table
-        tableHead={["Id", "Totale (€)", "Stampa"]}
+        tableHead={["Id", "Cameriere", "Totale (€)", "Stampa"]}
         tableData={props.notifications.map(n => buildTableRow(n,  props.printRequested))}
       />
   );
@@ -25,7 +26,8 @@ const ToBePrintedOrdersNotifications = props => {
 ToBePrintedOrdersNotifications.propTypes = {
   notifications: PropTypes.arrayOf(PropTypes.shape({
     orderId: PropTypes.number.isRequired,
-    totalPrice: PropTypes.number.isRequired
+    totalPrice: PropTypes.number.isRequired,
+    username: PropTypes.string.isRequired
   })).isRequired,
   printRequested: PropTypes.func.isRequired
 };

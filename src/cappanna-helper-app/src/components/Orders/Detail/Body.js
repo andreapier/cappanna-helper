@@ -16,7 +16,7 @@ const Body = props => {
   return (
     <div>
       <Table
-        tableHead={["Gruppo", "Nome", "Prezzo (€)", "Quantità", "Totale (€)"]}
+        tableHead={["Gruppo", "Cameriere", "Prezzo (€)", "Quantità", "Totale (€)"]}
         tableData={props.dishList.map(buildTableRow)}
       />
       <TextField

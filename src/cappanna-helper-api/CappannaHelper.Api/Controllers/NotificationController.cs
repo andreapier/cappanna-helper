@@ -31,6 +31,7 @@ namespace CappannaHelper.Api.Controllers
             {
                 var toBePrintedOrders = await _context
                     .Orders
+                    .Include(o => o.CreatedBy)
                     .Include(o => o.Details)
                     .ThenInclude(d => d.Item)
                     .Where(o => !o.Operations.Any(op => op.TypeId == (int) OperationTypes.Print))
@@ -38,7 +39,8 @@ namespace CappannaHelper.Api.Controllers
                     {
                         Type = NotificationModel.ORDER_NOTIFICATION,
                         OrderId = o.Id,
-                        TotalPrice = o.Details.Sum(d => d.Quantity * d.Item.Price)
+                        TotalPrice = o.Details.Sum(d => d.Quantity * d.Item.Price),
+                        Username = o.CreatedBy.UserName
                     })
                     .ToListAsync();
 

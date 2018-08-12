@@ -33,7 +33,7 @@ Preview.propTypes = {
     chTable: PropTypes.string.isRequired,
     status: PropTypes.number.isRequired,
     createdBy: PropTypes.shape({
-      userName: PropTypes.object.isRequired
+      userName: PropTypes.string.isRequired
     }).isRequired
   }).isRequired,
   classes: PropTypes.object.isRequired

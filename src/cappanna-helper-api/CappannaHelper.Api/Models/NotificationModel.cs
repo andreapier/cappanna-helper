@@ -7,5 +7,6 @@
         public string Type { get; set; }
         public int OrderId { get; set; }
         public decimal TotalPrice { get; set; }
+        public string Username { get; set; }
     }
 }

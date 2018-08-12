@@ -41,7 +41,8 @@ export default function(state = initialStatus, action) {
           totalPrice: action.payload.details.reduce(
             (acc, e) => acc + e.quantity * e.item.price,
             0
-          )
+          ),
+          username: action.payload.createdBy.userName
         }])
       };
 
@@ -59,7 +60,8 @@ export default function(state = initialStatus, action) {
                 totalPrice: action.payload.details.reduce(
                   (acc, e) => acc + e.quantity * e.item.price,
                   0
-                )
+                ),
+                username: n.username
               };
             }
 
@@ -71,7 +73,8 @@ export default function(state = initialStatus, action) {
             totalPrice: action.payload.details.reduce(
               (acc, e) => acc + e.quantity * e.item.price,
               0
-            )
+            ),
+            username: action.payload.createdBy.userName
           }])
       };
 
