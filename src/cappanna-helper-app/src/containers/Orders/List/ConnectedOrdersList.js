@@ -24,7 +24,9 @@ class ConnectedOrdersList extends Component {
 const mapStateToProps = state => {
   return {
     shouldLoad: !state.orders.loading && !state.orders.loaded,
-    orders: state.orders.items,
+    orders: state.orders.isFiltered
+      ? state.orders.items.filter(o => o.createdById === state.user.userId)
+      : state.orders.items,
     loaded: state.orders.loaded
   };
 };

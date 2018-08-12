@@ -4,9 +4,10 @@ import user from "./user";
 import api from "./api";
 import menuDetails from "./menuDetails";
 import orders from "./orders";
-import notification from "./notification";
+import message from "./message";
 import newOrder from "./newOrder";
 import selectedOrder from "./selectedOrder";
+import notifications from "./notifications";
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -15,8 +16,9 @@ const rootReducer = combineReducers({
   menuDetails,
   orders,
   newOrder,
-  notification,
-  selectedOrder
+  message,
+  selectedOrder,
+  notifications
 });
 
 export default rootReducer;

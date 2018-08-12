@@ -6,7 +6,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Typography from "@material-ui/core/Typography";
 import MenuItemDetail from "components/Orders/New/MenuItemDetail";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = {
   root: {

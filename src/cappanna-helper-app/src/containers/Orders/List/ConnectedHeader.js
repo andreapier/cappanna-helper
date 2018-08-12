@@ -1,7 +1,10 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { resetOrder, loadOrdersListRequested } from "actions";
+import {
+  resetOrder,
+  loadOrdersListRequested,
+  toggleOrdersListFilter
+} from "actions";
 import Header from "components/Orders/List/Header";
 import { withRouter } from "react-router-dom";
 
@@ -11,9 +14,10 @@ class ConnectedHeader extends Component {
   }
 }
 
-ConnectedHeader.propTypes = {
-  loadOrdersListRequested: PropTypes.func.isRequired,
-  goToNewOrder: PropTypes.func.isRequired
+const mapStateToProps = state => {
+  return {
+    isFiltered: state.orders.isFiltered
+  };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -22,13 +26,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     goToNewOrder: () => {
       dispatch(resetOrder());
       ownProps.history.push("/order/new");
-    }
+    },
+    toggleOrdersListFilter: () => dispatch(toggleOrdersListFilter())
   };
 };
 
 export default withRouter(
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )(ConnectedHeader)
 );

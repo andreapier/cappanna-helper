@@ -1,6 +1,7 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
-import { RegularCard, ItemGrid } from "components";
+import Grid from "@material-ui/core/Grid";
+import RegularCard from "components/Cards/RegularCard";
+import ItemGrid from "components/Grid/ItemGrid";
 import SignUpOk from "components/SignUpOk";
 import { withRouter } from "react-router-dom";
 

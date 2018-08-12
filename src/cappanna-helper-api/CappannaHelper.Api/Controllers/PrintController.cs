@@ -31,7 +31,7 @@ namespace CappannaHelper.Api.Controllers
         {
             ChOrder result;
 
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = await _context.Database.BeginTransactionAsync())
             {
                 result = await _context.Orders
                     .Include(o => o.CreatedBy)

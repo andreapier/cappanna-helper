@@ -1,6 +1,6 @@
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 import React from "react";
 import sidebarStyle from "variables/styles/sidebarStyle";

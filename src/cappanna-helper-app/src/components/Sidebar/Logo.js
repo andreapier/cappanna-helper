@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 import logoStyle from "variables/styles/logoStyle";
-import { Typography, withStyles } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import withStyles from "@material-ui/core/styles/withStyles";
 import logo from "assets/img/logo.png";
 
 const Logo = props => {

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,8 +34,9 @@ namespace CappannaHelper.Api.Controllers
         {
             var limit = DateTime.Now.AddHours(-12);
             var orders = await _context.Orders
+                .Include(o => o.CreatedBy)
                 //.Where(o => o.CreationTimestamp >= limit)
-                .OrderByDescending(o=>o.CreationTimestamp)
+                .OrderByDescending(o => o.CreationTimestamp)
                 .ToListAsync();
 
             return Ok(orders);
@@ -47,7 +47,7 @@ namespace CappannaHelper.Api.Controllers
         {
             var order = await _context
                 .Orders
-                .Include(o => o.Operations)
+                .Include(o => o.CreatedBy)
                 .Include(o => o.Details)
                 .ThenInclude(d => d.Item)
                 .FirstOrDefaultAsync(o => o.Id == id);
@@ -88,9 +88,9 @@ namespace CappannaHelper.Api.Controllers
                 return BadRequest("Impossibile modificare un ordine senza specificare i piatti");
             }
 
-            EntityEntry<ChOrder> result;
+            ChOrder result;
 
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = await _context.Database.BeginTransactionAsync())
             {
                 try
                 {
@@ -110,8 +110,15 @@ namespace CappannaHelper.Api.Controllers
                     order.CreatedById = userId;
                     order.Status = creationOperationId;
 
-                    result = await _context.Orders.AddAsync(order);
+                    var dbOrder = await _context.Orders.AddAsync(order);
                     await _context.SaveChangesAsync();
+
+                    result = await _context
+                        .Orders
+                        .Include(o => o.CreatedBy)
+                        .Include(o => o.Details)
+                        .ThenInclude(d => d.Item)
+                        .SingleAsync(o => o.Id == dbOrder.Entity.Id);
                     transaction.Commit();
                 }
                 catch (Exception e)
@@ -120,9 +127,9 @@ namespace CappannaHelper.Api.Controllers
                 }
             }
 
-            await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_CREATED, order);
+            await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_CREATED, result);
 
-            return Ok(result.Entity);
+            return Ok(result);
         }
 
         [HttpPatch]
@@ -155,7 +162,7 @@ namespace CappannaHelper.Api.Controllers
 
             ChOrder result;
 
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = await _context.Database.BeginTransactionAsync())
             {
                 try
                 {
@@ -210,7 +217,7 @@ namespace CappannaHelper.Api.Controllers
                     await _context.SaveChangesAsync();
 
                     result = await _context.Orders
-                        .Include(o => o.Operations)
+                        .Include(o => o.CreatedBy)
                         .Include(o => o.Details)
                         .ThenInclude(d => d.Item)
                         .FirstOrDefaultAsync(o => o.Id == order.Id);

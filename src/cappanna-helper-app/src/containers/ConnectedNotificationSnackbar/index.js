@@ -15,8 +15,8 @@ class ConnectedNotificationSnackbar extends Component {
 
 const mapStateToProps = state => {
   return {
-    type: state.notification.type,
-    message: state.notification.message
+    type: state.message.type,
+    message: state.message.message
   };
 };
 

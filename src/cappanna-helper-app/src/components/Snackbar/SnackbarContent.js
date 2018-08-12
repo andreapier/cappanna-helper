@@ -1,15 +1,13 @@
 import React from "react";
-import {
-  withStyles,
-  SnackbarContent as Snack,
-  IconButton
-} from "@material-ui/core";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
+import IconButton from "@material-ui/core/IconButton";
+import withStyles from "@material-ui/core/styles/withStyles";
 import Close from "@material-ui/icons/Close";
 import PropTypes from "prop-types";
 import cx from "classnames";
 import snackbarContentStyle from "variables/styles/snackbarContentStyle";
 
-function SnackbarContent({ ...props }) {
+function CustomSnackbarContent({ ...props }) {
   const { classes, message, color, close, icon } = props;
   var action = [];
   const messageClasses = cx({
@@ -28,7 +26,7 @@ function SnackbarContent({ ...props }) {
     ];
   }
   return (
-    <Snack
+    <SnackbarContent
       message={
         <div>
           {icon !== undefined ? <props.icon className={classes.icon} /> : null}
@@ -44,7 +42,7 @@ function SnackbarContent({ ...props }) {
   );
 }
 
-SnackbarContent.propTypes = {
+CustomSnackbarContent.propTypes = {
   classes: PropTypes.object.isRequired,
   message: PropTypes.node.isRequired,
   color: PropTypes.oneOf(["info", "success", "warning", "danger", "primary"]),
@@ -52,4 +50,4 @@ SnackbarContent.propTypes = {
   icon: PropTypes.func
 };
 
-export default withStyles(snackbarContentStyle)(SnackbarContent);
+export default withStyles(snackbarContentStyle)(CustomSnackbarContent);

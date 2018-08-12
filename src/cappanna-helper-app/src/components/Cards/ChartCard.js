@@ -1,12 +1,10 @@
 import React from "react";
-import {
-  withStyles,
-  Card,
-  CardContent,
-  CardHeader,
-  CardActions,
-  Typography
-} from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardActions from "@material-ui/core/CardActions";
+import Typography from "@material-ui/core/Typography";
+import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 
 import chartCardStyle from "variables/styles/chartCardStyle";
@@ -14,8 +12,6 @@ import chartCardStyle from "variables/styles/chartCardStyle";
 function ChartCard({ ...props }) {
   const {
     classes,
-    chartColor,
-    statIconColor,
     chart,
     title,
     text,
@@ -26,7 +22,7 @@ function ChartCard({ ...props }) {
     <Card className={classes.card}>
       <CardHeader
         className={
-          classes.cardHeader + " " + classes[chartColor + "CardHeader"]
+          classes.cardHeader + " " + classes.blueCardHeader
         }
         subheader={chart}
       />
@@ -48,7 +44,7 @@ function ChartCard({ ...props }) {
             className={
               classes.cardStatsIcon +
               " " +
-              classes[statIconColor + "CardStatsIcon"]
+              classes.grayCardStatsIcon
             }
           />{" "}
           {statLink !== undefined ? (
@@ -64,27 +60,12 @@ function ChartCard({ ...props }) {
   );
 }
 
-ChartCard.defaultProps = {
-  statIconColor: "gray",
-  chartColor: "purple"
-};
-
 ChartCard.propTypes = {
   classes: PropTypes.object.isRequired,
   chart: PropTypes.object.isRequired,
   title: PropTypes.node,
   text: PropTypes.node,
   statIcon: PropTypes.func.isRequired,
-  statIconColor: PropTypes.oneOf([
-    "warning",
-    "primary",
-    "danger",
-    "success",
-    "info",
-    "rose",
-    "gray"
-  ]),
-  chartColor: PropTypes.oneOf(["orange", "green", "red", "blue", "purple"]),
   statLink: PropTypes.object,
   statText: PropTypes.node
 };

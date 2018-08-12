@@ -7,3 +7,4 @@ export const SIGNUP = `${ACCOUNT}/signup`;
 export const MENU_DETAIL = `${API}/menuDetail`;
 export const ORDER = `${API}/order`;
 export const PRINT = `${API}/print`;
+export const NOTIFICATION = `${API}/notification`;

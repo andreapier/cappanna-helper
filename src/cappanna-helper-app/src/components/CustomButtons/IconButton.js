@@ -1,5 +1,6 @@
 import React from "react";
-import { withStyles, IconButton } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 import iconButtonStyle from "variables/styles/iconButtonStyle";
 
