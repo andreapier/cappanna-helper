@@ -45,14 +45,14 @@ namespace CappannaHelper.Api.Controllers
                     return NotFound($"L'ordine con Id '{id}' non esiste");
                 }
 
-                //try
-                //{
-                //    await _printService.PrintAsync(order);
-                //}
-                //catch (Exception e)
-                //{
-                //    throw new Exception("Impossibile ristampare l'ordine", e);
-                //}
+                try
+                {
+                   await _printService.PrintAsync(result);
+                }
+                catch (Exception e)
+                {
+                   throw new Exception("Impossibile ristampare l'ordine", e);
+                }
 
                 try
                 {

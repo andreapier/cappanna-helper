@@ -20,8 +20,12 @@ namespace CappannaHelper.Printing
                 throw new ArgumentNullException(nameof(document));
             }
 
-            var documentContent = document.Render();
-            await _channel.WriteAsync(documentContent);
+            using(_channel)
+            {
+                await _channel.OpenAsync();
+                var documentContent = document.Render();
+                await _channel.WriteAsync(documentContent);
+            }
         }
     }
 }
