@@ -1,10 +1,10 @@
 import AsyncOrderList from "views/OrderList/AsyncOrderList";
-import List from "@material-ui/icons/List";
+import LibraryBooks from "@material-ui/icons/LibraryBooks";
 
 const orders = {
   path: "/order",
   sidebarName: "Ordini",
-  icon: List,
+  icon: LibraryBooks,
   component: AsyncOrderList,
   protected: true,
   name: "orders",

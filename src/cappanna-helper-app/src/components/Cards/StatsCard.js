@@ -6,8 +6,8 @@ import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
-
 import statsCardStyle from "variables/styles/statsCardStyle";
+import { NavLink } from "react-router-dom";
 
 function StatsCard({ ...props }) {
   const {
@@ -44,17 +44,18 @@ function StatsCard({ ...props }) {
       </CardContent>
       <CardActions className={classes.cardActions}>
         <div className={classes.cardStats}>
-          <props.statIcon
+          {props.statIcon?
+          (<props.statIcon
             className={
               classes.cardStatsIcon +
               " " +
               classes.blueCardStatsIcon
             }
-          />{" "}
+          />) : null}{" "}
           {statLink !== undefined ? (
-            <a href={statLink.href} className={classes.cardStatsLink}>
+            <NavLink to={statLink.href} className={classes.cardStatsLink}>
               {statLink.text}
-            </a>
+            </NavLink>
           ) : statText !== undefined ? (
             statText
           ) : null}
@@ -70,7 +71,7 @@ StatsCard.propTypes = {
   title: PropTypes.node,
   description: PropTypes.node,
   small: PropTypes.node,
-  statIcon: PropTypes.func.isRequired,
+  statIcon: PropTypes.func,
   statLink: PropTypes.object,
   statText: PropTypes.node
 };
