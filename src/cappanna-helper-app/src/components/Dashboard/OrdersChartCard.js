@@ -6,10 +6,9 @@ import ChartistGraph from "react-chartist";
 
 const OrdersChartCard = props => {
   return (<RegularCard
-    cardTitle="Andamento"
+    cardTitle="Incasso"
     content={
       <ChartistGraph
-        className="ct-chart"
         data={props.data}
         type="Line"
         options={dailySalesChart.options}
@@ -20,7 +19,7 @@ const OrdersChartCard = props => {
 };
 
 OrdersChartCard.propTypes = {
-  data: PropTypes.shapeOf({
+  data: PropTypes.shape({
     labels: PropTypes.arrayOf(PropTypes.string).isRequired,
     series: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired
   }).isRequired

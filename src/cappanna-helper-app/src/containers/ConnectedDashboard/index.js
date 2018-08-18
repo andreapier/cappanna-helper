@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import ItemGrid from "components/Grid/ItemGrid";
 import dailySalesChart from "variables/charts";
@@ -17,18 +17,16 @@ const waitersStatData = [{
   amount: 150
 }];
 
-class Dashboard extends React.Component {
+class Dashboard extends Component {
   render() {
-    return [
-      <Grid container key={1}>
+    return (
+      <Grid container>
         <ItemGrid xs={12} sm={6}>
           <OrdersQuantityStatCard ordersQuantity={49} />
         </ItemGrid>
         <ItemGrid xs={12} sm={6}>
           <OrdersIncomeStartCard income={5000} />
         </ItemGrid>
-      </Grid>,
-      <Grid container key={2}>
         <ItemGrid xs={12} md={6}>
           <OrdersChartCard data={dailySalesChart.data} />
         </ItemGrid>
@@ -36,7 +34,7 @@ class Dashboard extends React.Component {
           <WaitersStatCard data={waitersStatData} />
         </ItemGrid>
       </Grid>
-    ];
+    );
   }
 }
 

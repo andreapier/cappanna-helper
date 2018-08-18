@@ -1,12 +1,14 @@
 import Chartist from "chartist";
 
-var delays = 80,
-  durations = 500;
-
 const dailySalesChart = {
   data: {
-    labels: ["M", "T", "W", "T", "F", "S", "S"],
-    series: [[12, 17, 7, 17, 23, 18, 38]]
+    labels: ["19", "20", "21", "22", "23", "24", "01"],
+    series: [
+      [12, 17, 7, 17, 23, 18, 38],
+      [6, 8, 3, 8, 11, 9, 19],
+      [3, 4, 1, 4, 5, 4, 9],
+      [1, 2, 0, 2, 2, 2, 4]
+    ]
   },
   options: {
     lineSmooth: Chartist.Interpolation.cardinal({
@@ -26,8 +28,8 @@ const dailySalesChart = {
       if (data.type === "line" || data.type === "area") {
         data.element.animate({
           d: {
-            begin: 600,
-            dur: 700,
+            begin: 300,
+            dur: 300,
             from: data.path
               .clone()
               .scale(1, 0)
@@ -35,16 +37,6 @@ const dailySalesChart = {
               .stringify(),
             to: data.path.clone().stringify(),
             easing: Chartist.Svg.Easing.easeOutQuint
-          }
-        });
-      } else if (data.type === "point") {
-        data.element.animate({
-          opacity: {
-            begin: (data.index + 1) * delays,
-            dur: durations,
-            from: 0,
-            to: 1,
-            easing: "ease"
           }
         });
       }

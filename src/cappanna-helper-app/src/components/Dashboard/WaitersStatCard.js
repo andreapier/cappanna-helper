@@ -11,7 +11,7 @@ const WaitersStatCard = props => {
     cardTitle="Ordini per cameriere"
     content={
       <Table
-        tableHead={["Cameriere", "Ordini", "Incassato tot"]}
+        tableHead={["Cameriere", "Ordini", "Incasso"]}
         tableData={props.data.map(buildTableRow)}
       />
     }

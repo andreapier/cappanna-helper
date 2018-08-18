@@ -4,6 +4,7 @@ import App from "containers/App";
 //import registerServiceWorker from "./registerServiceWorker";
 import storeGenerator from "./store";
 import { loadUserData } from "actions";
+import "assets/css/index.css";
 
 const store = storeGenerator();
 store.dispatch(loadUserData());

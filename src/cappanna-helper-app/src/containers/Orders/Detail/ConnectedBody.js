@@ -39,7 +39,7 @@ const mapStateToProps = state => {
         })
       : [],
     loaded: state.selectedOrder.loaded,
-    notes: state.selectedOrder.item ? state.selectedOrder.item.notes : ""
+    notes: state.selectedOrder.item ? state.selectedOrder.item.notes || "" : ""
   };
 };
 

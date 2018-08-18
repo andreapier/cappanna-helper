@@ -4,8 +4,10 @@ import NotificationSnackbar from "components/Snackbar/NotificationSnackbar";
 
 const WaitLoader = props => {
   if (props.error) {
+    console.error(props.error);
     const snackbarProps = {
-      message: "Attendere..."
+      message: props.error.message,
+      type: "ERROR"
     };
 
     return <NotificationSnackbar {...snackbarProps} />;

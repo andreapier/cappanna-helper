@@ -5,7 +5,7 @@ import { resetNotification } from "actions";
 
 class ConnectedNotificationSnackbar extends Component {
   render() {
-    if (!this.props.message) {
+    if (this.props.message === '') {
       return null;
     }
 
