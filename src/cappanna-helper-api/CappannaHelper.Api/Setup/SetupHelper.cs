@@ -182,10 +182,10 @@ namespace CappannaHelper.Api.Setup
 
         private async Task SetupWaterAsync(List<string> errors)
         {
-            await SetupMenuDetailAsync(MenuDetail.WATER, "Acqua mineralizzata 1L (naturale)", 1.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WATER, "Acqua mineralizzata 1L (frizzante)", 1.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WATER, "Acqua in bottiglia 0,5L (naturale)", 1.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WATER, "Acqua in bottiglia 0,5L (frizzante)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WATER, "Acqua mineralizzata 1L (nat.)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WATER, "Acqua mineralizzata 1L (friz.)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WATER, "Acqua bottiglia 0,5L (nat.)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WATER, "Acqua bottiglia 0,5L (friz.)", 1.0M, errors);
         }
 
         private async Task SetupDrinkDetailsAsync(List<string> errors)
@@ -194,7 +194,7 @@ namespace CappannaHelper.Api.Setup
             await SetupMenuDetailAsync(MenuDetail.DRINK, "Fanta", 2.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.DRINK, "Sprite", 2.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.DRINK, "Birra (bottiglia)", 2.5M, errors);
-            await SetupMenuDetailAsync(MenuDetail.DRINK, "Caffè", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.DRINK, "Caffe", 1.0M, errors);
         }
 
         private async Task SetupMenuDetailAsync(string group, string name, decimal price, List<string> errors)

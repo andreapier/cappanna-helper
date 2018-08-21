@@ -34,23 +34,21 @@ namespace CappannaHelper.Api.Printing
             section.HorizontalAlignment = HorizontalAlignments.Center;
             section.Bold = true;
             section.CreateLabel().SetContent(title);
+            section.NewLine();
         }
 
         private void SetOrderId(int orderId)
         {
             var section = _document.LastPage.CreateSection();
             section.SetSize(16);
-            section.Bold = true;
-            section.CreateLabel().SetContent($"Ordine: {orderId}");
+            section.CreateLabel().SetContent($"Ordine:  {orderId.ToString().PadLeft(3, ' ')}  ");
         }
 
         private void SetTable(string table)
         {
             var section = _document.LastPage.CreateSection();
             section.SetSize(16);
-            section.HorizontalAlignment = HorizontalAlignments.Right;
-            section.Bold = true;
-            section.CreateLabel().SetContent($"Tavolo: {table}");
+            section.CreateLabel().SetContent($"Tavolo:    {table.ToString().PadLeft(4, ' ')}");
             section.NewLine();
         }
 
@@ -58,15 +56,15 @@ namespace CappannaHelper.Api.Printing
         {
             var section = _document.LastPage.CreateSection();
             section.SetSize(16);
-            section.CreateLabel().SetContent($"N. coperti: {seats}");
+            section.CreateLabel().SetContent($"Coperti: {seats.ToString().PadLeft(3, ' ')}  ");
         }
 
         private void SetWaiter(ApplicationUser waiter)
         {
             var section = _document.LastPage.CreateSection();
+            var firstName = waiter.FirstName.Length <= 8 ? waiter.FirstName : waiter.FirstName.Substring(0, 8);
             section.SetSize(16);
-            section.HorizontalAlignment = HorizontalAlignments.Right;
-            section.CreateLabel().SetContent($"Cameriere: {waiter.FirstName}");
+            section.CreateLabel().SetContent($"Cameriere: {firstName}");
             section.NewLine();
         }
 
@@ -80,6 +78,9 @@ namespace CappannaHelper.Api.Printing
 
         private void SetDishes(IEnumerable<OrderDetail> details)
         {
+            var section = _document.LastPage.CreateSection();
+            section.NewLine();
+
             AddAppetizers(details.Where(d => d.Item.Group == MenuDetail.APPETIZER));
             AddFirstDishes(details.Where(d => d.Item.Group == MenuDetail.FIRST_DISH));
             AddSecondDishes(details.Where(d => d.Item.Group == MenuDetail.SECOND_DISH));
@@ -101,18 +102,20 @@ namespace CappannaHelper.Api.Printing
                 SetHeader("CUCINA", order.Id, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp);
                 SetDishes(order.Details);
                 SetNotes(order.Notes);
-
+                
                 AddPage();
             }
             
             SetHeader("BAR", order.Id, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp);
             SetDishes(order.Details);
-            SetNotes(order.Notes);
 
             if (order.Details.Any(d => d.Item.IsDrink))
             {
                 SetDrinks(order.Details);
             }
+
+            SetNotes(order.Notes);
+            BlankFeed();
 
             return this;
         }
@@ -212,7 +215,19 @@ namespace CappannaHelper.Api.Printing
 
         private void AddPage()
         {
+            BlankFeed();
             _document.CreatePage();
+        }
+
+        private void BlankFeed()
+        {
+            var section = _document.LastPage.CreateSection();
+            section.SetSize(16);
+            section.NewLine();
+            section.NewLine();
+            section.NewLine();
+            section.NewLine();
+            section.NewLine();
         }
 
         private void AddMenuItemCategoryHeader(string header)
@@ -221,20 +236,27 @@ namespace CappannaHelper.Api.Printing
             section.SetSize(16);
             section.HorizontalAlignment = HorizontalAlignments.Center;
             section.Underline = true;
-            section.CreateLabel().SetContent(header);
+            section.CreateLabel().SetContent(header.ToUpper());
             section.NewLine();
         }
 
         private void AddDetails(IEnumerable<OrderDetail> details)
         {
-            foreach(var detail in details)
-            {
-                var detailNameSection = _document.LastPage.CreateSection();
-                detailNameSection.CreateLabel().SetContent(detail.Item.Name);
+            var orderedDetails = details.OrderBy(d => d.ItemId);
 
-                var detailQuantitySection = _document.LastPage.CreateSection();
-                detailQuantitySection.HorizontalAlignment = HorizontalAlignments.Right;
-                detailQuantitySection.CreateLabel().SetContent($"{detail.Quantity}");
+            foreach(var detail in orderedDetails)
+            {
+                var name = detail.Item.Name;
+                var dotsLength = 30 - detail.Item.Name.Length;
+                var dots = string.Empty.PadLeft(dotsLength > 0 ? dotsLength : 0, '.');
+                var dotsSection = _document.LastPage.CreateSection();
+                var section = _document.LastPage.CreateSection();
+
+                section.SetSize(16);
+                section.CreateLabel().SetContent(name);
+                section.CreateLabel().SetContent($"{dots}");
+                section.CreateLabel().SetContent($"{detail.Quantity.ToString().PadLeft(2, ' ')}");
+                section.NewLine();
             }
         }
 
@@ -245,7 +267,7 @@ namespace CappannaHelper.Api.Printing
                 AddMenuItemCategoryHeader("NOTE");
 
                 var section = _document.LastPage.CreateSection();
-                section.SetSize(16);
+                section.SetSize(12);
                 section.CreateLabel().SetContent(notes);
                 section.NewLine();
             }

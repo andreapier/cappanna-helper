@@ -109,9 +109,14 @@ namespace CappannaHelper.Printing.EscPos
         private byte GetCharacterSizeSelectionValue()
         {
             //TODO: Do not hardcode font size
-            if (Size < 16)
+            if (Size < 12)
             {
                 return 0x00;
+            }
+
+            if (Size >= 12 && Size < 16)
+            {
+                return 0x10;
             }
 
             if (Size >= 16 && Size < 24)
