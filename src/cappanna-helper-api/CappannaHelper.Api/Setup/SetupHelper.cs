@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -27,6 +28,8 @@ namespace CappannaHelper.Api.Setup
         public async Task<IList<string>> SetupAsync()
         {
             var errors = new List<string>();
+            
+            await ActivateWalMode(errors);
 
             try
             {
@@ -45,6 +48,29 @@ namespace CappannaHelper.Api.Setup
             }
 
             return errors;
+        }
+
+        private async Task ActivateWalMode(List<string> errors)
+        {
+            try
+            {
+                var connection = _context.Database.GetDbConnection();
+
+                if (connection.State != ConnectionState.Open)
+                {
+                    await connection.OpenAsync();
+                }
+
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText= "PRAGMA journal_mode=WAL;";
+                    await command.ExecuteNonQueryAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                errors.Add(e.Message);
+            }
         }
 
         private async Task SetupUsersAsync(List<string> errors)

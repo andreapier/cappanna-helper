@@ -90,5 +90,7 @@ Coverage.xml
 # Application runtime files
 *.db
 *.db-journal
+*.db-shm
+*.db-wal
 
 RawPrint.txt
