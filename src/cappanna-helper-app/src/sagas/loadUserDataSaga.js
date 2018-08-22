@@ -16,7 +16,7 @@ const loadUserDataFromStorage = () =>
   localforage
     .getItem("userData")
     .catch(err =>
-      console.log("Error loading user data from local storage", err)
+      console.error("Error loading user data from local storage", err)
     );
 
 function* loadUserData() {

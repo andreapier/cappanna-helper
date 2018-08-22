@@ -14,7 +14,7 @@ const deleteUserData = () =>
   localforage
     .removeItem("userData")
     .catch(err =>
-      console.log("Error removing user data from local storage", err)
+      console.error("Error removing user data from local storage", err)
     );
 
 function* signout(action) {

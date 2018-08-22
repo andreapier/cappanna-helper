@@ -12,15 +12,15 @@ class ConnectedHeader extends Component {
 
 const mapStateToProps = state => {
   return {
-    id: state.newOrder.id,
-    totalPrice: state.newOrder.totalPrice,
-    chTable: state.newOrder.chTable,
-    tableCategory: state.newOrder.tableCategory,
-    seats: state.newOrder.seats,
+    id: state.newOrderHeader.id,
+    totalPrice: state.newOrderHeader.totalPrice,
+    chTable: state.newOrderHeader.chTable,
+    tableCategory: state.newOrderHeader.tableCategory,
+    seats: state.newOrderHeader.seats,
     canConfirm:
-      state.newOrder.totalPrice > 0 &&
-      state.newOrder.chTable > 0 &&
-      state.newOrder.seats > 0
+      state.newOrderHeader.totalPrice > 0 &&
+      state.newOrderHeader.chTable > 0 &&
+      state.newOrderHeader.seats > 0
   };
 };
 

@@ -1,13 +1,14 @@
 import { combineReducers } from "redux";
 import { reducer as formReducer } from "redux-form";
-import user from "./user";
-import api from "./api";
-import menuDetails from "./menuDetails";
-import orders from "./orders";
-import message from "./message";
-import newOrder from "./newOrder";
-import selectedOrder from "./selectedOrder";
-import notifications from "./notifications";
+import user from "reducers/user";
+import api from "reducers/api";
+import menuDetails from "reducers/menuDetails";
+import orders from "reducers/orders";
+import message from "reducers/message";
+import newOrderHeader from "reducers/newOrder/header";
+import newOrderDetails from "reducers/newOrder/details";
+import selectedOrder from "reducers/selectedOrder";
+import notifications from "reducers/notifications";
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   api,
   menuDetails,
   orders,
-  newOrder,
+  newOrderHeader,
+  newOrderDetails,
   message,
   selectedOrder,
   notifications

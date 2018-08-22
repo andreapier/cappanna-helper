@@ -27,7 +27,7 @@ const Header = props => {
             className="CreateOrderForm-TextField"
             style={textFieldStyle}
             value={props.chTable}
-            onChange={e => props.setOrderTable(e.target.value)}
+            onChange={e => props.setOrderTable(parseInt(e.target.value, 10))}
             InputLabelProps={{
               shrink: true
             }}
@@ -54,7 +54,7 @@ const Header = props => {
             className="CreateOrderForm-TextField"
             style={textFieldStyle}
             value={props.seats}
-            onChange={e => props.setOrderSeats(e.target.value)}
+            onChange={e => props.setOrderSeats(parseInt(e.target.value, 10))}
             InputLabelProps={{
               shrink: true
             }}

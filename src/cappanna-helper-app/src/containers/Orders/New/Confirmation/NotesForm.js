@@ -42,7 +42,7 @@ Notes.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    initialValues: { notes: state.newOrder.notes }
+    initialValues: { notes: state.newOrderHeader.notes }
   };
 };
 

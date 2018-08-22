@@ -15,7 +15,7 @@ import { getDefaultRoute } from "routes/helpers";
 const saveUserData = userData =>
   localforage
     .setItem("userData", userData)
-    .catch(err => console.log("Error saving user data in local storage", err));
+    .catch(err => console.error("Error saving user data in local storage", err));
 
 function* signin(action) {
   try {

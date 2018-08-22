@@ -1,12 +1,12 @@
 import React from "react";
 import ConnectedHeader from "containers/Orders/New/ConnectedHeader";
-import ConnectedBody from "containers/Orders/New/ConnectedBody";
+import Body from "containers/Orders/New/Body";
 
 const NewOrderPage = () => {
   return (
     <div>
       <ConnectedHeader />
-      <ConnectedBody />
+      <Body />
     </div>
   );
 };

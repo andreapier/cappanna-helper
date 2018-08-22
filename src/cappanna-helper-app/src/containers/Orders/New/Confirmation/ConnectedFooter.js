@@ -12,7 +12,10 @@ class ConnectedFooter extends Component {
 
 const mapStateToProps = state => {
   return {
-    order: state.newOrder
+    order: {
+      ...state.newOrderHeader,
+      details: state.newOrderDetails
+    }
   };
 };
 
