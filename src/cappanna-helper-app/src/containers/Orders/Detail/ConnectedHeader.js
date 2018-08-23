@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Header from "components/Orders/Detail/Header";
-import { printRequested, editOrder, calculate } from "actions";
+import { printRequested, editOrder, deleteOrder, calculate } from "actions";
 import history from "./../../../history";
 
 class ConnectedHeader extends Component {
@@ -71,6 +71,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(editOrder(order));
       history.push(`/order/${order.id}/edit`);
     },
+    deleteOrder: orderId => dispatch(deleteOrder(orderId)),
     goToCalc: order => {
       dispatch(calculate({
         amount: order.totalPrice,

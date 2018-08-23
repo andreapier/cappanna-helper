@@ -7,6 +7,7 @@ import Print from "@material-ui/icons/Print";
 import IconButton from "components/CustomButtons/IconButton";
 import Create from "@material-ui/icons/Create";
 import Apps from "@material-ui/icons/Apps";
+import Delete from "@material-ui/icons/Delete";
 
 const containerStyle = {
   display: "flex",
@@ -28,6 +29,13 @@ const Header = props => {
           style={{ marginRight: "10px" }}
         >
           <Create />
+        </IconButton>
+        <IconButton
+          onClick={() => props.deleteOrder(props.order.id)}
+          disabled={props.order.status === 3}
+          style={{ marginRight: "10px" }}
+        >
+          <Delete />
         </IconButton>
         <IconButton
           onClick={() => props.printRequested(props.order.id)}
@@ -94,6 +102,7 @@ Header.propTypes = {
   }).isRequired,
   printRequested: PropTypes.func.isRequired,
   editOrder: PropTypes.func.isRequired,
+  deleteOrder: PropTypes.func.isRequired,
   goToCalc: PropTypes.func.isRequired
 };
 

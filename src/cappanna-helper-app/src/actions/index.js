@@ -18,11 +18,13 @@ import {
   DISCONNECT_SIGNALR,
   CREATE_EMPTY_ORDER,
   EDIT_ORDER,
+  DELETE_ORDER,
   RESET_ORDER,
   CONFIRM_ORDER,
   ORDER_CREATED,
   ORDER_CHANGED,
   ORDER_PRINTED,
+  ORDER_DELETED,
   SET_ORDER_TABLE,
   SET_ORDER_TABLE_CATEGORY,
   SET_ORDER_SEATS,
@@ -137,6 +139,10 @@ export function editOrder(order) {
   return { type: EDIT_ORDER, payload: order };
 }
 
+export function deleteOrder(orderId) {
+  return { type: DELETE_ORDER, payload: orderId };
+}
+
 export function resetOrder() {
   return { type: RESET_ORDER };
 }
@@ -155,6 +161,10 @@ export function orderChanged(order) {
 
 export function orderPrinted(order) {
   return { type: ORDER_PRINTED, payload: order };
+}
+
+export function orderDeleted(order) {
+  return { type: ORDER_DELETED, payload: order };
 }
 
 export function setOrderTable(table) {

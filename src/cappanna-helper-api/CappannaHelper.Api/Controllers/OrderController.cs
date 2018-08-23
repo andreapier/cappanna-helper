@@ -50,7 +50,7 @@ namespace CappannaHelper.Api.Controllers
                 .Include(o => o.CreatedBy)
                 .Include(o => o.Details)
                 .ThenInclude(d => d.Item)
-                .FirstOrDefaultAsync(o => o.Id == id);
+                .SingleOrDefaultAsync(o => o.Id == id);
 
             if (order == null)
             {
@@ -173,6 +173,13 @@ namespace CappannaHelper.Api.Controllers
                         .Include(o => o.Details)
                         .FirstOrDefaultAsync(o => o.Id == order.Id);
 
+                    if (dbOrder.Operations.Any(o => o.TypeId == (int)OperationTypes.Print))
+                    {
+                        transaction.Rollback();
+
+                        return BadRequest("Impossibile modificare un ordine stampato");
+                    }
+
                     dbOrder.ChTable = order.ChTable;
                     dbOrder.Notes = order.Notes;
                     dbOrder.Seats = order.Seats;
@@ -220,7 +227,7 @@ namespace CappannaHelper.Api.Controllers
                         .Include(o => o.CreatedBy)
                         .Include(o => o.Details)
                         .ThenInclude(d => d.Item)
-                        .FirstOrDefaultAsync(o => o.Id == order.Id);
+                        .SingleOrDefaultAsync(o => o.Id == order.Id);
 
                     transaction.Commit();
                 }
@@ -231,6 +238,52 @@ namespace CappannaHelper.Api.Controllers
             }
 
             await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_CHANGED, result);
+
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            ChOrder result;
+
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                result = await _context
+                    .Orders
+                    .Include(o => o.Operations)
+                    .Include(o => o.CreatedBy)
+                    .Include(o => o.Details)
+                    .ThenInclude(d => d.Item)
+                    .SingleOrDefaultAsync(o => o.Id == id);
+
+                if (result == null)
+                {
+                    transaction.Rollback();
+
+                    return NotFound($"L'ordine con Id '{id}' non esiste");
+                }
+
+                if (result.Operations.Any(o => o.TypeId == (int)OperationTypes.Print))
+                {
+                    transaction.Rollback();
+                    
+                    return BadRequest("Impossibile eliminare un ordine stampato");
+                }
+
+                try
+                {
+                    _context.Orders.Remove(result);
+                    await _context.SaveChangesAsync();
+                    transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Impossibile eliminare l'ordine. Ripetere l'operazione", e);
+                }
+            }
+
+            await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_DELETED, result);
 
             return Ok(result);
         }

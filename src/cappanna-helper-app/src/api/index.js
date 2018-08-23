@@ -63,6 +63,14 @@ const patch = (url, data) =>
     .then(checkStatus)
     .then(parseJSON);
 
+const _delete = url => 
+  fetch(url, {
+    method: "DELETE",
+    headers: getHeaders()
+  })
+  .then(checkStatus)
+  .then(parseJSON);
+
 const parseJSON = response => response.json();
 
 const getServerOrder = order => {
@@ -143,6 +151,10 @@ class Api {
     const serverOrder = getServerOrder(order);
 
     return patch(ORDER, serverOrder);
+  }
+
+  deleteOrder(orderId) {
+    return _delete(`${ORDER}/${orderId}`);
   }
 
   printOrder(orderId) {

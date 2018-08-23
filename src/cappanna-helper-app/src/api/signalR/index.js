@@ -1,5 +1,5 @@
 import { HubConnectionBuilder, JsonHubProtocol } from "@aspnet/signalr";
-import { orderCreated, orderChanged, orderPrinted } from "actions";
+import { orderCreated, orderChanged, orderPrinted, orderDeleted } from "actions";
 
 class SignalR {
   constructor(dispatch) {
@@ -23,6 +23,10 @@ class SignalR {
     
     this.orderHubConnection.on("NotifyOrderPrinted", data =>
       this.dispatch(orderPrinted(data))
+    );
+    
+    this.orderHubConnection.on("NotifyOrderDeleted", data =>
+      this.dispatch(orderDeleted(data))
     );
   }
 
