@@ -6,6 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Print from "@material-ui/icons/Print";
 import IconButton from "components/CustomButtons/IconButton";
 import Create from "@material-ui/icons/Create";
+import Apps from "@material-ui/icons/Apps";
 
 const containerStyle = {
   display: "flex",
@@ -28,8 +29,14 @@ const Header = props => {
         >
           <Create />
         </IconButton>
-        <IconButton onClick={() => props.printRequested(props.order.id)}>
+        <IconButton
+          onClick={() => props.printRequested(props.order.id)}
+          style={{ marginRight: "10px" }}
+        >
           <Print />
+        </IconButton>
+        <IconButton onClick={() => props.goToCalc(props.order)}>
+          <Apps />
         </IconButton>
       </Toolbar>
       <div style={containerStyle}>
@@ -86,7 +93,8 @@ Header.propTypes = {
     status: PropTypes.number.isRequired,
   }).isRequired,
   printRequested: PropTypes.func.isRequired,
-  editOrder: PropTypes.func.isRequired
+  editOrder: PropTypes.func.isRequired,
+  goToCalc: PropTypes.func.isRequired
 };
 
 export default Header;
