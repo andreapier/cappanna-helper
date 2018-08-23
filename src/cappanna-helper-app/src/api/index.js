@@ -37,14 +37,14 @@ const checkStatus = response => {
   throw error;
 };
 
-const post = (url, data) =>
+const post = (url, data, jsonResponse = true) =>
   fetch(url, {
     method: "POST",
     headers: getHeaders(),
     body: JSON.stringify(data)
   })
     .then(checkStatus)
-    .then(parseJSON);
+    .then(json => jsonResponse ? parseJSON(json) : json);
 
 const get = url =>
   fetch(url, {
@@ -105,7 +105,7 @@ class Api {
   }
 
   signout() {
-    return post(SIGNOUT).then(json => {
+    return post(SIGNOUT, undefined, false).then(json => {
       token = undefined;
       return json;
     });

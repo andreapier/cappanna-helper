@@ -2,7 +2,8 @@ import { put, takeLatest } from "redux-saga/effects";
 import { notifyError, signoutRequested } from "actions";
 import { SIGNAL_API_ERROR } from "actions/types";
 
-function* signalApiError(error) {
+function* signalApiError(action) {
+  const error = action.payload;
   if (error.response && error.response.status === 401) {
     yield put(signoutRequested());
   } else {
