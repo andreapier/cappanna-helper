@@ -6,9 +6,9 @@ function Users({ ...props }) {
   return (
     <RegularCard
       cardTitle="Crea utente"
-      cardSubtitle="Inserisci i dati per creare un nuovo utente"
-      content={<SignUpForm />}
-    />
+      cardSubtitle="Inserisci i dati per creare un nuovo utente">
+      <SignUpForm />
+    </RegularCard>
   );
 }
 

@@ -14,7 +14,7 @@ const RegularCard = props => {
     plainCard,
     cardTitle,
     cardSubtitle,
-    content,
+    children,
     footer
   } = props;
   const plainCardClasses = cx({
@@ -39,7 +39,7 @@ const RegularCard = props => {
         title={cardTitle}
         subheader={cardSubtitle}
       />
-      <CardContent>{content}</CardContent>
+      <CardContent>{children}</CardContent>
       {footer !== undefined ? (
         <CardActions className={classes.cardActions}>{footer}</CardActions>
       ) : null}
@@ -54,9 +54,9 @@ RegularCard.defaultProps = {
 RegularCard.propTypes = {
   plainCard: PropTypes.bool,
   classes: PropTypes.object.isRequired,
-  cardTitle: PropTypes.node,
+  cardTitle: PropTypes.node.isRequired,
   cardSubtitle: PropTypes.node,
-  content: PropTypes.node,
+  children: PropTypes.node.isRequired,
   footer: PropTypes.node
 };
 

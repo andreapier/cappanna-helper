@@ -39,7 +39,8 @@ import {
   PRINT_COMPLETED,
   LOAD_NOTIFICATIONS_LIST_REQUESTED,
   LOAD_NOTIFICATIONS_LIST_COMPLETED,
-  INVALIDATE_NOTIFICATIONS_LIST
+  INVALIDATE_NOTIFICATIONS_LIST,
+  CALCULATE
 } from "actions/types";
 
 const signalRAction = {
@@ -225,4 +226,8 @@ export function loadNotificationsListCompleted(notifications) {
 
 export function invalidateNotificationsList() {
   return { type: INVALIDATE_NOTIFICATIONS_LIST };
+}
+
+export function calculate({ amount, paidAmount, seats }) {
+  return { type: CALCULATE, payload: { amount, paidAmount, seats } };
 }

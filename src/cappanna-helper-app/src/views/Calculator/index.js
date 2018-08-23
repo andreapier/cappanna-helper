@@ -1,6 +1,6 @@
 import React from "react";
-import Calculator from "components/Calculator";
+import CalculatorForm from "containers/CalculatorForm";
 
-const CalculatorPage = () => <Calculator />;
+const CalculatorPage = () => <CalculatorForm />;
 
 export default CalculatorPage;

@@ -4,12 +4,9 @@ import MenuTable from 'containers/MenuTable';
 
 const MenuPage = (props) => {
   return (
-    <RegularCard
-        cardTitle={"Menu"}
-        content={
-          <MenuTable />
-      }
-    />
+    <RegularCard cardTitle="Menu">
+      <MenuTable />
+    </RegularCard>
   );
 };
 

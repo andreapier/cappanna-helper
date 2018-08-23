@@ -5,17 +5,15 @@ import RegularCard from "components/Cards/RegularCard";
 import ChartistGraph from "react-chartist";
 
 const OrdersChartCard = props => {
-  return (<RegularCard
-    cardTitle="Incasso"
-    content={
+  return (
+    <RegularCard cardTitle="Incasso">
       <ChartistGraph
         data={props.data}
         type="Line"
         options={dailySalesChart.options}
         listener={dailySalesChart.animation}
       />
-    }
-  />);
+    </RegularCard>);
 };
 
 OrdersChartCard.propTypes = {

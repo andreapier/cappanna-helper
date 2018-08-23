@@ -8,18 +8,9 @@ import Grid from "@material-ui/core/Grid";
 import ItemGrid from "components/Grid/ItemGrid";
 
 class SignUp extends Component {
-  constructor(props) {
-    super(props);
-    this.signup = this.signup.bind(this);
-  }
-
-  signup(values) {
-    this.props.signupRequested(values);
-  }
-
   render() {
     return (
-      <form onSubmit={this.props.handleSubmit(this.signup)}>
+      <form onSubmit={this.props.handleSubmit(this.props.signupRequested)}>
         <Grid container justify="space-between">
           <ItemGrid xs={12}>
             <Field
