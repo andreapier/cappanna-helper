@@ -1,5 +1,5 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
+import Grid from "components/Grid";
 import RegularCard from "components/Cards/RegularCard";
 import P from "components/Typography/P";
 import ItemGrid from "components/Grid/ItemGrid";
@@ -13,7 +13,7 @@ class SignInPage extends React.Component {
         cardSubtitle={
           <P>Inserisci le credenziali per iniziare ad utilizzare il sistema</P>
         }>
-          <Grid container justify="center">
+          <Grid justify="center">
             <ItemGrid xs={12} sm={12} md={6}>
               <SignInForm />
             </ItemGrid>

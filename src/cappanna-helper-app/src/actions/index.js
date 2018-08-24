@@ -14,6 +14,9 @@ import {
   RESET_NOTIFICATION,
   LOAD_MENU_DETAILS_REQUESTED,
   LOAD_MENU_DETAILS_COMPLETED,
+  INVALIDATE_MENU_DETAILS,
+  SET_MENU_DETAIL_QUANTITY,
+  MENU_DETAIL_CHANGED,
   CONNECT_SIGNALR,
   DISCONNECT_SIGNALR,
   CREATE_EMPTY_ORDER,
@@ -121,6 +124,18 @@ export function loadMenuDetailsRequested() {
 
 export function loadMenuDetailsCompleted(menuDetails) {
   return { type: LOAD_MENU_DETAILS_COMPLETED, payload: menuDetails };
+}
+
+export function invalidateMenuDetails() {
+  return { type: INVALIDATE_MENU_DETAILS };
+}
+
+export function setMenuDetailQuantity(dishId, unitsInStock) {
+  return { type: SET_MENU_DETAIL_QUANTITY, payload: { dishId, unitsInStock } };
+}
+
+export function menuDetailChanged(menuDetail) {
+  return { type: MENU_DETAIL_CHANGED, payload: menuDetail };
 }
 
 export function connectSignalR(userData) {

@@ -33,31 +33,45 @@ namespace CappannaHelper.Api.Controllers
         public async Task<IActionResult> Get()
         {
             var limit = DateTime.Now.AddHours(-12);
-            var orders = await _context.Orders
-                .Include(o => o.CreatedBy)
-                //.Where(o => o.CreationTimestamp >= limit)
-                .OrderByDescending(o => o.CreationTimestamp)
-                .ToListAsync();
+            List<ChOrder> result;
 
-            return Ok(orders);
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                result = await _context.Orders
+                    .Include(o => o.CreatedBy)
+                    //.Where(o => o.CreationTimestamp >= limit)
+                    .OrderByDescending(o => o.CreationTimestamp)
+                    .ToListAsync();
+
+                transaction.Commit();
+            }
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var order = await _context
-                .Orders
-                .Include(o => o.CreatedBy)
-                .Include(o => o.Details)
-                .ThenInclude(d => d.Item)
-                .SingleOrDefaultAsync(o => o.Id == id);
+            ChOrder result;
 
-            if (order == null)
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                result = await _context
+                    .Orders
+                    .Include(o => o.CreatedBy)
+                    .Include(o => o.Details)
+                    .ThenInclude(d => d.Item)
+                    .SingleOrDefaultAsync(o => o.Id == id);
+
+                transaction.Commit();
+            }
+
+            if (result == null)
             {
                 return NotFound($"L'ordine con Id '{id}' non esiste");
             }
 
-            return Ok(order);
+            return Ok(result);
         }
 
         [HttpPost]

@@ -43,7 +43,7 @@ const MenuItemDetail = props => {
                 props.detail.item.price
               )
             }
-            disabled={!props.detail.item.isAvailable}
+            disabled={props.detail.item.unitsInStock - props.detail.quantity <= 0}
           >
             <ContentAdd />
           </IconButton>
@@ -58,9 +58,7 @@ const MenuItemDetail = props => {
                 props.detail.item.price
               )
             }
-            disabled={
-              props.detail.quantity === 0 || !props.detail.item.isAvailable
-            }
+            disabled={props.detail.quantity === 0}
           >
             <ContentRemove />
           </IconButton>
@@ -78,7 +76,7 @@ MenuItemDetail.propTypes = {
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       price: PropTypes.number.isRequired,
-      isAvailable: PropTypes.bool.isRequired
+      unitsInStock: PropTypes.number.isRequired
     }).isRequired
   }).isRequired,
   incrementOrderDetailQuantity: PropTypes.func.isRequired

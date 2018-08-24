@@ -1,12 +1,12 @@
 import React from "react";
 import P from "components/Typography/P";
 import Button from "components/CustomButtons";
-import Grid from "@material-ui/core/Grid";
+import Grid from "components/Grid";
 import ItemGrid from "components/Grid/ItemGrid";
 
 const SignUpOk = props => {
   return (
-    <Grid container justify="space-between">
+    <Grid justify="space-between">
       <ItemGrid xs={12}>
         <P key={1}>Registrazione eseguita con successo!</P>
       </ItemGrid>

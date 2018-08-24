@@ -38,10 +38,11 @@ const CustomTable = props => {
             return (
               <TableRow key={itemKey}>
                 {itemKeys.map((prop, key) => {
-                  if (React.isValidElement(props)) {
+                  if (React.isValidElement(prop)) {
+                    const Prop=prop;
                     return (
                       <TableCell className={classes.tableCell} key={key}>
-                        {<prop />}
+                        {Prop}
                       </TableCell>
                     );
                   } else if (isArray) {

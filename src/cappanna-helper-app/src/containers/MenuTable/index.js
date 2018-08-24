@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { loadMenuDetailsRequested } from "actions";
-import List from "components/Menu/List";
+import { loadMenuDetailsRequested, invalidateMenuDetails, setMenuDetailQuantity } from "actions";
+import Menu from "components/Menu";
 
 class MenuTable extends Component {
   componentDidMount() {
@@ -11,19 +11,29 @@ class MenuTable extends Component {
   }
 
   render() {
-    return <List dishList={this.props.dishList} />;
+    return <Menu dishList={this.props.dishList} setMenuDetailQuantity={this.props.setMenuDetailQuantity} />;
+  }
+
+  componentWillUnmount() {
+    if (this.props.loaded) {
+      this.props.invalidateMenuDetails();
+    }
   }
 }
 
 const mapStateToProps = state => {
   return {
+    shouldLoad: !state.menuDetails.loading && !state.menuDetails.loaded,
+    loaded: state.menuDetails.loaded,
     dishList: state.menuDetails.items
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadMenuDetailsRequested: () => dispatch(loadMenuDetailsRequested())
+    loadMenuDetailsRequested: () => dispatch(loadMenuDetailsRequested()),
+    invalidateMenuDetails: () => dispatch(invalidateMenuDetails()),
+    setMenuDetailQuantity: (dishId, unitsInStock) => dispatch(setMenuDetailQuantity(dishId, unitsInStock))
   };
 };
 

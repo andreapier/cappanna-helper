@@ -141,6 +141,10 @@ class Api {
     return get(MENU_DETAIL);
   }
 
+  editMenuDetail(detail) {
+    return patch(MENU_DETAIL, detail);
+  }
+
   createOrder(order) {
     const serverOrder = getServerOrder(order);
 

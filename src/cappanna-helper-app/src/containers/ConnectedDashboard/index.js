@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
+import Grid from "components/Grid";
 import ItemGrid from "components/Grid/ItemGrid";
 import dailySalesChart from "variables/charts";
 import OrdersQuantityStatCard from "components/Dashboard/OrdersQuantityStatCard";
@@ -20,7 +20,7 @@ const waitersStatData = [{
 class Dashboard extends Component {
   render() {
     return (
-      <Grid container>
+      <Grid>
         <ItemGrid xs={12} sm={6}>
           <OrdersQuantityStatCard ordersQuantity={49} />
         </ItemGrid>

@@ -4,14 +4,14 @@ import { reduxForm, Field } from "redux-form";
 import { TextField } from "redux-form-material-ui";
 import { signupRequested } from "actions";
 import { connect } from "react-redux";
-import Grid from "@material-ui/core/Grid";
+import Grid from "components/Grid";
 import ItemGrid from "components/Grid/ItemGrid";
 
 class SignUp extends Component {
   render() {
     return (
       <form onSubmit={this.props.handleSubmit(this.props.signupRequested)}>
-        <Grid container justify="space-between">
+        <Grid justify="space-between">
           <ItemGrid xs={12}>
             <Field
               name="username"

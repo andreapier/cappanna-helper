@@ -1,6 +1,6 @@
 import Button from "components/CustomButtons";
 import ItemGrid from "components/Grid/ItemGrid";
-import Grid from "components/Grid/ContainerGrid";
+import Grid from "components/Grid";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";

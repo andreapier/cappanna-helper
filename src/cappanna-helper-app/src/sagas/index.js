@@ -4,13 +4,15 @@ import signoutSaga from "./signoutSaga";
 import signupSaga from "./signupSaga";
 import loadUserDataSaga from "./loadUserDataSaga";
 import confirmOrderSaga from "./confirmOrderSaga";
+import orderChangedSaga from "./orderChangedSaga";
 import deleteOrderSaga from "./deleteOrderSaga";
 import loadOrdersListSaga from "./loadOrdersListSaga";
 import loadSelectedOrderSaga from "./loadSelectedOrderSaga";
 import printOrderSaga from "./printOrderSaga";
 import loadMenuDetailsSaga from "./loadMenuDetailsSaga";
+import editMenuDetailSaga from "./editMenuDetailSaga";
+import menuDetailChangedSaga from "./menuDetailChangedSaga";
 import signalApiErrorSaga from "./signalApiErrorSaga";
-import orderChangedSaga from "./orderChangedSaga";
 import loadNotificationsListSaga from "./loadNotificationsListSaga";
 
 function* rootSaga() {
@@ -19,14 +21,16 @@ function* rootSaga() {
     signoutSaga(),
     signupSaga(),
     loadUserDataSaga(),
-    confirmOrderSaga(),
-    deleteOrderSaga(),
     loadOrdersListSaga(),
+    confirmOrderSaga(),
+    orderChangedSaga(),
+    deleteOrderSaga(),
     loadSelectedOrderSaga(),
     printOrderSaga(),
     loadMenuDetailsSaga(),
+    editMenuDetailSaga(),
+    menuDetailChangedSaga(),
     signalApiErrorSaga(),
-    orderChangedSaga(),
     loadNotificationsListSaga()
   ]);
 }

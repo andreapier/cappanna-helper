@@ -1,6 +1,8 @@
 import {
   LOAD_MENU_DETAILS_REQUESTED,
-  LOAD_MENU_DETAILS_COMPLETED
+  LOAD_MENU_DETAILS_COMPLETED,
+  INVALIDATE_MENU_DETAILS,
+  MENU_DETAIL_CHANGED
 } from "actions/types";
 
 const initialStatus = {
@@ -21,10 +23,25 @@ export default function(state = initialStatus, action) {
         items: action.payload.map(e => {
           return {
             ...e,
-            isAvailable: !e.unitsInStock || e.unitsInStock > 0
+            unitsInStock: e.unitsInStock || Infinity
           };
         })
       };
+
+    case INVALIDATE_MENU_DETAILS:
+      return initialStatus;
+
+      case MENU_DETAIL_CHANGED:
+        return {
+          ...state,
+          items: state.items.map(e => {
+            if (e.id === action.payload.id) {
+              return action.payload;
+            }
+  
+            return e;
+          })
+        };
 
     default:
       return state;

@@ -20,7 +20,11 @@ const mapStateToProps = state => {
     canConfirm:
       state.newOrderHeader.totalPrice > 0 &&
       state.newOrderHeader.chTable > 0 &&
-      state.newOrderHeader.seats > 0
+      state.newOrderHeader.seats > 0 &&
+      !state.newOrderDetails.some(d => {
+        const menuDetail = state.menuDetails.items.find(m => m.id === d.itemId);
+        return menuDetail.unitsInStock < d.quantity;
+      })
   };
 };
 

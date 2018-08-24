@@ -1,4 +1,4 @@
-import { put, takeLatest, call } from "redux-saga/effects";
+import { select, put, takeLatest, call } from "redux-saga/effects";
 import {
   loadingChanged,
   loadMenuDetailsCompleted,
@@ -13,9 +13,12 @@ function* loadMenuDetails(action) {
     yield put(loadingChanged(true, "Caricamento menu..."));
     const api = new Api();
     const menuDetails = yield call(api.getMenuDetails);
-    menuDetails.sort((a, b) => a.id - b.id);
     yield put(loadMenuDetailsCompleted(menuDetails));
-    yield put(createEmptyOrder(menuDetails));
+    const state = yield select();
+    
+    if (state.newOrderDetails.length === 0) {
+      yield put(createEmptyOrder(menuDetails));
+    }
   } catch (e) {
     yield put(signalApiError(e));
   } finally {
