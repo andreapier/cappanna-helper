@@ -4,6 +4,7 @@ using CappannaHelper.Api.Persistence.Modelling;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CappannaHelper.Api.Services
@@ -12,14 +13,57 @@ namespace CappannaHelper.Api.Services
     {
         private readonly ApplicationDbContext _context;
 
-        private Shift _current;
+        private static readonly SemaphoreSlim _semaphore;
+
+        private static Shift _current;
+
+        static ShiftManager()
+        {
+            _semaphore = new SemaphoreSlim(1, 1);
+        }
 
         public ShiftManager(ApplicationDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<Shift> GetOrCreateCurrent(ApplicationUser user)
+        public async Task<Shift> GetOrCreateCurrentAsync()
+        {
+            await _semaphore.WaitAsync();
+
+            try
+            {
+                return await InternalGetOrCreateCurrentAsync();
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        public async Task<int> GetNextCounterAsync()
+        {
+            await _semaphore.WaitAsync();
+
+            try
+            {
+                if (_current == null)
+                {
+                    await GetOrCreateCurrentAsync();
+                }
+
+                _current.OrderCounter++;
+                await _context.SaveChangesAsync();
+
+                return _current.OrderCounter;
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        private async Task<Shift> InternalGetOrCreateCurrentAsync()
         {
             if (_current != null)
             {
@@ -29,28 +73,21 @@ namespace CappannaHelper.Api.Services
             var now = DateTime.Now;
             var limit = now.AddHours(-1);
 
-            using (var transaction = await _context.Database.BeginTransactionAsync())
+            _current = await _context.Orders
+                .Where(o => o.CreationTimestamp >= limit)
+                .OrderByDescending(o => o.CreationTimestamp)
+                .Select(o => o.Shift)
+                .FirstOrDefaultAsync();
+
+            if (_current == null)
             {
-                _current = await _context.Orders
-                    .Include(o => o.Shift)
-                    .Where(o => o.CreationTimestamp >= limit)
-                    .OrderByDescending(o => o.CreationTimestamp)
-                    .Select(o => o.Shift)
-                    .FirstAsync();
-
-                if (_current == null)
+                var shift = await _context.Shifts.AddAsync(new Shift
                 {
-                    var shift = await _context.Shifts.AddAsync(new Shift {
-                        OpenTimestamp = now,
-                        CreatedById = user.Id,
-                        CreationTimestamp = now,
-                        Description = $"{now.ToString("dddd")} - {(now.Hour < 17 ? "Pranzo" : "Cena")}"
-                    });
+                    OpenTimestamp = now,
+                    Description = $"{now.ToString("dddd")} - {(now.Hour < 17 ? "Pranzo" : "Cena")}"
+                });
 
-                    _current = shift.Entity;
-                }
-                
-                transaction.Commit();
+                _current = shift.Entity;
             }
 
             return _current;

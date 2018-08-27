@@ -30,6 +30,7 @@ const Header = props => {
         >
           <Create />
         </IconButton>
+        {props.deleteOrder ?
         <IconButton
           onClick={() => props.deleteOrder(props.order.id)}
           disabled={props.order.status === 3}
@@ -37,15 +38,18 @@ const Header = props => {
         >
           <Delete />
         </IconButton>
+        : null}
+        <IconButton onClick={() => props.goToCalc(props.order)}>
+          <Apps />
+        </IconButton>
+        {props.printRequested ?
         <IconButton
           onClick={() => props.printRequested(props.order.id)}
           style={{ marginRight: "10px" }}
         >
           <Print />
         </IconButton>
-        <IconButton onClick={() => props.goToCalc(props.order)}>
-          <Apps />
-        </IconButton>
+        : null}
       </Toolbar>
       <div style={containerStyle}>
         <div>
@@ -100,9 +104,9 @@ Header.propTypes = {
     seats: PropTypes.number.isRequired,
     status: PropTypes.number.isRequired,
   }).isRequired,
-  printRequested: PropTypes.func.isRequired,
+  printRequested: PropTypes.func,
   editOrder: PropTypes.func.isRequired,
-  deleteOrder: PropTypes.func.isRequired,
+  deleteOrder: PropTypes.func,
   goToCalc: PropTypes.func.isRequired
 };
 

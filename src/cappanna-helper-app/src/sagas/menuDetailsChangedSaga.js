@@ -36,11 +36,11 @@ function* menuDetailsChanged(action) {
   const state = yield select();
   const messages = action.payload.map(e => buildMessage(e, state));
 
-  if (messages.all(e => e.type === "info")) {
+  if (messages.every(e => e.type === "info")) {
     yield put(notifyInfo(messages.join("\n")));
-  } else if (messages.all(e => e.type === "warning")) {
+  } else if (messages.every(e => e.type === "warning")) {
     yield put(notifyWarning(messages.join("\n")));
-  } else if (messages.all(e => e.type === "error")) {
+  } else if (messages.every(e => e.type === "error")) {
     yield put(notifyError(messages.join("\n")));
   }
 }

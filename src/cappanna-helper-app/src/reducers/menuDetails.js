@@ -11,7 +11,7 @@ const initialStatus = {
   items: []
 };
 
-const calculateUnitsInStock = unitsInStock => unitsInStock === null || unitsInStock === undefined ? Infinity : unitsInStock
+const calculateUnitsInStock = unitsInStock => unitsInStock === null || unitsInStock === undefined ? Infinity : unitsInStock;
 
 export default function(state = initialStatus, action) {
   switch (action.type) {
@@ -25,7 +25,7 @@ export default function(state = initialStatus, action) {
         items: action.payload.map(e => {
           return {
             ...e,
-            unitsInStock: calculateUnitsInStock(action.payload.unitsInStock)
+            unitsInStock: calculateUnitsInStock(e.unitsInStock)
           };
         })
       };

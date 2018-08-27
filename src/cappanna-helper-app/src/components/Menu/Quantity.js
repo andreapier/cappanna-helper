@@ -15,7 +15,11 @@ const Quantity = props => {
   return (
     <Grid>
       <ItemGrid xs={unitsInStock === 10 ? 6 : 12}>
-        <Select value={unitsInStock} onChange={e => props.setMenuDetailQuantity(props.dishId, e.target.value)} fullWidth>
+        <Select
+          value={unitsInStock}
+          onChange={e => props.setMenuDetailQuantity(props.dishId, e.target.value)}
+          fullWidth
+          disabled={!props.setMenuDetailQuantity}>
           <MenuItem value={Infinity}>Disponibile</MenuItem>
           <MenuItem value={10}>Quasi finito</MenuItem>
           <MenuItem value={0}>Terminato</MenuItem>
@@ -28,6 +32,7 @@ const Quantity = props => {
             value={props.unitsInStock}
             onChange={e => props.setMenuDetailQuantity(props.dishId, e.target.value)}
             fullWidth
+            disabled={!props.setMenuDetailQuantity}
           />
           </ItemGrid>
         : null}
@@ -38,7 +43,7 @@ const Quantity = props => {
 Quantity.propTypes = {
   dishId: PropTypes.number.isRequired,
   unitsInStock: PropTypes.number.isRequired,
-  setMenuDetailQuantity: PropTypes.func.isRequired
+  setMenuDetailQuantity: PropTypes.func
 };
 
 export default Quantity;

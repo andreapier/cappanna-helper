@@ -7,9 +7,7 @@ namespace CappannaHelper.Api.Persistence.Modelling
     {
         public int Id { get; set; }
         public DateTime OpenTimestamp { get; set; }
-        public int CreatedById { get; set; }
-        public ApplicationUser CreatedBy { get; set; }
-        public DateTime CreationTimestamp { get; set; }
         public string Description { get; set; }
+        public int OrderCounter { get; set; }
     }
 }

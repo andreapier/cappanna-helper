@@ -27,9 +27,7 @@ const mapStateToProps = state => {
     shouldLoad: !state.selectedOrder.loading && !state.selectedOrder.loaded,
     dishList: state.selectedOrder.item
       ? state.selectedOrder.item.details.map(e => {
-          const menuDetail = state.menuDetails.items.find(
-            d => d.id === e.itemId
-          );
+          const menuDetail = state.menuDetails.items.find(d => d.id === e.itemId);
 
           return {
             ...menuDetail,

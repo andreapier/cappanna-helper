@@ -6,7 +6,7 @@ namespace CappannaHelper.Api.Services.Extensions
     {
         public static IServiceCollection AddChServices(this IServiceCollection services)
         {
-            return services.AddSingleton<IShiftManager, ShiftManager>();
+            return services.AddScoped<IShiftManager, ShiftManager>();
         }
     }
 }

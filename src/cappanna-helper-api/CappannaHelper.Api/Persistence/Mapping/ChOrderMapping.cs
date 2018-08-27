@@ -21,10 +21,11 @@ namespace CappannaHelper.Api.Persistence.Mapping
             entityBuilder.Property(o => o.CreationTimestamp).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
             entityBuilder.Property(o => o.Status).IsRequired().HasDefaultValue(1);
             entityBuilder.Property(o => o.ShiftId).IsRequired();
+            entityBuilder.Property(o => o.Notes).HasMaxLength(-1);
+            entityBuilder.Property(o => o.ShiftCounter).IsRequired();
             entityBuilder.HasOne(o => o.Shift).WithMany().HasForeignKey(o => o.CreatedById).IsRequired();
             entityBuilder.HasMany(o => o.Details).WithOne().HasForeignKey(d => d.OrderId).IsRequired();
             entityBuilder.HasOne(o => o.CreatedBy).WithMany().HasForeignKey(o => o.CreatedById).IsRequired();
-            entityBuilder.Property(o => o.Notes).HasMaxLength(-1);
             entityBuilder.HasMany(o => o.Operations).WithOne().HasForeignKey(d => d.OrderId).IsRequired();
 
             entityBuilder.HasIndex(o => o.CreationTimestamp);

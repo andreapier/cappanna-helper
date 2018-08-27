@@ -11,7 +11,12 @@ class MenuTable extends Component {
   }
 
   render() {
-    return <Menu dishList={this.props.dishList} setMenuDetailQuantity={this.props.setMenuDetailQuantity} />;
+    return (
+      <Menu
+        dishList={this.props.dishList}
+        setMenuDetailQuantity={this.props.isAdmin ? this.props.setMenuDetailQuantity : undefined}
+      />
+    );
   }
 
   componentWillUnmount() {
@@ -25,7 +30,8 @@ const mapStateToProps = state => {
   return {
     shouldLoad: !state.menuDetails.loading && !state.menuDetails.loaded,
     loaded: state.menuDetails.loaded,
-    dishList: state.menuDetails.items
+    dishList: state.menuDetails.items,
+    isAdmin: state.user.roles.some(r => r === "admin")
   };
 };
 

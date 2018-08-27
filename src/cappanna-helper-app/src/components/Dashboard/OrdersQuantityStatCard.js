@@ -8,7 +8,6 @@ const OrdersQuantityStatCard = props => {
     icon={LibraryBooks}
     title="N° Ordini"
     description={props.ordersQuantity}
-    statLink={{ text: "Dettagli", href: "/order" }}
   />);
 };
 

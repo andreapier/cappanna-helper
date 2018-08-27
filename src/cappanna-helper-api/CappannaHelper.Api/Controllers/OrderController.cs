@@ -35,14 +35,14 @@ namespace CappannaHelper.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var limit = DateTime.Now.AddHours(-12);
             List<ChOrder> result;
 
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
+                var currentShift = await _shiftManager.GetOrCreateCurrentAsync();
                 result = await _context.Orders
                     .Include(o => o.CreatedBy)
-                    //.Where(o => o.CreationTimestamp >= limit)
+                    .Where(o => o.ShiftId == currentShift.Id)
                     .OrderByDescending(o => o.CreationTimestamp)
                     .ToListAsync();
 
@@ -114,9 +114,12 @@ namespace CappannaHelper.Api.Controllers
                 {
                     var creationOperationId = (int)OperationTypes.Creation;
                     var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                    var shift = await _shiftManager.GetOrCreateCurrentAsync();
+                    var shiftCounter = await _shiftManager.GetNextCounterAsync();
 
                     order.Operations = new List<ChOrderOperation>();
-                    order.Operations.Add(new ChOrderOperation {
+                    order.Operations.Add(new ChOrderOperation
+                    {
                         OperationTimestamp = DateTime.Now,
                         TypeId = creationOperationId,
                         UserId = userId
@@ -124,6 +127,8 @@ namespace CappannaHelper.Api.Controllers
 
                     order.CreatedById = userId;
                     order.Status = creationOperationId;
+                    order.ShiftId = shift.Id;
+                    order.ShiftCounter = shiftCounter;
 
                     var dbOrder = await _context.Orders.AddAsync(order);
                     await _context.SaveChangesAsync();
@@ -202,6 +207,8 @@ namespace CappannaHelper.Api.Controllers
                 try
                 {
                     var operationId = (int) OperationTypes.Edit;
+                    var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                    var shift = _shiftManager.GetOrCreateCurrentAsync();
 
                     var dbOrder = await _context.Orders
                         .Include(o => o.Operations)
@@ -213,6 +220,13 @@ namespace CappannaHelper.Api.Controllers
                         transaction.Rollback();
 
                         return BadRequest("Impossibile modificare un ordine stampato");
+                    }
+
+                    if (dbOrder.ShiftId != shift.Id)
+                    {
+                        transaction.Rollback();
+
+                        return BadRequest("Impossibile modificare un ordine creato in un altro turno");
                     }
 
                     dbOrder.ChTable = order.ChTable;
@@ -253,7 +267,7 @@ namespace CappannaHelper.Api.Controllers
                     {
                         OperationTimestamp = DateTime.Now,
                         TypeId = operationId,
-                        UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                        UserId = userId
                     });
 
                     await _context.SaveChangesAsync();

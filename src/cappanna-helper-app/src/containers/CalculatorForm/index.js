@@ -60,23 +60,23 @@ class Calculator extends Component {
           </ItemGrid>
           <ItemGrid xs={12} md={6}>
             <TextFieldMui
+              name="perPersonAmount"
+              fullWidth
+              label="Da pagare a persona"
+              type="number"
+              readOnly
+              value={this.props.perPersonAmount}
+              normalize={this.formatAmount}
+            />
+          </ItemGrid>
+          <ItemGrid xs={12} md={6}>
+            <TextFieldMui
               name="chChange"
               fullWidth
               label="Resto"
               type="number"
               readOnly
               value={this.props.chChange}
-              normalize={this.formatAmount}
-            />
-          </ItemGrid>
-          <ItemGrid xs={12} md={6}>
-            <TextFieldMui
-              name="perPersonAmount"
-              fullWidth
-              label="A persona"
-              type="number"
-              readOnly
-              value={this.props.perPersonAmount}
               normalize={this.formatAmount}
             />
           </ItemGrid>

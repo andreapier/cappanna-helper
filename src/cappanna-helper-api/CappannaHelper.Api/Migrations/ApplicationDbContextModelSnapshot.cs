@@ -150,6 +150,8 @@ namespace CappannaHelper.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(2);
 
+                    b.Property<int>("ShiftCounter");
+
                     b.Property<int>("ShiftId");
 
                     b.Property<int>("Status")
@@ -262,17 +264,13 @@ namespace CappannaHelper.Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CreatedById");
-
-                    b.Property<DateTime>("CreationTimestamp");
-
                     b.Property<string>("Description");
 
                     b.Property<DateTime>("OpenTimestamp");
 
-                    b.HasKey("Id");
+                    b.Property<int>("OrderCounter");
 
-                    b.HasIndex("CreatedById");
+                    b.HasKey("Id");
 
                     b.ToTable("Shifts");
                 });
@@ -389,14 +387,6 @@ namespace CappannaHelper.Api.Migrations
                     b.HasOne("CappannaHelper.Api.Persistence.Modelling.ChOrder")
                         .WithMany("Details")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("CappannaHelper.Api.Persistence.Modelling.Shift", b =>
-                {
-                    b.HasOne("CappannaHelper.Api.Identity.DataModel.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

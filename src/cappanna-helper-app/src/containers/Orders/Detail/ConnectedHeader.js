@@ -6,7 +6,15 @@ import history from "./../../../history";
 
 class ConnectedHeader extends Component {
   render() {
-    return <Header {...this.props} />;
+    return (
+      <Header
+        order={this.props.order}
+        editOrder={this.props.editOrder}
+        goToCalc={this.props.goToCalc}
+        printRequested={this.props.isAdmin ? this.props.printRequested : undefined}
+        deleteOrder={this.props.isAdmin ? this.props.deleteOrder : undefined}
+      />
+    );
   }
 }
 
@@ -20,7 +28,8 @@ const mapStateToProps = state => {
       seats: 0,
       status: 0,
       details: []
-    }
+    },
+    isAdmin: state.user.roles.some(r => r === "admin")
   };
 
   if (state.selectedOrder.item) {
