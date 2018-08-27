@@ -142,7 +142,11 @@ class Api {
   }
 
   editMenuDetail(detail) {
-    return patch(MENU_DETAIL, detail);
+    const serverDetail = {
+      ...detail,
+      unitsInStock: detail.unitsInStock === Infinity ? null : detail.unitsInStock
+    }
+    return patch(MENU_DETAIL, serverDetail);
   }
 
   createOrder(order) {

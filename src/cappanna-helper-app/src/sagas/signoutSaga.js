@@ -2,9 +2,9 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "api/";
 import {
   signoutCompleted,
-  signalApiError,
   loadingChanged,
-  disconnectSignalR
+  disconnectSignalR,
+  notifyError
 } from "actions";
 import { SIGNOUT_REQUESTED } from "actions/types";
 import localforage from "localforage";
@@ -25,7 +25,8 @@ function* signout(action) {
     const api = new Api();
     yield call(api.signout);
   } catch (e) {
-    yield put(signalApiError(e));
+    console.error(e);
+    yield put(notifyError(e.message));
   }
 
   yield put(signoutCompleted());

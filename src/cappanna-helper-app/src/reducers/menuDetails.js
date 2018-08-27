@@ -36,7 +36,10 @@ export default function(state = initialStatus, action) {
           ...state,
           items: state.items.map(e => {
             if (e.id === action.payload.id) {
-              return action.payload;
+              return {
+                ...action.payload,
+                unitsInStock: action.payload.unitsInStock || Infinity
+              };
             }
   
             return e;
