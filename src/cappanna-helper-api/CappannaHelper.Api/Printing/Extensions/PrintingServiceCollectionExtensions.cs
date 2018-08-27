@@ -8,29 +8,30 @@ namespace CappannaHelper.Api.Printing.Extensions
 {
     public static class PrintingServiceCollectionExtensions
     {
-        public static void AddPrinting(this IServiceCollection services)
+        public static IServiceCollection AddPrinting(this IServiceCollection services)
         {
-            services.AddSingleton<IPrinterDocumentBuilderFactory, PrinterDocumentBuilderFactory>();
-            services.AddSingleton<IPrinterResolver>(c => {
-                var printerOptions = c.GetService<IOptions<PrintingConfiguration>>();
+            return services
+                .AddSingleton<IPrinterDocumentBuilderFactory, PrinterDocumentBuilderFactory>()
+                .AddSingleton<IPrinterResolver>(c => {
+                    var printerOptions = c.GetService<IOptions<PrintingConfiguration>>();
 
-                return new RegistryPrinterResolver(printerOptions.Value.PrinterName);
-            });
-            services.AddSingleton<UsbChannel>();
-            services.AddSingleton<FileChannel>();
-            services.AddSingleton<IChannel>(c =>
-            {
-                var printerOptions = c.GetService<IOptions<PrintingConfiguration>>();
-
-                if (printerOptions.Value.ChannelType == "File")
+                    return new RegistryPrinterResolver(printerOptions.Value.PrinterName);
+                })
+                .AddSingleton<UsbChannel>()
+                .AddSingleton<FileChannel>()
+                .AddSingleton<IChannel>(c =>
                 {
-                    return c.GetService<FileChannel>();
-                }
+                    var printerOptions = c.GetService<IOptions<PrintingConfiguration>>();
+
+                    if (printerOptions.Value.ChannelType == "File")
+                    {
+                        return c.GetService<FileChannel>();
+                    }
                 
-                return c.GetService<UsbChannel>();
-            });
-            services.AddSingleton<IPrinter, Printer>();
-            services.AddSingleton<IPrintService, PrintService>();
+                    return c.GetService<UsbChannel>();
+                })
+                .AddSingleton<IPrinter, Printer>()
+                .AddSingleton<IPrintService, PrintService>();
         }
     }
 }

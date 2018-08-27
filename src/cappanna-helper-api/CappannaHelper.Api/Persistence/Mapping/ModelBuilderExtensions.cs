@@ -48,5 +48,12 @@ namespace CappannaHelper.Api.Persistence.Mapping
             mapping.Build();
             return builder;
         }
+
+        public static ModelBuilder MapShift(this ModelBuilder builder)
+        {
+            var mapping = new ShiftMapping(builder);
+            mapping.Build();
+            return builder;
+        }
     }
 }

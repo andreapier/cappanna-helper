@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CappannaHelper.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180730083811_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20180827163326_All")]
+    partial class All
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,6 +152,8 @@ namespace CappannaHelper.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(2);
 
+                    b.Property<int>("ShiftId");
+
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(1);
@@ -161,6 +163,8 @@ namespace CappannaHelper.Api.Migrations
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("CreationTimestamp");
+
+                    b.HasIndex("ShiftId");
 
                     b.HasIndex("Status");
 
@@ -255,6 +259,26 @@ namespace CappannaHelper.Api.Migrations
                     b.ToTable("OrderDetails");
                 });
 
+            modelBuilder.Entity("CappannaHelper.Api.Persistence.Modelling.Shift", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CreatedById");
+
+                    b.Property<DateTime>("CreationTimestamp");
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("OpenTimestamp");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("Shifts");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -332,6 +356,11 @@ namespace CappannaHelper.Api.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CappannaHelper.Api.Persistence.Modelling.Shift", "Shift")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CappannaHelper.Api.Persistence.Modelling.ChOrderOperation", b =>
@@ -362,6 +391,14 @@ namespace CappannaHelper.Api.Migrations
                     b.HasOne("CappannaHelper.Api.Persistence.Modelling.ChOrder")
                         .WithMany("Details")
                         .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CappannaHelper.Api.Persistence.Modelling.Shift", b =>
+                {
+                    b.HasOne("CappannaHelper.Api.Identity.DataModel.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

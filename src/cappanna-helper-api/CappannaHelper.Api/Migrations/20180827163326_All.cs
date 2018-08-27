@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CappannaHelper.Api.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class All : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -122,25 +122,21 @@ namespace CappannaHelper.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ChOrders",
+                name: "Shifts",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ChTable = table.Column<string>(maxLength: 50, nullable: false),
-                    Seats = table.Column<int>(nullable: false, defaultValue: 2)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    OpenTimestamp = table.Column<DateTime>(nullable: false),
                     CreatedById = table.Column<int>(nullable: false),
-                    CreationTimestamp = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    Status = table.Column<int>(nullable: false, defaultValue: 1)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Notes = table.Column<string>(maxLength: -1, nullable: true)
+                    CreationTimestamp = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChOrders", x => x.Id);
+                    table.PrimaryKey("PK_Shifts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ChOrders_Users_CreatedById",
+                        name: "FK_Shifts_Users_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -207,6 +203,39 @@ namespace CappannaHelper.Api.Migrations
                         name: "FK_UserTokens_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ChOrders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ChTable = table.Column<string>(maxLength: 50, nullable: false),
+                    Seats = table.Column<int>(nullable: false, defaultValue: 2)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CreatedById = table.Column<int>(nullable: false),
+                    CreationTimestamp = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    Status = table.Column<int>(nullable: false, defaultValue: 1)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Notes = table.Column<string>(maxLength: -1, nullable: true),
+                    ShiftId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChOrders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ChOrders_Users_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChOrders_Shifts_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "Shifts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -305,6 +334,11 @@ namespace CappannaHelper.Api.Migrations
                 column: "CreationTimestamp");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ChOrders_ShiftId",
+                table: "ChOrders",
+                column: "ShiftId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ChOrders_Status",
                 table: "ChOrders",
                 column: "Status");
@@ -329,6 +363,11 @@ namespace CappannaHelper.Api.Migrations
                 table: "Roles",
                 column: "NormalizedName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shifts_CreatedById",
+                table: "Shifts",
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserLogins_UserId",
@@ -386,6 +425,9 @@ namespace CappannaHelper.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "Roles");
+
+            migrationBuilder.DropTable(
+                name: "Shifts");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -16,6 +16,8 @@ namespace CappannaHelper.Api.Persistence.Modelling
         public int Status { get; set; }
         public string Notes { get; set; }
         public IList<ChOrderOperation> Operations { get; set; }
+        public int ShiftId { get; set; }
+        public Shift Shift { get; set; }
 
         public ChOrder()
         {

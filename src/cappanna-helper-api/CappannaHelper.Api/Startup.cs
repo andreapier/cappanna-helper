@@ -4,6 +4,7 @@ using CappannaHelper.Api.Identity.Extensions;
 using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Printing;
 using CappannaHelper.Api.Printing.Extensions;
+using CappannaHelper.Api.Services.Extensions;
 using CappannaHelper.Api.Setup.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -107,8 +108,11 @@ namespace CappannaHelper.Api
                 .AddJsonProtocol();
 
             services.Configure<PrintingConfiguration>(_configuration.GetSection("Printing"));
-            services.AddPrinting();
-            services.AddSetup();
+
+            services
+                .AddPrinting()
+                .AddSetup()
+                .AddChServices();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

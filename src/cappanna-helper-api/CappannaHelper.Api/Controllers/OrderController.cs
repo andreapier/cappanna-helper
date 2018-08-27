@@ -2,6 +2,7 @@ using CappannaHelper.Api.Hubs;
 using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Persistence.Modelling;
 using CappannaHelper.Api.Printing;
+using CappannaHelper.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -21,12 +22,14 @@ namespace CappannaHelper.Api.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IPrintService _printService;
         private readonly IHubContext<OrderHub> _hub;
+        private readonly IShiftManager _shiftManager;
 
-        public OrderController(ApplicationDbContext context, IPrintService printService, IHubContext<OrderHub> hub)
+        public OrderController(ApplicationDbContext context, IPrintService printService, IHubContext<OrderHub> hub, IShiftManager shiftManager)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _printService = printService ?? throw new ArgumentNullException(nameof(printService));
             _hub = hub ?? throw new ArgumentNullException(nameof(hub));
+            _shiftManager = shiftManager ?? throw new ArgumentNullException(nameof(shiftManager));
         }
 
         [HttpGet]
@@ -99,7 +102,7 @@ namespace CappannaHelper.Api.Controllers
 
             if (order.Details == null || order.Details.Count <= 0)
             {
-                return BadRequest("Impossibile modificare un ordine senza specificare i piatti");
+                return BadRequest("Impossibile inviare un ordine senza specificare i piatti");
             }
 
             ChOrder result;
