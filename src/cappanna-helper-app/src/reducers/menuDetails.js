@@ -11,6 +11,8 @@ const initialStatus = {
   items: []
 };
 
+const calculateUnitsInStock = unitsInStock => unitsInStock === null || unitsInStock === undefined ? Infinity : unitsInStock
+
 export default function(state = initialStatus, action) {
   switch (action.type) {
     case LOAD_MENU_DETAILS_REQUESTED:
@@ -23,7 +25,7 @@ export default function(state = initialStatus, action) {
         items: action.payload.map(e => {
           return {
             ...e,
-            unitsInStock: e.unitsInStock || Infinity
+            unitsInStock: calculateUnitsInStock(action.payload.unitsInStock)
           };
         })
       };
@@ -38,7 +40,7 @@ export default function(state = initialStatus, action) {
             if (e.id === action.payload.id) {
               return {
                 ...action.payload,
-                unitsInStock: action.payload.unitsInStock || Infinity
+                unitsInStock: calculateUnitsInStock(action.payload.unitsInStock)
               };
             }
   

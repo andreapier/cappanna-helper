@@ -8,18 +8,21 @@ import SlideUpTransition from "components/Snackbar/SlideUpTransition";
 
 const NotificationSnackbar = props => {
   let icon = ErrorIcon;
+  let color = "danger";
 
   if (props.type === 'info') {
     icon = Info;
+    color = "info";
   } else if (props.type === 'warning') {
     icon = Warning;
+    color = "warning";
   }
   
   return (
     <Snackbar
       onClose={props.handleClose}
       message={props.message}
-      color="danger"
+      color={color}
       icon={icon}
       autoHideDuration={5000}
       transition={SlideUpTransition}

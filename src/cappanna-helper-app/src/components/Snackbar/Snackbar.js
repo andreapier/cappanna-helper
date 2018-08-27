@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import cx from "classnames";
 import snackbarContentStyle from "variables/styles/snackbarContentStyle";
 
-function CustomSnackbar({ ...props }) {
+const CustomSnackbar = props => {
   const {
     classes,
     message,
@@ -23,6 +23,7 @@ function CustomSnackbar({ ...props }) {
   const messageClasses = cx({
     [classes.iconMessage]: icon !== undefined
   });
+
   if (close !== undefined) {
     action = [
       <IconButton
@@ -36,6 +37,7 @@ function CustomSnackbar({ ...props }) {
       </IconButton>
     ];
   }
+  
   return (
     <Snackbar
       anchorOrigin={{

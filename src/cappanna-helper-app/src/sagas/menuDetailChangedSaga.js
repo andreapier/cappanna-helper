@@ -13,10 +13,10 @@ function* menuDetailChanged(action) {
     if (item.quantity > 0) {
       yield put(notifyWarning(`Il piatto '${action.payload.name}' non è più disponibile. Rimuoverlo dall'ordine.`));
     } else {
-      yield put(notifyInfo(`Il piatto '${action.payload.name}' non è più disponibile.`));
+      yield put(notifyWarning(`Il piatto '${action.payload.name}' non è più disponibile.`));
     }
   } else if (action.payload.unitsInStock <= 10) {
-    yield put(notifyInfo(`Rimangono solo ${action.payload.unitsInStock} porzioni del piatto '${action.payload.name}'.`));
+    yield put(notifyWarning(`Rimangono solo ${action.payload.unitsInStock} porzioni del piatto '${action.payload.name}'.`));
   }
 }
 
