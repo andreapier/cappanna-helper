@@ -22,7 +22,7 @@ const Quantity = props => {
         </Select>
       </ItemGrid>
       {unitsInStock === 10 ?
-        <ItemGrid xs={5} >
+        <ItemGrid xs={6} >
           <TextField
             label="N° piatti rimasti"
             value={props.unitsInStock}

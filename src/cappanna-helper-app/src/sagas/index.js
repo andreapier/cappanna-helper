@@ -11,7 +11,7 @@ import loadSelectedOrderSaga from "./loadSelectedOrderSaga";
 import printOrderSaga from "./printOrderSaga";
 import loadMenuDetailsSaga from "./loadMenuDetailsSaga";
 import editMenuDetailSaga from "./editMenuDetailSaga";
-import menuDetailChangedSaga from "./menuDetailChangedSaga";
+import menuDetailsChangedSaga from "./menuDetailsChangedSaga";
 import signalApiErrorSaga from "./signalApiErrorSaga";
 import loadNotificationsListSaga from "./loadNotificationsListSaga";
 
@@ -29,7 +29,7 @@ function* rootSaga() {
     printOrderSaga(),
     loadMenuDetailsSaga(),
     editMenuDetailSaga(),
-    menuDetailChangedSaga(),
+    menuDetailsChangedSaga(),
     signalApiErrorSaga(),
     loadNotificationsListSaga()
   ]);

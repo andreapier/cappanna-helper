@@ -2,7 +2,7 @@ import {
   LOAD_MENU_DETAILS_REQUESTED,
   LOAD_MENU_DETAILS_COMPLETED,
   INVALIDATE_MENU_DETAILS,
-  MENU_DETAIL_CHANGED
+  MENU_DETAILS_CHANGED
 } from "actions/types";
 
 const initialStatus = {
@@ -33,14 +33,16 @@ export default function(state = initialStatus, action) {
     case INVALIDATE_MENU_DETAILS:
       return initialStatus;
 
-      case MENU_DETAIL_CHANGED:
+      case MENU_DETAILS_CHANGED:
         return {
           ...state,
           items: state.items.map(e => {
-            if (e.id === action.payload.id) {
+            const item = action.payload.find(i => e.id === i.id);
+
+            if (item) {
               return {
-                ...action.payload,
-                unitsInStock: calculateUnitsInStock(action.payload.unitsInStock)
+                ...item,
+                unitsInStock: calculateUnitsInStock(item.unitsInStock)
               };
             }
   

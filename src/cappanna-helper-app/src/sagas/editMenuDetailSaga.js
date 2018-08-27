@@ -10,7 +10,7 @@ function* editMenuDetail(action) {
 
     const menuDetail = {
       ...state.menuDetails.items.find(e => e.id === action.payload.dishId),
-      unitsInStock: action.payload.unitsInStock
+      unitsInStock: action.payload.unitsInStock < 0 ? 0 : action.payload.unitsInStock
     };
     const api = new Api();
     yield call(api.editMenuDetail, menuDetail);

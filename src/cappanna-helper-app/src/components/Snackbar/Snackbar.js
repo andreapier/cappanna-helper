@@ -23,6 +23,7 @@ const CustomSnackbar = props => {
   const messageClasses = cx({
     [classes.iconMessage]: icon !== undefined
   });
+  const actualMessage = message.indexOf("\n") <= -1 ? message : message.split("\n");
 
   if (close !== undefined) {
     action = [
@@ -53,7 +54,10 @@ const CustomSnackbar = props => {
       message={
         <div>
           {icon !== undefined ? <props.icon className={classes.icon} /> : null}
-          <span className={messageClasses}>{message}</span>
+          {actualMessage.map
+            ? actualMessage.map((e, i) => <p className={messageClasses} key={i}>{e}</p>)
+            : <span className={messageClasses}>{actualMessage}</span>
+          }
         </div>
       }
       action={action}

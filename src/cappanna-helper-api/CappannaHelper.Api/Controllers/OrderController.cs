@@ -103,6 +103,7 @@ namespace CappannaHelper.Api.Controllers
             }
 
             ChOrder result;
+            var limitedStockMenuDetails = new List<MenuDetail>();
 
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
@@ -111,16 +112,13 @@ namespace CappannaHelper.Api.Controllers
                     var creationOperationId = (int)OperationTypes.Creation;
                     var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-                    if (!order.Operations.Any(o => o.Type.Id == creationOperationId || o.TypeId == creationOperationId))
-                    {
-                        order.Operations.Add(new ChOrderOperation
-                        {
-                            OperationTimestamp = DateTime.Now,
-                            TypeId = creationOperationId,
-                            UserId = userId
-                        });
-                    }
-                    
+                    order.Operations = new List<ChOrderOperation>();
+                    order.Operations.Add(new ChOrderOperation {
+                        OperationTimestamp = DateTime.Now,
+                        TypeId = creationOperationId,
+                        UserId = userId
+                    });
+
                     order.CreatedById = userId;
                     order.Status = creationOperationId;
 
@@ -133,6 +131,21 @@ namespace CappannaHelper.Api.Controllers
                         .Include(o => o.Details)
                         .ThenInclude(d => d.Item)
                         .SingleAsync(o => o.Id == dbOrder.Entity.Id);
+
+                    foreach(var detail in result.Details)
+                    {
+                        if (detail.Item.UnitsInStock.HasValue)
+                        {
+                            detail.Item.UnitsInStock -= order.Details.Single(d => d.ItemId == detail.ItemId).Quantity;
+                            limitedStockMenuDetails.Add(detail.Item);
+                        }
+                    }
+
+                    if (limitedStockMenuDetails.Any())
+                    {
+                        await _context.SaveChangesAsync();
+                    }
+
                     transaction.Commit();
                 }
                 catch (Exception e)
@@ -142,6 +155,11 @@ namespace CappannaHelper.Api.Controllers
             }
 
             await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_CREATED, result);
+
+            if (limitedStockMenuDetails.Any())
+            {
+                await _hub.Clients.All.SendAsync(MenuHub.NOTIFY_MENU_DETAILS_CHANGED, limitedStockMenuDetails);
+            }
 
             return Ok(result);
         }

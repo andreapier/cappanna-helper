@@ -28,6 +28,7 @@ const Footer = props => {
         <Button
           variant="raised"
           onClick={() => props.confirmOrder(props.order)}
+          disabled={!props.canConfirm}
         >
           <ActionDone />
           Conferma
@@ -41,7 +42,8 @@ Footer.propTypes = {
   goBack: PropTypes.func.isRequired,
   confirmOrder: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  order: PropTypes.object.isRequired
+  order: PropTypes.object.isRequired,
+  canConfirm: PropTypes.bool.isRequired
 };
 
 export default withStyles(styles)(Footer);

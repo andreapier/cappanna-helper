@@ -15,7 +15,8 @@ class ConnectedMenuItemDetail extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.detail.quantity !== nextProps.detail.quantity) {
+    if (this.props.detail.quantity !== nextProps.detail.quantity
+      || this.props.detail.item.unitsInStock !== nextProps.detail.item.unitsInStock) {
       return true;
     }
 

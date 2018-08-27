@@ -17,8 +17,8 @@
   },
   "dependencies": {
     "@aspnet/signalr": "^1.0.3",
-    "@material-ui/core": "^1.4.3",
-    "@material-ui/icons": "^2.0.1",
+    "@material-ui/core": "^1.5.1",
+    "@material-ui/icons": "^2.0.3",
     "chartist": "^0.11.0",
     "localforage": "^1.7.2",
     "react": "^16.4.2",

@@ -92,7 +92,7 @@ namespace CappannaHelper.Api.Controllers
                 }
             }
 
-            await _hub.Clients.All.SendAsync(MenuHub.NOTIFY_MENU_DETAIL_CHANGED, result);
+            await _hub.Clients.All.SendAsync(MenuHub.NOTIFY_MENU_DETAILS_CHANGED, new List<MenuDetail>{ result });
 
             return Ok(result);
         }
