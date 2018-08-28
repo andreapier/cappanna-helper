@@ -15,9 +15,7 @@ import { getDefaultRoute } from "routes/helpers";
 const loadUserDataFromStorage = () =>
   localforage
     .getItem("userData")
-    .catch(err =>
-      console.error("Error loading user data from local storage", err)
-    );
+    .catch(err => console.error("Error loading user data from local storage", err));
 
 function* loadUserData() {
   try {
@@ -30,6 +28,7 @@ function* loadUserData() {
 
     const api = new Api();
     api.setToken(userData.token);
+    
     yield put(signinCompleted(userData));
     yield put(connectSignalR(userData));
     yield put(loadMenuDetailsRequested());

@@ -1,41 +1,46 @@
 import React, { Component } from "react";
-import Grid from "components/Grid";
-import ItemGrid from "components/Grid/ItemGrid";
-import dailySalesChart from "variables/charts";
-import OrdersQuantityStatCard from "components/Dashboard/OrdersQuantityStatCard";
-import OrdersIncomeStartCard from "components/Dashboard/OrdersIncomeStartCard";
-import OrdersChartCard from "components/Dashboard/OrdersChartCard";
-import WaitersStatCard from "components/Dashboard/WaitersStatCard";
+import { connect } from "react-redux";
+import { loadDashboardDataRequested, invalidateDashboardData } from "actions";
+import Dashboard from "components/Dashboard";
 
-const waitersStatData = [{
-  waiter: 'marco',
-  count: 10,
-  amount: 100
-}, {
-  waiter: 'truku',
-  count: 15,
-  amount: 150
-}];
+class ConnectedDashboard extends Component {
+  componentDidMount() {
+    if (this.props.shouldLoad) {
+      this.props.loadDashboardDataRequested();
+    }
+  }
 
-class Dashboard extends Component {
   render() {
     return (
-      <Grid>
-        <ItemGrid xs={12} sm={6}>
-          <OrdersQuantityStatCard ordersQuantity={49} />
-        </ItemGrid>
-        <ItemGrid xs={12} sm={6}>
-          <OrdersIncomeStartCard income={5000} />
-        </ItemGrid>
-        <ItemGrid xs={12} md={6}>
-          <OrdersChartCard data={dailySalesChart.data} />
-        </ItemGrid>
-        <ItemGrid xs={12} md={6}>
-          <WaitersStatCard data={waitersStatData} />
-        </ItemGrid>
-      </Grid>
-    );
+      <Dashboard
+        ordersQuantity={this.props.ordersQuantity}
+        income={this.props.income}
+        dailySales={this.props.dailySales}
+        waitersStats={this.props.waitersStats}
+      />);
+  }
+
+  componentWillUnmount() {
+    if (this.props.loaded) {
+      this.props.invalidateDashboardData();
+    }
   }
 }
 
-export default Dashboard;
+const mapStateToProps = state => {
+  return {
+    ordersQuantity: state.dashboard.data.ordersQuantity,
+    income: state.dashboard.data.income,
+    dailySales: state.dashboard.data.dailySales,
+    waitersStats: state.dashboard.data.waitersStats
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    loadDashboardDataRequested: () => dispatch(loadDashboardDataRequested()),
+    invalidateDashboardData: () => dispatch(invalidateDashboardData())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectedDashboard);

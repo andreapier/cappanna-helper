@@ -124,8 +124,7 @@ namespace CappannaHelper.Api
                 .UseAuthentication()
                 .UseSignalR(routes =>
                 {
-                    routes.MapHub<MenuHub>("/hubs/menu");
-                    routes.MapHub<OrderHub>("/hubs/order");
+                    routes.MapHub<ChHub>("/hubs/ch");
                 })
 				.Use(async (context, next) =>
 				 {

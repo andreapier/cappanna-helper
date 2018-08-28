@@ -6,7 +6,6 @@ import {
 } from "actions";
 import { LOAD_ORDERS_LIST_REQUESTED } from "actions/types";
 import Api from "api";
-import history from "./../history";
 
 function* loadOrdersList(action) {
   try {
@@ -14,7 +13,6 @@ function* loadOrdersList(action) {
     const api = new Api();
     const orders = yield call(api.getOrders);
     yield put(loadOrdersListCompleted(orders));
-    history.push("/order");
   } catch (e) {
     yield put(signalApiError(e));
   } finally {

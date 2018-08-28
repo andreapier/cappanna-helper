@@ -19,6 +19,7 @@ namespace CappannaHelper.Api.Persistence.Mapping
             entityBuilder.Property(o => o.OpenTimestamp).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
             entityBuilder.Property(o => o.Description).HasMaxLength(100).IsRequired();
             entityBuilder.Property(o => o.OrderCounter).IsRequired().HasDefaultValue(0);
+            entityBuilder.Property(o => o.Income).IsRequired().HasDefaultValue(0);
 
             entityBuilder.HasIndex(o => o.OpenTimestamp);
         }

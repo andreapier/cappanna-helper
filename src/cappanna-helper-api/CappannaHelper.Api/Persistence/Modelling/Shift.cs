@@ -9,5 +9,6 @@ namespace CappannaHelper.Api.Persistence.Modelling
         public DateTime OpenTimestamp { get; set; }
         public string Description { get; set; }
         public int OrderCounter { get; set; }
+        public decimal Income { get; set; }
     }
 }

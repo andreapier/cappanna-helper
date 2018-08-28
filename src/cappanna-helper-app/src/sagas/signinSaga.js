@@ -22,7 +22,11 @@ function* signin(action) {
     yield put(loadingChanged(true, "Login in corso..."));
     const api = new Api();
     const userData = yield call(api.signin, action.payload);
-    yield saveUserData(userData);
+
+    if (action.payload.rememberMe) {
+      yield saveUserData(userData);
+    }
+    
     yield put(loadingChanged(true, "Caricamento menu..."));
     yield put(loadMenuDetailsRequested());
     yield put(signinCompleted(userData));

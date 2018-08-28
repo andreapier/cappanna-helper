@@ -14,6 +14,7 @@ import editMenuDetailSaga from "./editMenuDetailSaga";
 import menuDetailsChangedSaga from "./menuDetailsChangedSaga";
 import signalApiErrorSaga from "./signalApiErrorSaga";
 import loadNotificationsListSaga from "./loadNotificationsListSaga";
+import loadDashboardDataSaga from "./loadDashboardDataSaga";
 
 function* rootSaga() {
   yield all([
@@ -31,7 +32,8 @@ function* rootSaga() {
     editMenuDetailSaga(),
     menuDetailsChangedSaga(),
     signalApiErrorSaga(),
-    loadNotificationsListSaga()
+    loadNotificationsListSaga(),
+    loadDashboardDataSaga()
   ]);
 }
 

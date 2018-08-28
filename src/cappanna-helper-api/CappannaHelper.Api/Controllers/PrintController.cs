@@ -2,6 +2,7 @@
 using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Persistence.Modelling;
 using CappannaHelper.Api.Printing;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -11,15 +12,15 @@ using System.Threading.Tasks;
 
 namespace CappannaHelper.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
-    [ApiController]
     public class PrintController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly IPrintService _printService;
-        private readonly IHubContext<OrderHub> _hub;
+        private readonly IHubContext<ChHub> _hub;
 
-        public PrintController(ApplicationDbContext context, IPrintService printService, IHubContext<OrderHub> hub)
+        public PrintController(ApplicationDbContext context, IPrintService printService, IHubContext<ChHub> hub)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _printService = printService ?? throw new ArgumentNullException(nameof(printService));
@@ -27,6 +28,7 @@ namespace CappannaHelper.Api.Controllers
         }
 
         [Route("order/{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetPrint(int id)
         {
             ChOrder result;
@@ -72,7 +74,7 @@ namespace CappannaHelper.Api.Controllers
                     throw new Exception("Impossibile salvare l'operazione di stampa dell'ordine", e);
                 }
 
-				await _hub.Clients.All.SendAsync(OrderHub.NOTIFY_ORDER_PRINTED, result);
+				await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_PRINTED, result);
 
                 return Ok(result);
             }

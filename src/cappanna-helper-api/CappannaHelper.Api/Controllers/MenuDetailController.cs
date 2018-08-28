@@ -17,9 +17,9 @@ namespace CappannaHelper.Api.Controllers
     public class MenuDetailController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IHubContext<MenuHub> _hub;
+        private readonly IHubContext<ChHub> _hub;
 
-        public MenuDetailController(ApplicationDbContext context, IHubContext<MenuHub> hub)
+        public MenuDetailController(ApplicationDbContext context, IHubContext<ChHub> hub)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _hub = hub ?? throw new ArgumentNullException(nameof(hub));
@@ -41,6 +41,7 @@ namespace CappannaHelper.Api.Controllers
         }
 
         [HttpPatch]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Patch([FromBody] MenuDetail detail)
         {
             if (detail == null)
@@ -74,17 +75,14 @@ namespace CappannaHelper.Api.Controllers
             {
                 try
                 {
-                    var dbDetail = await _context.MenuDetails.SingleOrDefaultAsync(o => o.Id == detail.Id);
+                    result = await _context.MenuDetails.SingleOrDefaultAsync(o => o.Id == detail.Id);
 
-                    dbDetail.Group = detail.Group;
-                    dbDetail.Name = detail.Name;
-                    dbDetail.Price = detail.Price;
-                    dbDetail.UnitsInStock = detail.UnitsInStock;
+                    result.Group = detail.Group;
+                    result.Name = detail.Name;
+                    result.Price = detail.Price;
+                    result.UnitsInStock = detail.UnitsInStock;
 
                     await _context.SaveChangesAsync();
-
-                    result = dbDetail;
-
                     transaction.Commit();
                 } catch (Exception e)
                 {
@@ -92,7 +90,7 @@ namespace CappannaHelper.Api.Controllers
                 }
             }
 
-            await _hub.Clients.All.SendAsync(MenuHub.NOTIFY_MENU_DETAILS_CHANGED, new List<MenuDetail>{ result });
+            await _hub.Clients.All.SendAsync(ChHub.NOTIFY_MENU_DETAILS_CHANGED, new List<MenuDetail>{ result });
 
             return Ok(result);
         }

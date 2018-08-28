@@ -5,7 +5,8 @@ import {
   ORDER,
   MENU_DETAIL,
   PRINT,
-  NOTIFICATION
+  NOTIFICATION,
+  DASHBOARD
 } from "api/endpoints";
 import "whatwg-fetch";
 
@@ -175,6 +176,10 @@ class Api {
 
   getNotifications() {
     return get(NOTIFICATION);
+  }
+
+  getDashboardData() {
+    return get(DASHBOARD);
   }
 }
 

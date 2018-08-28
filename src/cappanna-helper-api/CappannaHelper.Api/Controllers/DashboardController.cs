@@ -1,5 +1,7 @@
 ﻿using CappannaHelper.Api.Hubs;
+using CappannaHelper.Api.Models;
 using CappannaHelper.Api.Persistence;
+using CappannaHelper.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -14,19 +16,25 @@ namespace CappannaHelper.Api.Controllers
     public class DashboardController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IHubContext<DashboardHub> _hub;
+        private readonly IHubContext<ChHub> _hub;
+        private readonly IShiftManager _shiftManager;
 
-        public DashboardController(ApplicationDbContext context, IHubContext<DashboardHub> hub)
+        public DashboardController(ApplicationDbContext context, IHubContext<ChHub> hub, IShiftManager shiftManager)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _hub = hub ?? throw new ArgumentNullException(nameof(hub));
+            _shiftManager = shiftManager ?? throw new ArgumentNullException(nameof(shiftManager));
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var menuDetails = await _context.MenuDetails.ToListAsync();
-            return Ok(menuDetails);
+            var shift = await _shiftManager.GetOrCreateCurrentAsync();
+            var result = new DashboardModel {
+                OrdersQuantity = shift.OrderCounter
+            };
+
+            return Ok(result);
         }
     }
 }

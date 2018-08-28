@@ -45,7 +45,11 @@ import {
   LOAD_NOTIFICATIONS_LIST_REQUESTED,
   LOAD_NOTIFICATIONS_LIST_COMPLETED,
   INVALIDATE_NOTIFICATIONS_LIST,
-  CALCULATE
+  CALCULATE,
+  LOAD_DASHBOARD_DATA_REQUESTED,
+  LOAD_DASHBOARD_DATA_COMPLETED,
+  INVALIDATE_DASHBOARD_DATA,
+  DASHBOARD_DATA
 } from "actions/types";
 
 const signalRAction = {
@@ -255,4 +259,20 @@ export function invalidateNotificationsList() {
 
 export function calculate({ amount, paidAmount, seats }) {
   return { type: CALCULATE, payload: { amount, paidAmount, seats } };
+}
+
+export function loadDashboardDataRequested() {
+  return { type: LOAD_DASHBOARD_DATA_REQUESTED };
+}
+
+export function loadDashboardDataCompleted(notifications) {
+  return { type: LOAD_DASHBOARD_DATA_COMPLETED, payload: notifications };
+}
+
+export function invalidateDashboardData() {
+  return { type: INVALIDATE_DASHBOARD_DATA };
+}
+
+export function dashboardDataChanged(dashboardData) {
+  return { type: DASHBOARD_DATA_CHANGED, payload: dashboardData };
 }

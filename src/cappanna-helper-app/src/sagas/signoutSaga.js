@@ -22,6 +22,7 @@ function* signout(action) {
     yield put(loadingChanged(true, "Logout in corso..."));
     yield deleteUserData();
     yield put(disconnectSignalR());
+    
     const api = new Api();
     yield call(api.signout);
   } catch (e) {

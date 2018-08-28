@@ -1,51 +1,54 @@
 import { HubConnectionBuilder, JsonHubProtocol } from "@aspnet/signalr";
-import { orderCreated, orderChanged, orderPrinted, orderDeleted, menuDetailsChanged } from "actions";
+import {
+  orderCreated,
+  orderChanged,
+  orderPrinted,
+  orderDeleted,
+  menuDetailsChanged,
+  dashboardDataChanged
+} from "actions";
 
 class SignalR {
-  constructor(dispatch) {
+  constructor(dispatch, userData) {
     this.dispatch = dispatch;
-    this.menuHubConnection = new HubConnectionBuilder()
-      .withUrl("/hubs/menu")
-      .withHubProtocol(new JsonHubProtocol())
-      .build();
-    this.orderHubConnection = new HubConnectionBuilder()
-      .withUrl("/hubs/order")
+    this.chHubConnection = new HubConnectionBuilder()
+      .withUrl("/hubs/ch")
       .withHubProtocol(new JsonHubProtocol())
       .build();
 
-    this.orderHubConnection.on("NotifyOrderCreated", data =>
+    this.chHubConnection.on("NotifyOrderCreated", data =>
       this.dispatch(orderCreated(data))
     );
     
-    this.orderHubConnection.on("NotifyOrderChanged", data =>
+    this.chHubConnection.on("NotifyOrderChanged", data =>
       this.dispatch(orderChanged(data))
     );
     
-    this.orderHubConnection.on("NotifyOrderPrinted", data =>
+    this.chHubConnection.on("NotifyOrderPrinted", data =>
       this.dispatch(orderPrinted(data))
     );
     
-    this.orderHubConnection.on("NotifyOrderDeleted", data =>
+    this.chHubConnection.on("NotifyOrderDeleted", data =>
       this.dispatch(orderDeleted(data))
     );
     
-    this.menuHubConnection.on("NotifyMenuDetailsChanged", data =>
+    this.chHubConnection.on("NotifyMenuDetailsChanged", data =>
       this.dispatch(menuDetailsChanged(data))
     );
+
+    if (userData.roles.some(r => r === "admin")) {
+      this.chHubConnection.on("NotifyDashboardDataChanged", data =>
+        this.dispatch(dashboardDataChanged(data))
+      );
+    }
   }
 
   connect() {
-    return Promise.all([
-      this.menuHubConnection.start().catch(err => console.error(err)),
-      this.orderHubConnection.start().catch(err => console.error(err))
-    ]);
+    return this.chHubConnection.start().catch(err => console.error(err));
   }
 
   disconnect() {
-    return Promise.all([
-      this.menuHubConnection.stop().catch(err => console.error(err)),
-      this.orderHubConnection.stop().catch(err => console.error(err))
-    ]);
+    return this.chHubConnection.stop().catch(err => console.error(err));
   }
 }
 
