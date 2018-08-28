@@ -6,7 +6,7 @@ import {
 } from "actions/types";
 import dailySales from "variables/charts";
 
-const waitersStatData = [{
+const waitersStats = [{
   waiter: 'marco',
   count: 10,
   amount: 100
@@ -16,11 +16,11 @@ const waitersStatData = [{
   amount: 150
 }];
 
-export const initialStatus = {
+export const initialState = {
   loading: false,
   loaded: false,
   data: {
-    waitersStatData,
+    waitersStats,
     ordersQuantity: 0,
     income: 0,
     dailySales: dailySales.data
@@ -41,11 +41,15 @@ export default function(state = initialState, action) {
       return {
         loading: false,
         loaded: true,
-        data: action.payload
+        data: {
+          ...state.data,
+          income: action.payload.income,
+          ordersQuantity: action.payload.ordersQuantity
+        }
       };
 
     case INVALIDATE_DASHBOARD_DATA:
-      return initialStatus;
+      return initialState;
 
     default:
       return state;

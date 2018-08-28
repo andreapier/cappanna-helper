@@ -29,6 +29,8 @@ class ConnectedDashboard extends Component {
 
 const mapStateToProps = state => {
   return {
+    shouldLoad: !state.dashboard.loading && !state.orders.loaded,
+    loaded: state.dashboard.loaded,
     ordersQuantity: state.dashboard.data.ordersQuantity,
     income: state.dashboard.data.income,
     dailySales: state.dashboard.data.dailySales,

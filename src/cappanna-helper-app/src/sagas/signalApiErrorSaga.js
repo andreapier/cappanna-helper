@@ -7,7 +7,8 @@ function* signalApiError(action) {
   if (error.response && error.response.status === 401) {
     yield put(signoutRequested());
   } else {
-    console.error(error);
+    console.error('API ERROR', error);
+    console.log(error);
     yield put(notifyError(error.message));
   }
 }

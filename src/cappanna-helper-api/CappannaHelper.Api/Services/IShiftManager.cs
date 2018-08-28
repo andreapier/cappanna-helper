@@ -7,6 +7,5 @@ namespace CappannaHelper.Api.Services
     public interface IShiftManager
     {
         Task<Shift> GetOrCreateCurrentAsync();
-        Task<int> GetNextCounterAsync();
     }
 }

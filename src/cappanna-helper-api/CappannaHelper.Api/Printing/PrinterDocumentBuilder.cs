@@ -99,14 +99,14 @@ namespace CappannaHelper.Api.Printing
         {
             if (order.Details.Any(d => d.Item.IsDish))
             {
-                SetHeader("CUCINA", order.Id, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp);
+                SetHeader("CUCINA", order.ShiftId, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp);
                 SetDishes(order.Details);
                 SetNotes(order.Notes);
                 
                 AddPage();
             }
             
-            SetHeader("BAR", order.Id, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp);
+            SetHeader("BAR", order.ShiftId, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp);
             SetDishes(order.Details);
 
             if (order.Details.Any(d => d.Item.IsDrink))

@@ -31,9 +31,10 @@ class SignalR {
     this.chHubConnection.on("NotifyOrderDeleted", data =>
       this.dispatch(orderDeleted(data))
     );
-    
-    this.chHubConnection.on("NotifyMenuDetailsChanged", data =>
-      this.dispatch(menuDetailsChanged(data))
+
+    this.chHubConnection.on("NotifyMenuDetailsChanged", data => {
+      this.dispatch(menuDetailsChanged(data));
+    }
     );
 
     if (userData.roles.some(r => r === "admin")) {

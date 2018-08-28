@@ -37,11 +37,11 @@ function* menuDetailsChanged(action) {
   const messages = action.payload.map(e => buildMessage(e, state));
 
   if (messages.every(e => e.type === "info")) {
-    yield put(notifyInfo(messages.join("\n")));
+    yield put(notifyInfo(messages.map(m => m.message).join("\n")));
   } else if (messages.every(e => e.type === "warning")) {
-    yield put(notifyWarning(messages.join("\n")));
+    yield put(notifyWarning(messages.map(m => m.message).join("\n")));
   } else if (messages.every(e => e.type === "error")) {
-    yield put(notifyError(messages.join("\n")));
+    yield put(notifyError(messages.map(m => m.message).join("\n")));
   }
 }
 

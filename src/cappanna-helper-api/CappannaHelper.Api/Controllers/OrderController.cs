@@ -115,7 +115,7 @@ namespace CappannaHelper.Api.Controllers
                     var creationOperationId = (int)OperationTypes.Creation;
                     var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
                     var shift = await _shiftManager.GetOrCreateCurrentAsync();
-                    var shiftCounter = await _shiftManager.GetNextCounterAsync();
+                    shift.OrderCounter++;
 
                     order.Operations = new List<ChOrderOperation>();
                     order.Operations.Add(new ChOrderOperation
@@ -128,8 +128,7 @@ namespace CappannaHelper.Api.Controllers
                     order.CreatedById = userId;
                     order.Status = creationOperationId;
                     order.ShiftId = shift.Id;
-                    order.ShiftCounter = shiftCounter;
-                    shift.Income += order.Details.Sum(d => d.Quantity * d.Item.Price);
+                    order.ShiftCounter = shift.OrderCounter;
 
                     var dbOrder = await _context.Orders.AddAsync(order);
                     await _context.SaveChangesAsync();
@@ -140,20 +139,19 @@ namespace CappannaHelper.Api.Controllers
                         .Include(o => o.Details)
                         .ThenInclude(d => d.Item)
                         .SingleAsync(o => o.Id == dbOrder.Entity.Id);
+                    
+                    shift.Income += result.Details.Sum(d => d.Quantity * d.Item.Price);
 
                     foreach(var detail in result.Details)
                     {
                         if (detail.Item.UnitsInStock.HasValue)
                         {
-                            detail.Item.UnitsInStock -= order.Details.Single(d => d.ItemId == detail.ItemId).Quantity;
+                            detail.Item.UnitsInStock -= result.Details.Single(d => d.ItemId == detail.ItemId).Quantity;
                             limitedStockMenuDetails.Add(detail.Item);
                         }
                     }
 
-                    if (limitedStockMenuDetails.Any())
-                    {
-                        await _context.SaveChangesAsync();
-                    }
+                    await _context.SaveChangesAsync();
 
                     transaction.Commit();
                 }
@@ -214,7 +212,8 @@ namespace CappannaHelper.Api.Controllers
                     var dbOrder = await _context.Orders
                         .Include(o => o.Operations)
                         .Include(o => o.Details)
-                        .FirstOrDefaultAsync(o => o.Id == order.Id);
+                        .ThenInclude(d => d.Item)
+                        .SingleOrDefaultAsync(o => o.Id == order.Id);
 
                     if (dbOrder.Operations.Any(o => o.TypeId == (int)OperationTypes.Print))
                     {
@@ -296,7 +295,6 @@ namespace CappannaHelper.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int id)
         {
             ChOrder result;
@@ -327,7 +325,8 @@ namespace CappannaHelper.Api.Controllers
                     return BadRequest("Impossibile eliminare un ordine stampato");
                 }
 
-                if(result.ShiftId != shift.Id) {
+                if(result.ShiftId != shift.Id)
+                {
                     transaction.Rollback();
 
                     return BadRequest("Impossibile eliminare un ordine creato in un altro turno");

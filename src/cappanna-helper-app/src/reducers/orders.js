@@ -8,14 +8,14 @@ import {
   TOGGLE_ORDERS_LIST_FILTER
 } from "actions/types";
 
-const initialStatus = {
+const initialState = {
   loading: false,
   loaded: false,
   items: [],
   isFiltered: false
 };
 
-export default function(state = initialStatus, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case LOAD_ORDERS_LIST_REQUESTED:
       return {
@@ -34,7 +34,7 @@ export default function(state = initialStatus, action) {
       };
 
     case INVALIDATE_ORDERS_LIST:
-      return initialStatus;
+      return initialState;
 
     case ORDER_CREATED:
       return { ...state, items: [action.payload].concat(state.items) };

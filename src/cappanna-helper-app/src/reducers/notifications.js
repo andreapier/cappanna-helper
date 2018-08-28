@@ -7,13 +7,13 @@ import {
   ORDER_PRINTED
 } from "actions/types";
 
-const initialStatus = {
+const initialState = {
   loading: false,
   loaded: false,
   items: []
 };
 
-export default function(state = initialStatus, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case LOAD_NOTIFICATIONS_LIST_REQUESTED:
       return {
@@ -30,7 +30,7 @@ export default function(state = initialStatus, action) {
       };
 
     case INVALIDATE_NOTIFICATIONS_LIST:
-      return initialStatus;
+      return initialState;
 
     case ORDER_CREATED:
       return {

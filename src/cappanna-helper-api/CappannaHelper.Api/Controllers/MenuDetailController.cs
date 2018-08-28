@@ -41,7 +41,6 @@ namespace CappannaHelper.Api.Controllers
         }
 
         [HttpPatch]
-        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Patch([FromBody] MenuDetail detail)
         {
             if (detail == null)

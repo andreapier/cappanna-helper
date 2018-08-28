@@ -28,7 +28,6 @@ namespace CappannaHelper.Api.Controllers
         }
 
         [Route("order/{id}")]
-        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetPrint(int id)
         {
             ChOrder result;

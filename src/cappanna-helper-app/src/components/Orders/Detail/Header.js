@@ -39,7 +39,10 @@ const Header = props => {
           <Delete />
         </IconButton>
         : null}
-        <IconButton onClick={() => props.goToCalc(props.order)}>
+        <IconButton
+          onClick={() => props.goToCalc(props.order)}
+          style={{ marginRight: "10px" }}
+        >
           <Apps />
         </IconButton>
         {props.printRequested ?

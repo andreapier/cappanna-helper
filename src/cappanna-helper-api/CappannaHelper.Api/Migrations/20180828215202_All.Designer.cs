@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CappannaHelper.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180827203446_All")]
+    [Migration("20180828215202_All")]
     partial class All
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -268,6 +268,8 @@ namespace CappannaHelper.Api.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<decimal>("Income");
+
                     b.Property<DateTime>("OpenTimestamp");
 
                     b.Property<int>("OrderCounter");
@@ -357,7 +359,7 @@ namespace CappannaHelper.Api.Migrations
 
                     b.HasOne("CappannaHelper.Api.Persistence.Modelling.Shift", "Shift")
                         .WithMany()
-                        .HasForeignKey("CreatedById")
+                        .HasForeignKey("ShiftId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

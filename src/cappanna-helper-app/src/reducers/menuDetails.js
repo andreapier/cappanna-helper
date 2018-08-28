@@ -5,7 +5,7 @@ import {
   MENU_DETAILS_CHANGED
 } from "actions/types";
 
-const initialStatus = {
+const initialState = {
   loading: false,
   loaded: false,
   items: []
@@ -13,7 +13,7 @@ const initialStatus = {
 
 const calculateUnitsInStock = unitsInStock => unitsInStock === null || unitsInStock === undefined ? Infinity : unitsInStock;
 
-export default function(state = initialStatus, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case LOAD_MENU_DETAILS_REQUESTED:
       return { ...state, loading: true, loaded: false };
@@ -31,7 +31,7 @@ export default function(state = initialStatus, action) {
       };
 
     case INVALIDATE_MENU_DETAILS:
-      return initialStatus;
+      return initialState;
 
       case MENU_DETAILS_CHANGED:
         return {

@@ -30,7 +30,7 @@ Dashboard.propTypes = {
   ordersQuantity: PropTypes.number.isRequired,
   income: PropTypes.number.isRequired,
   dailySales: PropTypes.object.isRequired,
-  waitersStats: PropTypes.object.isRequired
+  waitersStats: PropTypes.array.isRequired
 };
 
 export default Dashboard;

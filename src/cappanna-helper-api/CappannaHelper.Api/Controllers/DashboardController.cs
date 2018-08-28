@@ -30,8 +30,10 @@ namespace CappannaHelper.Api.Controllers
         public async Task<IActionResult> Get()
         {
             var shift = await _shiftManager.GetOrCreateCurrentAsync();
-            var result = new DashboardModel {
-                OrdersQuantity = shift.OrderCounter
+            var result = new DashboardModel
+            {
+                OrdersQuantity = shift.OrderCounter,
+                Income = shift.Income
             };
 
             return Ok(result);

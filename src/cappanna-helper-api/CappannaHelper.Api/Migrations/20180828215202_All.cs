@@ -59,7 +59,8 @@ namespace CappannaHelper.Api.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     OpenTimestamp = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    OrderCounter = table.Column<int>(nullable: false)
+                    OrderCounter = table.Column<int>(nullable: false),
+                    Income = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -163,8 +164,8 @@ namespace CappannaHelper.Api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ChOrders_Shifts_CreatedById",
-                        column: x => x.CreatedById,
+                        name: "FK_ChOrders_Shifts_ShiftId",
+                        column: x => x.ShiftId,
                         principalTable: "Shifts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);

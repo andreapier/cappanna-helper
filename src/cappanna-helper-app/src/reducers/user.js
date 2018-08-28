@@ -1,13 +1,13 @@
 import { SIGNIN_COMPLETED, SIGNOUT_COMPLETED } from "actions/types";
 
-const initialStatus = {
+const initialState = {
   userId: null,
   username: null,
   token: null,
   roles: []
 };
 
-export default function(state = initialStatus, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case SIGNIN_COMPLETED:
       return {
@@ -18,7 +18,7 @@ export default function(state = initialStatus, action) {
       };
 
     case SIGNOUT_COMPLETED:
-      return initialStatus;
+      return initialState;
 
     default:
       return state;

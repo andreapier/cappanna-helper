@@ -266,6 +266,8 @@ namespace CappannaHelper.Api.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<decimal>("Income");
+
                     b.Property<DateTime>("OpenTimestamp");
 
                     b.Property<int>("OrderCounter");
@@ -355,7 +357,7 @@ namespace CappannaHelper.Api.Migrations
 
                     b.HasOne("CappannaHelper.Api.Persistence.Modelling.Shift", "Shift")
                         .WithMany()
-                        .HasForeignKey("CreatedById")
+                        .HasForeignKey("ShiftId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

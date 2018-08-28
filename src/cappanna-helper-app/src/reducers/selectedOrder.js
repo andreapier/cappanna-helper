@@ -5,13 +5,13 @@ import {
   ORDER_CHANGED, ORDER_PRINTED
 } from "actions/types";
 
-const initialStatus = {
+const initialState = {
   loading: false,
   loaded: false,
   item: null
 };
 
-export default function(state = initialStatus, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case LOAD_SELECTED_ORDER_REQUESTED:
       return { ...state, loading: true, loaded: false, item: null };
@@ -20,7 +20,7 @@ export default function(state = initialStatus, action) {
       return { loading: false, loaded: true, item: action.payload };
 
     case INVALIDATE_SELECTED_ORDER:
-      return initialStatus;
+      return initialState;
 
     case ORDER_CHANGED:
     case ORDER_PRINTED:
