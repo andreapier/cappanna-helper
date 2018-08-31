@@ -13,7 +13,7 @@ const buildMessage = (menuDetail, state) => {
   if (menuDetail.unitsInStock === 0) {
     const item = state.newOrderDetails.find(e => e.itemId === menuDetail.id);
 
-    if (item.quantity > 0) {
+    if (state.newOrderHeader.id > 0 && item.quantity > 0) {
       return {
         type: "warning",
         message: `Il piatto '${menuDetail.name}' non è più disponibile. Rimuoverlo dall'ordine.`

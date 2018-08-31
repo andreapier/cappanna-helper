@@ -24,10 +24,12 @@ export default function(state = initialState, action) {
     case INCREMENT_ORDER_DETAIL_QUANTITY:
       const detailIndex = state.findIndex(e => e.itemId === action.payload.itemId);
       const detail = state.find(e => e.itemId === action.payload.itemId);
+      const quantity = detail.quantity + action.payload.quantity;
 
       state[detailIndex] = {
         ...detail,
-        quantity: detail.quantity + action.payload.quantity
+        quantity
+        subtotal: quantity * action.payload.price
       };
 
       return [...state];

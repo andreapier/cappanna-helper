@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Main from "components/Orders/New/Confirmation/Main";
+import buildFilledOrderDetails from "utils/buildFilledOrderDetails";
 
 class ConnectedMain extends Component {
   render() {
@@ -10,21 +11,7 @@ class ConnectedMain extends Component {
 
 const mapStateToProps = state => {
   return {
-    details: state.newOrderDetails.filter(e => e.quantity > 0).map(e => {
-      const menuDetail = state.menuDetails.items.find(d => d.id === e.itemId);
-
-      return {
-        id: e.id,
-        quantity: e.quantity,
-        totalPrice: menuDetail.price * e.quantity,
-        item: {
-          id: e.itemId,
-          name: menuDetail.name,
-          price: menuDetail.price,
-          group: menuDetail.group
-        }
-      };
-    })
+    details: buildFilledOrderDetails(state.newOrderDetails.filter(e => e.quantity > 0), state.menuDetails.items)
   };
 };
 

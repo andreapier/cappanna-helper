@@ -3,6 +3,7 @@ import Body from "components/Orders/Detail/Body";
 import { connect } from "react-redux";
 import { loadSelectedOrderRequested, invalidateSelectedOrder } from "actions";
 import { withRouter } from "react-router-dom";
+import buildFilledOrderDetails from "utils/buildFilledOrderDetails";
 
 class ConnectedBody extends Component {
   componentDidMount() {
@@ -26,15 +27,7 @@ const mapStateToProps = state => {
   return {
     shouldLoad: !state.selectedOrder.loading && !state.selectedOrder.loaded,
     dishList: state.selectedOrder.item
-      ? state.selectedOrder.item.details.map(e => {
-          const menuDetail = state.menuDetails.items.find(d => d.id === e.itemId);
-
-          return {
-            ...menuDetail,
-            quantity: e.quantity,
-            totalPrice: menuDetail.price * e.quantity
-          };
-        })
+      ? buildFilledOrderDetails(state.selectedOrder.item.details, state.menuDetails.items)
       : [],
     loaded: state.selectedOrder.loaded,
     notes: state.selectedOrder.item ? state.selectedOrder.item.notes || "" : ""

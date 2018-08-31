@@ -14,7 +14,7 @@ const Main = props => {
         e.item.name,
         formatAmount(e.item.price, false),
         e.quantity,
-        formatAmount(e.totalPrice, false)
+        formatAmount(e.subtotal, false)
       ])}
     />
   );
@@ -24,7 +24,7 @@ Main.propTypes = {
   details: PropTypes.arrayOf(
     PropTypes.shape({
       quantity: PropTypes.number.isRequired,
-      totalPrice: PropTypes.number.isRequired,
+      subtotal: PropTypes.number.isRequired,
       item: PropTypes.shape({
         name: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired
