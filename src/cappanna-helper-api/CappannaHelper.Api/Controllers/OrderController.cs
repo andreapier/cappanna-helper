@@ -253,7 +253,7 @@ namespace CappannaHelper.Api.Controllers
 
                     foreach (var detail in dbOrder.Details)
                     {
-                        if (!order.Details.Any(d => d.ItemId==detail.ItemId))
+                        if (!order.Details.Any(d => d.ItemId == detail.ItemId))
                         {
                             toBeRemoveDetails.Add(detail);
                         }
@@ -271,8 +271,6 @@ namespace CappannaHelper.Api.Controllers
                         UserId = userId
                     });
 
-                    shift.Income += dbOrder.Details.Sum(d => d.Quantity * d.Item.Price);
-
                     await _context.SaveChangesAsync();
 
                     result = await _context.Orders
@@ -280,6 +278,9 @@ namespace CappannaHelper.Api.Controllers
                         .Include(o => o.Details)
                         .ThenInclude(d => d.Item)
                         .SingleOrDefaultAsync(o => o.Id == order.Id);
+
+                    shift.Income += result.Details.Sum(d => d.Quantity * d.Item.Price);
+                    await _context.SaveChangesAsync();
 
                     transaction.Commit();
                 }

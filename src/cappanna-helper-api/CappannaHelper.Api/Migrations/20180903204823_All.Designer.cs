@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CappannaHelper.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180829120254_All")]
+    [Migration("20180903204823_All")]
     partial class All
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846");
+                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932");
 
             modelBuilder.Entity("CappannaHelper.Api.Identity.DataModel.ApplicationRole", b =>
                 {
