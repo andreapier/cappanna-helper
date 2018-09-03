@@ -77,6 +77,7 @@ namespace CappannaHelper.Api.Setup
         {
             await SetupAdminAsync(errors);
             await SetupWaiterAsync(errors);
+            await SetupDomeAsync(errors);
         }
 
         private async Task SetupAdminAsync(List<string> errors)
@@ -85,6 +86,13 @@ namespace CappannaHelper.Api.Setup
             await SetupRoleClaimAsync(ApplicationRole.APPLICATION_ROLE_ADMIN, ClaimTypes.Name, ApplicationRoleClaim.CLAIM_VALUE_ADMIN, errors);
             await SetupUserAsync("admin", "admin@cappannahelper.it", "Admin", "Admin", "admin12!", errors);
             await SetupUserRoleAsync("admin", ApplicationRole.APPLICATION_ROLE_ADMIN, errors);
+        }
+
+        private async Task SetupDomeAsync(List<string> errors) {
+            await SetupRoleAsync(ApplicationRole.APPLICATION_ROLE_DOME, errors);
+            await SetupRoleClaimAsync(ApplicationRole.APPLICATION_ROLE_DOME, ClaimTypes.Name, ApplicationRoleClaim.CLAIM_VALUE_DOME, errors);
+            await SetupUserAsync("dome", "dome@cappannahelper.it", "Dome", "Dome", "dome123!", errors);
+            await SetupUserRoleAsync("dome", ApplicationRole.APPLICATION_ROLE_DOME, errors);
         }
 
         private async Task SetupWaiterAsync(List<string> errors)
