@@ -1,31 +1,3 @@
-.ct-chart {
-  color: #1e2a9c;
-}
-
-.ct-series {
-  fill: transparent;
-}
-
-.ct-series-a {
-  stroke: #1e2a9c;
-}
-
-.ct-series-b {
-  stroke: #f80809;
-}
-
-.ct-series-c {
-  stroke: green;
-}
-
-.ct-series-d {
-  stroke: grey;
-}
-
-.ct-series-e {
-  stroke: black;
-}
-
 body {
   margin: 0;
   font-family: Roboto, Helvetica, Arial, sans-serif;
