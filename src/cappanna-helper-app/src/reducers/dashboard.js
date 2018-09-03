@@ -4,7 +4,6 @@ import {
   INVALIDATE_DASHBOARD_DATA,
   DASHBOARD_DATA_CHANGED
 } from "actions/types";
-import dailySales from "variables/charts";
 
 const waitersStats = [{
   waiter: 'marco',
@@ -22,8 +21,7 @@ export const initialState = {
   data: {
     waitersStats,
     ordersQuantity: 0,
-    income: 0,
-    dailySales: dailySales.data
+    income: 0
   }
 };
 

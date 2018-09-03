@@ -31,24 +31,27 @@ export default function(state = initialState, action) {
       };
 
     case INVALIDATE_MENU_DETAILS:
-      return initialState;
+      return {
+        ...initialState,
+        items: state.items
+      };
 
-      case MENU_DETAILS_CHANGED:
-        return {
-          ...state,
-          items: state.items.map(e => {
-            const item = action.payload.find(i => e.id === i.id);
+    case MENU_DETAILS_CHANGED:
+      return {
+        ...state,
+        items: state.items.map(e => {
+          const item = action.payload.find(i => e.id === i.id);
 
-            if (item) {
-              return {
-                ...item,
-                unitsInStock: calculateUnitsInStock(item.unitsInStock)
-              };
-            }
-  
-            return e;
-          })
-        };
+          if (item) {
+            return {
+              ...item,
+              unitsInStock: calculateUnitsInStock(item.unitsInStock)
+            };
+          }
+
+          return e;
+        })
+      };
 
     default:
       return state;

@@ -28,7 +28,7 @@ export default function(state = initialState, action) {
 
       state[detailIndex] = {
         ...detail,
-        quantity
+        quantity,
         subtotal: quantity * action.payload.price
       };
 

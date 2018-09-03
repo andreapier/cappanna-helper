@@ -5,11 +5,11 @@ import { formatAmount } from "utils/string";
 import TextField from "@material-ui/core/TextField";
 
 const buildTableRow = dish => [
-  dish.group,
-  dish.name,
-  formatAmount(dish.price, false),
+  dish.item.group,
+  dish.item.name,
+  formatAmount(dish.item.price, false),
   dish.quantity,
-  formatAmount(dish.totalPrice, false)
+  formatAmount(dish.subtotal, false)
 ];
 
 const Body = props => {
@@ -32,7 +32,15 @@ const Body = props => {
 };
 
 Body.propTypes = {
-  dishList: PropTypes.array.isRequired,
+  dishList: PropTypes.arrayOf(PropTypes.shape({
+    subtotal: PropTypes.number.isRequired,
+    quantity: PropTypes.number.isRequired,
+    item: PropTypes.shape({
+      group: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired
+    })
+  })).isRequired,
   notes: PropTypes.string.isRequired
 };
 
