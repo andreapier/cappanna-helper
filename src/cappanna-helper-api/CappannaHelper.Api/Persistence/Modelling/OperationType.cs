@@ -10,6 +10,7 @@
     {
         Creation = 1,
         Edit = 2,
-        Print = 3
+        Print = 3,
+        Close = 4
     }
 }

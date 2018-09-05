@@ -357,6 +357,7 @@ namespace CappannaHelper.Api.Setup
             await SetupOperationTypeAsync(OperationTypes.Creation, "creation", errors);
             await SetupOperationTypeAsync(OperationTypes.Print, "print", errors);
             await SetupOperationTypeAsync(OperationTypes.Edit, "edit", errors);
+            await SetupOperationTypeAsync(OperationTypes.Close, "close", errors);
 
             try
             {

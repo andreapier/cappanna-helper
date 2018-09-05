@@ -1,4 +1,5 @@
 using CappannaHelper.Api.Hubs;
+using CappannaHelper.Api.Models;
 using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Persistence.Modelling;
 using CappannaHelper.Api.Printing;
@@ -348,6 +349,103 @@ namespace CappannaHelper.Api.Controllers
             }
 
             await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_DELETED, result);
+
+            return Ok(result);
+        }
+
+        [HttpPatch("{id}/close")]
+        public async Task<IActionResult> Close(int id)
+        {
+            ChOrder result;
+
+            using(var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                var operationId = (int) OperationTypes.Close;
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                var shift = await _shiftManager.GetOrCreateCurrentAsync();
+
+                result = await _context
+                    .Orders
+                    .Include(o => o.Operations)
+                    .Include(o => o.CreatedBy)
+                    .Include(o => o.Details)
+                    .ThenInclude(d => d.Item)
+                    .SingleOrDefaultAsync(o => o.Id == id);
+
+                if(result == null)
+                {
+                    return NotFound($"L'ordine con Id '{id}' non esiste");
+                }
+
+                if(!result.Operations.Any(o => o.TypeId == (int) OperationTypes.Print))
+                {
+                    transaction.Rollback();
+
+                    return BadRequest("Impossibile chiudere un ordine non stampato");
+                }
+
+                if(result.Operations.Any(o => o.TypeId == (int) OperationTypes.Close))
+                {
+                    transaction.Rollback();
+
+                    return BadRequest("Impossibile chiudere un ordine già chiuso");
+                }
+
+                if(result.ShiftId != shift.Id)
+                {
+                    transaction.Rollback();
+
+                    return BadRequest("Impossibile chiudere un ordine creato in un altro turno");
+                }
+
+                result.Operations.Add(new ChOrderOperation
+                {
+                    OperationTimestamp = DateTime.Now,
+                    TypeId = operationId,
+                    UserId = userId
+                });
+
+                await _context.SaveChangesAsync();
+                transaction.Commit();
+            }
+
+            await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_CLOSED, result);
+
+            return Ok(result);
+        }
+
+        [HttpGet("detail/aggregate")]
+        public async Task<IActionResult> GetOrdersDetailAggregates([FromQuery] IList<int> ordersId, [FromQuery] OrderDetailsAggregateTypes type)
+        {
+            if(ordersId == null)
+            {
+                return BadRequest("Lista ordini da elaborare non specificati");
+            }
+
+            List<OrderDetailsAggregateModel> result = null;
+
+            using(var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                result = await _context
+                    .OrderDetails
+                    .Where(d =>
+                        ordersId.Contains(d.OrderId)
+                        && (type == OrderDetailsAggregateTypes.ALL
+                        ? true
+                        : type == OrderDetailsAggregateTypes.FIRST_DISHES_ONLY
+                            ? d.Item.Group == MenuDetail.FIRST_DISH
+                            : (d.Item.Group == MenuDetail.FIRST_DISH || d.Item.Name == "Fritto calamari e gamberi")))
+                    .GroupBy(d => d.ItemId)
+                    .Select(g => new OrderDetailsAggregateModel
+                    {
+                        ItemId = g.Key,
+                        Name = g.First().Item.Name,
+                        Quantity = g.Sum(d => d.Quantity)
+                    })
+                    .ToListAsync();
+
+                transaction.Commit();
+            }
 
             return Ok(result);
         }
