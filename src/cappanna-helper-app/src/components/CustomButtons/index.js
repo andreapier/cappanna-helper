@@ -21,12 +21,14 @@ const RegularButton = props => {
     [classes.fullWidth]: fullWidth,
     [classes.disabled]: disabled
   });
+
   return (
     <Button {...rest} className={classes.button + " " + btnClasses}>
       {children}
     </Button>
   );
 };
+
 RegularButton.defaultProps = {
   color: "info"
 };

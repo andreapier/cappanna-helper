@@ -5,18 +5,16 @@ import { formatAmount } from "utils/string";
 import TextField from "@material-ui/core/TextField";
 
 const buildTableRow = dish => [
-  dish.item.group,
   dish.item.name,
   formatAmount(dish.item.price, false),
-  dish.quantity,
-  formatAmount(dish.subtotal, false)
+  dish.quantity
 ];
 
 const Body = props => {
   return (
     <div>
       <Table
-        tableHead={["Gruppo", "Cameriere", "Prezzo (€)", "Quantità", "Totale (€)"]}
+        tableHead={["Nome", "Prezzo (€)", "Quantità"]}
         tableData={props.dishList.map(buildTableRow)}
       />
       <TextField

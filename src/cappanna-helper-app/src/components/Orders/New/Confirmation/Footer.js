@@ -8,23 +8,19 @@ import Grid from "components/Grid";
 import ItemGrid from "components/Grid/ItemGrid";
 import { flex } from "variables/styles";
 
-const styles = {
-  root: {
-    ...flex.root,
-    justifyContent: "space-between"
-  }
-};
-
 const Footer = props => {
   return (
-    <Grid className={props.classes.root}>
-      <ItemGrid sx={12} md={6}>
-        <Button variant="raised" onClick={props.goBack}>
+    <Grid className={props.classes.root}  justify="space-between">
+      <ItemGrid>
+        <Button
+          variant="raised"
+          onClick={props.goBack}
+        >
           <Create />
           Modifica
         </Button>
       </ItemGrid>
-      <ItemGrid sx={12} md={6}>
+      <ItemGrid>
         <Button
           variant="raised"
           onClick={() => props.confirmOrder(props.order)}
@@ -46,4 +42,4 @@ Footer.propTypes = {
   canConfirm: PropTypes.bool.isRequired
 };
 
-export default withStyles(styles)(Footer);
+export default withStyles(flex)(Footer);

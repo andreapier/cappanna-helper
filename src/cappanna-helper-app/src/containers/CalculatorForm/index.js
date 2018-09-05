@@ -1,13 +1,22 @@
-import Button from "components/CustomButtons";
-import ItemGrid from "components/Grid/ItemGrid";
-import Grid from "components/Grid";
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { TextField } from "redux-form-material-ui";
 import { calculate } from "actions";
+import Button from "components/CustomButtons";
+import ItemGrid from "components/Grid/ItemGrid";
+import Grid from "components/Grid";
 import TextFieldMui from "@material-ui/core/TextField";
+import withStyles from "@material-ui/core/styles/withStyles";
 import { formatAmount } from "utils/string";
+
+const style = {
+  buttonContainer: {
+    paddingTop: "40px",
+    paddingBottom: "40px"
+  }
+};
 
 class Calculator extends Component {
   constructor(props) {
@@ -22,7 +31,7 @@ class Calculator extends Component {
   render() {
     return (
       <form onSubmit={this.props.handleSubmit(this.props.calculate)}>
-        <Grid justify="space-between">
+        <Grid>
           <ItemGrid xs={12} md={4}>
             <Field
               name="amount"
@@ -53,8 +62,8 @@ class Calculator extends Component {
               type="number"
             />
           </ItemGrid>
-          <ItemGrid xs={12}>
-            <Button type="submit" fullWidth color="info">
+          <ItemGrid xs={12} className={this.props.classes.buttonContainer}>
+            <Button type="submit" fullWidth>
               Calcola
             </Button>
           </ItemGrid>
@@ -86,6 +95,10 @@ class Calculator extends Component {
   }
 }
 
+Calculator.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => {
   return {
     initialValues: {
@@ -112,6 +125,6 @@ Calculator = reduxForm({
   form: "calculatorForm"
 })(Calculator);
 
-Calculator = connect(mapStateToProps, mapDispatchToProps)(Calculator)
+Calculator = connect(mapStateToProps, mapDispatchToProps)(withStyles(style)(Calculator))
 
 export default Calculator;

@@ -12,6 +12,9 @@ import withStyles from "@material-ui/core/styles/withStyles";
 const styles = {
   root: {
     flexGrow: 1
+  },
+  expansion: {
+    padding: "8px 2px"
   }
 };
 
@@ -23,7 +26,7 @@ class DishList extends Component {
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{this.props.title}</Typography>
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
+          <ExpansionPanelDetails className={this.props.classes.expansion}>
             <div>
               {this.props.details.map(i => (
                 <ConnectedMenuItemDetail

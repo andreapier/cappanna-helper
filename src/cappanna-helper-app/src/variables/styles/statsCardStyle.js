@@ -3,9 +3,7 @@ import {
   cardHeader,
   defaultFont,
   blueCardHeader,
-  cardActions,
-  grayColor,
-  primaryColor
+  grayColor
 } from "variables/styles";
 
 const statsCardStyle = {
@@ -39,37 +37,6 @@ const statsCardStyle = {
     margin: "0",
     ...defaultFont,
     fontSize: "1.625em"
-  },
-  cardTitleSmall: {
-    fontSize: "65%",
-    fontWeight: "400",
-    lineHeight: "1",
-    color: "#777"
-  },
-  cardActions: {
-    ...cardActions,
-    padding: "0!important"
-  },
-  cardStats: {
-    lineHeight: "22px",
-    color: grayColor,
-    fontSize: "12px",
-    display: "inline-block",
-    margin: "0!important"
-  },
-  cardStatsIcon: {
-    position: "relative",
-    top: "4px",
-    width: "16px",
-    height: "16px"
-  },
-  grayCardStatsIcon: {
-    color: grayColor
-  },
-  cardStatsLink: {
-    color: primaryColor,
-    textDecoration: "none",
-    ...defaultFont
   }
 };
 

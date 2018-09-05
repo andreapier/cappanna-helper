@@ -4,19 +4,25 @@ import PropTypes from "prop-types";
 import Table from "components/Table";
 import { formatAmount } from "utils/string";
 
-const styles = {};
+const styles = {
+  table: {
+    margin: "16px 0px"
+  }
+};
 
 const Main = props => {
   return (
-    <Table
-      tableHead={["Nome", "Prezzo (€)", "Qta", "Tot (€)"]}
-      tableData={props.details.map(e => [
-        e.item.name,
-        formatAmount(e.item.price, false),
-        e.quantity,
-        formatAmount(e.subtotal, false)
-      ])}
-    />
+    <div className={props.classes.table}>
+      <Table
+        tableHead={["Nome", "Prezzo (€)", "Qta", "Tot (€)"]}
+        tableData={props.details.map(e => [
+          e.item.name,
+          formatAmount(e.item.price, false),
+          e.quantity,
+          formatAmount(e.subtotal, false)
+        ])}
+      />
+    </div>
   );
 };
 

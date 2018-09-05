@@ -42,13 +42,14 @@ const tableStyle = theme => ({
   },
   tableCell: {
     ...defaultFont,
-    lineHeight: "1.42857143",
-    padding: "12px 8px",
-    verticalAlign: "middle"
+    padding: "6px 2px",
+    verticalAlign: "middle",
+    "&:last-child": {
+      paddingRight: "2px"
+    }
   },
   tableResponsive: {
     width: "100%",
-    marginTop: theme.spacing.unit * 3,
     overflowX: "auto"
   }
 });

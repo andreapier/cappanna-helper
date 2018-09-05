@@ -5,11 +5,13 @@ import StatsCard from "components/Cards/StatsCard";
 import { formatAmount } from "utils/string";
 
 const OrdersIncomeStartCard = props => {
-  return (<StatsCard
-    icon={EuroSymbol}
-    title="Incasso"
-    description={formatAmount(props.income, false)}
-  />);
+  return (
+    <StatsCard
+      icon={EuroSymbol}
+      title="Incasso"
+      description={formatAmount(props.income, false)}
+    />
+  );
 };
 
 OrdersIncomeStartCard.propTypes = {

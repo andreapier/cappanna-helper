@@ -1,37 +1,49 @@
 import React from "react";
+import PropTypes from "prop-types";
 import IconButton from "components/CustomButtons/IconButton";
 import ContentAdd from "@material-ui/icons/Add";
 import ContentRemove from "@material-ui/icons/Remove";
 import AmountFormat from "components/AmountFormat";
-import PropTypes from "prop-types";
+import withStyles from "@material-ui/core/styles/withStyles";
+import { flex } from "variables/styles";
 
-const containerStyle = {
+const flexProp = {
   display: "flex",
-  justifyContent: "space-between",
   alignItems: "center"
 };
 
-const innerContainerStyle = {
-  ...containerStyle,
-  justifyContent: "flex-end"
-};
-
-const innerItemStyle = {
-  minWidth: "50px",
-  textAlign: "center"
-};
-
-const innerItemStyle20px = {
-  ...innerItemStyle,
-  minWidth: "20px"
+const style = {
+  root: {
+    ...flex.root,
+    ...flexProp,
+    justifyContent: "space-between",
+    margin: "2px 0px",
+    fontSize: "0.875em"
+  },
+  end: {
+    ...flex.root,
+    ...flexProp,
+    justifyContent: "flex-end"
+  },
+  item55: {
+    ...flexProp,
+    minWidth: "55px",
+    textAlign: "center"
+  },
+  item17: {
+    ...flexProp,
+    textAlign: "center",
+    minWidth: "17px",
+    justifyContent: "center"
+  }
 };
 
 const MenuItemDetail = props => {
   return (
-    <div style={containerStyle}>
+    <div className={props.classes.root}>
       <div>{props.detail.item.name}</div>
-      <div style={innerContainerStyle}>
-        <div style={innerItemStyle}>
+      <div className={props.classes.end}>
+        <div className={props.classes.item55}>
           <AmountFormat amount={props.detail.item.price} />
         </div>
         <div>
@@ -43,12 +55,14 @@ const MenuItemDetail = props => {
                 props.detail.item.price
               )
             }
-            disabled={props.detail.item.unitsInStock - props.detail.quantity <= 0}
+            disabled={
+              props.detail.item.unitsInStock - props.detail.quantity <= 0
+            }
           >
             <ContentAdd />
           </IconButton>
         </div>
-        <div style={innerItemStyle20px}>{props.detail.quantity}</div>
+        <div className={props.classes.item17}>{props.detail.quantity}</div>
         <div>
           <IconButton
             onClick={() =>
@@ -82,4 +96,4 @@ MenuItemDetail.propTypes = {
   incrementOrderDetailQuantity: PropTypes.func.isRequired
 };
 
-export default MenuItemDetail;
+export default withStyles(style)(MenuItemDetail);
