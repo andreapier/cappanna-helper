@@ -398,6 +398,7 @@ namespace CappannaHelper.Api.Controllers
                     return BadRequest("Impossibile chiudere un ordine creato in un altro turno");
                 }
 
+                result.Status = operationId;
                 result.Operations.Add(new ChOrderOperation
                 {
                     OperationTimestamp = DateTime.Now,

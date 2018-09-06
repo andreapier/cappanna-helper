@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Header from "components/Orders/Detail/Header";
-import { printRequested, editOrder, deleteOrder, calculate } from "actions";
+import {
+  printRequested,
+  editOrder,
+  deleteOrder,
+  closeOrder,
+  calculate
+} from "actions";
 import history from "./../../../history";
 
 class ConnectedHeader extends Component {
@@ -11,8 +17,13 @@ class ConnectedHeader extends Component {
         order={this.props.order}
         editOrder={this.props.editOrder}
         goToCalc={this.props.goToCalc}
-        printRequested={this.props.isAdmin ? this.props.printRequested : undefined}
+        printRequested={
+          this.props.isAdmin ? this.props.printRequested : undefined
+        }
         deleteOrder={this.props.isAdmin ? this.props.deleteOrder : undefined}
+        closeOrder={
+          this.props.canCloseOrders ? this.props.closeOrder : undefined
+        }
       />
     );
   }
@@ -29,7 +40,8 @@ const mapStateToProps = state => {
       status: 0,
       details: []
     },
-    isAdmin: state.user.roles.some(r => r === "admin")
+    isAdmin: state.user.roles.some(r => r === "admin"),
+    canCloseOrders: state.user.roles.some(r => r === "admin" || r === "dome")
   };
 
   if (state.selectedOrder.item) {
@@ -81,12 +93,15 @@ const mapDispatchToProps = dispatch => {
       history.push(`/order/${order.id}/edit`);
     },
     deleteOrder: orderId => dispatch(deleteOrder(orderId)),
+    closeOrder: orderId => dispatch(closeOrder(orderId)),
     goToCalc: order => {
-      dispatch(calculate({
-        amount: order.totalPrice,
-        paidAmount: order.totalPrice,
-        seats: order.seats
-      }));
+      dispatch(
+        calculate({
+          amount: order.totalPrice,
+          paidAmount: order.totalPrice,
+          seats: order.seats
+        })
+      );
       history.push("/calc");
     }
   };

@@ -22,12 +22,14 @@ import {
   CREATE_EMPTY_ORDER,
   EDIT_ORDER,
   DELETE_ORDER,
+  CLOSE_ORDER,
   RESET_ORDER,
   CONFIRM_ORDER,
   ORDER_CREATED,
   ORDER_CHANGED,
   ORDER_PRINTED,
   ORDER_DELETED,
+  ORDER_CLOSED,
   SET_ORDER_TABLE,
   SET_ORDER_TABLE_CATEGORY,
   SET_ORDER_SEATS,
@@ -162,6 +164,10 @@ export function deleteOrder(orderId) {
   return { type: DELETE_ORDER, payload: orderId };
 }
 
+export function closeOrder(orderId) {
+  return { type: CLOSE_ORDER, payload: orderId };
+}
+
 export function resetOrder() {
   return { type: RESET_ORDER };
 }
@@ -184,6 +190,10 @@ export function orderPrinted(order) {
 
 export function orderDeleted(order) {
   return { type: ORDER_DELETED, payload: order };
+}
+
+export function orderClosed(order) {
+  return { type: ORDER_CLOSED, payload: order };
 }
 
 export function setOrderTable(table) {

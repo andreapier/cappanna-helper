@@ -7,10 +7,16 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { NavLink, withRouter } from "react-router-dom";
 import sidebarStyle from "variables/styles/sidebarStyle";
 import Print from "@material-ui/icons/Print";
+import Done from "@material-ui/icons/Done";
 import PrintDisabled from "@material-ui/icons/PrintDisabled";
 
 const Preview = props => {
-  const text = `Ordine N° ${props.order.shiftCounter} - ${props.order.createdBy.userName} (Tav. ${props.order.chTable})`;
+  const text = `Ordine N° ${props.order.shiftCounter} - ${
+    props.order.createdBy.userName
+  } (Tav. ${props.order.chTable})`;
+  const printed = props.order.status === 3;
+  const closed = props.order.status === 4;
+
   return (
     <NavLink to={`/order/${props.order.id}`} className={props.classes.item}>
       <ListItem button className={props.classes.itemLink}>
@@ -20,7 +26,7 @@ const Preview = props => {
           disableTypography
         />
         <ListItemIcon>
-          {props.order.status === 3 ? <Print /> : <PrintDisabled />}
+          {closed ? <Done /> : printed ? <Print /> : <PrintDisabled />}
         </ListItemIcon>
       </ListItem>
     </NavLink>

@@ -6,6 +6,7 @@ import loadUserDataSaga from "./loadUserDataSaga";
 import confirmOrderSaga from "./confirmOrderSaga";
 import orderChangedSaga from "./orderChangedSaga";
 import deleteOrderSaga from "./deleteOrderSaga";
+import closeOrderSaga from "./closeOrderSaga";
 import loadOrdersListSaga from "./loadOrdersListSaga";
 import loadSelectedOrderSaga from "./loadSelectedOrderSaga";
 import printOrderSaga from "./printOrderSaga";
@@ -26,6 +27,7 @@ function* rootSaga() {
     confirmOrderSaga(),
     orderChangedSaga(),
     deleteOrderSaga(),
+    closeOrderSaga(),
     loadSelectedOrderSaga(),
     printOrderSaga(),
     loadMenuDetailsSaga(),

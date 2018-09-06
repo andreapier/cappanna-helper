@@ -2,7 +2,9 @@ import {
   LOAD_SELECTED_ORDER_REQUESTED,
   LOAD_SELECTED_ORDER_COMPLETED,
   INVALIDATE_SELECTED_ORDER,
-  ORDER_CHANGED, ORDER_PRINTED
+  ORDER_CHANGED,
+  ORDER_PRINTED,
+  ORDER_CLOSED
 } from "actions/types";
 
 const initialState = {
@@ -24,11 +26,12 @@ export default function(state = initialState, action) {
 
     case ORDER_CHANGED:
     case ORDER_PRINTED:
-	  if (state.item && state.item.id !== action.payload.id) {
-		  return state;
-	  }
-	  
-	  return { loading: false, loaded: true, item: action.payload };
+    case ORDER_CLOSED:
+      if (state.item && state.item.id !== action.payload.id) {
+        return state;
+      }
+
+      return { loading: false, loaded: true, item: action.payload };
 
     default:
       return state;

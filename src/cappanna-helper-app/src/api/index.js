@@ -45,7 +45,7 @@ const post = (url, data, jsonResponse = true) =>
     body: JSON.stringify(data)
   })
     .then(checkStatus)
-    .then(json => jsonResponse ? parseJSON(json) : json);
+    .then(json => (jsonResponse ? parseJSON(json) : json));
 
 const get = url =>
   fetch(url, {
@@ -59,18 +59,18 @@ const patch = (url, data) =>
   fetch(url, {
     method: "PATCH",
     headers: getHeaders(),
-    body: JSON.stringify(data)
+    body: data ? JSON.stringify(data) : undefined
   })
     .then(checkStatus)
     .then(parseJSON);
 
-const _delete = url => 
+const _delete = url =>
   fetch(url, {
     method: "DELETE",
     headers: getHeaders()
   })
-  .then(checkStatus)
-  .then(parseJSON);
+    .then(checkStatus)
+    .then(parseJSON);
 
 const parseJSON = response => response.json();
 
@@ -145,8 +145,9 @@ class Api {
   editMenuDetail(detail) {
     const serverDetail = {
       ...detail,
-      unitsInStock: detail.unitsInStock === Infinity ? null : detail.unitsInStock
-    }
+      unitsInStock:
+        detail.unitsInStock === Infinity ? null : detail.unitsInStock
+    };
     return patch(MENU_DETAIL, serverDetail);
   }
 
@@ -164,6 +165,10 @@ class Api {
 
   deleteOrder(orderId) {
     return _delete(`${ORDER}/${orderId}`);
+  }
+
+  closeOrder(orderId) {
+    return patch(`${ORDER}/${orderId}/close`);
   }
 
   printOrder(orderId) {

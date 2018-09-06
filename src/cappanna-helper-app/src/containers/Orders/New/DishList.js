@@ -14,37 +14,31 @@ const styles = {
     flexGrow: 1
   },
   expansion: {
-    padding: "8px 2px"
+    padding: "8px 2px",
+    display: "block"
   }
 };
 
 class DishList extends Component {
   render() {
     return (
-      <div className={this.props.classes.root}>
-        <ExpansionPanel>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>{this.props.title}</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails className={this.props.classes.expansion}>
-            <div>
-              {this.props.details.map(i => (
-                <ConnectedMenuItemDetail
-                  key={i.id}
-                  itemId={i.id}
-                />
-              ))}
-            </div>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </div>
+      <ExpansionPanel>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography>{this.props.title}</Typography>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails className={this.props.classes.expansion}>
+          {this.props.details.map(i => (
+            <ConnectedMenuItemDetail key={i.id} itemId={i.id} />
+          ))}
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
     );
   }
 
-  shouldComponentUpdate(nextProps) {    
-    return false
+  shouldComponentUpdate(nextProps) {
+    return false;
   }
-};
+}
 
 DishList.propTypes = {
   group: PropTypes.string.isRequired,

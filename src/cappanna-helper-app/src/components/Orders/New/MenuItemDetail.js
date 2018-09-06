@@ -14,9 +14,7 @@ const flexProp = {
 
 const style = {
   root: {
-    ...flex.root,
     ...flexProp,
-    justifyContent: "space-between",
     margin: "2px 0px",
     fontSize: "0.875em"
   },

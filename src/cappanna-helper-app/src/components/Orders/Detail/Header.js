@@ -8,6 +8,8 @@ import IconButton from "components/CustomButtons/IconButton";
 import Create from "@material-ui/icons/Create";
 import Apps from "@material-ui/icons/Apps";
 import Delete from "@material-ui/icons/Delete";
+import Done from "@material-ui/icons/Done";
+import isNotEditable from "utils/isOrderNotEditable";
 
 const containerStyle = {
   display: "flex",
@@ -20,39 +22,51 @@ const textFieldStyle = {
 };
 
 const Header = props => {
+  const closable = props.order.status === 3;
+  const notEditable = isNotEditable(props.order.status);
+
   return (
     <div>
       <Toolbar>
         <IconButton
           onClick={() => props.editOrder(props.order)}
-          disabled={props.order.status === 3}
+          disabled={notEditable}
           style={{ marginRight: "10px" }}
         >
           <Create />
         </IconButton>
-        {props.deleteOrder ?
-        <IconButton
-          onClick={() => props.deleteOrder(props.order.id)}
-          disabled={props.order.status === 3}
-          style={{ marginRight: "10px" }}
-        >
-          <Delete />
-        </IconButton>
-        : null}
+        {props.deleteOrder ? (
+          <IconButton
+            onClick={() => props.deleteOrder(props.order.id)}
+            disabled={notEditable}
+            style={{ marginRight: "10px" }}
+          >
+            <Delete />
+          </IconButton>
+        ) : null}
         <IconButton
           onClick={() => props.goToCalc(props.order)}
           style={{ marginRight: "10px" }}
         >
           <Apps />
         </IconButton>
-        {props.printRequested ?
-        <IconButton
-          onClick={() => props.printRequested(props.order.id)}
-          style={{ marginRight: "10px" }}
-        >
-          <Print />
-        </IconButton>
-        : null}
+        {props.printRequested ? (
+          <IconButton
+            onClick={() => props.printRequested(props.order.id)}
+            style={{ marginRight: "10px" }}
+          >
+            <Print />
+          </IconButton>
+        ) : null}
+        {props.closeOrder ? (
+          <IconButton
+            onClick={() => props.closeOrder(props.order.id)}
+            disabled={!closable}
+            style={{ marginRight: "10px" }}
+          >
+            <Done />
+          </IconButton>
+        ) : null}
       </Toolbar>
       <div style={containerStyle}>
         <div>
@@ -105,11 +119,12 @@ Header.propTypes = {
     chTable: PropTypes.number.isRequired,
     tableCategory: PropTypes.string,
     seats: PropTypes.number.isRequired,
-    status: PropTypes.number.isRequired,
+    status: PropTypes.number.isRequired
   }).isRequired,
   printRequested: PropTypes.func,
   editOrder: PropTypes.func.isRequired,
   deleteOrder: PropTypes.func,
+  closeOrder: PropTypes.func,
   goToCalc: PropTypes.func.isRequired
 };
 
