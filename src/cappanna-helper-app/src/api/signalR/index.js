@@ -46,10 +46,34 @@ class SignalR {
         this.dispatch(dashboardDataChanged(data))
       );
     }
+
+    this.chHubConnection.onclose(err => {
+      if (!err) {
+        return;
+      }
+
+      console.error("Connection closed with error", err);
+      this.reconnect();
+    });
+  }
+
+  reconnect(failedRetry = 0, interval = 1000) {
+    if (failedRetry === 100) {
+      return;
+    }
+
+    return this.connectNoError().catch(err => {
+      console.error("Errore trying to automatically reconnect", err);
+      setTimeout(() => this.reconnect(failedRetry++, interval * 2), interval);
+    });
+  }
+
+  connectNoError() {
+    return this.chHubConnection.start();
   }
 
   connect() {
-    return this.chHubConnection.start().catch(err => console.error(err));
+    return this.connectNoError().catch(err => console.error(err));
   }
 
   disconnect() {
