@@ -17,7 +17,8 @@ class ConnectedDashboard extends Component {
         income={this.props.income}
         dailySales={this.props.dailySales}
         waitersStats={this.props.waitersStats}
-      />);
+      />
+    );
   }
 
   componentWillUnmount() {
@@ -29,11 +30,10 @@ class ConnectedDashboard extends Component {
 
 const mapStateToProps = state => {
   return {
-    shouldLoad: !state.dashboard.loading && !state.orders.loaded,
+    shouldLoad: !state.dashboard.loading && !state.dashboard.loaded,
     loaded: state.dashboard.loaded,
     ordersQuantity: state.dashboard.data.ordersQuantity,
     income: state.dashboard.data.income,
-    dailySales: state.dashboard.data.dailySales,
     waitersStats: state.dashboard.data.waitersStats
   };
 };
@@ -45,4 +45,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConnectedDashboard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConnectedDashboard);
