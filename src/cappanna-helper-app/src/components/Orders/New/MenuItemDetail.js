@@ -7,29 +7,24 @@ import AmountFormat from "components/AmountFormat";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { flex } from "variables/styles";
 
-const flexProp = {
-  display: "flex",
-  alignItems: "center"
-};
-
 const style = {
   root: {
-    ...flexProp,
+    ...flex.alignCenter,
     margin: "2px 0px",
     fontSize: "0.875em"
   },
   end: {
     ...flex.root,
-    ...flexProp,
+    ...flex.alignCenter,
     justifyContent: "flex-end"
   },
   item55: {
-    ...flexProp,
+    ...flex.alignCenter,
     minWidth: "55px",
     textAlign: "center"
   },
   item17: {
-    ...flexProp,
+    ...flex.alignCenter,
     textAlign: "center",
     minWidth: "17px",
     justifyContent: "center"

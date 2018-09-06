@@ -3,12 +3,19 @@ import PropTypes from "prop-types";
 import Table from "components/Table";
 import { formatAmount } from "utils/string";
 import TextField from "@material-ui/core/TextField";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 const buildTableRow = dish => [
   dish.item.name,
   formatAmount(dish.item.price, false),
   dish.quantity
 ];
+
+const style = {
+  notes: {
+    marginTop: "20px"
+  }
+};
 
 const Body = props => {
   return (
@@ -23,23 +30,26 @@ const Body = props => {
         readOnly
         fullWidth
         value={props.notes}
-        style={{ marginTop: "20px" }}
+        className={props.classes.notes}
       />
     </div>
   );
 };
 
 Body.propTypes = {
-  dishList: PropTypes.arrayOf(PropTypes.shape({
-    subtotal: PropTypes.number.isRequired,
-    quantity: PropTypes.number.isRequired,
-    item: PropTypes.shape({
-      group: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired
+  dishList: PropTypes.arrayOf(
+    PropTypes.shape({
+      subtotal: PropTypes.number.isRequired,
+      quantity: PropTypes.number.isRequired,
+      item: PropTypes.shape({
+        group: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired
+      })
     })
-  })).isRequired,
-  notes: PropTypes.string.isRequired
+  ).isRequired,
+  notes: PropTypes.string.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-export default Body;
+export default withStyles(style)(Body);

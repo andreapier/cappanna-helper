@@ -6,16 +6,23 @@ import IconButton from "components/CustomButtons/IconButton";
 import PermIdentity from "@material-ui/icons/PermIdentity";
 import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
 import NavigationRefresh from "@material-ui/icons/Refresh";
+import withStyles from "@material-ui/core/styles/withStyles";
+
+const style = {
+  icon: {
+    marginRight: "20px"
+  }
+};
 
 const Header = props => {
   return (
     <Toolbar>
-      <IconButton onClick={props.goToNewOrder} style={{ marginRight: "10px" }}>
+      <IconButton onClick={props.goToNewOrder} customClass={props.classes.icon}>
         <ContentAdd />
       </IconButton>
       <IconButton
         onClick={props.loadOrdersListRequested}
-        style={{ marginRight: "10px" }}
+        customClass={props.classes.icon}
       >
         <NavigationRefresh />
       </IconButton>
@@ -36,7 +43,8 @@ Header.propTypes = {
   loadOrdersListRequested: PropTypes.func.isRequired,
   goToNewOrder: PropTypes.func.isRequired,
   toggleOrdersListFilter: PropTypes.func.isRequired,
-  isFiltered: PropTypes.bool.isRequired
+  isFiltered: PropTypes.bool.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-export default Header;
+export default withStyles(style)(Header);

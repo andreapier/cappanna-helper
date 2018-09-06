@@ -10,15 +10,20 @@ import Apps from "@material-ui/icons/Apps";
 import Delete from "@material-ui/icons/Delete";
 import Done from "@material-ui/icons/Done";
 import isNotEditable from "utils/isOrderNotEditable";
+import withStyles from "@material-ui/core/styles/withStyles";
+import { flex } from "variables/styles";
 
-const containerStyle = {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center"
-};
-
-const textFieldStyle = {
-  width: "60px"
+const style = {
+  root: {
+    ...flex.alignCenter,
+    justifyContent: "space-between"
+  },
+  textField: {
+    width: "60px"
+  },
+  icon: {
+    marginRight: "10px"
+  }
 };
 
 const Header = props => {
@@ -31,7 +36,7 @@ const Header = props => {
         <IconButton
           onClick={() => props.editOrder(props.order)}
           disabled={notEditable}
-          style={{ marginRight: "10px" }}
+          customClass={props.classes.icon}
         >
           <Create />
         </IconButton>
@@ -39,21 +44,21 @@ const Header = props => {
           <IconButton
             onClick={() => props.deleteOrder(props.order.id)}
             disabled={notEditable}
-            style={{ marginRight: "10px" }}
+            customClass={props.classes.icon}
           >
             <Delete />
           </IconButton>
         ) : null}
         <IconButton
           onClick={() => props.goToCalc(props.order)}
-          style={{ marginRight: "10px" }}
+          customClass={props.classes.icon}
         >
           <Apps />
         </IconButton>
         {props.printRequested ? (
           <IconButton
             onClick={() => props.printRequested(props.order.id)}
-            style={{ marginRight: "10px" }}
+            customClass={props.classes.icon}
           >
             <Print />
           </IconButton>
@@ -62,20 +67,19 @@ const Header = props => {
           <IconButton
             onClick={() => props.closeOrder(props.order.id)}
             disabled={!closable}
-            style={{ marginRight: "10px" }}
+            customClass={props.classes.icon}
           >
             <Done />
           </IconButton>
         ) : null}
       </Toolbar>
-      <div style={containerStyle}>
+      <div className={props.classes.root}>
         <div>
           <TextField
             name="table"
             type="number"
             label="Tav."
-            className="CreateOrderForm-TextField"
-            style={textFieldStyle}
+            className={props.classes.textField}
             value={props.order.chTable}
             InputLabelProps={{ shrink: true }}
             readOnly
@@ -85,8 +89,7 @@ const Header = props => {
           <TextField
             name="tableCategory"
             label="Cat."
-            className="CreateOrderForm-TextField"
-            style={textFieldStyle}
+            className={props.classes.textField}
             value={props.order.tableCategory}
             InputLabelProps={{ shrink: true }}
             readOnly
@@ -97,14 +100,13 @@ const Header = props => {
             name="personNumber"
             type="number"
             label="N° pers"
-            className="CreateOrderForm-TextField"
-            style={textFieldStyle}
+            className={props.classes.textField}
             value={props.order.seats}
             InputLabelProps={{ shrink: true }}
             readOnly
           />
         </div>
-        <div style={textFieldStyle}>
+        <div className={props.classes.textField}>
           Tot: <AmountFormat amount={props.order.totalPrice} />
         </div>
       </div>
@@ -125,7 +127,8 @@ Header.propTypes = {
   editOrder: PropTypes.func.isRequired,
   deleteOrder: PropTypes.func,
   closeOrder: PropTypes.func,
-  goToCalc: PropTypes.func.isRequired
+  goToCalc: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-export default Header;
+export default withStyles(style)(Header);
