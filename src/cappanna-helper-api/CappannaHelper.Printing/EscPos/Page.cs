@@ -29,8 +29,6 @@ namespace CappannaHelper.Printing.EscPos
             {
                 section.Visit(commandBuilder);
             }
-
-            commandBuilder.AddRange(Commands.CUT_PARTIAL);
         }
     }
 }

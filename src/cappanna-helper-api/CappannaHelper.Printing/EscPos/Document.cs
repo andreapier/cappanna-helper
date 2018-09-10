@@ -64,9 +64,15 @@ namespace CappannaHelper.Printing.EscPos
             commandBuilder.AddRange(Commands.INITIALIZE_PRINTER);
             commandBuilder.AddRange(Commands.SELECT_CHARACTER_CODE_TABLE_USA_AND_EUROPE); //\x13
 
-            foreach (var page in _pages)
+            for (var counter = 0; counter < _pages.Count; counter++)
             {
+                var page = _pages[counter];
                 page.Visit(commandBuilder);
+
+                if (counter < _pages.Count - 1)
+                {
+                    commandBuilder.AddRange(Commands.CUT_PARTIAL);
+                }
             }
 
             commandBuilder.AddRange(Commands.CUT_FULL);

@@ -16,6 +16,7 @@ namespace CappannaHelper.Printing.EscPos
         public ILabel SetContent(string content)
         {
             Content = content ?? throw new ArgumentNullException(nameof(content));
+            Content = Content.ToUpper();
 
             return this;
         }

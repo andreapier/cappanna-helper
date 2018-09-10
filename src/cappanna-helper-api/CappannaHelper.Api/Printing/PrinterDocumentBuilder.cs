@@ -17,14 +17,14 @@ namespace CappannaHelper.Api.Printing
             _document = new Document();
         }
 
-        private void SetHeader(string title, int orderId, string table, int seats, ApplicationUser waiter, DateTime creationTimestamp)
+        private void SetHeader(string title, int orderId, string table, int seats, ApplicationUser waiter, DateTime creationTimestamp, int size)
         {
             SetTitle(title);
-            SetOrderId(orderId);
-            SetTable(table);
-            SetSeats(seats);
-            SetWaiter(waiter);
-            SetCreationTimestamp(creationTimestamp);
+            SetOrderId(orderId, size);
+            SetTable(table, size);
+            SetSeats(seats, size);
+            SetWaiter(waiter, size);
+            SetCreationTimestamp(creationTimestamp, size);
         }
 
         private void SetTitle(string title)
@@ -37,85 +37,85 @@ namespace CappannaHelper.Api.Printing
             section.NewLine();
         }
 
-        private void SetOrderId(int orderId)
+        private void SetOrderId(int orderId, int size)
         {
             var section = _document.LastPage.CreateSection();
-            section.SetSize(16);
+            section.SetSize(size);
             section.CreateLabel().SetContent($"Ordine:  {orderId.ToString().PadLeft(3, ' ')}  ");
         }
 
-        private void SetTable(string table)
+        private void SetTable(string table, int size)
         {
             var section = _document.LastPage.CreateSection();
-            section.SetSize(16);
+            section.SetSize(size);
             section.CreateLabel().SetContent($"Tavolo:    {table.ToString().PadLeft(4, ' ')}");
             section.NewLine();
         }
 
-        private void SetSeats(int seats)
+        private void SetSeats(int seats, int size)
         {
             var section = _document.LastPage.CreateSection();
-            section.SetSize(16);
+            section.SetSize(size);
             section.CreateLabel().SetContent($"Coperti: {seats.ToString().PadLeft(3, ' ')}  ");
         }
 
-        private void SetWaiter(ApplicationUser waiter)
+        private void SetWaiter(ApplicationUser waiter, int size)
         {
             var section = _document.LastPage.CreateSection();
             var firstName = waiter.FirstName.Length <= 8 ? waiter.FirstName : waiter.FirstName.Substring(0, 8);
-            section.SetSize(16);
+            section.SetSize(size);
             section.CreateLabel().SetContent($"Cameriere: {firstName}");
             section.NewLine();
         }
 
-        private void SetCreationTimestamp(DateTime creationTimestamp)
+        private void SetCreationTimestamp(DateTime creationTimestamp, int size)
         {
             var section = _document.LastPage.CreateSection();
-            section.SetSize(16);
+            section.SetSize(size);
             section.CreateLabel().SetContent($"Orario: {creationTimestamp.ToString("HH:mm:ss")}");
             section.NewLine();
         }
 
-        private void SetDishes(IEnumerable<OrderDetail> details)
+        private void SetDishes(IEnumerable<OrderDetail> details, int size)
         {
             var section = _document.LastPage.CreateSection();
             section.NewLine();
 
-            AddAppetizers(details.Where(d => d.Item.Group == MenuDetail.APPETIZER));
-            AddFirstDishes(details.Where(d => d.Item.Group == MenuDetail.FIRST_DISH));
-            AddSecondDishes(details.Where(d => d.Item.Group == MenuDetail.SECOND_DISH));
-            AddSideDishes(details.Where(d => d.Item.Group == MenuDetail.SIDE_DISH));
+            AddAppetizers(details.Where(d => d.Item.Group == MenuDetail.APPETIZER), size);
+            AddFirstDishes(details.Where(d => d.Item.Group == MenuDetail.FIRST_DISH), size);
+            AddSecondDishes(details.Where(d => d.Item.Group == MenuDetail.SECOND_DISH), size);
+            AddSideDishes(details.Where(d => d.Item.Group == MenuDetail.SIDE_DISH), size);
         }
 
-        private void SetDrinks(IEnumerable<OrderDetail> details)
+        private void SetDrinks(IEnumerable<OrderDetail> details, int size)
         {
-            AddWines(details.Where(d => d.Item.Group.Contains(MenuDetail.WINE)));
-            AddWaters(details.Where(d => d.Item.Group == MenuDetail.WATER));
-            AddOtherDrinks(details.Where(d => d.Item.Group == MenuDetail.DRINK));
-            AddDesserts(details.Where(d => d.Item.Group == MenuDetail.DESSERT_DISH));
+            AddWines(details.Where(d => d.Item.Group.Contains(MenuDetail.WINE)), size);
+            AddWaters(details.Where(d => d.Item.Group == MenuDetail.WATER), size);
+            AddOtherDrinks(details.Where(d => d.Item.Group == MenuDetail.DRINK), size);
+            AddDesserts(details.Where(d => d.Item.Group == MenuDetail.DESSERT_DISH), size);
         }
 
         public IPrinterDocumentBuilder SetOrder(ChOrder order)
         {
             if (order.Details.Any(d => d.Item.IsDish))
             {
-                SetHeader("CUCINA", order.ShiftId, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp);
-                SetDishes(order.Details);
-                SetNotes(order.Notes);
+                SetHeader("CUCINA", order.ShiftId, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp, 16);
+                SetDishes(order.Details, 16);
+                SetNotes(order.Notes, 16);
                 
-                AddPage();
+                AddPage(16);
             }
             
-            SetHeader("BAR", order.ShiftId, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp);
-            SetDishes(order.Details);
+            SetHeader("BAR", order.ShiftId, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp, 12);
+            SetDishes(order.Details, 12);
 
             if (order.Details.Any(d => d.Item.IsDrink))
             {
-                SetDrinks(order.Details);
+                SetDrinks(order.Details, 12);
             }
 
-            SetNotes(order.Notes);
-            BlankFeed();
+            SetNotes(order.Notes, 12);
+            BlankFeed(12);
 
             return this;
         }
@@ -125,104 +125,104 @@ namespace CappannaHelper.Api.Printing
             return _document;
         }
 
-        private void AddAppetizers(IEnumerable<OrderDetail> appetizers)
+        private void AddAppetizers(IEnumerable<OrderDetail> appetizers, int size)
         {
             if (appetizers.Count() == 0)
             {
                 return;
             }
 
-            AddMenuItemCategoryHeader(MenuDetail.APPETIZER);
-            AddDetails(appetizers);
+            AddMenuItemCategoryHeader(MenuDetail.APPETIZER, size);
+            AddDetails(appetizers, size);
         }
 
-        private void AddFirstDishes(IEnumerable<OrderDetail> firstDishes)
+        private void AddFirstDishes(IEnumerable<OrderDetail> firstDishes, int size)
         {
             if (firstDishes.Count() == 0)
             {
                 return;
             }
             
-            AddMenuItemCategoryHeader(MenuDetail.FIRST_DISH);
-            AddDetails(firstDishes);
+            AddMenuItemCategoryHeader(MenuDetail.FIRST_DISH, size);
+            AddDetails(firstDishes, size);
         }
 
-        private void AddSecondDishes(IEnumerable<OrderDetail> secondDishes)
+        private void AddSecondDishes(IEnumerable<OrderDetail> secondDishes, int size)
         {
             if (secondDishes.Count() == 0)
             {
                 return;
             }
             
-            AddMenuItemCategoryHeader(MenuDetail.SECOND_DISH);
-            AddDetails(secondDishes);
+            AddMenuItemCategoryHeader(MenuDetail.SECOND_DISH, size);
+            AddDetails(secondDishes, size);
         }
 
-        private void AddSideDishes(IEnumerable<OrderDetail> sideDishes)
+        private void AddSideDishes(IEnumerable<OrderDetail> sideDishes, int size)
         {
             if (sideDishes.Count() == 0)
             {
                 return;
             }
             
-            AddMenuItemCategoryHeader(MenuDetail.SIDE_DISH);
-            AddDetails(sideDishes);
+            AddMenuItemCategoryHeader(MenuDetail.SIDE_DISH, size);
+            AddDetails(sideDishes, size);
         }
 
-        private void AddWines(IEnumerable<OrderDetail> wines)
+        private void AddWines(IEnumerable<OrderDetail> wines, int size)
         {
             if (wines.Count() == 0)
             {
                 return;
             }
             
-            AddMenuItemCategoryHeader(MenuDetail.WINE);
-            AddDetails(wines);
+            AddMenuItemCategoryHeader(MenuDetail.WINE, size);
+            AddDetails(wines, size);
         }
 
-        private void AddWaters(IEnumerable<OrderDetail> waters)
+        private void AddWaters(IEnumerable<OrderDetail> waters, int size)
         {
             if (waters.Count() == 0)
             {
                 return;
             }
             
-            AddMenuItemCategoryHeader(MenuDetail.WATER);
-            AddDetails(waters);
+            AddMenuItemCategoryHeader(MenuDetail.WATER, size);
+            AddDetails(waters, size);
         }
 
-        private void AddOtherDrinks(IEnumerable<OrderDetail> otherDrinks)
+        private void AddOtherDrinks(IEnumerable<OrderDetail> otherDrinks, int size)
         {
             if (otherDrinks.Count() == 0)
             {
                 return;
             }
             
-            AddMenuItemCategoryHeader(MenuDetail.DRINK);
-            AddDetails(otherDrinks);
+            AddMenuItemCategoryHeader(MenuDetail.DRINK, size);
+            AddDetails(otherDrinks, size);
         }
 
-        private void AddDesserts(IEnumerable<OrderDetail> desserts)
+        private void AddDesserts(IEnumerable<OrderDetail> desserts, int size)
         {
             if (desserts.Count() == 0)
             {
                 return;
             }
             
-            AddMenuItemCategoryHeader(MenuDetail.DESSERT_DISH);
-            AddDetails(desserts);
+            AddMenuItemCategoryHeader(MenuDetail.DESSERT_DISH, size);
+            AddDetails(desserts, size);
         }
 
-        private void AddPage()
+        private void AddPage(int size)
         {
-            BlankFeed();
+            BlankFeed(size);
             _document.CreatePage();
         }
 
-        private void BlankFeed()
+        private void BlankFeed(int size)
         {
             var section = _document.LastPage.CreateSection();
-            section.SetSize(16);
+            section.SetSize(size);
             section.NewLine();
             section.NewLine();
             section.NewLine();
@@ -230,17 +230,17 @@ namespace CappannaHelper.Api.Printing
             section.NewLine();
         }
 
-        private void AddMenuItemCategoryHeader(string header)
+        private void AddMenuItemCategoryHeader(string header, int size)
         {
             var section = _document.LastPage.CreateSection();
-            section.SetSize(16);
+            section.SetSize(size);
             section.HorizontalAlignment = HorizontalAlignments.Center;
             section.Underline = true;
             section.CreateLabel().SetContent(header.ToUpper());
             section.NewLine();
         }
 
-        private void AddDetails(IEnumerable<OrderDetail> details)
+        private void AddDetails(IEnumerable<OrderDetail> details, int size)
         {
             var orderedDetails = details.OrderBy(d => d.ItemId);
 
@@ -252,7 +252,7 @@ namespace CappannaHelper.Api.Printing
                 var dotsSection = _document.LastPage.CreateSection();
                 var section = _document.LastPage.CreateSection();
 
-                section.SetSize(16);
+                section.SetSize(size);
                 section.CreateLabel().SetContent(name);
                 section.CreateLabel().SetContent($"{dots}");
                 section.CreateLabel().SetContent($"{detail.Quantity.ToString().PadLeft(2, ' ')}");
@@ -260,11 +260,11 @@ namespace CappannaHelper.Api.Printing
             }
         }
 
-        private void SetNotes(string notes)
+        private void SetNotes(string notes, int size)
         {
             if (!string.IsNullOrEmpty(notes))
             {
-                AddMenuItemCategoryHeader("NOTE");
+                AddMenuItemCategoryHeader("NOTE", size);
 
                 var section = _document.LastPage.CreateSection();
                 section.SetSize(12);
