@@ -17,11 +17,11 @@
   },
   "dependencies": {
     "@aspnet/signalr": "^1.0.3",
-    "@material-ui/core": "^3.0.2",
+    "@material-ui/core": "^3.0.3",
     "@material-ui/icons": "^3.0.1",
     "localforage": "^1.7.2",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
     "react-loadable": "^5.5.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
@@ -52,6 +52,6 @@
   "devDependencies": {
     "eslint-plugin-prettier": "^2.6.2",
     "prettier": "^1.14.2",
-	  "source-map-explorer": "^1.6.0"
+    "source-map-explorer": "^1.6.0"
   }
 }
