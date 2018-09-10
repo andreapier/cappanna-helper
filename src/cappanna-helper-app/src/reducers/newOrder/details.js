@@ -2,7 +2,11 @@ import {
   CREATE_EMPTY_ORDER,
   INCREMENT_ORDER_DETAIL_QUANTITY,
   RESET_ORDER,
-  EDIT_ORDER
+  EDIT_ORDER,
+  INVALIDATE_MENU_DETAILS,
+  INVALIDATE_ORDERS_LIST,
+  INVALIDATE_NOTIFICATIONS_LIST,
+  INVALIDATE_DASHBOARD_DATA
 } from "actions/types";
 
 export const initialState = [];
@@ -10,6 +14,10 @@ export const initialState = [];
 export default function(state = initialState, action) {
   switch (action.type) {
     case RESET_ORDER:
+    case INVALIDATE_MENU_DETAILS:
+    case INVALIDATE_ORDERS_LIST:
+    case INVALIDATE_NOTIFICATIONS_LIST:
+    case INVALIDATE_DASHBOARD_DATA:
       return state.map(e => ({
         itemId: e.itemId,
         quantity: 0
