@@ -11,6 +11,7 @@ import selectedOrder from "reducers/selectedOrder";
 import notifications from "reducers/notifications";
 import calculator from "reducers/calculator";
 import dashboard from "reducers/dashboard";
+import aggregation from "reducers/aggregation";
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
   selectedOrder,
   notifications,
   calculator,
-  dashboard
+  dashboard,
+  aggregation
 });
 
 export default rootReducer;

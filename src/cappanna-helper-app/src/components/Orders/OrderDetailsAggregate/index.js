@@ -1,7 +1,29 @@
 import React from "react";
+import PropTypes from "prop-types";
+import List from "@material-ui/core/List";
+import Header from "components/Orders/OrderDetailsAggregate/Header";
+import Preview from "components/Orders/OrderDetailsAggregate/Preview";
 
 const OrderDetailsAggregate = props => {
-  return <div />;
+  return (
+    <div>
+      <Header
+        orderDetailsAggregationRequested={
+          props.orderDetailsAggregationRequested
+        }
+      />
+      <List>
+        {props.orders.map(o => (
+          <Preview order={o} key={o.id} />
+        ))}
+      </List>
+    </div>
+  );
+};
+
+OrderDetailsAggregate.propTypes = {
+  orderDetailsAggregationRequested: PropTypes.func.isRequired,
+  orders: PropTypes.array.isRequired
 };
 
 export default OrderDetailsAggregate;

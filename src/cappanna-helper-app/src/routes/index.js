@@ -7,6 +7,7 @@ import confirmNewOrder from "routes/orders/new/confirm";
 import order from "routes/orders/detail";
 import editOrder from "routes/orders/edit/edit";
 import confirmEditedOrder from "routes/orders/edit/confirm";
+import aggregate from "routes/orders/aggregate";
 import calculator from "routes/calculator";
 import notifications from "routes/notifications";
 import signin from "routes/users/signin";
@@ -24,6 +25,7 @@ const appRoutes = [
   order,
   editOrder,
   confirmEditedOrder,
+  aggregate,
   calculator,
   notifications,
   signin,

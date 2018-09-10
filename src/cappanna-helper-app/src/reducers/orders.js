@@ -27,9 +27,9 @@ export default function(state = initialState, action) {
 
     case LOAD_ORDERS_LIST_COMPLETED:
       return {
+        ...state,
         loading: false,
         loaded: true,
-        isFiltered: state.isFiltered,
         items: action.payload
       };
 
@@ -40,7 +40,7 @@ export default function(state = initialState, action) {
       return { ...state, items: [action.payload].concat(state.items) };
 
     case ORDER_CHANGED:
-    case ORDER_PRINTED:
+    case ORDER_PRINTED: {
       let found = false;
 
       return {
@@ -56,6 +56,7 @@ export default function(state = initialState, action) {
           })
           .concat(found ? [] : [action.payload])
       };
+    }
 
     case TOGGLE_ORDERS_LIST_FILTER:
       return {
