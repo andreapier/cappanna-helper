@@ -1,31 +1,23 @@
 import {
-  RESET_ORDER_SELECTION_FOR_AGGREAGATE,
-  TOGGLE_ORDER_SELECTION_FOR_AGGREGATE
+  RESET_ORDER_SELECTION_FOR_AGGREGATION,
+  TOGGLE_ORDER_SELECTION_FOR_AGGREGATION
 } from "actions/types";
 
 const initialState = [];
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case RESET_ORDER_SELECTION_FOR_AGGREAGATE:
+    case RESET_ORDER_SELECTION_FOR_AGGREGATION:
       return initialState;
 
-    case TOGGLE_ORDER_SELECTION_FOR_AGGREGATE: {
-      let found = false;
+    case TOGGLE_ORDER_SELECTION_FOR_AGGREGATION: {
+      const index = state.indexOf(action.payload);
 
-      return {
-        ...state,
-        selectedForAggregation: state.selectedForAggregation
-          .map(o => {
-            if (o === action.payload) {
-              found = true;
-              return action.payload;
-            }
-
-            return o;
-          })
-          .concat(found ? [] : [action.payload])
-      };
+      if (index === -1) {
+          return [...state, action.payload];
+      } else {
+          return state.filter(i => i !== action.payload);
+      }
     }
 
     default:

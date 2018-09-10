@@ -1,7 +1,6 @@
 import {
   grayColor,
   primaryColor,
-  infoColor,
   successColor,
   warningColor,
   dangerColor
@@ -41,18 +40,10 @@ const iconButtonStyle = {
     }
   },
   primary: {
+    color: "#FFFFFF",
     backgroundColor: primaryColor,
     "&:hover": {
       backgroundColor: primaryColor,
-      boxShadow:
-        "0 14px 26px -12px rgba(156, 39, 176, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(156, 39, 176, 0.2)"
-    }
-  },
-  info: {
-    backgroundColor: infoColor,
-    color: "#FFFFFF",
-    "&:hover": {
-      backgroundColor: infoColor,
       boxShadow:
         "0 14px 26px -12px rgba(0, 188, 212, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 188, 212, 0.2)"
     }

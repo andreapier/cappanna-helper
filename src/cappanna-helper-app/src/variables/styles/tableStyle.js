@@ -3,7 +3,6 @@ import {
   primaryColor,
   dangerColor,
   successColor,
-  infoColor,
   grayColor,
   defaultFont
 } from "variables/styles";
@@ -20,9 +19,6 @@ const tableStyle = theme => ({
   },
   successTableHeader: {
     color: successColor
-  },
-  infoTableHeader: {
-    color: infoColor
   },
   grayTableHeader: {
     color: grayColor

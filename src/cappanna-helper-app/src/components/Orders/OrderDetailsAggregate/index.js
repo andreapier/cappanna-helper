@@ -14,7 +14,7 @@ const OrderDetailsAggregate = props => {
       />
       <List>
         {props.orders.map(o => (
-          <Preview order={o} key={o.id} />
+          <Preview order={o} key={o.id} toggleOrderSelectionForAggregation={props.toggleOrderSelectionForAggregation} />
         ))}
       </List>
     </div>

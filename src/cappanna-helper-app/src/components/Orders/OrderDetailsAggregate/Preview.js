@@ -4,7 +4,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import withStyles from "@material-ui/core/styles/withStyles";
 import sidebarStyle from "variables/styles/sidebarStyle";
-import Checkbox from "@material-ui/core/Checkbox";
+import Checkbox from "components/CustomCheckbox";
 
 const Preview = props => {
   const text = `Ordine N° ${props.order.shiftCounter} - ${
@@ -17,7 +17,7 @@ const Preview = props => {
         checked={props.order.selected}
         disableRipple
         disableTouchRipple
-        onChange={() => toggleOrderSelectionForAggregation(props.order.id)}
+        onChange={() => props.toggleOrderSelectionForAggregation(props.order.id)}
       />
       <ListItemText
         primary={text}

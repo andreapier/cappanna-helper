@@ -4,7 +4,8 @@ import {
   loadOrdersListRequested,
   invalidateOrdersList,
   resetOrderSelectionForAggregation,
-  toggleOrderSelectionForAggregation
+  toggleOrderSelectionForAggregation,
+  orderDetailsAggregationRequested
 } from "actions";
 import OrderDetailsAggregate from "components/Orders/OrderDetailsAggregate";
 
@@ -33,7 +34,7 @@ class ConnectedOrderDetailsAggregate extends Component {
     if (this.props.loaded) {
       this.props.invalidateOrdersList();
     }
-    this.resetOrderSelectionForAggregation();
+    this.props.resetOrderSelectionForAggregation();
   }
 }
 
@@ -42,7 +43,7 @@ const mapStateToProps = state => {
     shouldLoad: !state.orders.loading && !state.orders.loaded,
     loaded: state.orders.loaded,
     orders: state.orders.items.filter(o => o.status === 3).map(o => {
-      const selected = state.aggregate.find(i => i === o.id);
+      const selected = state.aggregation.find(i => i === o.id);
 
       return {
         ...o,

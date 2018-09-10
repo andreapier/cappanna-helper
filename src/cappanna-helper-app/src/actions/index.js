@@ -39,8 +39,8 @@ import {
   LOAD_ORDERS_LIST_COMPLETED,
   INVALIDATE_ORDERS_LIST,
   TOGGLE_ORDERS_LIST_FILTER,
-  RESET_ORDER_SELECTION_FOR_AGGREAGATE,
-  TOGGLE_ORDER_SELECTION_FOR_AGGREGATE,
+  RESET_ORDER_SELECTION_FOR_AGGREGATION,
+  TOGGLE_ORDER_SELECTION_FOR_AGGREGATION,
   ORDER_DETAILS_AGGREGATION_REQUESTED,
   ORDER_DETAILS_AGGREGATION_COMPLETED,
   LOAD_SELECTED_ORDER_REQUESTED,
@@ -239,12 +239,12 @@ export function toggleOrdersListFilter() {
   return { type: TOGGLE_ORDERS_LIST_FILTER };
 }
 
-export function resetOrderSelectionForAggregate() {
-  return { type: RESET_ORDER_SELECTION_FOR_AGGREAGATE };
+export function resetOrderSelectionForAggregation() {
+  return { type: RESET_ORDER_SELECTION_FOR_AGGREGATION };
 }
 
-export function toggleOrderSelectionForAggregate(orderId) {
-  return { type: TOGGLE_ORDER_SELECTION_FOR_AGGREGATE, payload: orderId };
+export function toggleOrderSelectionForAggregation(orderId) {
+  return { type: TOGGLE_ORDER_SELECTION_FOR_AGGREGATION, payload: orderId };
 }
 
 export function orderDetailsAggregationRequested(ordersId) {
