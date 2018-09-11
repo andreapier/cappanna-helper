@@ -1,5 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using CappannaHelper.Api.Hubs;
-using CappannaHelper.Api.Models;
 using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Persistence.Modelling;
 using CappannaHelper.Api.Printing;
@@ -8,14 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
-namespace CappannaHelper.Api.Controllers
-{
+namespace CappannaHelper.Api.Controllers {
     [Authorize]
     [Route("api/[controller]")]
     public class OrderController : Controller
@@ -411,42 +409,6 @@ namespace CappannaHelper.Api.Controllers
             }
 
             await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_CLOSED, result);
-
-            return Ok(result);
-        }
-
-        [HttpGet("detail/aggregate")]
-        public async Task<IActionResult> GetOrdersDetailAggregates([FromQuery] IList<int> ordersId, [FromQuery] OrderDetailsAggregateTypes type)
-        {
-            if(ordersId == null)
-            {
-                return BadRequest("Lista ordini da elaborare non specificati");
-            }
-
-            List<OrderDetailsAggregateModel> result = null;
-
-            using(var transaction = await _context.Database.BeginTransactionAsync())
-            {
-                result = await _context
-                    .OrderDetails
-                    .Where(d =>
-                        ordersId.Contains(d.OrderId)
-                        && (type == OrderDetailsAggregateTypes.ALL
-                        ? true
-                        : type == OrderDetailsAggregateTypes.FIRST_DISHES_ONLY
-                            ? d.Item.Group == MenuDetail.FIRST_DISH
-                            : (d.Item.Group == MenuDetail.FIRST_DISH || d.Item.Name == "Fritto calamari e gamberi")))
-                    .GroupBy(d => d.ItemId)
-                    .Select(g => new OrderDetailsAggregateModel
-                    {
-                        ItemId = g.Key,
-                        Name = g.First().Item.Name,
-                        Quantity = g.Sum(d => d.Quantity)
-                    })
-                    .ToListAsync();
-
-                transaction.Commit();
-            }
 
             return Ok(result);
         }

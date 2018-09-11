@@ -1,11 +1,9 @@
-﻿using CappannaHelper.Api.Persistence.Modelling;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
-namespace CappannaHelper.Api.Printing
-{
+namespace CappannaHelper.Api.Printing {
     public interface IPrintService : IDisposable
     {
-        Task PrintAsync(ChOrder order);
+        Task PrintAsync<T>(T data);
     }
 }

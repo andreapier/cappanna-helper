@@ -1,13 +1,9 @@
-﻿using CappannaHelper.Api.Persistence.Modelling;
-using CappannaHelper.Printing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using CappannaHelper.Printing;
 
-namespace CappannaHelper.Api.Printing
-{
+namespace CappannaHelper.Api.Printing {
     public class PrintService : IPrintService
     {
         private readonly IPrinterDocumentBuilderFactory _factory;
@@ -21,15 +17,15 @@ namespace CappannaHelper.Api.Printing
             _semaphore = new SemaphoreSlim(1, 1);
         }
 
-        public async Task PrintAsync(ChOrder order)
+        public async Task PrintAsync<T>(T data)
         {
-            if (order == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(order));
+                throw new ArgumentNullException(nameof(data));
             }
 
-            var builder = _factory.Create();
-            var document = builder.SetOrder(order).Build();
+            var builder = _factory.Create<T>();
+            var document = builder.SetData(data).Build();
 
             await _semaphore.WaitAsync();
 

@@ -1,4 +1,5 @@
 ﻿using CappannaHelper.Api.Hubs;
+using CappannaHelper.Api.Models;
 using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Persistence.Modelling;
 using CappannaHelper.Api.Printing;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -77,6 +80,41 @@ namespace CappannaHelper.Api.Controllers
 
                 return Ok(result);
             }
+        }
+
+        [HttpGet("order/aggregate")]
+        public async Task<IActionResult> GetOrdersDetailAggregates([FromQuery] IList<int> ordersId) {
+            if(ordersId == null) {
+                return BadRequest("Lista ordini da stampare non specificata");
+            }
+
+            IList<OrderDetailsAggregateModel> result;
+
+            using(var transaction = await _context.Database.BeginTransactionAsync()) {
+                result = await _context
+                    .OrderDetails
+                    .Where(d =>
+                        ordersId.Contains(d.OrderId)
+                        && d.Item.Group == MenuDetail.FIRST_DISH)
+                    .GroupBy(d => d.ItemId)
+                    .Select(g => new OrderDetailsAggregateModel {
+                        ItemId = g.Key,
+                        Name = g.First().Item.Name,
+                        Quantity = g.Sum(d => d.Quantity)
+                    })
+                    .ToListAsync();
+
+                transaction.Commit();
+            }
+
+            try {
+                await _printService.PrintAsync(result);
+            }
+            catch(Exception e) {
+                throw new Exception("Impossibile stampare la lista dei piatti", e);
+            }
+
+            return Ok();
         }
     }
 }

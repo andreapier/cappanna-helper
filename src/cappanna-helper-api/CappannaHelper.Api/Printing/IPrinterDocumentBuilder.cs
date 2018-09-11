@@ -1,11 +1,9 @@
-using CappannaHelper.Api.Persistence.Modelling;
 using CappannaHelper.Printing;
 
-namespace CappannaHelper.Api.Printing
-{
-    public interface IPrinterDocumentBuilder
+namespace CappannaHelper.Api.Printing {
+    public interface IPrinterDocumentBuilder<T>
     {
         IDocument Build();
-        IPrinterDocumentBuilder SetOrder(ChOrder order);
+        IPrinterDocumentBuilder<T> SetData(T order);
     }
 }

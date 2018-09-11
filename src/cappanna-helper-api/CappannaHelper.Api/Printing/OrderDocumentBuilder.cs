@@ -8,11 +8,11 @@ using System.Linq;
 
 namespace CappannaHelper.Api.Printing
 {
-    public class PrinterDocumentBuilder : IPrinterDocumentBuilder
+    public class OrderDocumentBuilder : IPrinterDocumentBuilder<ChOrder>
     {
         private readonly Document _document;
 
-        public PrinterDocumentBuilder()
+        public OrderDocumentBuilder()
         {
             _document = new Document();
         }
@@ -95,7 +95,7 @@ namespace CappannaHelper.Api.Printing
             AddDesserts(details.Where(d => d.Item.Group == MenuDetail.DESSERT_DISH), size);
         }
 
-        public IPrinterDocumentBuilder SetOrder(ChOrder order)
+        public IPrinterDocumentBuilder<ChOrder> SetData(ChOrder order)
         {
             if (order.Details.Any(d => d.Item.IsDish))
             {
