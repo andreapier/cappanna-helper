@@ -8,7 +8,7 @@ const CustomCheckbox = props => {
   const {
     id,
     classes,
-    inputProps
+    ...inputProps
   } = props;
 
   return (

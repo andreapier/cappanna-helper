@@ -3,7 +3,8 @@ using CappannaHelper.Api.Models;
 using CappannaHelper.Printing;
 using CappannaHelper.Printing.EscPos;
 
-namespace CappannaHelper.Api.Printing {
+namespace CappannaHelper.Api.Printing
+{
     public class OrderDetailsAggregateDocumentBuilder: IPrinterDocumentBuilder<IList<OrderDetailsAggregateModel>>
     {
         private readonly Document _document;
@@ -15,7 +16,6 @@ namespace CappannaHelper.Api.Printing {
 
         public IPrinterDocumentBuilder<IList<OrderDetailsAggregateModel>> SetData(IList<OrderDetailsAggregateModel> aggregation)
         {
-
             return this;
         }
 

@@ -11,6 +11,7 @@ const OrderDetailsAggregate = props => {
         orderDetailsAggregationRequested={
           props.orderDetailsAggregationRequested
         }
+        ordersId={props.orders.filter(o => o.selected).map(o => o.id)}
       />
       <List>
         {props.orders.map(o => (
@@ -23,7 +24,7 @@ const OrderDetailsAggregate = props => {
 
 OrderDetailsAggregate.propTypes = {
   orderDetailsAggregationRequested: PropTypes.func,
-  toggleOrderSelectionForAggregation: PropTyps.func,
+  toggleOrderSelectionForAggregation: PropTypes.func,
   orders: PropTypes.array.isRequired
 };
 

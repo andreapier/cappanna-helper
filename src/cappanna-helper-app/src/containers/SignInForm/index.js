@@ -38,7 +38,7 @@ class SignIn extends Component {
             />
           </ItemGrid>
           <ItemGrid xs={12} md={3}>
-            <Button type="submit" fullWidth color="info">
+            <Button type="submit" fullWidth>
               Sign in
             </Button>
           </ItemGrid>

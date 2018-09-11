@@ -15,7 +15,7 @@ const Header = props => {
   return (
     <Toolbar>
       <IconButton
-        onClick={props.orderDetailsAggregationRequested}
+        onClick={() => props.orderDetailsAggregationRequested(props.ordersId)}
         customClass={props.classes.icon}
       >
         <Assignment />
@@ -25,6 +25,7 @@ const Header = props => {
 };
 
 Header.propTypes = {
+  ordersId: PropTypes.arrayOf(PropTypes.number).isRequired,
   orderDetailsAggregationRequested: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired
 };

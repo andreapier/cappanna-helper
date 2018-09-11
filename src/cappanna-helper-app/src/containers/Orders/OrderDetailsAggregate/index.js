@@ -43,11 +43,11 @@ const mapStateToProps = state => {
     shouldLoad: !state.orders.loading && !state.orders.loaded,
     loaded: state.orders.loaded,
     orders: state.orders.items.filter(o => o.status === 3).map(o => {
-      const selected = state.aggregation.find(i => i === o.id);
-
+      const selected = state.aggregation.indexOf(o.id);
+      
       return {
         ...o,
-        selected: selected > 0
+        selected: selected > -1
       };
     })
   };
@@ -61,8 +61,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(resetOrderSelectionForAggregation()),
     toggleOrderSelectionForAggregation: orderId =>
       dispatch(toggleOrderSelectionForAggregation(orderId)),
-    orderDetailsAggregationRequested: () =>
-      dispatch(orderDetailsAggregationRequested())
+    orderDetailsAggregationRequested: ordersId =>
+      dispatch(orderDetailsAggregationRequested(ordersId))
   };
 };
 

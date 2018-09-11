@@ -179,6 +179,10 @@ class Api {
     return post(`${ORDER}/${orderId}`, status);
   }
 
+  aggregateOrderDetails(ordersId) {
+    return get(`${PRINT}/order/aggregate?${ordersId.map(o => "ordersId=" + o).join("&")}`)
+  }
+
   getNotifications() {
     return get(NOTIFICATION);
   }

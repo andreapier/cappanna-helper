@@ -12,12 +12,11 @@ const Preview = props => {
   } (Tav. ${props.order.chTable})`;
 
   return (
-    <ListItem button className={props.classes.itemLink}>
+    <ListItem button className={props.classes.itemLink} onClick={() => props.toggleOrderSelectionForAggregation(props.order.id)}>
       <Checkbox
         checked={props.order.selected}
         disableRipple
         disableTouchRipple
-        onChange={() => props.toggleOrderSelectionForAggregation(props.order.id)}
       />
       <ListItemText
         primary={text}
