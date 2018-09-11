@@ -1,11 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 import Grid from "components/Grid";
 import RegularCard from "components/Cards/RegularCard";
 import P from "components/Typography/P";
 import ItemGrid from "components/Grid/ItemGrid";
 import SignInForm from "containers/SignInForm";
 
-class SignInPage extends React.Component {
+class SignInPage extends Component {
   render() {
     return (
       <RegularCard

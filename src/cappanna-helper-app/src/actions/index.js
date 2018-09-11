@@ -17,9 +17,6 @@ import {
   INVALIDATE_MENU_DETAILS,
   SET_MENU_DETAIL_QUANTITY,
   MENU_DETAILS_CHANGED,
-  CONNECT_SIGNALR,
-  DISCONNECT_SIGNALR,
-  CREATE_EMPTY_ORDER,
   EDIT_ORDER,
   DELETE_ORDER,
   CLOSE_ORDER,
@@ -57,12 +54,6 @@ import {
   INVALIDATE_DASHBOARD_DATA,
   DASHBOARD_DATA_CHANGED
 } from "actions/types";
-
-const signalRAction = {
-  metadata: {
-    signalR: true
-  }
-};
 
 export function signinRequested({ username, password, rememberMe }) {
   return {
@@ -146,18 +137,6 @@ export function setMenuDetailQuantity(dishId, unitsInStock) {
 
 export function menuDetailsChanged(menuDetails) {
   return { type: MENU_DETAILS_CHANGED, payload: menuDetails };
-}
-
-export function connectSignalR(userData) {
-  return { type: CONNECT_SIGNALR, payload: userData, ...signalRAction };
-}
-
-export function disconnectSignalR() {
-  return { type: DISCONNECT_SIGNALR, ...signalRAction };
-}
-
-export function createEmptyOrder(menu) {
-  return { type: CREATE_EMPTY_ORDER, payload: menu };
 }
 
 export function editOrder(order) {

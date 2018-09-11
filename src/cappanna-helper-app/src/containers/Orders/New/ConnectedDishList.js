@@ -35,7 +35,7 @@ class DishList extends Component {
     );
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate() {
     return false;
   }
 }

@@ -16,4 +16,6 @@ const getDefaultRoute = role => {
   }
 };
 
-export { isRouteActive, getActiveRoute, getDefaultRoute };
+const isNewOrder = location => location.pathname === "/order/new";
+
+export { isRouteActive, getActiveRoute, getDefaultRoute, isNewOrder };

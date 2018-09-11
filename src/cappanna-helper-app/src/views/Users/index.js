@@ -2,7 +2,7 @@ import React from "react";
 import RegularCard from "components/Cards/RegularCard";
 import SignUpForm from "containers/SignUpForm";
 
-function Users({ ...props }) {
+const Users = () => {
   return (
     <RegularCard
       cardTitle="Crea utente"

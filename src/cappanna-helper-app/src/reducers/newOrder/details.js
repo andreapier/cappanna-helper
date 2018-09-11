@@ -1,8 +1,8 @@
 import {
-  CREATE_EMPTY_ORDER,
   INCREMENT_ORDER_DETAIL_QUANTITY,
   RESET_ORDER,
   EDIT_ORDER,
+  LOAD_MENU_DETAILS_COMPLETED,
   INVALIDATE_MENU_DETAILS,
   INVALIDATE_ORDERS_LIST,
   INVALIDATE_NOTIFICATIONS_LIST,
@@ -18,19 +18,18 @@ export default function(state = initialState, action) {
     case INVALIDATE_ORDERS_LIST:
     case INVALIDATE_NOTIFICATIONS_LIST:
     case INVALIDATE_DASHBOARD_DATA:
-      return state.map(e => ({
-        itemId: e.itemId,
-        quantity: 0
-      }));
+      return state.map(e => ({ itemId: e.itemId, quantity: 0 }));
 
-    case CREATE_EMPTY_ORDER:
-      return action.payload.map(e => ({
-        itemId: e.id,
-        quantity: 0
-      }));
+    case LOAD_MENU_DETAILS_COMPLETED:
+      if (state.length === 0) {
+        return action.payload.map(e => ({ itemId: e.id, quantity: 0 }));
+      }
+      return state;
 
     case INCREMENT_ORDER_DETAIL_QUANTITY:
-      const detailIndex = state.findIndex(e => e.itemId === action.payload.itemId);
+      const detailIndex = state.findIndex(
+        e => e.itemId === action.payload.itemId
+      );
       const detail = state.find(e => e.itemId === action.payload.itemId);
       const quantity = detail.quantity + action.payload.quantity;
 

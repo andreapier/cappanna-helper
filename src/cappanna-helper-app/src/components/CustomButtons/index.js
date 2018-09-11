@@ -30,14 +30,13 @@ const RegularButton = props => {
 };
 
 RegularButton.defaultProps = {
-  color: "info"
+  color: "primary"
 };
 
 RegularButton.propTypes = {
   classes: PropTypes.object.isRequired,
   color: PropTypes.oneOf([
     "primary",
-    "info",
     "success",
     "warning",
     "danger",

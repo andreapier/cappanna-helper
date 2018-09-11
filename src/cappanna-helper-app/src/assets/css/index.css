@@ -3,12 +3,6 @@ body {
   font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
-a,
-a:hover,
-a:focus {
-  color: #1e2a9c;
-}
-
 @media (max-width: 991px) {
   body,
   html {

@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "containers/App";
-//import registerServiceWorker from "./registerServiceWorker";
 import storeGenerator from "./store";
 import { loadUserData } from "actions";
 import "assets/css/index.css";
@@ -20,5 +19,3 @@ if (module.hot) {
     renderApp();
   });
 }
-
-//registerServiceWorker();

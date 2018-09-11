@@ -12,7 +12,9 @@ const IconCustomButton = props => {
     <IconButton
       {...rest}
       className={
-        classes.button + " " + classes[colorWithDisabled] +
+        classes.button +
+        " " +
+        classes[colorWithDisabled] +
         (customClass ? " " + customClass : "")
       }
     >
@@ -22,14 +24,13 @@ const IconCustomButton = props => {
 };
 
 IconCustomButton.defaultProps = {
-  color: "info"
+  color: "primary"
 };
 
 IconCustomButton.propTypes = {
   classes: PropTypes.object.isRequired,
   color: PropTypes.oneOf([
     "primary",
-    "info",
     "success",
     "warning",
     "danger",

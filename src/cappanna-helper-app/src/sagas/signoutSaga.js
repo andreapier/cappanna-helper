@@ -1,11 +1,6 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "api/";
-import {
-  signoutCompleted,
-  loadingChanged,
-  disconnectSignalR,
-  notifyError
-} from "actions";
+import { signoutCompleted, loadingChanged, notifyError } from "actions";
 import { SIGNOUT_REQUESTED } from "actions/types";
 import localforage from "localforage";
 import history from "./../history";
@@ -21,8 +16,7 @@ function* signout(action) {
   try {
     yield put(loadingChanged(true, "Logout in corso..."));
     yield deleteUserData();
-    yield put(disconnectSignalR());
-    
+
     const api = new Api();
     yield call(api.signout);
   } catch (e) {

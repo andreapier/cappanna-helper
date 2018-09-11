@@ -7,7 +7,7 @@ const PrivateRoute = ({ component: Component, user, roles, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      user && user.token ? (
+      user.token ? (
         user.roles.some(r => roles.includes(r)) ? (
           <Component {...props} />
         ) : (
@@ -29,7 +29,7 @@ PrivateRoute.propTypes = {
   component: PropTypes.func.isRequired,
   user: PropTypes.shape({
     roles: PropTypes.arrayOf(PropTypes.string).isRequired,
-    token: PropTypes.string
+    token: PropTypes.string.isRequired
   }).isRequired,
   roles: PropTypes.arrayOf(PropTypes.string).isRequired
 };

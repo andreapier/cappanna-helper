@@ -3,7 +3,7 @@ import { SIGNIN_COMPLETED, SIGNOUT_COMPLETED } from "actions/types";
 const initialState = {
   userId: null,
   username: null,
-  token: null,
+  token: "",
   roles: []
 };
 

@@ -1,5 +1,4 @@
 import {
-  CREATE_EMPTY_ORDER,
   INCREMENT_ORDER_DETAIL_QUANTITY,
   SET_ORDER_TABLE,
   SET_ORDER_TABLE_CATEGORY,
@@ -22,13 +21,11 @@ export default function(state = initialState, action) {
     case RESET_ORDER:
       return initialState;
 
-    case CREATE_EMPTY_ORDER:
-      return initialState;
-
     case INCREMENT_ORDER_DETAIL_QUANTITY:
       return {
         ...state,
-        totalPrice: state.totalPrice + action.payload.quantity * action.payload.price
+        totalPrice:
+          state.totalPrice + action.payload.quantity * action.payload.price
       };
 
     case SET_ORDER_TABLE:

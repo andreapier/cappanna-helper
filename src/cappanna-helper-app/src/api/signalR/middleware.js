@@ -1,20 +1,16 @@
-import { CONNECT_SIGNALR, DISCONNECT_SIGNALR } from "actions/types";
+import { SIGNIN_COMPLETED, SIGNOUT_COMPLETED } from "actions/types";
 import SignalR from "api/signalR";
 
 const signalrMiddleware = ({ dispatch }) => {
   let signalR;
 
   return next => action => {
-    if (!action.metadata || !action.metadata.signalR) {
-      return next(action);
-    }
-
     switch (action.type) {
-      case CONNECT_SIGNALR:
+      case SIGNIN_COMPLETED:
         signalR = new SignalR(dispatch, action.payload);
         return signalR.connect().then(() => next(action));
 
-      case DISCONNECT_SIGNALR:
+      case SIGNOUT_COMPLETED:
         return signalR.disconnect().then(() => next(action));
 
       default:
