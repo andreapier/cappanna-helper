@@ -22,7 +22,8 @@ const OrderDetailsAggregate = props => {
 };
 
 OrderDetailsAggregate.propTypes = {
-  orderDetailsAggregationRequested: PropTypes.func.isRequired,
+  orderDetailsAggregationRequested: PropTypes.func,
+  toggleOrderSelectionForAggregation: PropTyps.func,
   orders: PropTypes.array.isRequired
 };
 
