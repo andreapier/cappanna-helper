@@ -4,7 +4,7 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-namespace CappannaHelper.Printing.Communication.Windows
+namespace CappannaHelper.Printing.Communication.Usb.Windows
 {
     public class UsbChannel : IChannel
     {

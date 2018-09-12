@@ -1,7 +1,7 @@
 using Microsoft.Win32;
 using System;
 
-namespace CappannaHelper.Printing.Communication.Windows
+namespace CappannaHelper.Printing.Communication.Usb.Windows
 {
     public class RegistryPrinterResolver : IPrinterResolver
     {

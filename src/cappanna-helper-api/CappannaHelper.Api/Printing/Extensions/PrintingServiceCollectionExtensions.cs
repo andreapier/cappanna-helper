@@ -1,6 +1,6 @@
 using CappannaHelper.Printing;
 using CappannaHelper.Printing.Communication;
-using CappannaHelper.Printing.Communication.Windows;
+using CappannaHelper.Printing.Communication.Usb.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 

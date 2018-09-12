@@ -1,4 +1,4 @@
-namespace CappannaHelper.Printing.Communication.Windows
+namespace CappannaHelper.Printing.Communication.Usb.Windows
 {
     public interface IPrinterResolver
     {

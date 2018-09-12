@@ -1,4 +1,4 @@
-﻿using CappannaHelper.Printing.Communication.Windows;
+﻿using CappannaHelper.Printing.Communication.Usb.Windows;
 using CappannaHelper.Printing.EscPos;
 using System.Threading.Tasks;
 
