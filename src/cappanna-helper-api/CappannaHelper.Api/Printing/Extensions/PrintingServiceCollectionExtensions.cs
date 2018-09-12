@@ -1,5 +1,6 @@
 using CappannaHelper.Printing;
 using CappannaHelper.Printing.Communication;
+using CappannaHelper.Printing.Communication.Lan;
 using CappannaHelper.Printing.Communication.Usb.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -27,7 +28,12 @@ namespace CappannaHelper.Api.Printing.Extensions
                     {
                         return c.GetService<FileChannel>();
                     }
-                
+
+                    if(printerOptions.Value.ChannelType == "Tcp")
+                    {
+                        return c.GetService<TcpChannel>();
+                    }
+
                     return c.GetService<UsbChannel>();
                 })
                 .AddSingleton<IPrinter, Printer>()
