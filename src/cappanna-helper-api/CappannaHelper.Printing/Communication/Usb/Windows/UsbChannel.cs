@@ -64,12 +64,7 @@ namespace CappannaHelper.Printing.Communication.Usb.Windows
 
         public UsbChannel(IPrinterResolver resolver)
         {
-            if (resolver == null)
-            {
-                throw new ArgumentNullException("resolver");
-            }
-
-            _resolver = resolver;
+            _resolver = resolver ?? throw new ArgumentNullException("resolver");
         }
 
         public bool Open()
