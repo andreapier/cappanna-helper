@@ -5,21 +5,11 @@ import {
   DASHBOARD_DATA_CHANGED
 } from "actions/types";
 
-const waitersStats = [{
-  waiter: 'marco',
-  count: 10,
-  amount: 100
-}, {
-  waiter: 'truku',
-  count: 15,
-  amount: 150
-}];
-
 export const initialState = {
   loading: false,
   loaded: false,
   data: {
-    waitersStats,
+    waitersStats: [],
     ordersQuantity: 0,
     income: 0
   }
@@ -40,9 +30,7 @@ export default function(state = initialState, action) {
         loading: false,
         loaded: true,
         data: {
-          ...state.data,
-          income: action.payload.income,
-          ordersQuantity: action.payload.ordersQuantity
+          ...action.payload
         }
       };
 

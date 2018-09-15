@@ -4,7 +4,7 @@ import RegularCard from "components/Cards/RegularCard";
 import Table from "components/Table";
 import { formatAmount } from "utils/string";
 
-const buildTableRow = data => [data.waiter, data.count, formatAmount(data.amount)];
+const buildTableRow = data => [data.waiter, data.ordersQuantity, formatAmount(data.income)];
 
 const WaitersStatCard = props => {
   return (
@@ -20,8 +20,8 @@ WaitersStatCard.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       waiter: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-      amount: PropTypes.number.isRequired
+      ordersQuantity: PropTypes.number.isRequired,
+      income: PropTypes.number.isRequired
     })
   ).isRequired
 };
