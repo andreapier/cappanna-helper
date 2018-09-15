@@ -24,22 +24,30 @@ namespace CappannaHelper.Api.Services
             var limit = now.AddHours(-1);
 
             var result = await _context.Orders
-                .Where(o => o.CreationTimestamp <= limit)
+                .Where(o => o.CreationTimestamp >= limit)
                 .OrderByDescending(o => o.CreationTimestamp)
                 .Select(o => o.Shift)
                 .FirstOrDefaultAsync();
 
             if (result == null)
             {
-                var shift = await _context.Shifts.AddAsync(new Shift
+                result = await _context.Shifts
+                    .Where(o => o.OpenTimestamp >= limit)
+                    .OrderByDescending(o => o.OpenTimestamp)
+                    .FirstOrDefaultAsync();
+
+                if (result == null)
                 {
-                    OpenTimestamp = now,
-                    Description = $"{now.ToString("dddd")} - {(now.Hour < 17 ? "Pranzo" : "Cena")}"
-                });
+                    var shift = await _context.Shifts.AddAsync(new Shift
+                    {
+                        OpenTimestamp = now,
+                        Description = $"{now.ToString("dddd")} - {(now.Hour < 17 ? "Pranzo" : "Cena")}"
+                    });
 
-                await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
 
-                result = shift.Entity;
+                    result = shift.Entity;
+                }
             }
 
             return result;
