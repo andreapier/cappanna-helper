@@ -36,6 +36,7 @@ namespace CappannaHelper.Api.Controllers
                 .GroupBy(o => o.CreatedById)
                 .Select(g => new WaiterStats
                 {
+                    UserId = g.First().CreatedById,
                     Waiter = g.First().CreatedBy.UserName,
                     OrdersQuantity = g.Count(),
                     Income = g.Sum(o => o.Details.Sum(d => d.Quantity * d.Item.Price))
