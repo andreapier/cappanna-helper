@@ -7,7 +7,7 @@ const signalrMiddleware = ({ dispatch }) => {
   return next => action => {
     switch (action.type) {
       case SIGNIN_COMPLETED:
-        signalR = new SignalR(dispatch, action.payload);
+        signalR = new SignalR(dispatch);
         return signalR.connect().then(() => next(action));
 
       case SIGNOUT_COMPLETED:

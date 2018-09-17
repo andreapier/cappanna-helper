@@ -5,12 +5,11 @@ import {
   orderPrinted,
   orderDeleted,
   orderClosed,
-  menuDetailsChanged,
-  dashboardDataChanged
+  menuDetailsChanged
 } from "actions";
 
 class SignalR {
-  constructor(dispatch, userData) {
+  constructor(dispatch) {
     this.dispatch = dispatch;
     this.chHubConnection = new HubConnectionBuilder()
       .withUrl("/hubs/ch")
@@ -41,12 +40,6 @@ class SignalR {
       this.dispatch(menuDetailsChanged(data));
     });
 
-    if (userData.roles.some(r => r === "admin")) {
-      this.chHubConnection.on("NotifyDashboardDataChanged", data =>
-        this.dispatch(dashboardDataChanged(data))
-      );
-    }
-
     this.chHubConnection.onclose(err => {
       if (!err) {
         return;
@@ -63,7 +56,7 @@ class SignalR {
     }
 
     return this.connectNoError().catch(err => {
-      console.error("Errore trying to automatically reconnect", err);
+      console.error("Error trying to automatically reconnect", err);
       setTimeout(() => this.reconnect(failedRetry++, interval * 2), interval);
     });
   }

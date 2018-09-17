@@ -51,8 +51,7 @@ import {
   CALCULATE,
   LOAD_DASHBOARD_DATA_REQUESTED,
   LOAD_DASHBOARD_DATA_COMPLETED,
-  INVALIDATE_DASHBOARD_DATA,
-  DASHBOARD_DATA_CHANGED
+  INVALIDATE_DASHBOARD_DATA
 } from "actions/types";
 
 export function signinRequested({ username, password, rememberMe }) {
@@ -280,8 +279,4 @@ export function loadDashboardDataCompleted(notifications) {
 
 export function invalidateDashboardData() {
   return { type: INVALIDATE_DASHBOARD_DATA };
-}
-
-export function dashboardDataChanged(dashboardData) {
-  return { type: DASHBOARD_DATA_CHANGED, payload: dashboardData };
 }
