@@ -15,6 +15,7 @@ namespace CappannaHelper.Api.Persistence
         public DbSet<MenuDetail> MenuDetails { get; set; }
         public DbSet<OperationType> OperationTypes { get; set; }
         public DbSet<Shift> Shifts { get; set; }
+        public DbSet<Setting> Settings { get; set; }
 
         public ApplicationDbContext()
         { }

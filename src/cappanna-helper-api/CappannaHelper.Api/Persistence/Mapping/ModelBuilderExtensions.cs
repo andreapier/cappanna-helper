@@ -11,7 +11,9 @@ namespace CappannaHelper.Api.Persistence.Mapping
                 .MapChOrderOperation()
                 .MapOperationType()
                 .MapMenuDetail()
-                .MapOrderDetail();
+                .MapOrderDetail()
+                .MapShift()
+                .MapSetting();
         }
 
         public static ModelBuilder MapChOrder(this ModelBuilder builder)
@@ -52,6 +54,12 @@ namespace CappannaHelper.Api.Persistence.Mapping
         public static ModelBuilder MapShift(this ModelBuilder builder)
         {
             var mapping = new ShiftMapping(builder);
+            mapping.Build();
+            return builder;
+        }
+
+        public static ModelBuilder MapSetting(this ModelBuilder builder) {
+            var mapping = new SettingMapping(builder);
             mapping.Build();
             return builder;
         }

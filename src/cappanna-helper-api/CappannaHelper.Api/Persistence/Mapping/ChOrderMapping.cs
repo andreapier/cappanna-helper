@@ -31,6 +31,7 @@ namespace CappannaHelper.Api.Persistence.Mapping
             entityBuilder.HasIndex(o => o.CreationTimestamp);
             entityBuilder.HasIndex(o => o.Status);
             entityBuilder.HasIndex(o => o.ShiftId);
+            entityBuilder.HasIndex(o => new { o.ShiftId, o.ShiftCounter }).IsUnique();
         }
     }
 }
