@@ -2,6 +2,7 @@ using CappannaHelper.Printing;
 using CappannaHelper.Printing.Communication;
 using CappannaHelper.Printing.Communication.Lan;
 using CappannaHelper.Printing.Communication.Usb.Windows;
+using CappannaHelper.Printing.EscPos;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
@@ -36,6 +37,7 @@ namespace CappannaHelper.Api.Printing.Extensions
 
                     return c.GetService<UsbChannel>();
                 })
+                .AddSingleton<IStatusFactory, StatusFactory>()
                 .AddSingleton<IPrinter, Printer>()
                 .AddSingleton<IPrintService, PrintService>();
         }

@@ -13,7 +13,17 @@ namespace CappannaHelper.Printing.Tests
         [Fact]
         public void Throws_With_Null_Channel()
         {
-            var exception = Assert.Throws<ArgumentNullException>(() => new Printer(null));
+            var statusFactory = new Mock<IStatusFactory>();
+            var exception = Assert.Throws<ArgumentNullException>(() => new Printer(null, statusFactory.Object));
+
+            Assert.NotNull(exception);
+            Assert.Equal("channel", exception.ParamName);
+        }
+        [Fact]
+        public void Throws_With_Null_StatusFactory()
+        {
+            var channel = new Mock<IChannel>();
+            var exception = Assert.Throws<ArgumentNullException>(() => new Printer(channel.Object, null));
 
             Assert.NotNull(exception);
             Assert.Equal("channel", exception.ParamName);
@@ -23,7 +33,8 @@ namespace CappannaHelper.Printing.Tests
         public async Task Throws_With_Null_Document()
         {
             var channel = new Mock<IChannel>();
-            var printer = new Printer(channel.Object);
+            var statusFactory = new Mock<IStatusFactory>();
+            var printer = new Printer(channel.Object, statusFactory.Object);
 
             var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => printer.PrintAsync(null));
 
@@ -39,7 +50,8 @@ namespace CappannaHelper.Printing.Tests
             var renderCalled = false;
             var writeAsyncCalled = false;
             var channel = new Mock<IChannel>();
-            var printer = new Printer(channel.Object);
+            var statusFactory = new Mock<IStatusFactory>();
+            var printer = new Printer(channel.Object, statusFactory.Object);
             var document = new Mock<IDocument>();
             document.Setup(d => d.Render()).Returns(documentRaw).Callback(() => renderCalled = true);
             channel.Setup(c => c.WriteAsync(It.IsAny<byte[]>())).ReturnsAsync(true).Callback<byte[]>(w =>
