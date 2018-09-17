@@ -6,6 +6,7 @@ import {
   ORDER_CHANGED,
   ORDER_PRINTED
 } from "actions/types";
+import calculateOrderTotalPrice from "utils/calculateOrderTotalPrice";
 
 const initialState = {
   loading: false,
@@ -38,10 +39,7 @@ export default function(state = initialState, action) {
         items: state.items.concat([{
           type: "order",
           orderId: action.payload.id,
-          totalPrice: action.payload.details.reduce(
-            (acc, e) => acc + e.quantity * e.item.price,
-            0
-          ),
+          totalPrice: calculateOrderTotalPrice(action.payload),
           username: action.payload.createdBy.userName
         }])
       };
@@ -57,10 +55,7 @@ export default function(state = initialState, action) {
               return {
                 orderId: action.payload.id,
                 type: n.type,
-                totalPrice: action.payload.details.reduce(
-                  (acc, e) => acc + e.quantity * e.item.price,
-                  0
-                ),
+                totalPrice: calculateOrderTotalPrice(action.payload),
                 username: n.username
               };
             }
@@ -70,10 +65,7 @@ export default function(state = initialState, action) {
           state.items.concat([{
             orderId: action.payload.id,
             type: "order",
-            totalPrice: action.payload.details.reduce(
-              (acc, e) => acc + e.quantity * e.item.price,
-              0
-            ),
+            totalPrice: calculateOrderTotalPrice(action.payload),
             username: action.payload.createdBy.userName
           }])
       };

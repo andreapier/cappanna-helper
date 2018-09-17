@@ -5,6 +5,7 @@ import {
   ORDER_CREATED,
   ORDER_DELETED
 } from "actions/types";
+import calculateOrderTotalPrice from "utils/calculateOrderTotalPrice";
 
 export const initialState = {
   loading: false,
@@ -38,10 +39,8 @@ export default function(state = initialState, action) {
       return initialState;
 
     case ORDER_CREATED: {
-      const totalPrice = action.payload.details.reduce(
-        (acc, e) => acc + e.quantity * e.item.price,
-        0
-      );
+      const totalPrice = calculateOrderTotalPrice(action.payload);
+
       return {
         ...state,
         data: {
@@ -59,10 +58,8 @@ export default function(state = initialState, action) {
     }
       
     case ORDER_DELETED: {
-      const totalPrice = action.payload.details.reduce(
-        (acc, e) => acc + e.quantity * e.item.price,
-        0
-      );
+      const totalPrice = calculateOrderTotalPrice(action.payload);
+
       return {
         ...state,
         data: {

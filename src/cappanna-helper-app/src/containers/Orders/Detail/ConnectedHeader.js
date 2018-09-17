@@ -9,6 +9,7 @@ import {
   calculate
 } from "actions";
 import history from "./../../../history";
+import calculateOrderTotalPrice from "utils/calculateOrderTotalPrice";
 
 class ConnectedHeader extends Component {
   render() {
@@ -46,10 +47,7 @@ const mapStateToProps = state => {
 
   if (state.selectedOrder.item) {
     result.order.id = state.selectedOrder.item.id;
-    result.order.totalPrice = state.selectedOrder.item.details.reduce(
-      (acc, e) => acc + e.quantity * e.item.price,
-      0
-    );
+    result.order.totalPrice = calculateOrderTotalPrice(state.selectedOrder.item);
     result.order.chTable = parseInt(
       state.selectedOrder.item.chTable.split("\\")[0],
       10
