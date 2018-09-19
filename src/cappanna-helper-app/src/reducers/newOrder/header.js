@@ -5,7 +5,12 @@ import {
   SET_ORDER_SEATS,
   RESET_ORDER,
   SET_ORDER_NOTES,
-  EDIT_ORDER
+  EDIT_ORDER,
+  INVALIDATE_MENU_DETAILS,
+  INVALIDATE_ORDERS_LIST,
+  INVALIDATE_NOTIFICATIONS_LIST,
+  INVALIDATE_DASHBOARD_DATA,
+  INVALIDATE_SETTINGS_LIST
 } from "actions/types";
 
 export const initialState = {
@@ -19,6 +24,11 @@ export const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case RESET_ORDER:
+    case INVALIDATE_MENU_DETAILS:
+    case INVALIDATE_ORDERS_LIST:
+    case INVALIDATE_NOTIFICATIONS_LIST:
+    case INVALIDATE_DASHBOARD_DATA:
+    case INVALIDATE_SETTINGS_LIST:
       return initialState;
 
     case INCREMENT_ORDER_DETAIL_QUANTITY:

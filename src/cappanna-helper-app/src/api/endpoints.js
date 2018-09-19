@@ -9,3 +9,4 @@ export const ORDER = `${API}/order`;
 export const PRINT = `${API}/print`;
 export const NOTIFICATION = `${API}/notification`;
 export const DASHBOARD = `${API}/dashboard`;
+export const SETTING = `${API}/setting`;

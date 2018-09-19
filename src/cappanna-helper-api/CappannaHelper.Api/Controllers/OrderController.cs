@@ -13,7 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CappannaHelper.Api.Controllers {
+namespace CappannaHelper.Api.Controllers
+{
     [Authorize]
     [Route("api/[controller]")]
     public class OrderController : Controller
@@ -22,13 +23,20 @@ namespace CappannaHelper.Api.Controllers {
         private readonly IPrintService _printService;
         private readonly IHubContext<ChHub> _hub;
         private readonly IShiftManager _shiftManager;
+        private readonly ISettingManager _settingManager;
 
-        public OrderController(ApplicationDbContext context, IPrintService printService, IHubContext<ChHub> hub, IShiftManager shiftManager)
+        public OrderController(
+            ApplicationDbContext context,
+            IPrintService printService,
+            IHubContext<ChHub> hub,
+            IShiftManager shiftManager,
+            ISettingManager settingManager)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _printService = printService ?? throw new ArgumentNullException(nameof(printService));
             _hub = hub ?? throw new ArgumentNullException(nameof(hub));
             _shiftManager = shiftManager ?? throw new ArgumentNullException(nameof(shiftManager));
+            _settingManager = settingManager ?? throw new ArgumentNullException(nameof(settingManager));
         }
 
         [HttpGet]
@@ -106,6 +114,7 @@ namespace CappannaHelper.Api.Controllers {
 
             ChOrder result;
             var limitedStockMenuDetails = new List<MenuDetail>();
+            var autoPrint = false;
 
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
@@ -114,6 +123,8 @@ namespace CappannaHelper.Api.Controllers {
                     var creationOperationId = (int)OperationTypes.Creation;
                     var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
                     var shift = await _shiftManager.GetOrCreateCurrentAsync();
+                    autoPrint = await _settingManager.GetSettingValue<bool>(Setting.AUTO_PRINT);
+
                     shift.OrderCounter++;
 
                     order.Operations = new List<ChOrderOperation>();
@@ -150,8 +161,36 @@ namespace CappannaHelper.Api.Controllers {
                         }
                     }
 
-                    await _context.SaveChangesAsync();
+                    if (autoPrint)
+                    {
+                        try
+                        {
+                            await _printService.PrintAsync(result);
+                        }
+                        catch(Exception e)
+                        {
+                            throw new Exception("Impossibile stampare l'ordine", e);
+                        }
 
+                        try
+                        {
+                            var printOperationId = (int) OperationTypes.Print;
+
+                            result.Operations.Add(new ChOrderOperation
+                            {
+                                OperationTimestamp = DateTime.Now,
+                                TypeId = printOperationId,
+                                UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                            });
+                            result.Status = printOperationId;
+                        }
+                        catch(Exception e)
+                        {
+                            throw new Exception("Impossibile salvare l'operazione di stampa dell'ordine", e);
+                        }
+                    }
+
+                    await _context.SaveChangesAsync();
                     transaction.Commit();
                 }
                 catch (Exception e)
@@ -160,7 +199,14 @@ namespace CappannaHelper.Api.Controllers {
                 }
             }
 
-            await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_CREATED, result);
+            if (autoPrint)
+            {
+                await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_PRINTED, result);
+            }
+            else
+            {
+                await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_CREATED, result);
+            }
 
             if (limitedStockMenuDetails.Any())
             {

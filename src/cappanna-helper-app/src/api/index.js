@@ -6,7 +6,8 @@ import {
   MENU_DETAIL,
   PRINT,
   NOTIFICATION,
-  DASHBOARD
+  DASHBOARD,
+  SETTING
 } from "api/endpoints";
 import "whatwg-fetch";
 
@@ -189,6 +190,14 @@ class Api {
 
   getDashboardData() {
     return get(DASHBOARD);
+  }
+
+  getSettings() {
+    return get(SETTING);
+  }
+
+  saveSetting(setting) {
+    return patch(SETTING, setting);
   }
 }
 

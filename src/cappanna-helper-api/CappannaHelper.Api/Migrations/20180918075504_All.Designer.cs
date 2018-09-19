@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CappannaHelper.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180903204823_All")]
+    [Migration("20180918075504_All")]
     partial class All
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,6 +170,9 @@ namespace CappannaHelper.Api.Migrations
 
                     b.HasIndex("Status");
 
+                    b.HasIndex("ShiftId", "ShiftCounter")
+                        .IsUnique();
+
                     b.ToTable("ChOrders");
                 });
 
@@ -256,9 +259,35 @@ namespace CappannaHelper.Api.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("OrderId", "ItemId")
+                        .IsUnique();
 
                     b.ToTable("OrderDetails");
+                });
+
+            modelBuilder.Entity("CappannaHelper.Api.Persistence.Modelling.Setting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(-1);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("CappannaHelper.Api.Persistence.Modelling.Shift", b =>
@@ -266,15 +295,25 @@ namespace CappannaHelper.Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
-                    b.Property<decimal>("Income");
+                    b.Property<decimal>("Income")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(0m);
 
-                    b.Property<DateTime>("OpenTimestamp");
+                    b.Property<DateTime>("OpenTimestamp")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                    b.Property<int>("OrderCounter");
+                    b.Property<int>("OrderCounter")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(0);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OpenTimestamp");
 
                     b.ToTable("Shifts");
                 });

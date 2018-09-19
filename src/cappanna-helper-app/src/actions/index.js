@@ -51,7 +51,11 @@ import {
   CALCULATE,
   LOAD_DASHBOARD_DATA_REQUESTED,
   LOAD_DASHBOARD_DATA_COMPLETED,
-  INVALIDATE_DASHBOARD_DATA
+  INVALIDATE_DASHBOARD_DATA,
+  LOAD_SETTINGS_LIST_REQUESTED,
+  LOAD_SETTINGS_LIST_COMPLETED,
+  INVALIDATE_SETTINGS_LIST,
+  SET_SETTING_VALUE
 } from "actions/types";
 
 export function signinRequested({ username, password, rememberMe }) {
@@ -279,4 +283,20 @@ export function loadDashboardDataCompleted(notifications) {
 
 export function invalidateDashboardData() {
   return { type: INVALIDATE_DASHBOARD_DATA };
+}
+
+export function loadSettingsListRequested() {
+  return { type: LOAD_SETTINGS_LIST_REQUESTED };
+}
+
+export function loadSettingsListCompleted(settings) {
+  return { type: LOAD_SETTINGS_LIST_COMPLETED, payload: settings };
+}
+
+export function invalidateSettingsList() {
+  return { type: INVALIDATE_SETTINGS_LIST };
+}
+
+export function setSettingValue(settingId, settingValue) {
+  return { type: SET_SETTING_VALUE, payload: { settingId, settingValue } };
 }

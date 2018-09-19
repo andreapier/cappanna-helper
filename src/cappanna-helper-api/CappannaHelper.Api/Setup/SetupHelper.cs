@@ -38,6 +38,7 @@ namespace CappannaHelper.Api.Setup
                     await SetupUsersAsync(errors);
                     await SetupMenuAsync(errors);
                     await SetupOperationTypesAsync(errors);
+                    await SetupSettingsAsync(errors);
 
                     transaction.Commit();
                 }
@@ -374,6 +375,7 @@ namespace CappannaHelper.Api.Setup
             try
             {
                 var id = (int)type;
+
                 if (!await _context.OperationTypes.AnyAsync(d => d.Id == id))
                 {
                     await _context.AddAsync(new OperationType
@@ -384,6 +386,40 @@ namespace CappannaHelper.Api.Setup
                 }
             }
             catch (Exception e)
+            {
+                errors.Add(e.Message);
+            }
+        }
+
+        private async Task SetupSettingsAsync(List<string> errors)
+        {
+            await SetupSettingAsync(Setting.AUTO_PRINT, false, errors);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch(Exception e)
+            {
+                errors.Add(e.Message);
+            }
+        }
+
+        private async Task SetupSettingAsync(string name, object value, List<string> errors)
+        {
+            try
+            {
+                if(!await _context.Settings.AnyAsync(d => d.Name == name))
+                {
+                    await _context.AddAsync(new Setting
+                    {
+                        Name = name,
+                        Type = value.GetType().Name,
+                        Value = value.ToString()
+                    });
+                }
+            }
+            catch(Exception e)
             {
                 errors.Add(e.Message);
             }

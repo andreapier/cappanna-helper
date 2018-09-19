@@ -6,7 +6,8 @@ import {
   INVALIDATE_MENU_DETAILS,
   INVALIDATE_ORDERS_LIST,
   INVALIDATE_NOTIFICATIONS_LIST,
-  INVALIDATE_DASHBOARD_DATA
+  INVALIDATE_DASHBOARD_DATA,
+  INVALIDATE_SETTINGS_LIST
 } from "actions/types";
 
 export const initialState = [];
@@ -18,6 +19,7 @@ export default function(state = initialState, action) {
     case INVALIDATE_ORDERS_LIST:
     case INVALIDATE_NOTIFICATIONS_LIST:
     case INVALIDATE_DASHBOARD_DATA:
+    case INVALIDATE_SETTINGS_LIST:
       return state.map(e => ({ itemId: e.itemId, quantity: 0 }));
 
     case LOAD_MENU_DETAILS_COMPLETED:

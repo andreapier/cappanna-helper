@@ -52,15 +52,31 @@ namespace CappannaHelper.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Type = table.Column<string>(maxLength: 50, nullable: false),
+                    Value = table.Column<string>(maxLength: -1, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Settings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Shifts",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    OpenTimestamp = table.Column<DateTime>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    OrderCounter = table.Column<int>(nullable: false),
-                    Income = table.Column<decimal>(nullable: false)
+                    OpenTimestamp = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    Description = table.Column<string>(maxLength: 100, nullable: false),
+                    OrderCounter = table.Column<int>(nullable: false, defaultValue: 0)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Income = table.Column<decimal>(nullable: false, defaultValue: 0m)
                 },
                 constraints: table =>
                 {
@@ -339,14 +355,21 @@ namespace CappannaHelper.Api.Migrations
                 column: "Status");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ChOrders_ShiftId_ShiftCounter",
+                table: "ChOrders",
+                columns: new[] { "ShiftId", "ShiftCounter" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_ItemId",
                 table: "OrderDetails",
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_OrderId",
+                name: "IX_OrderDetails_OrderId_ItemId",
                 table: "OrderDetails",
-                column: "OrderId");
+                columns: new[] { "OrderId", "ItemId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
@@ -358,6 +381,17 @@ namespace CappannaHelper.Api.Migrations
                 table: "Roles",
                 column: "NormalizedName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Settings_Name",
+                table: "Settings",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shifts_OpenTimestamp",
+                table: "Shifts",
+                column: "OpenTimestamp");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserLogins_UserId",
@@ -394,6 +428,9 @@ namespace CappannaHelper.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "RoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "Settings");
 
             migrationBuilder.DropTable(
                 name: "UserLogins");

@@ -39,7 +39,6 @@ namespace CappannaHelper.Api.Controllers
             {
                 result = await _context.Orders
                     .Include(o => o.CreatedBy)
-                    .Include(o => o.Operations)
                     .Include(o => o.Details)
                     .ThenInclude(d => d.Item)
                     .FirstOrDefaultAsync(o => o.Id == id);
@@ -55,19 +54,21 @@ namespace CappannaHelper.Api.Controllers
                 }
                 catch (Exception e)
                 {
-                   throw new Exception("Impossibile ristampare l'ordine", e);
+                   throw new Exception("Impossibile stampare l'ordine", e);
                 }
 
                 try
                 {
                     var printOperationId = (int) OperationTypes.Print;
 					
-                    result.Operations.Add(new ChOrderOperation {
+                    result.Operations.Add(new ChOrderOperation
+                    {
                         OperationTimestamp = DateTime.Now,
                         TypeId = printOperationId,
                         UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
                     });
                     result.Status = printOperationId;
+
                     await _context.SaveChangesAsync();
                     transaction.Commit();
                 }

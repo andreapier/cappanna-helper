@@ -17,6 +17,8 @@ import signalApiErrorSaga from "./signalApiErrorSaga";
 import loadNotificationsListSaga from "./loadNotificationsListSaga";
 import loadDashboardDataSaga from "./loadDashboardDataSaga";
 import orderDetailsAggregationRequestedSaga from "./orderDetailsAggregationRequestedSaga";
+import loadSettingsListSaga from "./loadSettingsListSaga";
+import setSettingSaga from "./setSettingSaga";
 
 function* rootSaga() {
   yield all([
@@ -37,7 +39,9 @@ function* rootSaga() {
     signalApiErrorSaga(),
     loadNotificationsListSaga(),
     loadDashboardDataSaga(),
-    orderDetailsAggregationRequestedSaga()
+    orderDetailsAggregationRequestedSaga(),
+    loadSettingsListSaga(),
+    setSettingSaga()
   ]);
 }
 

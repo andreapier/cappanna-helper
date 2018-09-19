@@ -14,6 +14,7 @@ import signin from "routes/users/signin";
 import signout from "routes/users/signout";
 import signupOk from "routes/users/signupOk";
 import redirect from "routes/redirect";
+import settings from "routes/settings";
 
 const appRoutes = [
   dashboard,
@@ -29,6 +30,7 @@ const appRoutes = [
   calculator,
   notifications,
   signin,
+  settings,
   signout,
   signupOk,
   redirect
