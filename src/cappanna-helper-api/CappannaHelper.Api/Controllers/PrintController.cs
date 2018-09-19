@@ -84,21 +84,25 @@ namespace CappannaHelper.Api.Controllers
         }
 
         [HttpGet("order/aggregate")]
-        public async Task<IActionResult> GetOrdersDetailAggregates([FromQuery] IList<int> ordersId) {
-            if(ordersId == null) {
+        public async Task<IActionResult> GetOrdersDetailAggregates([FromQuery] IList<int> ordersId)
+        {
+            if(ordersId == null)
+            {
                 return BadRequest("Lista ordini da stampare non specificata");
             }
 
             IList<OrderDetailsAggregateModel> result;
 
-            using(var transaction = await _context.Database.BeginTransactionAsync()) {
+            using(var transaction = await _context.Database.BeginTransactionAsync())
+            {
                 result = await _context
                     .OrderDetails
                     .Where(d =>
                         ordersId.Contains(d.OrderId)
                         && d.Item.Group == MenuDetail.FIRST_DISH)
                     .GroupBy(d => d.ItemId)
-                    .Select(g => new OrderDetailsAggregateModel {
+                    .Select(g => new OrderDetailsAggregateModel
+                    {
                         ItemId = g.Key,
                         Name = g.First().Item.Name,
                         Quantity = g.Sum(d => d.Quantity)
@@ -108,14 +112,31 @@ namespace CappannaHelper.Api.Controllers
                 transaction.Commit();
             }
 
-            try {
+            try
+            {
                 await _printService.PrintAsync(result);
             }
-            catch(Exception e) {
+            catch(Exception e)
+            {
                 throw new Exception("Impossibile stampare la lista dei piatti", e);
             }
 
             return Ok();
+        }
+
+        [HttpGet("status")]
+        public async Task<IActionResult> GetStatus()
+        {
+            try
+            {
+                var status = await _printService.GetStatusAsync();
+
+                return Ok(status);
+            }
+            catch(Exception e)
+            {
+                throw new Exception("Impossibile recuperare lo stato della stampante", e);
+            }
         }
     }
 }

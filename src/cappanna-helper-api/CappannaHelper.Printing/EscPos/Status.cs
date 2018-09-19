@@ -32,10 +32,12 @@ namespace CappannaHelper.Printing.EscPos
             return IsOk;
         }
 
-        private async Task ExecuteTransmitPrinterStatusAsync(IChannel channel) {
+        private async Task ExecuteTransmitPrinterStatusAsync(IChannel channel)
+        {
             var ok = await channel.WriteAsync(Commands.TRANSMIT_PRINTER_STATUS.ToArray());
 
-            if(!ok) {
+            if (!ok)
+            {
                 throw new Exception("Cannot send 'TRANSMIT_PRINTER_STATUS' command to printer");
             }
 
@@ -46,10 +48,12 @@ namespace CappannaHelper.Printing.EscPos
             Details["IsFeedButtonPressed"] = (data[0] & 0x07) == 1;
         }
 
-        private async Task ExecuteTransmitOfflineCauseAsync(IChannel channel) {
+        private async Task ExecuteTransmitOfflineCauseAsync(IChannel channel)
+        {
             var ok = await channel.WriteAsync(Commands.TRANSMIT_OFFLINE_CAUSE_STATUS.ToArray());
 
-            if(!ok) {
+            if (!ok)
+            {
                 throw new Exception("Cannot send 'TRANSMIT_OFFLINE_CAUSE_STATUS' command to printer");
             }
 
@@ -61,10 +65,12 @@ namespace CappannaHelper.Printing.EscPos
             Details["ErrorOccurred"] = (data[0] & 0x06) == 1;
         }
 
-        private async Task ExecuteErrorCauseAsync(IChannel channel) {
+        private async Task ExecuteErrorCauseAsync(IChannel channel)
+        {
             var ok = await channel.WriteAsync(Commands.TRANSMIT_ERROR_CAUSE_STATUS.ToArray());
 
-            if(!ok) {
+            if (!ok)
+            {
                 throw new Exception("Cannot send 'TRANSMIT_ERROR_CAUSE_STATUS' command to printer");
             }
 
@@ -76,10 +82,12 @@ namespace CappannaHelper.Printing.EscPos
             Details["AutorecoverableErrorOccurred"] = (data[0] & 0x06) == 1;
         }
 
-        private async Task ExecuteRollPaperSensorStatusAsync(IChannel channel) {
+        private async Task ExecuteRollPaperSensorStatusAsync(IChannel channel)
+        {
             var ok = await channel.WriteAsync(Commands.TRANSMIT_ROLL_PAPER_SENSOR_STATUS.ToArray());
 
-            if(!ok) {
+            if (!ok)
+            {
                 throw new Exception("Cannot send 'TRANSMIT_ROLL_PAPER_SENSOR_STATUS' command to printer");
             }
 
@@ -89,10 +97,12 @@ namespace CappannaHelper.Printing.EscPos
             Details["IsPaperEnd"] = (data[0] & 0x05) == 1;
         }
 
-        private async Task ExecuteInkAStatusAsync(IChannel channel) {
+        private async Task ExecuteInkAStatusAsync(IChannel channel)
+        {
             var ok = await channel.WriteAsync(Commands.TRANSMIT_INK_A_STATUS.ToArray());
 
-            if(!ok) {
+            if (!ok)
+            {
                 throw new Exception("Cannot send 'TRANSMIT_INK_A_STATUS' command to printer");
             }
 
@@ -103,10 +113,12 @@ namespace CappannaHelper.Printing.EscPos
             Details["InkACartridgeMissing"] = (data[0] & 0x05) == 1;
         }
 
-        private async Task ExecuteInkBStatusAsync(IChannel channel) {
+        private async Task ExecuteInkBStatusAsync(IChannel channel)
+        {
             var ok = await channel.WriteAsync(Commands.TRANSMIT_INK_B_STATUS.ToArray());
 
-            if(!ok) {
+            if (!ok)
+            {
                 throw new Exception("Cannot send 'TRANSMIT_INK_B_STATUS' command to printer");
             }
 
@@ -117,10 +129,12 @@ namespace CappannaHelper.Printing.EscPos
             Details["InkBCartridgeMissing"] = (data[0] & 0x05) == 1;
         }
 
-        private async Task ExecutePeelerStatusCauseAsync(IChannel channel) {
+        private async Task ExecutePeelerStatusCauseAsync(IChannel channel)
+        {
             var ok = await channel.WriteAsync(Commands.TRANSMIT_PEELER_STATUS.ToArray());
 
-            if(!ok) {
+            if (!ok)
+            {
                 throw new Exception("Cannot send 'TRANSMIT_PEELER_STATUS' command to printer");
             }
 
