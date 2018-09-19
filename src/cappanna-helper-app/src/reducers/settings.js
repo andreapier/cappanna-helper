@@ -2,7 +2,8 @@ import {
   LOAD_SETTINGS_LIST_REQUESTED,
   LOAD_SETTINGS_LIST_COMPLETED,
   INVALIDATE_SETTINGS_LIST,
-  SET_SETTING_VALUE
+  SET_SETTING_VALUE,
+  SIGNOUT_COMPLETED
 } from "actions/types";
 
 const initialState = {
@@ -28,6 +29,7 @@ export default function(state = initialState, action) {
       };
 
     case INVALIDATE_SETTINGS_LIST:
+    case SIGNOUT_COMPLETED:
       return initialState;
 
     case SET_SETTING_VALUE:

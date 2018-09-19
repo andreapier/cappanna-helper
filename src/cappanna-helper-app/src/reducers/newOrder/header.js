@@ -10,7 +10,8 @@ import {
   INVALIDATE_ORDERS_LIST,
   INVALIDATE_NOTIFICATIONS_LIST,
   INVALIDATE_DASHBOARD_DATA,
-  INVALIDATE_SETTINGS_LIST
+  INVALIDATE_SETTINGS_LIST,
+  SIGNOUT_COMPLETED
 } from "actions/types";
 
 export const initialState = {
@@ -29,6 +30,7 @@ export default function(state = initialState, action) {
     case INVALIDATE_NOTIFICATIONS_LIST:
     case INVALIDATE_DASHBOARD_DATA:
     case INVALIDATE_SETTINGS_LIST:
+    case SIGNOUT_COMPLETED:
       return initialState;
 
     case INCREMENT_ORDER_DETAIL_QUANTITY:

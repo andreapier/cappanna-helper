@@ -4,7 +4,8 @@ import {
   INVALIDATE_NOTIFICATIONS_LIST,
   ORDER_CREATED,
   ORDER_CHANGED,
-  ORDER_PRINTED
+  ORDER_PRINTED,
+  SIGNOUT_COMPLETED
 } from "actions/types";
 import calculateOrderTotalPrice from "utils/calculateOrderTotalPrice";
 
@@ -31,6 +32,7 @@ export default function(state = initialState, action) {
       };
 
     case INVALIDATE_NOTIFICATIONS_LIST:
+    case SIGNOUT_COMPLETED:
       return initialState;
 
     case ORDER_CREATED:

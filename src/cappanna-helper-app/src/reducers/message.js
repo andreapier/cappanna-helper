@@ -1,4 +1,4 @@
-import { NOTIFY_INFO, NOTIFY_WARNING, NOTIFY_ERROR, RESET_NOTIFICATION } from "actions/types";
+import { NOTIFY_INFO, NOTIFY_WARNING, NOTIFY_ERROR, RESET_NOTIFICATION, SIGNOUT_COMPLETED } from "actions/types";
 
 const initialState = {
   message: '',
@@ -17,6 +17,7 @@ export default function(state = initialState, action) {
       return { type: 'error', message: action.payload };
 
     case RESET_NOTIFICATION:
+    case SIGNOUT_COMPLETED:
       return initialState;
 
     default:

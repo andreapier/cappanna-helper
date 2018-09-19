@@ -3,7 +3,8 @@ import {
   LOAD_DASHBOARD_DATA_COMPLETED,
   INVALIDATE_DASHBOARD_DATA,
   ORDER_CREATED,
-  ORDER_DELETED
+  ORDER_DELETED,
+  SIGNOUT_COMPLETED
 } from "actions/types";
 import calculateOrderTotalPrice from "utils/calculateOrderTotalPrice";
 
@@ -36,6 +37,7 @@ export default function(state = initialState, action) {
       };
 
     case INVALIDATE_DASHBOARD_DATA:
+    case SIGNOUT_COMPLETED:
       return initialState;
 
     case ORDER_CREATED: {

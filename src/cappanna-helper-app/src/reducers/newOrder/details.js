@@ -7,7 +7,8 @@ import {
   INVALIDATE_ORDERS_LIST,
   INVALIDATE_NOTIFICATIONS_LIST,
   INVALIDATE_DASHBOARD_DATA,
-  INVALIDATE_SETTINGS_LIST
+  INVALIDATE_SETTINGS_LIST,
+  SIGNOUT_COMPLETED
 } from "actions/types";
 
 export const initialState = [];
@@ -49,6 +50,9 @@ export default function(state = initialState, action) {
         itemId: e.itemId,
         quantity: e.quantity
       }));
+
+    case SIGNOUT_COMPLETED:
+      return initialState;
 
     default:
       return state;

@@ -8,7 +8,6 @@ function* signalApiError(action) {
     yield put(signoutRequested());
   } else {
     console.error('API ERROR', error);
-    console.log(error);
     yield put(notifyError(error.message));
   }
 }

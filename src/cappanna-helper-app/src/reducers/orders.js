@@ -5,7 +5,8 @@ import {
   ORDER_CREATED,
   ORDER_CHANGED,
   ORDER_PRINTED,
-  TOGGLE_ORDERS_LIST_FILTER
+  TOGGLE_ORDERS_LIST_FILTER,
+  SIGNOUT_COMPLETED
 } from "actions/types";
 
 const initialState = {
@@ -34,6 +35,7 @@ export default function(state = initialState, action) {
       };
 
     case INVALIDATE_ORDERS_LIST:
+    case SIGNOUT_COMPLETED:
       return initialState;
 
     case ORDER_CREATED:

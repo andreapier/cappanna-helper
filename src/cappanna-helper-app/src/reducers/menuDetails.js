@@ -2,7 +2,8 @@ import {
   LOAD_MENU_DETAILS_REQUESTED,
   LOAD_MENU_DETAILS_COMPLETED,
   INVALIDATE_MENU_DETAILS,
-  MENU_DETAILS_CHANGED
+  MENU_DETAILS_CHANGED,
+  SIGNOUT_COMPLETED
 } from "actions/types";
 
 const initialState = {
@@ -52,6 +53,9 @@ export default function(state = initialState, action) {
           return e;
         })
       };
+
+    case SIGNOUT_COMPLETED:
+      return initialState;
 
     default:
       return state;

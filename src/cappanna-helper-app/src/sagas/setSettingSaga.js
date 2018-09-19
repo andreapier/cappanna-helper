@@ -11,7 +11,6 @@ function* setSetting(action) {
     yield put(loadingChanged(true, "Salvataggio in corso..."));
 
     const state = yield select();
-    console.log(state.settings.items[0])
     const setting = {
       ...state.settings.items.find(e => e.id === action.payload.settingId)
     };
