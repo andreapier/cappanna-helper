@@ -36,7 +36,7 @@ class ConnectedDishList extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.props.details.length != nextProps.details.length;
+    return this.props.details.length !== nextProps.details.length;
   }
 }
 
