@@ -1,4 +1,5 @@
-﻿using CappannaHelper.Api.Hubs;
+﻿using CappannaHelper.Api.Common.ErrorManagement;
+using CappannaHelper.Api.Hubs;
 using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Identity.Extensions;
 using CappannaHelper.Api.Persistence;
@@ -135,6 +136,7 @@ namespace CappannaHelper.Api
 					}
 					await next();
 				 })
+                .UseMiddleware<ErrorHandlingMiddleware>()
                 .UseMvc();
         }
     }
