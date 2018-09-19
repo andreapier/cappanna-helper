@@ -18,6 +18,9 @@ namespace CappannaHelper.Api.Printing
         public IPrinterDocumentBuilder<IList<OrderDetailsAggregateModel>> SetData(IList<OrderDetailsAggregateModel> aggregation)
         {
             SetTitle("Primi piatti");
+            SetAggregates(aggregation);
+            BlankFeed(12);
+            
             return this;
         }
 
@@ -57,6 +60,17 @@ namespace CappannaHelper.Api.Printing
             section.CreateLabel().SetContent(name);
             section.CreateLabel().SetContent($"{dots}");
             section.CreateLabel().SetContent($"{aggregation.Quantity.ToString().PadLeft(2, ' ')}");
+            section.NewLine();
+        }
+
+        private void BlankFeed(int size)
+        {
+            var section = _document.LastPage.CreateSection();
+            section.SetSize(size);
+            section.NewLine();
+            section.NewLine();
+            section.NewLine();
+            section.NewLine();
             section.NewLine();
         }
 

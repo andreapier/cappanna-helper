@@ -17,6 +17,7 @@ const Header = props => {
       <IconButton
         onClick={() => props.orderDetailsAggregationRequested(props.ordersId)}
         customClass={props.classes.icon}
+        disabled={props.ordersId.length === 0}
       >
         <Assignment />
       </IconButton>
