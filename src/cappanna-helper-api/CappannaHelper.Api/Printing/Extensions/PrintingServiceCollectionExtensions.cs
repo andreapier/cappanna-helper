@@ -1,3 +1,4 @@
+using System.Net;
 using CappannaHelper.Printing;
 using CappannaHelper.Printing.Communication;
 using CappannaHelper.Printing.Communication.Lan;
@@ -14,13 +15,20 @@ namespace CappannaHelper.Api.Printing.Extensions
         {
             return services
                 .AddSingleton<IPrinterDocumentBuilderFactory, PrinterDocumentBuilderFactory>()
-                .AddSingleton<IPrinterResolver>(c => {
+                .AddSingleton<IPrinterResolver>(c =>
+                {
                     var printerOptions = c.GetService<IOptions<PrintingConfiguration>>();
 
                     return new RegistryPrinterResolver(printerOptions.Value.PrinterName);
                 })
                 .AddSingleton<UsbChannel>()
                 .AddSingleton<FileChannel>()
+                .AddSingleton<TcpChannel>(c => 
+                {
+                    var printerOptions = c.GetService<IOptions<PrintingConfiguration>>();
+
+                    return new TcpChannel(IPAddress.Parse(printerOptions.Value.IpAddress), printerOptions.Value.Port);
+                })
                 .AddSingleton<IChannel>(c =>
                 {
                     var printerOptions = c.GetService<IOptions<PrintingConfiguration>>();

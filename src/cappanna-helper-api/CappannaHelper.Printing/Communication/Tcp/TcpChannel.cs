@@ -9,17 +9,18 @@ namespace CappannaHelper.Printing.Communication.Lan
     {
         private readonly IPAddress _host;
         private readonly int _port;
-        private readonly TcpClient _client;
+
+        private TcpClient _client;
 
         public TcpChannel(IPAddress host, int port)
         {
-            if (port <= 0) {
+            if (port <= 0)
+            {
                 throw new ArgumentException(nameof(port));
             }
 
             _host = host ?? throw new ArgumentNullException(nameof(host));
             _port = port;
-            _client = new TcpClient();
         }
 
         public async Task CloseAsync()
@@ -34,6 +35,7 @@ namespace CappannaHelper.Printing.Communication.Lan
 
         public async Task<bool> OpenAsync()
         {
+            _client = new TcpClient();
             await _client.ConnectAsync(_host, _port);
 
             return true;
