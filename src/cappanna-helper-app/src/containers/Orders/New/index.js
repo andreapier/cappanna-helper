@@ -28,11 +28,10 @@ class NewOrder extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const newOrder = isNewOrder(ownProps.location);
-  const needsMenuDetailsLoading = !state.menuDetails.loaded;
 
   return {
     needsReset: newOrder && state.newOrderHeader.id,
-    needsMenuDetailsLoading
+    needsMenuDetailsLoading: !state.menuDetails.loaded
   };
 };
 

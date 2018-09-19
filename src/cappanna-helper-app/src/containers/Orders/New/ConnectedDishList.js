@@ -19,7 +19,7 @@ const styles = {
   }
 };
 
-class DishList extends Component {
+class ConnectedDishList extends Component {
   render() {
     return (
       <ExpansionPanel>
@@ -35,12 +35,12 @@ class DishList extends Component {
     );
   }
 
-  shouldComponentUpdate() {
-    return false;
+  shouldComponentUpdate(nextProps) {
+    return this.props.details.length != nextProps.details.length;
   }
 }
 
-DishList.propTypes = {
+ConnectedDishList.propTypes = {
   group: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired
 };
@@ -51,4 +51,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(withStyles(styles)(DishList));
+export default connect(mapStateToProps)(withStyles(styles)(ConnectedDishList));
