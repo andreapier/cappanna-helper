@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { loadDashboardDataRequested, invalidateDashboardData } from "actions";
+import { loadDashboardDataRequested, resetOrder } from "actions";
 import Dashboard from "components/Dashboard";
 
 class ConnectedDashboard extends Component {
   componentDidMount() {
-    if (this.props.shouldLoad) {
-      this.props.loadDashboardDataRequested();
-    }
+    this.props.loadDashboardDataRequested();
   }
 
   render() {
@@ -22,26 +20,22 @@ class ConnectedDashboard extends Component {
   }
 
   componentWillUnmount() {
-    if (this.props.loaded) {
-      this.props.invalidateDashboardData();
-    }
+    this.props.resetOrder();
   }
 }
 
 const mapStateToProps = state => {
   return {
-    shouldLoad: !state.dashboard.loading && !state.dashboard.loaded,
-    loaded: state.dashboard.loaded,
-    ordersQuantity: state.dashboard.data.ordersQuantity,
-    income: state.dashboard.data.income,
-    waitersStats: state.dashboard.data.waitersStats
+    ordersQuantity: state.dashboard.ordersQuantity,
+    income: state.dashboard.income,
+    waitersStats: state.dashboard.waitersStats
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     loadDashboardDataRequested: () => dispatch(loadDashboardDataRequested()),
-    invalidateDashboardData: () => dispatch(invalidateDashboardData())
+    resetOrder: () => dispatch(resetOrder())
   };
 };
 

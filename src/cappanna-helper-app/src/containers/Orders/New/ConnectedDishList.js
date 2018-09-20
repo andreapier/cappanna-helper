@@ -47,7 +47,7 @@ ConnectedDishList.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    details: state.menuDetails.items.filter(e => e.group === ownProps.group)
+    details: state.menuDetails.filter(e => e.group === ownProps.group)
   };
 };
 

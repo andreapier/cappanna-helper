@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { loadMenuDetailsRequested, invalidateMenuDetails, setMenuDetailQuantity } from "actions";
+import { loadMenuDetailsRequested, resetOrder, setMenuDetailQuantity } from "actions";
 import Menu from "components/Menu";
 
 class MenuTable extends Component {
   componentDidMount() {
-    if (this.props.shouldLoad) {
-      this.props.loadMenuDetailsRequested();
-    }
+    this.props.loadMenuDetailsRequested();
   }
 
   render() {
@@ -20,17 +18,13 @@ class MenuTable extends Component {
   }
 
   componentWillUnmount() {
-    if (this.props.loaded) {
-      this.props.invalidateMenuDetails();
-    }
+    this.props.resetOrder();
   }
 }
 
 const mapStateToProps = state => {
   return {
-    shouldLoad: !state.menuDetails.loading && !state.menuDetails.loaded,
-    loaded: state.menuDetails.loaded,
-    dishList: state.menuDetails.items,
+    dishList: state.menuDetails,
     isAdmin: state.user.roles.some(r => r === "admin")
   };
 };
@@ -38,7 +32,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadMenuDetailsRequested: () => dispatch(loadMenuDetailsRequested()),
-    invalidateMenuDetails: () => dispatch(invalidateMenuDetails()),
+    resetOrder: () => dispatch(resetOrder()),
     setMenuDetailQuantity: (dishId, unitsInStock) => dispatch(setMenuDetailQuantity(dishId, unitsInStock))
   };
 };

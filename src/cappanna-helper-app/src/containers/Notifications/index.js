@@ -2,16 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   loadNotificationsListRequested,
-  invalidateNotificationsList,
+  resetOrder,
   printRequested
 } from "actions";
 import NotificationsComp from "components/Notifications";
 
 class Notifications extends Component {
   componentDidMount() {
-    if (this.props.shouldLoad) {
-      this.props.loadNotificationsListRequested();
-    }
+    this.props.loadNotificationsListRequested();
   }
 
   render() {
@@ -24,17 +22,13 @@ class Notifications extends Component {
   }
 
   componentWillUnmount() {
-    if (this.props.loaded) {
-      this.props.invalidateNotificationsList();
-    }
+    this.props.resetOrder();
   }
 }
 
 const mapStateToProps = state => {
   return {
-    shouldLoad: !state.notifications.loading && !state.notifications.loaded,
-    notifications: state.notifications.items,
-    loaded: state.notifications.loaded
+    notifications: state.notifications,
   };
 };
 
@@ -42,7 +36,7 @@ const mapDispatchToProps = dispatch => {
   return {
     loadNotificationsListRequested: () =>
       dispatch(loadNotificationsListRequested()),
-    invalidateNotificationsList: () => dispatch(invalidateNotificationsList()),
+    resetOrder: () => dispatch(resetOrder()),
     printRequested: orderId => dispatch(printRequested(orderId))
   };
 };

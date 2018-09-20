@@ -9,7 +9,7 @@ function* editMenuDetail(action) {
     yield put(loadingChanged(true, "Salvataggio in corso..."));
 
     const menuDetail = {
-      ...state.menuDetails.items.find(e => e.id === action.payload.dishId),
+      ...state.menuDetails.find(e => e.id === action.payload.dishId),
       unitsInStock: action.payload.unitsInStock < 0 ? 0 : action.payload.unitsInStock
     };
     const api = new Api();

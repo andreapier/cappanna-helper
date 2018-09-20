@@ -3,11 +3,6 @@ import {
   RESET_ORDER,
   EDIT_ORDER,
   LOAD_MENU_DETAILS_COMPLETED,
-  INVALIDATE_MENU_DETAILS,
-  INVALIDATE_ORDERS_LIST,
-  INVALIDATE_NOTIFICATIONS_LIST,
-  INVALIDATE_DASHBOARD_DATA,
-  INVALIDATE_SETTINGS_LIST,
   SIGNOUT_COMPLETED
 } from "actions/types";
 
@@ -16,11 +11,6 @@ export const initialState = [];
 export default function(state = initialState, action) {
   switch (action.type) {
     case RESET_ORDER:
-    case INVALIDATE_MENU_DETAILS:
-    case INVALIDATE_ORDERS_LIST:
-    case INVALIDATE_NOTIFICATIONS_LIST:
-    case INVALIDATE_DASHBOARD_DATA:
-    case INVALIDATE_SETTINGS_LIST:
       return state.map(e => ({ itemId: e.itemId, quantity: 0 }));
 
     case LOAD_MENU_DETAILS_COMPLETED:

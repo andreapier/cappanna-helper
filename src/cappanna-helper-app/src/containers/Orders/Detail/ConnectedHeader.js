@@ -45,19 +45,18 @@ const mapStateToProps = state => {
     canCloseOrders: state.user.roles.some(r => r === "admin" || r === "dome")
   };
 
-  if (state.selectedOrder.item) {
-    result.order.id = state.selectedOrder.item.id;
-    result.order.totalPrice = calculateOrderTotalPrice(state.selectedOrder.item);
+  if (state.selectedOrder) {
+    result.order.id = state.selectedOrder.id;
+    result.order.totalPrice = calculateOrderTotalPrice(state.selectedOrder);
     result.order.chTable = parseInt(
-      state.selectedOrder.item.chTable.split("\\")[0],
+      state.selectedOrder.chTable.split("\\")[0],
       10
     );
-    result.order.tableCategory =
-      state.selectedOrder.item.chTable.split("\\")[1] || "";
-    result.order.seats = state.selectedOrder.item.seats;
-    result.order.status = state.selectedOrder.item.status;
-    result.order.notes = state.selectedOrder.item.notes;
-    result.order.details = state.selectedOrder.item.details
+    result.order.tableCategory = state.selectedOrder.chTable.split("\\")[1] || "";
+    result.order.seats = state.selectedOrder.seats;
+    result.order.status = state.selectedOrder.status;
+    result.order.notes = state.selectedOrder.notes;
+    result.order.details = state.selectedOrder.details
       .map(e => {
         return {
           id: e.id,
@@ -66,9 +65,9 @@ const mapStateToProps = state => {
         };
       })
       .concat(
-        state.menuDetails.items
+        state.menuDetails
           .filter(
-            d => !state.selectedOrder.item.details.find(e => e.itemId === d.id)
+            d => !state.selectedOrder.details.find(e => e.itemId === d.id)
           )
           .map(e => {
             return {

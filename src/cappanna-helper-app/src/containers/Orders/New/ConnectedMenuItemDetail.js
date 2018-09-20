@@ -26,7 +26,7 @@ class ConnectedMenuItemDetail extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const detail = state.newOrderDetails.find(e => e.itemId === ownProps.itemId);
-  const menuDetail = state.menuDetails.items.find(d => d.id === ownProps.itemId);
+  const menuDetail = state.menuDetails.find(d => d.id === ownProps.itemId);
 
   return {
     detail: {

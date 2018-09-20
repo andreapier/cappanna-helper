@@ -14,7 +14,7 @@ import {
   RESET_NOTIFICATION,
   LOAD_MENU_DETAILS_REQUESTED,
   LOAD_MENU_DETAILS_COMPLETED,
-  INVALIDATE_MENU_DETAILS,
+
   SET_MENU_DETAIL_QUANTITY,
   MENU_DETAILS_CHANGED,
   EDIT_ORDER,
@@ -34,7 +34,6 @@ import {
   INCREMENT_ORDER_DETAIL_QUANTITY,
   LOAD_ORDERS_LIST_REQUESTED,
   LOAD_ORDERS_LIST_COMPLETED,
-  INVALIDATE_ORDERS_LIST,
   TOGGLE_ORDERS_LIST_FILTER,
   RESET_ORDER_SELECTION_FOR_AGGREGATION,
   TOGGLE_ORDER_SELECTION_FOR_AGGREGATION,
@@ -42,19 +41,15 @@ import {
   ORDER_DETAILS_AGGREGATION_COMPLETED,
   LOAD_SELECTED_ORDER_REQUESTED,
   LOAD_SELECTED_ORDER_COMPLETED,
-  INVALIDATE_SELECTED_ORDER,
   PRINT_REQUESTED,
   PRINT_COMPLETED,
   LOAD_NOTIFICATIONS_LIST_REQUESTED,
   LOAD_NOTIFICATIONS_LIST_COMPLETED,
-  INVALIDATE_NOTIFICATIONS_LIST,
   CALCULATE,
   LOAD_DASHBOARD_DATA_REQUESTED,
   LOAD_DASHBOARD_DATA_COMPLETED,
-  INVALIDATE_DASHBOARD_DATA,
   LOAD_SETTINGS_LIST_REQUESTED,
   LOAD_SETTINGS_LIST_COMPLETED,
-  INVALIDATE_SETTINGS_LIST,
   SET_SETTING_VALUE
 } from "actions/types";
 
@@ -128,10 +123,6 @@ export function loadMenuDetailsRequested() {
 
 export function loadMenuDetailsCompleted(menuDetails) {
   return { type: LOAD_MENU_DETAILS_COMPLETED, payload: menuDetails };
-}
-
-export function invalidateMenuDetails() {
-  return { type: INVALIDATE_MENU_DETAILS };
 }
 
 export function setMenuDetailQuantity(dishId, unitsInStock) {
@@ -213,10 +204,6 @@ export function loadOrdersListCompleted(orders) {
   return { type: LOAD_ORDERS_LIST_COMPLETED, payload: orders };
 }
 
-export function invalidateOrdersList() {
-  return { type: INVALIDATE_ORDERS_LIST };
-}
-
 export function toggleOrdersListFilter() {
   return { type: TOGGLE_ORDERS_LIST_FILTER };
 }
@@ -245,10 +232,6 @@ export function loadSelectedOrderCompleted(order) {
   return { type: LOAD_SELECTED_ORDER_COMPLETED, payload: order };
 }
 
-export function invalidateSelectedOrder() {
-  return { type: INVALIDATE_SELECTED_ORDER };
-}
-
 export function printRequested(orderId) {
   return { type: PRINT_REQUESTED, payload: orderId };
 }
@@ -265,10 +248,6 @@ export function loadNotificationsListCompleted(notifications) {
   return { type: LOAD_NOTIFICATIONS_LIST_COMPLETED, payload: notifications };
 }
 
-export function invalidateNotificationsList() {
-  return { type: INVALIDATE_NOTIFICATIONS_LIST };
-}
-
 export function calculate({ amount, paidAmount, seats }) {
   return { type: CALCULATE, payload: { amount, paidAmount, seats } };
 }
@@ -281,20 +260,12 @@ export function loadDashboardDataCompleted(notifications) {
   return { type: LOAD_DASHBOARD_DATA_COMPLETED, payload: notifications };
 }
 
-export function invalidateDashboardData() {
-  return { type: INVALIDATE_DASHBOARD_DATA };
-}
-
 export function loadSettingsListRequested() {
   return { type: LOAD_SETTINGS_LIST_REQUESTED };
 }
 
 export function loadSettingsListCompleted(settings) {
   return { type: LOAD_SETTINGS_LIST_COMPLETED, payload: settings };
-}
-
-export function invalidateSettingsList() {
-  return { type: INVALIDATE_SETTINGS_LIST };
 }
 
 export function setSettingValue(settingId, settingValue) {

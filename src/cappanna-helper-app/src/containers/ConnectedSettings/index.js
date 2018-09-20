@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { loadSettingsListRequested, invalidateSettingsList, setSettingValue } from "actions";
+import { loadSettingsListRequested, resetOrder, setSettingValue } from "actions";
 import List from "@material-ui/core/List";
 import Setting from "components/Settings";
 
 class ConnectedSettings extends Component {
   componentDidMount() {
-    if (this.props.shouldLoad) {
-      this.props.loadSettingsListRequested();
-    }
+    this.props.loadSettingsListRequested();
   }
 
   render() {
@@ -16,24 +14,20 @@ class ConnectedSettings extends Component {
   }
 
   componentWillUnmount() {
-    if (this.props.loaded) {
-      this.props.invalidateSettingsList();
-    }
+    this.props.resetOrder();
   }
 }
 
 const mapStateToProps = state => {
   return {
-    shouldLoad: !state.settings.loading && !state.settings.loaded,
-    settings: state.settings.items,
-    loaded: state.settings.loaded
+    settings: state.settings
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     loadSettingsListRequested: () => dispatch(loadSettingsListRequested()),
-    invalidateSettingsList: () => dispatch(invalidateSettingsList()),
+    resetOrder: () => dispatch(resetOrder()),
     setSettingValue: (id, value) => dispatch(setSettingValue(id, value))
   };
 };

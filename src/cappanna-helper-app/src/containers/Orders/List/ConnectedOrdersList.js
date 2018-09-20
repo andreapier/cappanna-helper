@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { loadOrdersListRequested, invalidateOrdersList } from "actions";
+import { loadOrdersListRequested, resetOrder } from "actions";
 import List from "components/Orders/List";
 
 class ConnectedOrdersList extends Component {
   componentDidMount() {
-    if (this.props.shouldLoad) {
-      this.props.loadOrdersListRequested();
-    }
+    this.props.loadOrdersListRequested();
   }
 
   render() {
@@ -15,26 +13,22 @@ class ConnectedOrdersList extends Component {
   }
 
   componentWillUnmount() {
-    if (this.props.loaded) {
-      this.props.invalidateOrdersList();
-    }
+    this.props.resetOrder()
   }
 }
 
 const mapStateToProps = state => {
   return {
-    shouldLoad: !state.orders.loading && !state.orders.loaded,
     orders: state.orders.isFiltered
       ? state.orders.items.filter(o => o.createdById === state.user.userId)
       : state.orders.items,
-    loaded: state.orders.loaded
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     loadOrdersListRequested: () => dispatch(loadOrdersListRequested()),
-    invalidateOrdersList: () => dispatch(invalidateOrdersList())
+    resetOrder: () => dispatch(resetOrder())
   };
 };
 

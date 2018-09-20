@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import Body from "components/Orders/Detail/Body";
 import { connect } from "react-redux";
-import { loadSelectedOrderRequested, invalidateSelectedOrder } from "actions";
+import { loadSelectedOrderRequested, resetOrder } from "actions";
 import { withRouter } from "react-router-dom";
 import buildFilledOrderDetails from "utils/buildFilledOrderDetails";
 
 class ConnectedBody extends Component {
   componentDidMount() {
-    if (this.props.shouldLoad) {
-      this.props.loadSelectedOrderRequested();
-    }
+    this.props.loadSelectedOrderRequested();
   }
 
   render() {
@@ -17,20 +15,16 @@ class ConnectedBody extends Component {
   }
 
   componentWillUnmount() {
-    if (this.props.loaded) {
-      this.props.invalidateSelectedOrder();
-    }
+    this.props.resetOrder();
   }
 }
 
 const mapStateToProps = state => {
   return {
-    shouldLoad: !state.selectedOrder.loading && !state.selectedOrder.loaded,
-    dishList: state.selectedOrder.item
-      ? buildFilledOrderDetails(state.selectedOrder.item.details, state.menuDetails.items)
+    dishList: state.selectedOrder
+      ? buildFilledOrderDetails(state.selectedOrder.details, state.menuDetails)
       : [],
-    loaded: state.selectedOrder.loaded,
-    notes: state.selectedOrder.item ? state.selectedOrder.item.notes || "" : ""
+    notes: state.selectedOrder ? state.selectedOrder.notes || "" : ""
   };
 };
 
@@ -38,7 +32,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loadSelectedOrderRequested: () =>
       dispatch(loadSelectedOrderRequested(ownProps.match.params.id)),
-    invalidateSelectedOrder: () => dispatch(invalidateSelectedOrder())
+    resetOrder: () => dispatch(resetOrder())
   };
 };
 

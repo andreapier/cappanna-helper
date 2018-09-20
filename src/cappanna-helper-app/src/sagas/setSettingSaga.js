@@ -12,7 +12,7 @@ function* setSetting(action) {
 
     const state = yield select();
     const setting = {
-      ...state.settings.items.find(e => e.id === action.payload.settingId)
+      ...state.settings.find(e => e.id === action.payload.settingId)
     };
     setting.value = action.payload.settingValue;
     const api = new Api();

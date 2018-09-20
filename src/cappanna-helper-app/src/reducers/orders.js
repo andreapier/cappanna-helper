@@ -1,7 +1,5 @@
 import {
-  LOAD_ORDERS_LIST_REQUESTED,
   LOAD_ORDERS_LIST_COMPLETED,
-  INVALIDATE_ORDERS_LIST,
   ORDER_CREATED,
   ORDER_CHANGED,
   ORDER_PRINTED,
@@ -10,31 +8,18 @@ import {
 } from "actions/types";
 
 const initialState = {
-  loading: false,
-  loaded: false,
   items: [],
   isFiltered: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case LOAD_ORDERS_LIST_REQUESTED:
-      return {
-        ...state,
-        loading: true,
-        loaded: false,
-        items: []
-      };
-
     case LOAD_ORDERS_LIST_COMPLETED:
       return {
         ...state,
-        loading: false,
-        loaded: true,
         items: action.payload
       };
 
-    case INVALIDATE_ORDERS_LIST:
     case SIGNOUT_COMPLETED:
       return initialState;
 

@@ -12,7 +12,7 @@ const NotificationSnackbar = props => {
 
   if (props.type === 'info') {
     icon = Info;
-    color = "info";
+    color = "primary";
   } else if (props.type === 'warning') {
     icon = Warning;
     color = "warning";

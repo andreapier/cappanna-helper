@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   loadOrdersListRequested,
-  invalidateOrdersList,
+  resetOrder,
   resetOrderSelectionForAggregation,
   toggleOrderSelectionForAggregation,
   orderDetailsAggregationRequested
@@ -11,9 +11,7 @@ import OrderDetailsAggregate from "components/Orders/OrderDetailsAggregate";
 
 class ConnectedOrderDetailsAggregate extends Component {
   componentDidMount() {
-    if (this.props.shouldLoad) {
-      this.props.loadOrdersListRequested();
-    }
+    this.props.loadOrdersListRequested();
   }
 
   render() {
@@ -31,17 +29,13 @@ class ConnectedOrderDetailsAggregate extends Component {
   }
 
   componentWillUnmount() {
-    if (this.props.loaded) {
-      this.props.invalidateOrdersList();
-    }
+    this.props.resetOrder();
     this.props.resetOrderSelectionForAggregation();
   }
 }
 
 const mapStateToProps = state => {
   return {
-    shouldLoad: !state.orders.loading && !state.orders.loaded,
-    loaded: state.orders.loaded,
     orders: state.orders.items.filter(o => o.status === 3).map(o => {
       const selected = state.aggregation.indexOf(o.id);
       
@@ -56,7 +50,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadOrdersListRequested: () => dispatch(loadOrdersListRequested()),
-    invalidateOrdersList: () => dispatch(invalidateOrdersList()),
+    resetOrder: () => dispatch(resetOrder()),
     resetOrderSelectionForAggregation: () =>
       dispatch(resetOrderSelectionForAggregation()),
     toggleOrderSelectionForAggregation: orderId =>

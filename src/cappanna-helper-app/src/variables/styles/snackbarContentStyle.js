@@ -36,7 +36,7 @@ const snackbarContentStyle = {
     ...dangerBoxShadow
   },
   primary: {
-    backgroundColor: "#af2cc5",
+    backgroundColor: "#1e2a9c",
     color: "#ffffff",
     ...primaryBoxShadow
   },

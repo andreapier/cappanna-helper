@@ -1,48 +1,26 @@
 import {
-  LOAD_SETTINGS_LIST_REQUESTED,
   LOAD_SETTINGS_LIST_COMPLETED,
-  INVALIDATE_SETTINGS_LIST,
   SET_SETTING_VALUE,
   SIGNOUT_COMPLETED
 } from "actions/types";
 
-const initialState = {
-  loading: false,
-  loaded: false,
-  items: []
-};
+const initialState = [];
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case LOAD_SETTINGS_LIST_REQUESTED:
-      return {
-        loading: true,
-        loaded: false,
-        items: []
-      };
-
     case LOAD_SETTINGS_LIST_COMPLETED:
-      return {
-        loading: false,
-        loaded: true,
-        items: action.payload
-      };
+      return action.payload;
 
-    case INVALIDATE_SETTINGS_LIST:
     case SIGNOUT_COMPLETED:
       return initialState;
 
     case SET_SETTING_VALUE:
-      return {
-        ...state,
-        items: [
-          ...state.items.filter(e => e.id !== action.payload.settingId),
-          {
-            ...state.items.find(e => e.id === action.payload.settingId),
-            value: action.payload.settingValue
-          }
-        ]
-      }
+      return [
+        ...state.filter(e => e.id !== action.payload.settingId),
+        {
+          ...state.find(e => e.id === action.payload.settingId),
+          value: action.payload.settingValue
+        }];
 
     default:
       return state;

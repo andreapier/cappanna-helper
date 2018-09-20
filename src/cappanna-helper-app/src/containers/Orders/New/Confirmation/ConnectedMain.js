@@ -11,7 +11,7 @@ class ConnectedMain extends Component {
 
 const mapStateToProps = state => {
   return {
-    details: buildFilledOrderDetails(state.newOrderDetails.filter(e => e.quantity > 0), state.menuDetails.items)
+    details: buildFilledOrderDetails(state.newOrderDetails.filter(e => e.quantity > 0), state.menuDetails)
   };
 };
 
