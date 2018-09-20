@@ -45,7 +45,12 @@ namespace CappannaHelper.Api.Printing.Extensions
 
                     return c.GetService<UsbChannel>();
                 })
-                .AddSingleton<IStatusFactory, StatusFactory>()
+                .AddSingleton<IStatusFactory>(c =>
+                {
+                    var printerOptions = c.GetService<IOptions<PrintingConfiguration>>();
+
+                    return new StatusFactory(printerOptions.Value.PrinterName);
+                })
                 .AddSingleton<IPrinter, Printer>()
                 .AddSingleton<IPrintService, PrintService>();
         }

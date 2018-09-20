@@ -26,8 +26,8 @@ namespace CappannaHelper.Printing.EscPos
         public static readonly IReadOnlyList<byte> TURN_90_CLOCKWISE_ROTATION_OFF = new byte[] { 0x1B, 0x56, 0x00 };
         public static readonly IReadOnlyList<byte> TURN_90_CLOCKWISE_ROTATION_ON = new byte[] { 0x1B, 0x56, 0x01 };
         public static readonly IReadOnlyList<byte> TRANSMIT_PRINTER_STATUS = new byte[] { 0x10, 0x04, 0x01 };
-        public static readonly IReadOnlyList<byte> TRANSMIT_OFFLINE_CAUSE_STATUS = new byte[] { 0x10, 0x04, 0x02 };
-        public static readonly IReadOnlyList<byte> TRANSMIT_ERROR_CAUSE_STATUS = new byte[] { 0x10, 0x04, 0x03 };
+        public static readonly IReadOnlyList<byte> TRANSMIT_OFFLINE_STATUS = new byte[] { 0x10, 0x04, 0x02 };
+        public static readonly IReadOnlyList<byte> TRANSMIT_ERROR_STATUS = new byte[] { 0x10, 0x04, 0x03 };
         public static readonly IReadOnlyList<byte> TRANSMIT_ROLL_PAPER_SENSOR_STATUS = new byte[] { 0x10, 0x04, 0x04 };
         public static readonly IReadOnlyList<byte> TRANSMIT_INK_A_STATUS = new byte[] { 0x10, 0x04, 0x07, 0x01 };
         public static readonly IReadOnlyList<byte> TRANSMIT_INK_B_STATUS = new byte[] { 0x10, 0x04, 0x07, 0x02 };
