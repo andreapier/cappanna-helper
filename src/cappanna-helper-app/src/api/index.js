@@ -33,10 +33,14 @@ const checkStatus = response => {
     return response;
   }
 
-  const error = new Error(response.statusText);
-  error.response = response;
-
-  throw error;
+  return parseJSON(response)
+    .then(json => {
+      const error = new Error(json.message);
+      error.stackTrace=json.stackTrace;
+      error.response = response;
+      
+      throw error;
+    });
 };
 
 const post = (url, data, jsonResponse = true) =>
