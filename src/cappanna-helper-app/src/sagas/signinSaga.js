@@ -3,8 +3,6 @@ import Api from "api";
 import { signinCompleted, signalApiError, loadingChanged } from "actions";
 import { SIGNIN_REQUESTED } from "actions/types";
 import localforage from "localforage";
-import history from "./../history";
-import { getDefaultRoute } from "routes/helpers";
 
 const saveUserData = userData =>
   localforage
@@ -24,8 +22,6 @@ function* signin(action) {
     }
 
     yield put(signinCompleted(userData));
-    const route = getDefaultRoute(userData.roles[0]);
-    history.push(route);
   } catch (e) {
     yield put(signalApiError(e));
   } finally {

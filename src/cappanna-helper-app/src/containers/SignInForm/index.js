@@ -1,14 +1,22 @@
+import React, { Component } from "react";
 import { signinRequested } from "actions";
 import Button from "components/CustomButtons";
 import ItemGrid from "components/Grid/ItemGrid";
 import Grid from "components/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Checkbox, TextField } from "redux-form-material-ui";
+import { getDefaultRoute } from "routes/helpers";
+import history from "./../../history";
 
 class SignIn extends Component {
+  componentDidUpdate(prevProps) {
+    if (prevProps.user.token!==this.props.user.token) {
+      history.push(getDefaultRoute(this.props.user.roles[0]));
+    }
+  }
+
   render() {
     return (
       <form onSubmit={this.props.handleSubmit(this.props.signinRequested)}>
@@ -48,6 +56,12 @@ class SignIn extends Component {
   }
 }
 
+const mapStateToProps  = state => {
+  return  {
+    user: state.user
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     signinRequested: ({ username, password, rememberMe }) =>
@@ -57,4 +71,4 @@ const mapDispatchToProps = dispatch => {
 
 export default reduxForm({
   form: "signinForm"
-})(connect(null, mapDispatchToProps)(SignIn));
+})(connect(mapStateToProps, mapDispatchToProps)(SignIn));

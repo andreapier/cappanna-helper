@@ -17,7 +17,7 @@ const switchRoutes = routes => (
   <Switch>
     {routes.map((route, key) => {
       if (route.redirect) {
-        return <Redirect from={route.path} to={route.to} key={key} />;
+        return <Redirect from={route.path} to={route.to} key={key}  />;
       }
 
       if (route.protected) {

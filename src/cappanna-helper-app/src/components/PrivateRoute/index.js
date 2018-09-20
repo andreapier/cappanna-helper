@@ -3,27 +3,26 @@ import PropTypes from "prop-types";
 import { Route, Redirect } from "react-router-dom";
 import signinRoute from "routes/users/signin";
 
-const PrivateRoute = ({ component: Component, user, roles, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      user.token ? (
-        user.roles.some(r => roles.includes(r)) ? (
-          <Component {...props} />
-        ) : (
-          <div>Role not allowed</div>
-        )
-      ) : (
-        <Redirect
+const PrivateRoute = ({ component: Component, user, roles, ...rest }) => {
+  const isAllowed = user.roles.some(r => roles.includes(r));
+  
+  return (
+    <Route
+      {...rest}
+    >{
+      user.token ?
+        isAllowed ? <Component {...rest} />
+        : <div>Role not allowed</div>
+      : <Redirect
           to={{
             pathname: signinRoute.path,
-            state: { from: props.location }
+            state: { from: rest.location }
           }}
         />
-      )
     }
-  />
-);
+    </Route>
+  );
+};
 
 PrivateRoute.propTypes = {
   component: PropTypes.func.isRequired,
