@@ -45,7 +45,9 @@ namespace CappannaHelper.Api.Controllers
 
                 if (result == null)
                 {
-                    return NotFound($"L'ordine con Id '{id}' non esiste");
+                    transaction.Rollback();
+
+                    return NotFound(new { Message = $"L'ordine con Id '{id}' non esiste" });
                 }
 
                 try
@@ -88,7 +90,7 @@ namespace CappannaHelper.Api.Controllers
         {
             if(ordersId == null)
             {
-                return BadRequest("Lista ordini da stampare non specificata");
+                return BadRequest(new { Message = "Lista ordini da stampare non specificata" });
             }
 
             IList<OrderDetailsAggregateModel> result;

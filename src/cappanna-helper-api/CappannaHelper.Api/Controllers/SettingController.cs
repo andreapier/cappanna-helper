@@ -37,31 +37,43 @@ namespace CappannaHelper.Api.Controllers
         [HttpPatch]
         public async Task<IActionResult> Patch([FromBody] Setting setting)
         {
-            if(setting == null) {
-                return BadRequest("Dati dell'impostazione non specificati");
+            if(setting == null)
+            {
+                return BadRequest(new { Message = "Dati dell'impostazione non specificati" });
             }
 
-            if(setting.Id <= 0) {
-                return BadRequest("Impossibile modificare un'impostazione senza specificare l'Id");
+            if(setting.Id <= 0)
+            {
+                return BadRequest(new { Message = "Impossibile modificare un'impostazione senza specificare l'Id" });
             }
 
-            if(setting.Name == null) {
-                return BadRequest("Impossibile modificare un'impostazione senza specificare il nome");
+            if(setting.Name == null)
+            {
+                return BadRequest(new { Message = "Impossibile modificare un'impostazione senza specificare il nome" });
             }
 
             Setting result;
 
             using(var transaction = await _context.Database.BeginTransactionAsync())
             {
-                try {
+                try
+                {
                     result = await _context.Settings.SingleOrDefaultAsync(o => o.Id == setting.Id);
-                    
+
+                    if(result == null)
+                    {
+                        transaction.Rollback();
+
+                        return NotFound(new { Message = $"L'impostazione Id '{setting.Id}' non esiste" });
+                    }
+
                     result.Value = setting.Value;
 
                     await _context.SaveChangesAsync();
                     transaction.Commit();
                 }
-                catch(Exception e) {
+                catch(Exception e)
+                {
                     throw new Exception("Impossibile salvare il piatto. Ripetere l'operazione", e);
                 }
             }

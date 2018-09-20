@@ -43,7 +43,8 @@ namespace CappannaHelper.Api.Common.ErrorManagement
             var code = HttpStatusCode.InternalServerError;
             var result = JsonConvert.SerializeObject(new
             {
-                exception.Message
+                exception.Message,
+                exception.StackTrace
             }, _jsonSettings);
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int) code;

@@ -78,7 +78,7 @@ namespace CappannaHelper.Api.Controllers
 
             if (result == null)
             {
-                return NotFound($"L'ordine con Id '{id}' non esiste");
+                return NotFound(new { Message = $"L'ordine con Id '{id}' non esiste" });
             }
 
             return Ok(result);
@@ -89,27 +89,27 @@ namespace CappannaHelper.Api.Controllers
         {
             if (order == null)
             {
-                return BadRequest("Dati dell'ordine non specificati");
+                return BadRequest(new { Message = "Dati dell'ordine non specificati" });
             }
 
             if (order.Id > 0)
             {
-                return BadRequest("Impossibile inviare un ordine con il campo Id valorizzato");
+                return BadRequest(new { Message = "Impossibile inviare un ordine con il campo Id valorizzato" });
             }
 
             if (order.ChTable == null)
             {
-                return BadRequest("Impossibile inviare un ordine senza specificare il tavolo");
+                return BadRequest(new { Message = "Impossibile inviare un ordine senza specificare il tavolo" });
             }
 
             if (order.Seats <= 0)
             {
-                return BadRequest("Impossibile inviare un ordine senza specificare il numero di coperti");
+                return BadRequest(new { Message = "Impossibile inviare un ordine senza specificare il numero di coperti" });
             }
 
             if (order.Details == null || order.Details.Count <= 0)
             {
-                return BadRequest("Impossibile inviare un ordine senza specificare i piatti");
+                return BadRequest(new { Message = "Impossibile inviare un ordine senza specificare i piatti" });
             }
 
             ChOrder result;
@@ -221,27 +221,27 @@ namespace CappannaHelper.Api.Controllers
         {
             if (order == null)
             {
-                return BadRequest("Dati dell'ordine non specificati");
+                return BadRequest(new { Message = "Dati dell'ordine non specificati" });
             }
 
             if (order.Id <= 0)
             {
-                return BadRequest("Impossibile modificare un ordine senza specificare l'Id");
+                return BadRequest(new { Message = "Impossibile modificare un ordine senza specificare l'Id" });
             }
 
             if (order.ChTable == null)
             {
-                return BadRequest("Impossibile modificare un ordine senza specificare il tavolo");
+                return BadRequest(new { Message = "Impossibile modificare un ordine senza specificare il tavolo" });
             }
 
             if (order.Seats <= 0)
             {
-                return BadRequest("Impossibile modificare un ordine senza specificare il numero di coperti");
+                return BadRequest(new { Message = "Impossibile modificare un ordine senza specificare il numero di coperti" });
             }
 
             if (order.Details == null || order.Details.Count <= 0)
             {
-                return BadRequest("Impossibile modificare un ordine senza specificare i piatti");
+                return BadRequest(new { Message = "Impossibile modificare un ordine senza specificare i piatti" });
             }
 
             ChOrder result;
@@ -264,14 +264,14 @@ namespace CappannaHelper.Api.Controllers
                     {
                         transaction.Rollback();
 
-                        return BadRequest("Impossibile modificare un ordine stampato");
+                        return BadRequest(new { Message = "Impossibile modificare un ordine stampato" });
                     }
 
                     if (dbOrder.ShiftId != shift.Id)
                     {
                         transaction.Rollback();
 
-                        return BadRequest("Impossibile modificare un ordine creato in un altro turno");
+                        return BadRequest(new { Message = "Impossibile modificare un ordine creato in un altro turno" });
                     }
 
                     shift.Income -= dbOrder.Details.Sum(d => d.Quantity * d.Item.Price);
@@ -361,21 +361,21 @@ namespace CappannaHelper.Api.Controllers
                 {
                     transaction.Rollback();
 
-                    return NotFound($"L'ordine con Id '{id}' non esiste");
+                    return NotFound(new { Message = $"L'ordine con Id '{id}' non esiste" });
                 }
 
                 if (result.Operations.Any(o => o.TypeId == (int)OperationTypes.Print))
                 {
                     transaction.Rollback();
                     
-                    return BadRequest("Impossibile eliminare un ordine stampato");
+                    return BadRequest(new { Message = "Impossibile eliminare un ordine stampato" });
                 }
 
                 if(result.ShiftId != shift.Id)
                 {
                     transaction.Rollback();
 
-                    return BadRequest("Impossibile eliminare un ordine creato in un altro turno");
+                    return BadRequest(new { Message = "Impossibile eliminare un ordine creato in un altro turno" });
                 }
 
                 try
@@ -418,28 +418,28 @@ namespace CappannaHelper.Api.Controllers
 
                 if(result == null)
                 {
-                    return NotFound($"L'ordine con Id '{id}' non esiste");
+                    return NotFound(new { Message = $"L'ordine con Id '{id}' non esiste" });
                 }
 
                 if(!result.Operations.Any(o => o.TypeId == (int) OperationTypes.Print))
                 {
                     transaction.Rollback();
 
-                    return BadRequest("Impossibile chiudere un ordine non stampato");
+                    return BadRequest(new { Message = "Impossibile chiudere un ordine non stampato" });
                 }
 
                 if(result.Operations.Any(o => o.TypeId == (int) OperationTypes.Close))
                 {
                     transaction.Rollback();
 
-                    return BadRequest("Impossibile chiudere un ordine già chiuso");
+                    return BadRequest(new { Message = "Impossibile chiudere un ordine già chiuso" });
                 }
 
                 if(result.ShiftId != shift.Id)
                 {
                     transaction.Rollback();
 
-                    return BadRequest("Impossibile chiudere un ordine creato in un altro turno");
+                    return BadRequest(new { Message = "Impossibile chiudere un ordine creato in un altro turno" });
                 }
 
                 result.Status = operationId;

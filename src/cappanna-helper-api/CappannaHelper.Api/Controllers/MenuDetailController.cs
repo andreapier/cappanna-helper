@@ -45,27 +45,27 @@ namespace CappannaHelper.Api.Controllers
         {
             if (detail == null)
             {
-                return BadRequest("Dati del piatto non specificati");
+                return BadRequest(new { Message = "Dati del piatto non specificati" });
             }
 
             if (detail.Id <= 0)
             {
-                return BadRequest("Impossibile modificare un piatto senza specificare l'Id");
+                return BadRequest(new { Message = "Impossibile modificare un piatto senza specificare l'Id" });
             }
 
             if (detail.Group == null)
             {
-                return BadRequest("Impossibile modificare un piatto senza specificare il gruppo");
+                return BadRequest(new { Message = "Impossibile modificare un piatto senza specificare il gruppo" });
             }
 
             if (string.IsNullOrEmpty(detail.Name))
             {
-                return BadRequest("Impossibile modificare un piatto senza specificare il nome");
+                return BadRequest(new { Message = "Impossibile modificare un piatto senza specificare il nome" });
             }
 
             if (detail.Price <= 0)
             {
-                return BadRequest("Impossibile modificare un piatto senza specificare il prezzo");
+                return BadRequest(new { Message = "Impossibile modificare un piatto senza specificare il prezzo" });
             }
 
             MenuDetail result;
