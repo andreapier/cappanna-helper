@@ -8,13 +8,13 @@ import {
   LOAD_USER_DATA,
   LOADING_CHANGED,
   SIGNAL_API_ERROR,
+  SIGNAL_API_SUCCESS,
   NOTIFY_INFO,
   NOTIFY_WARNING,
   NOTIFY_ERROR,
   RESET_NOTIFICATION,
   LOAD_MENU_DETAILS_REQUESTED,
   LOAD_MENU_DETAILS_COMPLETED,
-
   SET_MENU_DETAIL_QUANTITY,
   MENU_DETAILS_CHANGED,
   EDIT_ORDER,
@@ -99,6 +99,10 @@ export function loadingChanged(loading, message = "") {
 
 export function signalApiError(error) {
   return { type: SIGNAL_API_ERROR, payload: error };
+}
+
+export function signalApiSuccess() {
+  return { type: SIGNAL_API_SUCCESS };
 }
 
 export function notifyInfo(message) {

@@ -3,7 +3,8 @@ import Api from "api";
 import {
   loadingChanged,
   signalApiError,
-  resetOrder
+  resetOrder,
+  signalApiSuccess
 } from "actions";
 import { DELETE_ORDER } from "actions/types";
 import history from "./../history";
@@ -13,8 +14,9 @@ function* deleteOrder(action) {
     yield put(loadingChanged(true, "Cancellazione ordine in corso..."));
     const api = new Api();
     yield call(api.deleteOrder, action.payload);
+    yield put(signalApiSuccess());
     yield put(resetOrder());
-    history.push("/order/new");
+    history.push("/order");
   } catch (e) {
     yield put(signalApiError(e));
   } finally {

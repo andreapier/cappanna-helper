@@ -1,6 +1,10 @@
 import { select, call, put, takeLatest } from "redux-saga/effects";
 import Api from "api";
-import {loadingChanged, signalApiError } from "actions";
+import {
+  loadingChanged,
+  signalApiError,
+  signalApiSuccess
+} from "actions";
 import { SET_MENU_DETAIL_QUANTITY } from "actions/types";
 
 function* editMenuDetail(action) {
@@ -14,6 +18,7 @@ function* editMenuDetail(action) {
     };
     const api = new Api();
     yield call(api.editMenuDetail, menuDetail);
+    yield put(signalApiSuccess());
   } catch (e) {
     yield put(signalApiError(e));
   } finally {
