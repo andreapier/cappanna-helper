@@ -114,6 +114,11 @@ namespace CappannaHelper.Api.Controllers
                 transaction.Commit();
             }
 
+            if (result.Count == 0)
+            {
+                return Ok(result);
+            }
+
             try
             {
                 await _printService.PrintAsync(result);
@@ -123,7 +128,7 @@ namespace CappannaHelper.Api.Controllers
                 throw new Exception("Impossibile stampare la lista dei piatti", e);
             }
 
-            return Ok();
+            return Ok(result);
         }
 
         [HttpGet("status")]
