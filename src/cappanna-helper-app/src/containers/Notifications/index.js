@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import {
   loadNotificationsListRequested,
   resetOrder,
-  printRequested
+  printRequested,
+  completeNotification
 } from "actions";
 import NotificationsComp from "components/Notifications";
 
@@ -37,7 +38,8 @@ const mapDispatchToProps = dispatch => {
     loadNotificationsListRequested: () =>
       dispatch(loadNotificationsListRequested()),
     resetOrder: () => dispatch(resetOrder()),
-    printRequested: orderId => dispatch(printRequested(orderId))
+    printRequested: orderId => dispatch(printRequested(orderId)),
+    completeNotification: notificationId => dispatch(completeNotification(notificationId))
   };
 };
 

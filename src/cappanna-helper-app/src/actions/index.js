@@ -45,6 +45,7 @@ import {
   PRINT_COMPLETED,
   LOAD_NOTIFICATIONS_LIST_REQUESTED,
   LOAD_NOTIFICATIONS_LIST_COMPLETED,
+  COMPLETE_NOTIFICATION,
   CALCULATE,
   LOAD_DASHBOARD_DATA_REQUESTED,
   LOAD_DASHBOARD_DATA_COMPLETED,
@@ -250,6 +251,10 @@ export function loadNotificationsListRequested() {
 
 export function loadNotificationsListCompleted(notifications) {
   return { type: LOAD_NOTIFICATIONS_LIST_COMPLETED, payload: notifications };
+}
+
+export function completeNotification(notificationId) {
+  return { type: COMPLETE_NOTIFICATION, payload: notificationId };
 }
 
 export function calculate({ amount, paidAmount, seats }) {
