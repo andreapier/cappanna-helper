@@ -2,7 +2,8 @@
 using System.Threading.Tasks;
 using CappannaHelper.Printing;
 
-namespace CappannaHelper.Api.Printing {
+namespace CappannaHelper.Api.Printing
+{
     public interface IPrintService : IDisposable
     {
         Task PrintAsync<T>(T data);

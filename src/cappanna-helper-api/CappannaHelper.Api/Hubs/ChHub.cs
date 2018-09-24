@@ -11,5 +11,7 @@ namespace CappannaHelper.Api.Hubs
         public const string NOTIFY_ORDER_CLOSED = "NotifyOrderClosed";
 
         public const string NOTIFY_MENU_DETAILS_CHANGED = "NotifyMenuDetailsChanged";
+
+        public const string NOTIFY_PRINTER_FAILURE = "NotifyPrinterFailure";
     }
 }

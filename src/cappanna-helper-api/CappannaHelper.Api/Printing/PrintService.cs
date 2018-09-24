@@ -3,7 +3,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using CappannaHelper.Printing;
 
-namespace CappannaHelper.Api.Printing {
+namespace CappannaHelper.Api.Printing
+{
     public class PrintService : IPrintService
     {
         private readonly IPrinterDocumentBuilderFactory _factory;
