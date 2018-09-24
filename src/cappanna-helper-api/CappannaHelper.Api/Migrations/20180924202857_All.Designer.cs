@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CappannaHelper.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180922105450_All")]
+    [Migration("20180924202857_All")]
     partial class All
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -222,34 +222,6 @@ namespace CappannaHelper.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MenuDetails");
-                });
-
-            modelBuilder.Entity("CappannaHelper.Api.Persistence.Modelling.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("Completed");
-
-                    b.Property<DateTime>("CreationTimestamp")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<string>("Message")
-                        .IsRequired();
-
-                    b.Property<string>("Notes");
-
-                    b.Property<string>("Type")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Completed");
-
-                    b.HasIndex("CreationTimestamp");
-
-                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("CappannaHelper.Api.Persistence.Modelling.OperationType", b =>

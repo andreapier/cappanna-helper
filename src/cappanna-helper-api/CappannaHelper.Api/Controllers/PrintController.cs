@@ -3,7 +3,6 @@ using CappannaHelper.Api.Models;
 using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Persistence.Modelling;
 using CappannaHelper.Api.Printing;
-using CappannaHelper.Printing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -59,8 +58,6 @@ namespace CappannaHelper.Api.Controllers
                 {
                     throw new Exception("Impossibile stampare l'ordine", e);
                 }
-
-                await GetAndNotifyStatus();
 
                 try
                 {
@@ -131,70 +128,7 @@ namespace CappannaHelper.Api.Controllers
                 throw new Exception("Impossibile stampare la lista dei piatti", e);
             }
 
-            await GetAndNotifyStatus();
-
             return Ok(result);
-        }
-
-        [HttpGet("status")]
-        public async Task<IActionResult> GetStatus()
-        {
-            try
-            {
-                var status = await GetAndNotifyStatus();
-
-                return Ok(status);
-            }
-            catch(Exception e)
-            {
-                throw new Exception("Impossibile recuperare lo stato della stampante", e);
-            }
-        }
-
-        private async Task<IStatus> GetAndNotifyStatus()
-        {
-            try
-            {
-                var status = await _printService.GetStatusAsync();
-
-                if (status.HasError)
-                {
-                    var type = Notification.PRINTER_STATUS_KO;
-                    var found = false;
-
-                    using (var transaction = await _context.Database.BeginTransactionAsync())
-                    {
-                        found = await _context.Notifications.AnyAsync(n => n.Type == type && !n.Completed);
-
-                        if (!found)
-                        {
-                            await _context.Notifications.AddAsync(new Notification
-                            {
-                                Message = "Printer status KO",
-                                Notes = string.Join(Environment.NewLine, status.Details.Keys),
-                                Type = type
-                            });
-
-                            await _context.SaveChangesAsync();
-                        }
-
-                        transaction.Commit();
-                    }
-
-                    if (!found)
-                    {
-                        await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_PRINTED, status);
-                    }
-                }
-
-                return status;
-            }
-            catch (Exception e)
-            {
-                await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_PRINTED, e);
-
-                return null;
-            }
         }
     }
 }

@@ -222,34 +222,6 @@ namespace CappannaHelper.Api.Migrations
                     b.ToTable("MenuDetails");
                 });
 
-            modelBuilder.Entity("CappannaHelper.Api.Persistence.Modelling.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("Completed");
-
-                    b.Property<DateTime>("CreationTimestamp")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<string>("Message")
-                        .IsRequired();
-
-                    b.Property<string>("Notes");
-
-                    b.Property<string>("Type")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Completed");
-
-                    b.HasIndex("CreationTimestamp");
-
-                    b.ToTable("Notifications");
-                });
-
             modelBuilder.Entity("CappannaHelper.Api.Persistence.Modelling.OperationType", b =>
                 {
                     b.Property<int>("Id")

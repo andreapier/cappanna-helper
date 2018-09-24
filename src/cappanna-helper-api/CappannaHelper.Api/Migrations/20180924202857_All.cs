@@ -24,23 +24,6 @@ namespace CappannaHelper.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Notifications",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Type = table.Column<string>(nullable: false),
-                    Message = table.Column<string>(nullable: false),
-                    Notes = table.Column<string>(nullable: true),
-                    CreationTimestamp = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    Completed = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Notifications", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OperationTypes",
                 columns: table => new
                 {
@@ -378,16 +361,6 @@ namespace CappannaHelper.Api.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notifications_Completed",
-                table: "Notifications",
-                column: "Completed");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Notifications_CreationTimestamp",
-                table: "Notifications",
-                column: "CreationTimestamp");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_ItemId",
                 table: "OrderDetails",
                 column: "ItemId");
@@ -449,9 +422,6 @@ namespace CappannaHelper.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "ChOrderOperations");
-
-            migrationBuilder.DropTable(
-                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "OrderDetails");

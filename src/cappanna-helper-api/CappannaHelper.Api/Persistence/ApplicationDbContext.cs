@@ -16,7 +16,6 @@ namespace CappannaHelper.Api.Persistence
         public DbSet<OperationType> OperationTypes { get; set; }
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<Setting> Settings { get; set; }
-        public DbSet<Notification> Notifications { get; set; }
 
         public ApplicationDbContext()
         { }
