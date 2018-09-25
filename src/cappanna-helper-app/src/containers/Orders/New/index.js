@@ -31,7 +31,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     needsReset: newOrder && state.newOrderHeader.id,
-    needsMenuDetailsLoading: !state.menuDetails.loaded
+    needsMenuDetailsLoading: state.menuDetails.length === 0
   };
 };
 

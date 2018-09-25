@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import Body from "components/Orders/Detail/Body";
 import { connect } from "react-redux";
-import { loadSelectedOrderRequested, resetOrder } from "actions";
+import { loadSelectedOrderRequested, loadMenuDetailsRequested, resetOrder } from "actions";
 import { withRouter } from "react-router-dom";
 import buildFilledOrderDetails from "utils/buildFilledOrderDetails";
 
 class ConnectedBody extends Component {
   componentDidMount() {
+    if (this.props.needsMenuDetailsLoading) {
+      this.props.loadMenuDetailsRequested();
+    }
     this.props.loadSelectedOrderRequested();
   }
 
@@ -24,7 +27,8 @@ const mapStateToProps = state => {
     dishList: state.selectedOrder
       ? buildFilledOrderDetails(state.selectedOrder.details, state.menuDetails)
       : [],
-    notes: state.selectedOrder ? state.selectedOrder.notes || "" : ""
+    notes: state.selectedOrder ? state.selectedOrder.notes || "" : "",
+    needsMenuDetailsLoading: state.menuDetails.length === 0
   };
 };
 
@@ -32,6 +36,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loadSelectedOrderRequested: () =>
       dispatch(loadSelectedOrderRequested(ownProps.match.params.id)),
+    loadMenuDetailsRequested: () => dispatch(loadMenuDetailsRequested()),
     resetOrder: () => dispatch(resetOrder())
   };
 };
