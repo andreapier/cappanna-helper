@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Body from "components/Orders/Detail/Body";
 import { connect } from "react-redux";
-import { loadSelectedOrderRequested, loadMenuDetailsRequested, resetOrder } from "actions";
+import { loadSelectedOrderRequested, loadMenuDetailsRequested } from "actions";
 import { withRouter } from "react-router-dom";
 import buildFilledOrderDetails from "utils/buildFilledOrderDetails";
 
@@ -15,10 +15,6 @@ class ConnectedBody extends Component {
 
   render() {
     return <Body dishList={this.props.dishList} notes={this.props.notes} />;
-  }
-
-  componentWillUnmount() {
-    this.props.resetOrder();
   }
 }
 
@@ -36,8 +32,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loadSelectedOrderRequested: () =>
       dispatch(loadSelectedOrderRequested(ownProps.match.params.id)),
-    loadMenuDetailsRequested: () => dispatch(loadMenuDetailsRequested()),
-    resetOrder: () => dispatch(resetOrder())
+    loadMenuDetailsRequested: () => dispatch(loadMenuDetailsRequested())
   };
 };
 

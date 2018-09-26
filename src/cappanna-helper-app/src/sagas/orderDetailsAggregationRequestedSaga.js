@@ -2,6 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "api";
 import {
   loadingChanged,
+  signalApiSuccess,
   signalApiError,
   orderDetailsAggregationCompleted
 } from "actions";
@@ -14,6 +15,7 @@ function* orderDetailsAggregationRequestedSaga(action) {
     const api = new Api();
     const aggregate = yield call(api.aggregateOrderDetails, action.payload);
     yield put(orderDetailsAggregationCompleted(aggregate));
+    yield put(signalApiSuccess());
   } catch (e) {
     yield put(signalApiError(e));
   } finally {

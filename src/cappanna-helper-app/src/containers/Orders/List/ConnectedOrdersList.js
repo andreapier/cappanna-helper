@@ -13,7 +13,7 @@ class ConnectedOrdersList extends Component {
   }
 
   componentWillUnmount() {
-    this.props.resetOrder()
+    this.props.resetOrder();
   }
 }
 
@@ -21,7 +21,7 @@ const mapStateToProps = state => {
   return {
     orders: state.orders.isFiltered
       ? state.orders.items.filter(o => o.createdById === state.user.userId)
-      : state.orders.items,
+      : state.orders.items
   };
 };
 

@@ -1,4 +1,4 @@
-import { CALCULATE, RESET_ORDER, SIGNOUT_COMPLETED } from "actions/types";
+import { CALCULATE, SIGNOUT_COMPLETED } from "actions/types";
 
 export const initialState = {
   amount: 0,
@@ -10,7 +10,6 @@ export const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case RESET_ORDER:
     case SIGNOUT_COMPLETED:
       return initialState;
       

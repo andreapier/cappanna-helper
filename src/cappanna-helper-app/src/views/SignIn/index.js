@@ -8,7 +8,7 @@ import SignInForm from "containers/SignInForm";
 const SignInPage = () => {
   return (
     <RegularCard
-      cardTitle="Sign in"
+      cardTitle=""
       cardSubtitle={
         <P>Inserisci le credenziali per iniziare ad utilizzare il sistema</P>
       }>

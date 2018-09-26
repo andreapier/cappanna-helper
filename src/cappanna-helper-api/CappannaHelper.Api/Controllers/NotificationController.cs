@@ -1,6 +1,7 @@
 ﻿using CappannaHelper.Api.Models;
 using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Persistence.Modelling;
+using CappannaHelper.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,10 +17,12 @@ namespace CappannaHelper.Api.Controllers
     public class NotificationController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IShiftManager _shiftManager;
 
-        public NotificationController(ApplicationDbContext context)
+        public NotificationController(ApplicationDbContext context, IShiftManager shiftManager)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _shiftManager = shiftManager ?? throw new ArgumentNullException(nameof(shiftManager));
         }
 
         [HttpGet]
@@ -29,12 +32,13 @@ namespace CappannaHelper.Api.Controllers
 
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
+                var currentShift = await _shiftManager.GetOrCreateCurrentAsync();
                 var toBePrintedOrders = await _context
                     .Orders
                     .Include(o => o.CreatedBy)
                     .Include(o => o.Details)
                     .ThenInclude(d => d.Item)
-                    .Where(o => !o.Operations.Any(op => op.TypeId == (int) OperationTypes.Print))
+                    .Where(o => o.ShiftId == currentShift.Id && !o.Operations.Any(op => op.TypeId == (int) OperationTypes.Print))
                     .Select(o => new NotificationModel
                     {
                         Type = NotificationModel.ORDER_NOTIFICATION,
