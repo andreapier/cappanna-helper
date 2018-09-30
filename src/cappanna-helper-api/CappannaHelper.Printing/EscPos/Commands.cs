@@ -17,6 +17,7 @@ namespace CappannaHelper.Printing.EscPos
         public static readonly IReadOnlyList<byte> SELECT_CHARACTER_CODE_TABLE_CANADA_AND_FRENCH = new byte[] { 0x1B, 0x74, 0x04 };
         public static readonly IReadOnlyList<byte> SELECT_CHARACTER_CODE_TABLE_NORDIC = new byte[] { 0x1B, 0x74, 0x05 };
         public static readonly IReadOnlyList<byte> SELECT_CHARACTER_CODE_TABLE_CYRILLIC_2 = new byte[] { 0x1B, 0x74, 0x11 };
+        public static readonly IReadOnlyList<byte> SELECT_CHARACTER_CODE_TABLE_EURO = new byte[] { 0x1B, 0x74, 0x13 };
         public static readonly IReadOnlyList<byte> SELECT_CHARACTER_CODE_TABLE_SPACE_PAGE = new byte[] { 0x1B, 0x74, 0xFF };
         public static readonly IReadOnlyList<byte> SELECT_CHARACTER_SIZE_HEADER = new byte[] { 0x1D, 0x21 };
         public static readonly IReadOnlyList<byte> SELECT_JUSTIFICATION_LEFT = new byte[] { 0x1B, 0x61, 0x00 };
