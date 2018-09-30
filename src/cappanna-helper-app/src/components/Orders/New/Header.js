@@ -36,7 +36,7 @@ const Header = props => {
         <div>
           <TextField
             name="tableCategory"
-            label="Cat."
+            label="Cliente"
             className="CreateOrderForm-TextField"
             style={textFieldStyle}
             value={props.tableCategory}
