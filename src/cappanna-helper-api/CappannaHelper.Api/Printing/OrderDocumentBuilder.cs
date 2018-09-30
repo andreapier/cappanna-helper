@@ -47,8 +47,19 @@ namespace CappannaHelper.Api.Printing
         private void SetTable(string table, int size)
         {
             var section = _document.LastPage.CreateSection();
+            var tableStr = table.ToString();
+
+            if (tableStr.Length <= 11)
+            {
+                tableStr = tableStr.PadLeft(11, ' ');
+            }
+            else
+            {
+                tableStr = tableStr.Substring(0, 11);
+            }
+            
             section.SetSize(size);
-            section.CreateLabel().SetContent($"Tavolo:    {table.ToString().PadLeft(4, ' ')}");
+            section.CreateLabel().SetContent($"Tav:   {tableStr}");
             section.NewLine();
         }
 
@@ -62,9 +73,9 @@ namespace CappannaHelper.Api.Printing
         private void SetWaiter(ApplicationUser waiter, int size)
         {
             var section = _document.LastPage.CreateSection();
-            var firstName = waiter.FirstName.Length <= 8 ? waiter.FirstName : waiter.FirstName.Substring(0, 8);
+            var firstName = waiter.FirstName.Length <= 11 ? waiter.FirstName.PadLeft(11, ' ') : waiter.FirstName.Substring(0, 11);
             section.SetSize(size);
-            section.CreateLabel().SetContent($"Cameriere: {firstName}");
+            section.CreateLabel().SetContent($"Camer: {firstName}");
             section.NewLine();
         }
 
