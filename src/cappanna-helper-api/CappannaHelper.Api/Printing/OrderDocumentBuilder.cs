@@ -110,14 +110,14 @@ namespace CappannaHelper.Api.Printing
         {
             if (order.Details.Any(d => d.Item.IsDish))
             {
-                SetHeader("CUCINA", order.ShiftId, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp, 16);
+                SetHeader("CUCINA", order.ShiftCounter, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp, 16);
                 SetDishes(order.Details, 16);
                 SetNotes(order.Notes, 16);
                 
                 AddPage(16);
             }
             
-            SetHeader("BAR", order.ShiftId, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp, 12);
+            SetHeader("BAR", order.ShiftCounter, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp, 12);
             SetDishes(order.Details, 12);
 
             if (order.Details.Any(d => d.Item.IsDrink))
