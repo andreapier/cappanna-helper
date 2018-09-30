@@ -21,7 +21,13 @@ namespace CappannaHelper.Api.Identity.ComponentModel.User
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IdentityResult> CreateAsync(ApplicationUser user, string password) => await _userManager.CreateAsync(user, password);
+        public async Task<IdentityResult> CreateAsync(ApplicationUser user, string password)
+        {
+            var result = await _userManager.CreateAsync(user, password);
+            await _userManager.AddToRoleAsync(user, "waiter");
+
+            return result;
+        }
 
         public async Task<ApplicationUser> FindByNameAsync(string userName)
         {
