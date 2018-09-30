@@ -8,10 +8,10 @@
   "private": true,
   "proxy": {
     "/api": {
-      "target": "http://localhost:5000"
+      "target": "http://localhost"
     },
     "/hubs": {
-      "target": "http://localhost:5000",
+      "target": "http://localhost",
       "ws": true
     }
   },
