@@ -151,6 +151,7 @@ namespace CappannaHelper.Api.Setup
         private async Task SetupAppetizersAsync(List<string> errors)
         {
             await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Insalata di mare", 6.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Totano patate olive", 7.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Alici marinate", 5.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Degustazione di antipasti", 9.0M, errors);
         }
@@ -170,7 +171,7 @@ namespace CappannaHelper.Api.Setup
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Fritto calamari e gamberi", 10.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Coda di rospo", 9.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Sardoncini scottadito", 6.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Costarelle fagioli salsiccia", 6.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Costarelle fagioli salsiccia", 8.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Piadina con prosciutto", 3.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Cresciola di polenta", 3.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Bruschetta salsa pesce", 1.5M, errors);
@@ -211,13 +212,14 @@ namespace CappannaHelper.Api.Setup
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Cuapro", 10.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Cuprese", 10.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Tufico", 12.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "San Michele", 14.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "San Michele", 15.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Manciano", 9.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Il Priore", 13.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Salerna", 10.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Capovolto", 13.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Capovolto 1,5L", 26.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Saltatempo", 13.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Fonte Cherubini", 11.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Calipra", 14.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Kypra", 14.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Oinochoe", 12.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Brecciole", 10.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Spumante 'Cuvee Tradition'", 10.0M, errors);
@@ -230,6 +232,7 @@ namespace CappannaHelper.Api.Setup
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Vino rosso doc 1 L", 5.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Lyricus (Rosso Piceno)", 6.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Tornamagno (Rosso IGT)", 12.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Bastian Contrario", 14.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Superbo (Lacrima Morro d'Alba)", 12.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Rubus (Rosso Piceno)", 10.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Nerium (Rosso Piceno)", 10.0M, errors);
