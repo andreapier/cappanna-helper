@@ -49,7 +49,7 @@ const MenuItemDetail = props => {
               )
             }
             disabled={
-              props.detail.item.unitsInStock - props.detail.quantity <= 0
+              props.detail.item.unitsInStock + props.detail.initialQuantity - props.detail.quantity <= 0
             }
           >
             <ContentAdd />
@@ -79,6 +79,7 @@ MenuItemDetail.propTypes = {
   detail: PropTypes.shape({
     id: PropTypes.number,
     quantity: PropTypes.number.isRequired,
+    initialQuantity: PropTypes.number.isRequired,
     item: PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,

@@ -32,6 +32,7 @@ const mapStateToProps = (state, ownProps) => {
     detail: {
       id: detail.id,
       quantity: detail.quantity,
+      initialQuantity: detail.initialQuantity,
       item: menuDetail
     }
   };
