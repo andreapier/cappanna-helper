@@ -14,17 +14,23 @@ class ConnectedBody extends Component {
   }
 
   render() {
+    if (this.props.needsMenuDetailsLoading) {
+      return null;
+    }
+
     return <Body dishList={this.props.dishList} notes={this.props.notes} />;
   }
 }
 
 const mapStateToProps = state => {
+  const needsMenuDetailsLoading = state.menuDetails.length === 0;
+
   return {
-    dishList: state.selectedOrder
+    dishList: state.selectedOrder && !needsMenuDetailsLoading
       ? buildFilledOrderDetails(state.selectedOrder.details, state.menuDetails)
       : [],
     notes: state.selectedOrder ? state.selectedOrder.notes || "" : "",
-    needsMenuDetailsLoading: state.menuDetails.length === 0
+    needsMenuDetailsLoading
   };
 };
 
