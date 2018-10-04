@@ -82,8 +82,9 @@ namespace CappannaHelper.Api.Printing
         private void SetCreationTimestamp(DateTime creationTimestamp, int size)
         {
             var section = _document.LastPage.CreateSection();
+            var localCreationTimestamp = TimeZoneInfo.ConvertTime(creationTimestamp, TimeZoneInfo.Local);
             section.SetSize(size);
-            section.CreateLabel().SetContent($"Orario: {creationTimestamp.ToString("HH:mm:ss")}");
+            section.CreateLabel().SetContent($"Orario: {localCreationTimestamp.ToString("HH:mm:ss")}");
             section.NewLine();
         }
 
