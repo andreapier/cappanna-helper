@@ -88,7 +88,7 @@ const Header = props => {
         <div>
           <TextField
             name="tableCategory"
-            label="Cat."
+            label="Cliente"
             className={props.classes.textField}
             value={props.order.tableCategory}
             InputLabelProps={{ shrink: true }}
