@@ -41,6 +41,7 @@ namespace CappannaHelper.Api.Controllers
                     OrdersQuantity = g.Count(),
                     Income = g.Sum(o => o.Details.Sum(d => d.Quantity * d.Item.Price))
                 })
+                .OrderByDescending(r => r.Income)
                 .ToListAsync();
             var result = new DashboardModel
             {
