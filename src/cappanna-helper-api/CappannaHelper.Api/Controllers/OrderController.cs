@@ -157,6 +157,12 @@ namespace CappannaHelper.Api.Controllers
                         if (detail.Item.UnitsInStock.HasValue)
                         {
                             detail.Item.UnitsInStock -= result.Details.Single(d => d.ItemId == detail.ItemId).Quantity;
+
+                            if (detail.Item.UnitsInStock.Value < 0)
+                            {
+                                detail.Item.UnitsInStock = 0;
+                            }
+
                             limitedStockMenuDetails.Add(detail.Item);
                         }
                     }
@@ -294,6 +300,12 @@ namespace CappannaHelper.Api.Controllers
                             if(dbItem.UnitsInStock.HasValue)
                             {
                                 dbItem.UnitsInStock -= detail.Quantity;
+
+                                if(dbItem.UnitsInStock.Value < 0)
+                                {
+                                    dbItem.UnitsInStock = 0;
+                                }
+
                                 limitedStockMenuDetails.Add(dbItem);
                             }
                         }
@@ -305,6 +317,12 @@ namespace CappannaHelper.Api.Controllers
                             if(dbDetail.Item.UnitsInStock.HasValue)
                             {
                                 dbDetail.Item.UnitsInStock -= changedQuantity;
+
+                                if(dbDetail.Item.UnitsInStock.Value < 0)
+                                {
+                                    dbDetail.Item.UnitsInStock = 0;
+                                }
+
                                 limitedStockMenuDetails.Add(dbDetail.Item);
                             }
                         }
@@ -327,6 +345,11 @@ namespace CappannaHelper.Api.Controllers
                         if(dbDetail.Item.UnitsInStock.HasValue)
                         {
                             dbDetail.Item.UnitsInStock += detail.Quantity;
+
+                            if(dbDetail.Item.UnitsInStock.Value < 0)
+                            {
+                                detail.Item.UnitsInStock = 0;
+                            }
 
                             if (!limitedStockMenuDetails.Any(d => d.Id == dbDetail.ItemId))
                             {
@@ -378,6 +401,7 @@ namespace CappannaHelper.Api.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             ChOrder result;
+            var limitedStockMenuDetails = new List<MenuDetail>();
 
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
@@ -417,6 +441,21 @@ namespace CappannaHelper.Api.Controllers
                     shift.Income -= result.Details.Sum(d => d.Quantity * d.Item.Price);
                     _context.Orders.Remove(result);
 
+                    foreach(var detail in result.Details)
+                     {
+                        if(detail.Item.UnitsInStock.HasValue)
+                        {
+                            detail.Item.UnitsInStock += result.Details.Single(d => d.ItemId == detail.ItemId).Quantity;
+
+                            if(detail.Item.UnitsInStock.Value < 0)
+                            {
+                                detail.Item.UnitsInStock = 0;
+                            }
+
+                            limitedStockMenuDetails.Add(detail.Item);
+                        }
+                    }
+
                     await _context.SaveChangesAsync();
                     transaction.Commit();
                 }
@@ -427,6 +466,11 @@ namespace CappannaHelper.Api.Controllers
             }
 
             await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_DELETED, result);
+
+            if(limitedStockMenuDetails.Any())
+            {
+                await _hub.Clients.All.SendAsync(ChHub.NOTIFY_MENU_DETAILS_CHANGED, limitedStockMenuDetails);
+            }
 
             return Ok(result);
         }

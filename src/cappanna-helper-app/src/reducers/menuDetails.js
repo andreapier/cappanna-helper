@@ -6,7 +6,9 @@ import {
 
 const initialState = [];
 
-const calculateUnitsInStock = unitsInStock => unitsInStock === null || unitsInStock === undefined ? Infinity : unitsInStock;
+const calculateUnitsInStock = unitsInStock => unitsInStock === null || unitsInStock === undefined
+  ? Infinity
+  : (unitsInStock < 0) ? 0 : unitsInStock;
 
 export default function(state = initialState, action) {
   switch (action.type) {

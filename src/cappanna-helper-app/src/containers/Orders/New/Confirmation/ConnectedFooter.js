@@ -20,7 +20,7 @@ const mapStateToProps = state => {
       state.newOrderHeader.totalPrice > 0 &&
       state.newOrderHeader.chTable > 0 &&
       state.newOrderHeader.seats > 0 &&
-      !state.newOrderDetails.some(d => {
+      !state.newOrderDetails.filter(d => d.quantity > 0).some(d => {
         const menuDetail = state.menuDetails.find(m => m.id === d.itemId);
         return menuDetail.unitsInStock + d.initialQuantity < d.quantity;
       })
