@@ -21,7 +21,7 @@ namespace CappannaHelper.Api.Services
         public async Task<Shift> GetOrCreateCurrentAsync()
         {
             var now = DateTime.Now;
-            var limit = now.AddHours(-1);
+            var limit = TimeZoneInfo.ConvertTime(now.AddHours(-1), TimeZoneInfo.Utc);
 
             var result = await _context.Orders
                 .Where(o => o.CreationTimestamp >= limit)
