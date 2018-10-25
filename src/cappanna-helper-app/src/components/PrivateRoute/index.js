@@ -10,9 +10,8 @@ const PrivateRoute = ({ component: Component, user, roles, ...rest }) => {
     <Route
       {...rest}
     >{
-      user.token ?
-        isAllowed ? <Component {...rest} />
-        : <div>Role not allowed</div>
+      user.token
+      ? isAllowed ? <Component {...rest} /> : <div>Role not allowed</div>
       : <Redirect
           to={{
             pathname: signinRoute.path,

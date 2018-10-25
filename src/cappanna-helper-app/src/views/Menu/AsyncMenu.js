@@ -1,5 +1,13 @@
-import LoadablePage from "components/LoadablePage";
+import React, {lazy, Suspense} from 'react';
+import WaitLoader from "components/WaitDialog/WaitLoader";
 
-const AsyncMenu = LoadablePage(() => import("views/Menu"));
+const Menu = lazy(() => import("views/Menu"));
+const AsyncMenu = () => {
+  return (
+    <Suspense fallback={<WaitLoader />}>
+      <Menu />
+    </Suspense>
+  );
+};
 
 export default AsyncMenu;

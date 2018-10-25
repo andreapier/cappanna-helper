@@ -1,5 +1,13 @@
-import LoadablePage from "components/LoadablePage";
+import React, {lazy, Suspense} from 'react';
+import WaitLoader from "components/WaitDialog/WaitLoader";
 
-const AsyncNotification = LoadablePage(() => import("views/Notifications"));
+const Notifications = lazy(() => import("views/Notifications"));
+const AsyncNotifications = () => {
+  return (
+    <Suspense fallback={<WaitLoader />}>
+      <Notifications />
+    </Suspense>
+  );
+};
 
-export default AsyncNotification;
+export default AsyncNotifications;

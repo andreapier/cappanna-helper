@@ -1,7 +1,14 @@
-import LoadablePage from "components/LoadablePage";
+import React, {lazy, Suspense} from 'react';
+import WaitLoader from "components/WaitDialog/WaitLoader";
 
-const AsyncOrderDetailsAggregate = LoadablePage(() =>
-  import("views/OrderDetailsAggregate")
-);
+const OrderDetailsAggregate = lazy(() => import("views/OrderDetailsAggregate"));
+const AsyncOrderDetailsAggregate = () => {
+  return (
+    <Suspense fallback={<WaitLoader />}>
+      <OrderDetailsAggregate />
+    </Suspense>
+  );
+};
 
 export default AsyncOrderDetailsAggregate;
+

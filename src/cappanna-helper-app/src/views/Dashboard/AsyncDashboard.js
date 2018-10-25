@@ -1,5 +1,13 @@
-import LoadablePage from "components/LoadablePage";
+import React, {lazy, Suspense} from 'react';
+import WaitLoader from "components/WaitDialog/WaitLoader";
 
-const AsyncDashboard = LoadablePage(() => import("views/Dashboard"));
+const Dashboard = lazy(() => import("views/Dashboard"));
+const AsyncDashboard = () => {
+  return (
+    <Suspense fallback={<WaitLoader />}>
+      <Dashboard />
+    </Suspense>
+  );
+};
 
 export default AsyncDashboard;

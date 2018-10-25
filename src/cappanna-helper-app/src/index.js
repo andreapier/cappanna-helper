@@ -4,12 +4,18 @@ import App from "containers/App";
 import storeGenerator from "./store";
 import { loadUserData } from "actions";
 import "assets/css/index.css";
+import { createMuiTheme } from '@material-ui/core/styles';
 
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  }
+});
 const store = storeGenerator();
 store.dispatch(loadUserData());
 
 const renderApp = () => {
-  ReactDOM.render(<App store={store} />, document.getElementById("root"));
+  ReactDOM.render(<App store={store} theme={theme} />, document.getElementById("root"));
 };
 
 renderApp();

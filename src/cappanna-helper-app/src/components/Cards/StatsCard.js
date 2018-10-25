@@ -24,7 +24,7 @@ const StatsCard = props => {
           {title}
         </Typography>
         <Typography
-          variant="headline"
+          variant="h5"
           component="h2"
           className={classes.cardTitle}
         >

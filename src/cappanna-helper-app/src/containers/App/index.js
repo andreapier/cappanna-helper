@@ -12,6 +12,7 @@ import ConnectedWaitDialog from "containers/ConnectedWaitDialog";
 import ConnectedNotificationSnackbar from "containers/ConnectedNotificationSnackbar";
 import RoutingAwareHeader from "containers/RoutingAwareHeader";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 
 const switchRoutes = routes => (
   <Switch>
@@ -71,31 +72,33 @@ class App extends Component {
       <Provider store={this.props.store}>
         <Router history={history}>
           <div className={this.props.classes.wrapper}>
-            <CssBaseline />
-            <ConnectedWaitDialog />
-            <ConnectedNotificationSnackbar />
-            <ConnectedSidebar
-              routes={appRoutes}
-              handleDrawerToggle={this.handleDrawerToggle}
-              handleSidebarNavigationItemClick={
-                this.handleSidebarNavigationItemClick
-              }
-              open={this.state.mobileOpen}
-            />
-            <div
-              className={this.props.classes.mainPanel}
-              ref={this.mainPanelRef}
-            >
-              <RoutingAwareHeader
-                handleDrawerToggle={this.handleDrawerToggle}
+            <MuiThemeProvider theme={this.props.theme}>
+              <CssBaseline />
+              <ConnectedWaitDialog />
+              <ConnectedNotificationSnackbar />
+              <ConnectedSidebar
                 routes={appRoutes}
+                handleDrawerToggle={this.handleDrawerToggle}
+                handleSidebarNavigationItemClick={
+                  this.handleSidebarNavigationItemClick
+                }
+                open={this.state.mobileOpen}
               />
-              <div className={this.props.classes.content}>
-                <div className={this.props.classes.container}>
-                  {switchRoutes(appRoutes)}
+              <div
+                className={this.props.classes.mainPanel}
+                ref={this.mainPanelRef}
+              >
+                <RoutingAwareHeader
+                  handleDrawerToggle={this.handleDrawerToggle}
+                  routes={appRoutes}
+                />
+                <div className={this.props.classes.content}>
+                  <div className={this.props.classes.container}>
+                    {switchRoutes(appRoutes)}
+                  </div>
                 </div>
               </div>
-            </div>
+            </MuiThemeProvider>
           </div>
         </Router>
       </Provider>
@@ -105,7 +108,8 @@ class App extends Component {
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
-  store: PropTypes.object.isRequired
+  store: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
 };
 
 export default withStyles(appStyle)(App);

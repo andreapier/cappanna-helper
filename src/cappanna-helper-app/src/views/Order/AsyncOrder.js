@@ -1,5 +1,13 @@
-import LoadablePage from "components/LoadablePage";
+import React, {lazy, Suspense} from 'react';
+import WaitLoader from "components/WaitDialog/WaitLoader";
 
-const AsyncOrder = LoadablePage(() => import("views/Order"));
+const Order = lazy(() => import("views/Order"));
+const AsyncOrder = () => {
+  return (
+    <Suspense fallback={<WaitLoader />}>
+      <Order />
+    </Suspense>
+  );
+};
 
 export default AsyncOrder;

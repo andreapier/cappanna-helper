@@ -26,7 +26,7 @@ function Header(props) {
             </IconButton>
           </Hidden>
           <Typography
-            variant="title"
+            variant="h6"
             color="inherit"
             className={classes.flex.flex}
           >

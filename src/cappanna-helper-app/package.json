@@ -6,31 +6,21 @@
   "name": "cappanna-helper-app",
   "version": "1.0.1",
   "private": true,
-  "proxy": {
-    "/api": {
-      "target": "http://localhost"
-    },
-    "/hubs": {
-      "target": "http://localhost",
-      "ws": true
-    }
-  },
   "dependencies": {
     "@aspnet/signalr": "^1.0.4",
-    "@material-ui/core": "^3.1.2",
+    "@material-ui/core": "^3.4.0",
     "@material-ui/icons": "^3.0.1",
-    "localforage": "^1.7.2",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-loadable": "^5.5.0",
-    "react-redux": "^5.0.7",
+    "localforage": "^1.7.3",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-redux": "^5.1.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^1.1.5",
-    "redux": "^4.0.0",
+    "react-scripts": "^2.1.1",
+    "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.5",
     "redux-form": "^7.4.2",
     "redux-form-material-ui": "^5.0.0-beta.3",
-    "redux-saga": "^0.16.0"
+    "redux-saga": "^0.16.2"
   },
   "scripts": {
     "analyze": "source-map-explorer build/static/js/main.*",
@@ -49,8 +39,15 @@
     "order taking"
   ],
   "devDependencies": {
-    "eslint-plugin-prettier": "^2.7.0",
+    "eslint-plugin-prettier": "^3.0.0",
     "prettier": "^1.14.3",
-    "source-map-explorer": "^1.6.0"
-  }
+    "source-map-explorer": "^1.6.0",
+    "http-proxy-middleware": "^0.19.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

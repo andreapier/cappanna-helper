@@ -1,5 +1,13 @@
-import LoadablePage from "components/LoadablePage";
+import React, {lazy, Suspense} from 'react';
+import WaitLoader from "components/WaitDialog/WaitLoader";
 
-const AsyncCalculator = LoadablePage(() => import("views/Calculator"));
+const Calculator = lazy(() => import("views/Calculator"));
+const AsyncCalculator = () => {
+  return (
+    <Suspense fallback={<WaitLoader />}>
+      <Calculator />
+    </Suspense>
+  );
+};
 
 export default AsyncCalculator;
