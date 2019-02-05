@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Button from "components/CustomButtons";
 import { reduxForm, Field } from "redux-form";
-import { TextField } from "redux-form-material-ui";
+import { TextField } from "@material-ui/core";
 import { signupRequested } from "actions";
 import { connect } from "react-redux";
 import Grid from "components/Grid";
