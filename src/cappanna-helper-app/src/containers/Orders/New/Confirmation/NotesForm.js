@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setOrderNotes } from "actions";
-import { TextField } from "redux-form-material-ui";
+import { TextField } from "@material-ui/core";
 import { Field, reduxForm } from "redux-form";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";

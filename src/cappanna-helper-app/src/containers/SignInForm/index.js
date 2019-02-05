@@ -6,7 +6,7 @@ import Grid from "components/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-import { Checkbox, TextField } from "redux-form-material-ui";
+import { Checkbox, TextField } from "@material-ui/core";
 import { getDefaultRoute } from "routes/helpers";
 import history from "./../../history";
 
