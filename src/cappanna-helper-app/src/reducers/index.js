@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-import { reducer as formReducer } from "redux-form";
 import user from "reducers/user";
 import api from "reducers/api";
 import menuDetails from "reducers/menuDetails";
@@ -15,7 +14,6 @@ import aggregation from "reducers/aggregation";
 import settings from "reducers/settings";
 
 const rootReducer = combineReducers({
-  form: formReducer,
   user,
   api,
   menuDetails,
