@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Field, reduxForm } from "redux-form";
 import { TextField } from "@material-ui/core";
 import { calculate } from "actions";
 import Button from "components/CustomButtons";
 import ItemGrid from "components/Grid/ItemGrid";
 import Grid from "components/Grid";
-import TextFieldMui from "@material-ui/core/TextField";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { formatAmount } from "utils/string";
 
@@ -21,45 +19,78 @@ const style = {
 class Calculator extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      amount: props.amount,
+      paidAmount: props.paidAmount,
+      seats: props.seats
+    };
+
     this.format = this.format.bind(this);
+    this.setAmount = this.setAmount.bind(this);
+    this.setPaidAmount = this.setPaidAmount.bind(this);
+    this.setSeats = this.setSeats.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   format(value) {
     return formatAmount(value, false);
   }
 
+  setAmount(event) {
+    this.amount = parseFloat(event.target.value);
+  }
+
+  setPaidAmount(event) {
+    this.paidAmount = parseFloat(event.target.value);
+  }
+
+  setSeats(event) {
+    this.seats = parseFloat(event.target.value);
+  }
+
+  handleSubmit(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    this.props.calculate(this.state);
+  }
+
   render() {
     return (
-      <form onSubmit={this.props.handleSubmit(this.props.calculate)}>
+      <form onSubmit={this.handleSubmit}>
         <Grid>
           <ItemGrid xs={12} md={4}>
-            <Field
+            <TextField
               name="amount"
-              component={TextField}
               autoFocus
               fullWidth
               label="Da pagare"
               type="number"
               normalize={this.formatAmount}
+              onChange={this.setAmount}
+              value={this.state.amount}
             />
           </ItemGrid>
           <ItemGrid xs={12} md={4}>
-            <Field
+            <TextField
               name="paidAmount"
-              component={TextField}
               fullWidth
               label="Pagato"
               type="number"
               normalize={this.formatAmount}
+              onChange={this.setPaidAmount}
+              value={this.state.paidAmount}
             />
           </ItemGrid>
           <ItemGrid xs={12} md={4}>
-            <Field
+            <TextField
               name="seats"
-              component={TextField}
               fullWidth
               label="Coperti"
               type="number"
+              onChange={this.setSeats}
+              value={this.state.seats}
             />
           </ItemGrid>
           <ItemGrid xs={12} className={this.props.classes.buttonContainer}>
@@ -68,7 +99,7 @@ class Calculator extends Component {
             </Button>
           </ItemGrid>
           <ItemGrid xs={12} md={6}>
-            <TextFieldMui
+            <TextField
               name="perPersonAmount"
               fullWidth
               label="Da pagare a persona"
@@ -79,7 +110,7 @@ class Calculator extends Component {
             />
           </ItemGrid>
           <ItemGrid xs={12} md={6}>
-            <TextFieldMui
+            <TextField
               name="chChange"
               fullWidth
               label="Resto"
@@ -96,16 +127,17 @@ class Calculator extends Component {
 }
 
 Calculator.propTypes = {
-  classes: PropTypes.object.isRequired
+  amount: PropTypes.number.isRequired,
+  calculate: PropTypes.func.isRequired,
+  chChange: PropTypes.number.isRequired,
+  classes: PropTypes.object.isRequired,
+  paidAmount: PropTypes.number.isRequired,
+  perPersonAmount: PropTypes.number.isRequired,
+  seats: PropTypes.number.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    initialValues: {
-      amount: state.calculator.amount,
-      paidAmount: state.calculator.paidAmount,
-      seats: state.calculator.seats
-    },
     chChange: state.calculator.change,
     perPersonAmount: state.calculator.perPersonAmount
   };
@@ -113,18 +145,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    calculate: ({ amount, paidAmount, seats }) => dispatch(calculate({
-      amount: parseFloat(amount),
-      paidAmount: parseFloat(paidAmount),
-      seats: parseInt(seats, 10)
-    }))
+    calculate: ({ amount, paidAmount, seats }) => dispatch(calculate({ amount, paidAmount, seats }))
   };
 };
 
-Calculator = reduxForm({
-  form: "calculatorForm"
-})(Calculator);
-
-Calculator = connect(mapStateToProps, mapDispatchToProps)(withStyles(style)(Calculator))
-
-export default Calculator;
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(style)(Calculator));

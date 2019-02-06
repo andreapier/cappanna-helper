@@ -3,7 +3,6 @@ import Api from "api";
 import { signupCompleted, signalApiError, loadingChanged } from "actions";
 import { SIGNUP_REQUESTED } from "actions/types";
 import history from "./../history";
-import { reset } from "redux-form";
 
 function* signup(action) {
   try {
@@ -12,7 +11,6 @@ function* signup(action) {
     const userData = yield call(api.signup, action.payload);
     yield put(signupCompleted(userData));
     history.push("/users/signup/ok");
-    reset("signupForm");
   } catch (e) {
     yield put(signalApiError(e));
   } finally {
