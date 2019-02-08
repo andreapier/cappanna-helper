@@ -17,9 +17,7 @@ namespace CappannaHelper.Api.Persistence.Mapping
             entityBuilder.ToTable("Shifts");
 
             entityBuilder.Property(o => o.Id).IsRequired().ValueGeneratedOnAdd();
-            entityBuilder.Property(o => o.OpenTimestamp)
-                .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entityBuilder.Property(o => o.OpenTimestamp).IsRequired().ValueGeneratedOnAdd();
             entityBuilder.Property(o => o.Description).HasMaxLength(100).IsRequired();
             entityBuilder.Property(o => o.OrderCounter).IsRequired().HasDefaultValue(0);
             entityBuilder.Property(o => o.Income).IsRequired().HasDefaultValue(0);

@@ -95,5 +95,7 @@ Coverage.xml
 
 RawPrint.txt
 
-# Environment variables
+# Docker files
 .env
+postgres/*
+pgadmin/*

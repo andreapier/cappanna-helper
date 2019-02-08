@@ -1,17 +1,15 @@
-﻿using CappannaHelper.Api.Identity.DataModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Persistence.Modelling;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
-namespace CappannaHelper.Api.Setup
-{
+namespace CappannaHelper.Api.Setup {
     public class SetupHelper : ISetupHelper
     {
         private readonly RoleManager<ApplicationRole> _roleManager;
@@ -28,11 +26,11 @@ namespace CappannaHelper.Api.Setup
         public async Task<IList<string>> SetupAsync()
         {
             var errors = new List<string>();
-            
-            await ActivateWalMode(errors);
 
             try
             {
+                await MigrateAsync(errors);
+
                 using (var transaction = await _context.Database.BeginTransactionAsync())
                 {
                     await SetupRolesAsync(errors);
@@ -52,22 +50,10 @@ namespace CappannaHelper.Api.Setup
             return errors;
         }
 
-        private async Task ActivateWalMode(List<string> errors)
-        {
+        private async Task MigrateAsync(List<string> errors) {
             try
             {
-                var connection = _context.Database.GetDbConnection();
-
-                if (connection.State != ConnectionState.Open)
-                {
-                    await connection.OpenAsync();
-                }
-
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText= "PRAGMA journal_mode=WAL;";
-                    await command.ExecuteNonQueryAsync();
-                }
+                await _context.Database.MigrateAsync();
             }
             catch (Exception e)
             {
