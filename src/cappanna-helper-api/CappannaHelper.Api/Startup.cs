@@ -47,8 +47,6 @@ namespace CappannaHelper.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var persistenceConfiguration = _configuration.GetSection("Persistence").Get<PersistenceConfiguration>();
-
             services
                 .AddEntityFrameworkNpgsql()
                 .AddDbContext<ApplicationDbContext>(o =>
