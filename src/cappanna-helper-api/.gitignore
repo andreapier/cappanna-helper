@@ -94,3 +94,6 @@ Coverage.xml
 *.db-wal
 
 RawPrint.txt
+
+# Environment variables
+.env

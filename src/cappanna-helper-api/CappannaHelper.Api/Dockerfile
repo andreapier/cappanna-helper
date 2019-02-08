@@ -1,18 +1,20 @@
-﻿FROM microsoft/dotnet:2.1-runtime-deps-stretch-slim
+FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
+WORKDIR /app
+EXPOSE 80
 
-# set up network
-ENV ASPNETCORE_URLS http://+:80
+FROM microsoft/dotnet:2.2-sdk AS build
+WORKDIR /src
+COPY CappannaHelper.Api/CappannaHelper.Api.csproj CappannaHelper.Api/
+COPY CappannaHelper.Printing/CappannaHelper.Printing.csproj CappannaHelper.Printing/
+RUN dotnet restore CappannaHelper.Api/CappannaHelper.Api.csproj
+COPY . .
+WORKDIR /src/CappannaHelper.Api
+RUN dotnet build CappannaHelper.Api.csproj -c Release -o /app
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        curl \
-    && rm -rf /var/lib/apt/lists/*
+FROM build AS publish
+RUN dotnet publish CappannaHelper.Api.csproj -c Release -o /app
 
-# Install ASP.NET Core
-ENV ASPNETCORE_VERSION 2.1.0-preview1-final
-
-RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$ASPNETCORE_VERSION/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-x64.tar.gz \
-    && mkdir -p /usr/share/dotnet \
-    && tar -zxf aspnetcore.tar.gz -C /usr/share/dotnet \
-    && rm aspnetcore.tar.gz \
-    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "CappannaHelper.Api.dll"]
