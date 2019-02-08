@@ -10,7 +10,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappannaHelper.Printing", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappannaHelper.Printing.Tests", "CappannaHelper.Printing.Tests\CappannaHelper.Printing.Tests.csproj", "{06C4947E-7E7D-4E82-A7A7-7B2EEEFD0933}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CappannaHelper.Printing.Examples", "CappannaHelper.Printing.Examples\CappannaHelper.Printing.Examples.csproj", "{60560FF6-DB70-4C88-A252-6972D7D384B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappannaHelper.Printing.Examples", "CappannaHelper.Printing.Examples\CappannaHelper.Printing.Examples.csproj", "{60560FF6-DB70-4C88-A252-6972D7D384B8}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{37149E14-0428-4597-8150-36450E78E300}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,6 +84,18 @@ Global
 		{60560FF6-DB70-4C88-A252-6972D7D384B8}.Release|x64.Build.0 = Release|Any CPU
 		{60560FF6-DB70-4C88-A252-6972D7D384B8}.Release|x86.ActiveCfg = Release|Any CPU
 		{60560FF6-DB70-4C88-A252-6972D7D384B8}.Release|x86.Build.0 = Release|Any CPU
+		{37149E14-0428-4597-8150-36450E78E300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37149E14-0428-4597-8150-36450E78E300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37149E14-0428-4597-8150-36450E78E300}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{37149E14-0428-4597-8150-36450E78E300}.Debug|x64.Build.0 = Debug|Any CPU
+		{37149E14-0428-4597-8150-36450E78E300}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{37149E14-0428-4597-8150-36450E78E300}.Debug|x86.Build.0 = Debug|Any CPU
+		{37149E14-0428-4597-8150-36450E78E300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37149E14-0428-4597-8150-36450E78E300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37149E14-0428-4597-8150-36450E78E300}.Release|x64.ActiveCfg = Release|Any CPU
+		{37149E14-0428-4597-8150-36450E78E300}.Release|x64.Build.0 = Release|Any CPU
+		{37149E14-0428-4597-8150-36450E78E300}.Release|x86.ActiveCfg = Release|Any CPU
+		{37149E14-0428-4597-8150-36450E78E300}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
