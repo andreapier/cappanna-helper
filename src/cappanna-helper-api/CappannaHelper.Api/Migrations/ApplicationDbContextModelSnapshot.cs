@@ -4,7 +4,6 @@ using CappannaHelper.Api.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CappannaHelper.Api.Migrations
 {
@@ -15,9 +14,7 @@ namespace CappannaHelper.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932");
 
             modelBuilder.Entity("CappannaHelper.Api.Identity.DataModel.ApplicationRole", b =>
                 {
@@ -143,9 +140,11 @@ namespace CappannaHelper.Api.Migrations
                     b.Property<int>("CreatedById");
 
                     b.Property<DateTime>("CreationTimestamp")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                    b.Property<string>("Notes");
+                    b.Property<string>("Notes")
+                        .HasMaxLength(-1);
 
                     b.Property<int>("Seats")
                         .ValueGeneratedOnAdd()
@@ -181,7 +180,8 @@ namespace CappannaHelper.Api.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("OperationTimestamp")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<int>("OrderId");
 
@@ -242,7 +242,8 @@ namespace CappannaHelper.Api.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreationTimestamp")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<int>("ItemId");
 
@@ -276,7 +277,8 @@ namespace CappannaHelper.Api.Migrations
                         .HasMaxLength(50);
 
                     b.Property<string>("Value")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(-1);
 
                     b.HasKey("Id");
 
@@ -300,7 +302,8 @@ namespace CappannaHelper.Api.Migrations
                         .HasDefaultValue(0m);
 
                     b.Property<DateTime>("OpenTimestamp")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<int>("OrderCounter")
                         .ValueGeneratedOnAdd()

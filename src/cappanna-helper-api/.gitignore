@@ -88,9 +88,12 @@ reporting/
 Coverage.xml
 
 # Application runtime files
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
 RawPrint.txt
 
-# Docker files
+# Environment variables
 .env
-postgres/*
-pgadmin/*

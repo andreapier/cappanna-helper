@@ -31,8 +31,7 @@ namespace CappannaHelper.Api
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json")
-                .AddEnvironmentVariables();
+                .AddJsonFile("appsettings.json");
 
             if (env.IsDevelopment())
             {
@@ -47,16 +46,11 @@ namespace CappannaHelper.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddEntityFrameworkNpgsql()
-                .AddDbContext<ApplicationDbContext>(o =>
-                {
-                    var user = Environment.GetEnvironmentVariable("POSTGRES_USER");
-                    var pwd = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
-                    var db = Environment.GetEnvironmentVariable("POSTGRES_DB");
+            var persistenceConfiguration = _configuration.GetSection("Persistence").Get<PersistenceConfiguration>();
 
-                    o.UseNpgsql($"Host=db;Port=5432;Database={db};Username={user};Password={pwd}");
-                });
+            services
+                .AddEntityFrameworkSqlite()
+                .AddDbContext<ApplicationDbContext>(o => o.UseSqlite(persistenceConfiguration.ConnectionString));
 
             services
                 .AddMvc()
