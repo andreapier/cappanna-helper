@@ -19,13 +19,14 @@ namespace CappannaHelper.Printing.Tests.EscPos
         [Theory]
         [InlineData("")]
         [InlineData("test")]
+        [InlineData("TEST")]
         public void Sets_Label_If_Not_Null(string content)
         {
             var label = new Label();
 
             label.SetContent(content);
 
-            Assert.Equal(content, label.Content);
+            Assert.Equal(content.ToUpper(), label.Content);
         }
 
         [Fact]
@@ -63,9 +64,10 @@ namespace CappannaHelper.Printing.Tests.EscPos
         [Theory]
         [InlineData("")]
         [InlineData("test")]
+        [InlineData("TEST")]
         public void Visit_Appends_Content(string content)
         {
-            var contentRaw = Encoding.ASCII.GetBytes(content);
+            var contentRaw = Encoding.ASCII.GetBytes(content.ToUpper());
             var label = new Label();
             var commandBuilder = new List<byte>();
 

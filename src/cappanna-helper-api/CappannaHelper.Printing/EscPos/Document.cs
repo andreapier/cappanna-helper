@@ -62,7 +62,6 @@ namespace CappannaHelper.Printing.EscPos
         private List<byte> BuildSingleCopyCommand(List<byte> commandBuilder)
         {
             commandBuilder.AddRange(Commands.INITIALIZE_PRINTER);
-            //commandBuilder.AddRange(Commands.SELECT_CHARACTER_CODE_TABLE_EURO); //\x13
 
             for (var counter = 0; counter < _pages.Count; counter++)
             {

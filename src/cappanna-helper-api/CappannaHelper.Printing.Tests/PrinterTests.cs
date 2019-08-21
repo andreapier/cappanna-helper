@@ -26,7 +26,7 @@ namespace CappannaHelper.Printing.Tests
             var exception = Assert.Throws<ArgumentNullException>(() => new Printer(channel.Object, null));
 
             Assert.NotNull(exception);
-            Assert.Equal("channel", exception.ParamName);
+            Assert.Equal("statusFactory", exception.ParamName);
         }
 
         [Fact]

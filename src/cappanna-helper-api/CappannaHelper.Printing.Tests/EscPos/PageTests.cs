@@ -39,20 +39,6 @@ namespace CappannaHelper.Printing.Tests.EscPos
         }
 
         [Fact]
-        public void Visit_Appends_Cut_Partial_Command()
-        {
-            var page = new Page();
-            var commandBuilder = new List<byte>();
-
-            page.Visit(commandBuilder);
-
-            Assert.NotNull(commandBuilder);
-            var cutPartial = new byte[Commands.CUT_PARTIAL.Count];
-            Array.Copy(commandBuilder.ToArray(), commandBuilder.Count - Commands.CUT_PARTIAL.Count, cutPartial, 0, Commands.CUT_PARTIAL.Count);
-            Assert.Equal(Commands.CUT_PARTIAL, cutPartial);
-        }
-
-        [Fact]
         public void Visit_Appends_Section_Command()
         {
             var page = new Page();

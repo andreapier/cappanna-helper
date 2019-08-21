@@ -72,14 +72,32 @@ namespace CappannaHelper.Printing.Tests.EscPos
             Assert.NotNull(result);
             Assert.True(result.Length >= 11);
             var initPrinter = new byte[Commands.INITIALIZE_PRINTER.Count];
-            var selectCharTable = new byte[Commands.SELECT_CHARACTER_CODE_TABLE_USA_AND_EUROPE.Count];
             var cutFull = new byte[Commands.CUT_FULL.Count];
             Array.Copy(result, 0, initPrinter, 0, Commands.INITIALIZE_PRINTER.Count);
-            Array.Copy(result, Commands.INITIALIZE_PRINTER.Count, selectCharTable, 0, Commands.SELECT_CHARACTER_CODE_TABLE_USA_AND_EUROPE.Count);
             Array.Copy(result, result.Length - Commands.CUT_FULL.Count, cutFull, 0, Commands.CUT_FULL.Count);
             Assert.Equal(Commands.INITIALIZE_PRINTER, initPrinter);
-            Assert.Equal(Commands.SELECT_CHARACTER_CODE_TABLE_USA_AND_EUROPE, selectCharTable);
             Assert.Equal(Commands.CUT_FULL, cutFull);
+        }
+
+        [Fact]
+        public void Visit_With_Multiple_Pages_Appends_Cut_Partial_Command()
+        {
+            var document = new Document();
+            document.CreatePage();
+
+            var result = document.Render();
+
+            Assert.NotNull(result);
+            var cutPartial = new byte[Commands.CUT_PARTIAL.Count];
+            var startIndex = Commands.INITIALIZE_PRINTER.Count
+                + Commands.TURN_90_CLOCKWISE_ROTATION_OFF.Count
+                + Commands.SELECT_PRINT_MODE_HEADER.Count
+                + 1
+                + Commands.SELECT_CHARACTER_SIZE_HEADER.Count
+                + 1
+                + Commands.SELECT_JUSTIFICATION_CENTER.Count;
+            Array.Copy(result, startIndex, cutPartial, 0, Commands.CUT_PARTIAL.Count);
+            Assert.Equal(Commands.CUT_PARTIAL, cutPartial);
         }
     }
 }

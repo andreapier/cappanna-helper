@@ -83,12 +83,19 @@ namespace CappannaHelper.Api.Tests.Controller
         [Fact]
         public async Task Signin_User_IfValid()
         {
-            var expectedUser = new ApplicationUser();
+            var expectedUser = new ApplicationUser
+            {
+                UserName = "test"
+            };
             var userManager = new Mock<IApplicationUserManager>();
             userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(expectedUser));
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.Success));
-            var accountController = new AccountController(userManager.Object, signInManager.Object, new Mock<IConfiguration>().Object);
+            var configuration = new Mock<IConfiguration>();
+            configuration.Setup(c => c["JwtKey"]).Returns("SOME_RANDOM_KEY_DO_NOT_SHARE");
+            configuration.Setup(c => c["JwtExpireDays"]).Returns("1");
+            configuration.Setup(c => c["JwtIssuer"]).Returns("http://cappannahelper.it");
+            var accountController = new AccountController(userManager.Object, signInManager.Object, configuration.Object);
             var signinData = new SigninModel
             {
                 Username = "test",
@@ -98,16 +105,18 @@ namespace CappannaHelper.Api.Tests.Controller
             var httpResult = await accountController.Signin(signinData);
 
             var ok = Assert.IsAssignableFrom<OkObjectResult>(httpResult);
-            var actualUser = Assert.IsAssignableFrom<ApplicationUser>(ok.Value);
-            Assert.Equal(expectedUser, actualUser);
+            var signInResult = Assert.IsAssignableFrom<SigninResultModel>(ok.Value);
+            Assert.Equal(expectedUser.UserName, signInResult.Username);
         }
 
         [Fact]
         public async Task Returns_TooManyRequests_If_User_Is_LockedOut()
         {
+            var userManager = new Mock<IApplicationUserManager>();
+            userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(new ApplicationUser()));
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.LockedOut));
-            var accountController = new AccountController(new Mock<IApplicationUserManager>().Object, signInManager.Object, new Mock<IConfiguration>().Object);
+            var accountController = new AccountController(userManager.Object, signInManager.Object, new Mock<IConfiguration>().Object);
             var signinData = new SigninModel
             {
                 Username = "test",
@@ -123,9 +132,11 @@ namespace CappannaHelper.Api.Tests.Controller
         [Fact]
         public async Task Returns_Unauthorized_If_User_IsNot_Authorized()
         {
+            var userManager = new Mock<IApplicationUserManager>();
+            userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(new ApplicationUser()));
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.NotAllowed));
-            var accountController = new AccountController(new Mock<IApplicationUserManager>().Object, signInManager.Object, new Mock<IConfiguration>().Object);
+            var accountController = new AccountController(userManager.Object, signInManager.Object, new Mock<IConfiguration>().Object);
             var signinData = new SigninModel
             {
                 Username = "test",
@@ -140,9 +151,11 @@ namespace CappannaHelper.Api.Tests.Controller
         [Fact]
         public async Task Throws_IfNot_Handled()
         {
+            var userManager = new Mock<IApplicationUserManager>();
+            userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(new ApplicationUser()));
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.TwoFactorRequired));
-            var accountController = new AccountController(new Mock<IApplicationUserManager>().Object, signInManager.Object, new Mock<IConfiguration>().Object);
+            var accountController = new AccountController(userManager.Object, signInManager.Object, new Mock<IConfiguration>().Object);
             var signinData = new SigninModel
             {
                 Username = "test",

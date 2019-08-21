@@ -171,19 +171,16 @@ namespace CappannaHelper.Printing.Tests.EscPos
         }
 
         [Theory]
-        [InlineData(15)]
-        [InlineData(16)]
-        [InlineData(24)]
-        [InlineData(32)]
-        public void Visit_Appends_Size_Command(int size)
+        [InlineData(11, 0x00)]
+        [InlineData(12, 0x10)]
+        [InlineData(16, 0x11)]
+        [InlineData(24, 0x22)]
+        [InlineData(32, 0x33)]
+        public void Visit_Appends_Size_Command(int size, byte expected)
         {
             var section = new Section();
             section.SetSize(size);
             var sectionCommandBuilder = new List<byte>();
-            var expected = size < 16 ? 0x00
-                : size >= 16 && size < 24 ? 0x11
-                : size >= 24 && size < 32 ? 0x22
-                : 0x33;
 
             section.Visit(sectionCommandBuilder);
 
