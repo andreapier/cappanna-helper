@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappannaHelper.Api", "CappannaHelper.Api\CappannaHelper.Api.csproj", "{2EE9D88E-CA9A-41F3-9605-32CE37D59B52}"
 EndProject
