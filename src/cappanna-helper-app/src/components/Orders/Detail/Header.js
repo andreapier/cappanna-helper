@@ -116,7 +116,7 @@ const Header = props => {
 
 Header.propTypes = {
   order: PropTypes.shape({
-    id: PropTypes.number.required,
+    id: PropTypes.number.isRequired,
     totalPrice: PropTypes.number.isRequired,
     chTable: PropTypes.number.isRequired,
     tableCategory: PropTypes.string,

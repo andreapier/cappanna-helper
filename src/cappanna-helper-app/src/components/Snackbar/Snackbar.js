@@ -23,7 +23,8 @@ const CustomSnackbar = props => {
   const messageClasses = cx({
     [classes.iconMessage]: icon !== undefined
   });
-  const actualMessage = message.indexOf("\n") <= -1 ? message : message.split("\n");
+  const actualMessage =
+    message.indexOf("\n") <= -1 ? message : message.split("\n");
 
   if (close !== undefined) {
     action = [
@@ -38,7 +39,7 @@ const CustomSnackbar = props => {
       </IconButton>
     ];
   }
-  
+
   return (
     <Snackbar
       anchorOrigin={{
@@ -47,17 +48,22 @@ const CustomSnackbar = props => {
           place.indexOf("l") !== -1
             ? "left"
             : place.indexOf("c") !== -1
-              ? "center"
-              : "right"
+            ? "center"
+            : "right"
       }}
       open={open}
       message={
         <div>
           {icon !== undefined ? <props.icon className={classes.icon} /> : null}
-          {actualMessage.map
-            ? actualMessage.map((e, i) => <p className={messageClasses} key={i}>{e}</p>)
-            : <span className={messageClasses}>{actualMessage}</span>
-          }
+          {actualMessage.map ? (
+            actualMessage.map((e, i) => (
+              <p className={messageClasses} key={i}>
+                {e}
+              </p>
+            ))
+          ) : (
+            <span className={messageClasses}>{actualMessage}</span>
+          )}
         </div>
       }
       action={action}
@@ -71,14 +77,14 @@ const CustomSnackbar = props => {
       onClose={onClose}
     />
   );
-}
+};
 
 CustomSnackbar.propTypes = {
   classes: PropTypes.object.isRequired,
   message: PropTypes.node.isRequired,
   color: PropTypes.oneOf(["info", "success", "warning", "danger", "primary"]),
   close: PropTypes.bool,
-  icon: PropTypes.func,
+  icon: PropTypes.object,
   place: PropTypes.oneOf(["tl", "tr", "tc", "br", "bl", "bc"]),
   open: PropTypes.bool
 };

@@ -13,7 +13,7 @@ import history from "./../../history";
 class SignIn extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       username: "",
       password: "",
@@ -46,7 +46,7 @@ class SignIn extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.user.token!==this.props.user.token) {
+    if (prevProps.user.token !== this.props.user.token) {
       history.push(getDefaultRoute(this.props.user.roles[0]));
     }
   }
@@ -84,7 +84,7 @@ class SignIn extends Component {
                   name="rememberMe"
                   color="primary"
                   component={Checkbox}
-                  value={this.state.rememberMe}
+                  checked={this.state.rememberMe}
                   onChange={this.setRememberMe}
                 />
               }
@@ -108,8 +108,8 @@ SignIn.propTypes = {
   signinRequested: PropTypes.func.isRequired
 };
 
-const mapStateToProps  = state => {
-  return  {
+const mapStateToProps = state => {
+  return {
     user: state.user
   };
 };
@@ -121,4 +121,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignIn);

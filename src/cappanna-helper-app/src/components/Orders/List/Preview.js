@@ -11,9 +11,7 @@ import Done from "@material-ui/icons/Done";
 import PrintDisabled from "@material-ui/icons/PrintDisabled";
 
 const Preview = props => {
-  const text = `Ordine N° ${props.order.shiftCounter} - ${
-    props.order.createdBy.userName
-  } (Tav. ${props.order.chTable})`;
+  const text = `Ordine N° ${props.order.shiftCounter} - ${props.order.createdBy.userName} (Tav. ${props.order.chTable})`;
   const printed = props.order.status === 3;
   const closed = props.order.status === 4;
 
@@ -35,8 +33,8 @@ const Preview = props => {
 
 Preview.propTypes = {
   order: PropTypes.shape({
-    id: PropTypes.number.required,
-    shiftCounter: PropTypes.number.required,
+    id: PropTypes.number.isRequired,
+    shiftCounter: PropTypes.number.isRequired,
     chTable: PropTypes.string.isRequired,
     status: PropTypes.number.isRequired,
     createdBy: PropTypes.shape({

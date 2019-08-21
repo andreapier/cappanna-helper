@@ -7,12 +7,14 @@ import sidebarStyle from "variables/styles/sidebarStyle";
 import Checkbox from "components/CustomCheckbox";
 
 const Preview = props => {
-  const text = `Ordine N° ${props.order.shiftCounter} - ${
-    props.order.createdBy.userName
-  } (Tav. ${props.order.chTable})`;
+  const text = `Ordine N° ${props.order.shiftCounter} - ${props.order.createdBy.userName} (Tav. ${props.order.chTable})`;
 
   return (
-    <ListItem button className={props.classes.itemLink} onClick={() => props.toggleOrderSelectionForAggregation(props.order.id)}>
+    <ListItem
+      button
+      className={props.classes.itemLink}
+      onClick={() => props.toggleOrderSelectionForAggregation(props.order.id)}
+    >
       <Checkbox
         checked={props.order.selected}
         disableRipple
@@ -30,7 +32,7 @@ const Preview = props => {
 Preview.propTypes = {
   order: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    shiftCounter: PropTypes.number.required,
+    shiftCounter: PropTypes.number.isRequired,
     chTable: PropTypes.string.isRequired,
     createdBy: PropTypes.shape({
       userName: PropTypes.string.isRequired
