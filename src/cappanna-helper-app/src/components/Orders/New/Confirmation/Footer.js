@@ -10,19 +10,16 @@ import { flex } from "variables/styles";
 
 const Footer = props => {
   return (
-    <Grid className={props.classes.root}  justify="space-between">
+    <Grid className={props.classes.root} justify="space-between">
       <ItemGrid>
-        <Button
-          variant="raised"
-          onClick={props.goBack}
-        >
+        <Button variant="contained" onClick={props.goBack}>
           <Create />
           Modifica
         </Button>
       </ItemGrid>
       <ItemGrid>
         <Button
-          variant="raised"
+          variant="contained"
           onClick={() => props.confirmOrder(props.order)}
           disabled={!props.canConfirm}
         >
