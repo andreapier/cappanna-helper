@@ -6,6 +6,7 @@ stages:
 
 before_script:
     - "cd src/cappanna-helper-api"
+    - "echo \"\" >| CappannaHelper.Api/Persistence/CappannaHelper.db"
     - "dotnet restore"
 
 build:
