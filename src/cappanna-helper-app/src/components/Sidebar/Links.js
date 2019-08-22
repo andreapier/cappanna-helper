@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import SidebarNavigationItem from "./SidebarNavigationItem";
-import List from "@material-ui/core/List";
-import withStyles from "@material-ui/core/styles/withStyles";
+import { List, withStyles } from "@material-ui/core";
 import sidebarStyle from "variables/styles/sidebarStyle";
 // import { isRouteActive } from "routes/helpers";
 

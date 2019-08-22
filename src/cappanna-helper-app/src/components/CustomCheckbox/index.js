@@ -1,25 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Checkbox from "@material-ui/core/Checkbox";
-import withStyles from "@material-ui/core/styles/withStyles";
+import { Checkbox, withStyles } from "@material-ui/core";
 import checkboxStyle from "variables/styles/checkboxStyle";
 
 const CustomCheckbox = props => {
-  const {
-    id,
-    classes,
-    ...inputProps
-  } = props;
+  const { id, classes, ...inputProps } = props;
 
   return (
-      <Checkbox
-        classes={{
-          root: classes.root
-        }}
-        id={id}
-        color="primary"
-        {...inputProps}
-      />
+    <Checkbox
+      classes={{
+        root: classes.root
+      }}
+      id={id}
+      color="primary"
+      {...inputProps}
+    />
   );
 };
 

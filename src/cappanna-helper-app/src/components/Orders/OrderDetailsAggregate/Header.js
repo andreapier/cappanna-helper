@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Toolbar from "@material-ui/core/Toolbar";
+import { Toolbar, withStyles } from "@material-ui/core";
 import Assignment from "@material-ui/icons/Assignment";
 import IconButton from "components/CustomButtons/IconButton";
-import withStyles from "@material-ui/core/styles/withStyles";
 
 const style = {
   icon: {

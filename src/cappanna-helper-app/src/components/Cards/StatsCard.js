@@ -1,9 +1,11 @@
 import React from "react";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
-import Typography from "@material-ui/core/Typography";
-import withStyles from "@material-ui/core/styles/withStyles";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Typography,
+  withStyles
+} from "@material-ui/core";
 import PropTypes from "prop-types";
 import statsCardStyle from "variables/styles/statsCardStyle";
 

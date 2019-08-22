@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import withStyles from "@material-ui/core/styles/withStyles";
+import {
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  withStyles
+} from "@material-ui/core";
 import { NavLink, withRouter } from "react-router-dom";
 import sidebarStyle from "variables/styles/sidebarStyle";
 import Print from "@material-ui/icons/Print";

@@ -4,7 +4,7 @@ import IconButton from "components/CustomButtons/IconButton";
 import ContentAdd from "@material-ui/icons/Add";
 import ContentRemove from "@material-ui/icons/Remove";
 import AmountFormat from "components/AmountFormat";
-import withStyles from "@material-ui/core/styles/withStyles";
+import { withStyles } from "@material-ui/core";
 import { flex } from "variables/styles";
 
 const style = {
@@ -49,7 +49,10 @@ const MenuItemDetail = props => {
               )
             }
             disabled={
-              props.detail.item.unitsInStock + props.detail.initialQuantity - props.detail.quantity <= 0
+              props.detail.item.unitsInStock +
+                props.detail.initialQuantity -
+                props.detail.quantity <=
+              0
             }
           >
             <ContentAdd />

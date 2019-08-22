@@ -1,12 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Toolbar from "@material-ui/core/Toolbar";
+import { Toolbar, withStyles } from "@material-ui/core";
 import ContentAdd from "@material-ui/icons/Add";
 import IconButton from "components/CustomButtons/IconButton";
 import PermIdentity from "@material-ui/icons/PermIdentity";
 import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
 import NavigationRefresh from "@material-ui/icons/Refresh";
-import withStyles from "@material-ui/core/styles/withStyles";
 
 const style = {
   icon: {

@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import withStyles from "@material-ui/core/styles/withStyles";
+import { ListItem, ListItemText, withStyles } from "@material-ui/core";
 import sidebarStyle from "variables/styles/sidebarStyle";
 import Checkbox from "components/CustomCheckbox";
 

@@ -1,9 +1,11 @@
 import cx from "classnames";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardActions from "@material-ui/core/CardActions";
-import withStyles from "@material-ui/core/styles/withStyles";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  withStyles
+} from "@material-ui/core";
 import PropTypes from "prop-types";
 import React from "react";
 import regularCardStyle from "variables/styles/regularCardStyle";
@@ -45,7 +47,7 @@ const RegularCard = props => {
       ) : null}
     </Card>
   );
-}
+};
 
 RegularCard.defaultProps = {
   headerColor: "blue"

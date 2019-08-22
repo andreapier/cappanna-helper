@@ -4,9 +4,8 @@ import { signinRequested } from "actions";
 import Button from "components/CustomButtons";
 import ItemGrid from "components/Grid/ItemGrid";
 import Grid from "components/Grid";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { connect } from "react-redux";
-import { Checkbox, TextField } from "@material-ui/core";
+import { Checkbox, FormControlLabel, TextField } from "@material-ui/core";
 import { getDefaultRoute } from "routes/helpers";
 import history from "./../../history";
 

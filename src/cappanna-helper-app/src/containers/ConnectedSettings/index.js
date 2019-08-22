@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { loadSettingsListRequested, resetOrder, setSettingValue } from "actions";
-import List from "@material-ui/core/List";
+import {
+  loadSettingsListRequested,
+  resetOrder,
+  setSettingValue
+} from "actions";
+import { List } from "@material-ui/core";
 import Setting from "components/Settings";
 
 class ConnectedSettings extends Component {
@@ -10,7 +14,17 @@ class ConnectedSettings extends Component {
   }
 
   render() {
-    return <List>{this.props.settings.map(o => <Setting setting={o} key={o.id} setSettingValue={this.props.setSettingValue} />)}</List>;
+    return (
+      <List>
+        {this.props.settings.map(o => (
+          <Setting
+            setting={o}
+            key={o.id}
+            setSettingValue={this.props.setSettingValue}
+          />
+        ))}
+      </List>
+    );
   }
 
   componentWillUnmount() {

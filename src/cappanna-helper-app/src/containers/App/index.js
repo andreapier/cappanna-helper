@@ -1,4 +1,4 @@
-import withStyles from "@material-ui/core/styles/withStyles";
+import { CssBaseline, withStyles } from "@material-ui/core";
 import appRoutes from "routes";
 import appStyle from "variables/styles/appStyle";
 import PropTypes from "prop-types";
@@ -11,14 +11,13 @@ import ConnectedSidebar from "containers/ConnectedSidebar";
 import ConnectedWaitDialog from "containers/ConnectedWaitDialog";
 import ConnectedNotificationSnackbar from "containers/ConnectedNotificationSnackbar";
 import RoutingAwareHeader from "containers/RoutingAwareHeader";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 
 const switchRoutes = routes => (
   <Switch>
     {routes.map((route, key) => {
       if (route.redirect) {
-        return <Redirect from={route.path} to={route.to} key={key}  />;
+        return <Redirect from={route.path} to={route.to} key={key} />;
       }
 
       if (route.protected) {

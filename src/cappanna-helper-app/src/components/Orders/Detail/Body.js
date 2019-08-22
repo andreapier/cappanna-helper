@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Table from "components/Table";
 import { formatAmount } from "utils/string";
-import TextField from "@material-ui/core/TextField";
-import withStyles from "@material-ui/core/styles/withStyles";
+import { TextField, withStyles } from "@material-ui/core";
 
 const buildTableRow = dish => [
   dish.item.name,

@@ -1,8 +1,7 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
+import { TextField, Toolbar, withStyles } from "@material-ui/core";
 import AmountFormat from "components/AmountFormat";
 import PropTypes from "prop-types";
-import Toolbar from "@material-ui/core/Toolbar";
 import Print from "@material-ui/icons/Print";
 import IconButton from "components/CustomButtons/IconButton";
 import Create from "@material-ui/icons/Create";
@@ -10,7 +9,6 @@ import Apps from "@material-ui/icons/Apps";
 import Delete from "@material-ui/icons/Delete";
 import Done from "@material-ui/icons/Done";
 import isNotEditable from "utils/isOrderNotEditable";
-import withStyles from "@material-ui/core/styles/withStyles";
 import { flex } from "variables/styles";
 
 const style = {

@@ -1,9 +1,11 @@
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import withStyles from "@material-ui/core/styles/withStyles";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  withStyles
+} from "@material-ui/core";
 import PropTypes from "prop-types";
 import React from "react";
 import tableStyle from "variables/styles/tableStyle";
@@ -39,7 +41,7 @@ const CustomTable = props => {
               <TableRow key={itemKey}>
                 {itemKeys.map((prop, key) => {
                   if (React.isValidElement(prop)) {
-                    const Prop=prop;
+                    const Prop = prop;
                     return (
                       <TableCell className={classes.tableCell} key={key}>
                         {Prop}

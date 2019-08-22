@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { TextField } from "@material-ui/core";
+import { TextField, withStyles } from "@material-ui/core";
 import { calculate } from "actions";
 import Button from "components/CustomButtons";
 import ItemGrid from "components/Grid/ItemGrid";
 import Grid from "components/Grid";
-import withStyles from "@material-ui/core/styles/withStyles";
 import { formatAmount } from "utils/string";
 
 const style = {
@@ -145,8 +144,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    calculate: ({ amount, paidAmount, seats }) => dispatch(calculate({ amount, paidAmount, seats }))
+    calculate: ({ amount, paidAmount, seats }) =>
+      dispatch(calculate({ amount, paidAmount, seats }))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(style)(Calculator));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(style)(Calculator));

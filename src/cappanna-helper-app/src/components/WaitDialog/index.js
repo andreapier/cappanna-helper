@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import {
+  Dialog,
+  CircularProgress,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  withStyles
+} from "@material-ui/core";
 import waitDialogStyle from "variables/styles/waitDialogStyle";
 
 const WaitDialog = props => {
