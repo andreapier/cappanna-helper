@@ -12,6 +12,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappannaHelper.Printing.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappannaHelper.Printing.Examples", "CappannaHelper.Printing.Examples\CappannaHelper.Printing.Examples.csproj", "{60560FF6-DB70-4C88-A252-6972D7D384B8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI", "CI", "{5ACDB47B-C9CF-43EC-93DE-C1A2DD87A012}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\.gitlab-ci.yml = ..\..\.gitlab-ci.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

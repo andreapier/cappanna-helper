@@ -28,8 +28,9 @@ namespace CappannaHelper.Api.Setup
         public async Task<IList<string>> SetupAsync()
         {
             var errors = new List<string>();
-            
-            await ActivateWalMode(errors);
+
+            await MigrateAsync(errors);
+            await ActivateWalModeAsync(errors);
 
             try
             {
@@ -52,7 +53,19 @@ namespace CappannaHelper.Api.Setup
             return errors;
         }
 
-        private async Task ActivateWalMode(List<string> errors)
+        private async Task MigrateAsync(List<string> errors)
+        {
+            try
+            {
+                await _context.Database.MigrateAsync();
+            }
+            catch (Exception e)
+            {
+                errors.Add(e.Message);
+            }
+        }
+
+        private async Task ActivateWalModeAsync(List<string> errors)
         {
             try
             {

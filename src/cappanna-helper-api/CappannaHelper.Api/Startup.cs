@@ -24,7 +24,6 @@ namespace CappannaHelper.Api
 {
     public class Startup
     {
-        private readonly IHostingEnvironment _environment;
         private readonly IConfiguration _configuration;
 
         public Startup(IHostingEnvironment env)
@@ -40,7 +39,6 @@ namespace CappannaHelper.Api
 
             builder.AddEnvironmentVariables();
 
-            _environment = env;
             _configuration = builder.Build();
         }
 
@@ -54,7 +52,7 @@ namespace CappannaHelper.Api
 
             services
                 .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services
                 .AddIdentity<ApplicationUser, ApplicationRole>()
