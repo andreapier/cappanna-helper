@@ -114,17 +114,17 @@ namespace CappannaHelper.Printing.EscPos
                 return 0x00;
             }
 
-            if (Size >= 12 && Size < 16)
+            if (Size < 16)
             {
                 return 0x10;
             }
 
-            if (Size >= 16 && Size < 24)
+            if (Size < 24)
             {
                 return 0x11;
             }
 
-            if (Size >= 24 && Size < 32)
+            if (Size < 32)
             {
                 return 0x22;
             }

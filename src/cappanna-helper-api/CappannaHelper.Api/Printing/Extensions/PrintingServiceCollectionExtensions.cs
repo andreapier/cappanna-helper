@@ -1,11 +1,10 @@
-using System.Net;
 using CappannaHelper.Printing;
 using CappannaHelper.Printing.Communication;
 using CappannaHelper.Printing.Communication.Lan;
 using CappannaHelper.Printing.Communication.Usb.Windows;
-using CappannaHelper.Printing.EscPos;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System.Net;
 
 namespace CappannaHelper.Api.Printing.Extensions
 {
@@ -23,7 +22,7 @@ namespace CappannaHelper.Api.Printing.Extensions
                 })
                 .AddSingleton<UsbChannel>()
                 .AddSingleton<FileChannel>()
-                .AddSingleton<TcpChannel>(c => 
+                .AddSingleton(c => 
                 {
                     var printerOptions = c.GetService<IOptions<PrintingConfiguration>>();
 
@@ -44,12 +43,6 @@ namespace CappannaHelper.Api.Printing.Extensions
                     }
 
                     return c.GetService<UsbChannel>();
-                })
-                .AddSingleton<IStatusFactory>(c =>
-                {
-                    var printerOptions = c.GetService<IOptions<PrintingConfiguration>>();
-
-                    return new StatusFactory(printerOptions.Value.PrinterName);
                 })
                 .AddSingleton<IPrinter, Printer>()
                 .AddSingleton<IPrintService, PrintService>();

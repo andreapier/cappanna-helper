@@ -99,5 +99,17 @@ namespace CappannaHelper.Printing.Tests.EscPos
             Array.Copy(result, startIndex, cutPartial, 0, Commands.CUT_PARTIAL.Count);
             Assert.Equal(Commands.CUT_PARTIAL, cutPartial);
         }
+
+        [Fact]
+        public void LastPage_Returns_Last_Page()
+        {
+            var document = new Document();
+
+            var page1 = document.CreatePage();
+            var page2 = document.CreatePage();
+            var page3 = document.CreatePage();
+
+            Assert.Equal(page3, document.LastPage);
+        }
     }
 }

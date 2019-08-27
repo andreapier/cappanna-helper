@@ -20,29 +20,29 @@ namespace CappannaHelper.Printing.Communication.Usb.Windows
         //TODO: Do not hardcode string resources
         public string ResolvePath()
         {
-            var registerKey = $@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Print\Printers\{_printerName}";
-            var key = Registry.LocalMachine.OpenSubKey(registerKey);
+            var registryKey = $@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Print\Printers\{_printerName}";
+            var key = Registry.LocalMachine.OpenSubKey(registryKey);
 
             if (key == null)
             {
-                throw new CommunicationException($"Registry key '{registerKey}' was not found");
+                throw new CommunicationException($"Registry key '{registryKey}' was not found");
             }
 
             var value = (string)key.GetValue("Port");
 
             if (!value.StartsWith("USB"))
             {
-                throw new CommunicationException($"Registry key '{registerKey}' has an invalid value");
+                throw new CommunicationException($"Registry key '{registryKey}' has an invalid value");
             }
 
             int.TryParse(value.Replace("USB", string.Empty), out int printerPortNumber);
 
-            registerKey = @"SYSTEM\CurrentControlSet\Control\DeviceClasses\{28d78fad-5a12-11d1-ae5b-0000f803a8c2}";
-            key = Registry.LocalMachine.OpenSubKey(registerKey);
+            registryKey = @"SYSTEM\CurrentControlSet\Control\DeviceClasses\{28d78fad-5a12-11d1-ae5b-0000f803a8c2}";
+            key = Registry.LocalMachine.OpenSubKey(registryKey);
 
             if (key == null)
             {
-                throw new CommunicationException($"Registry key '{registerKey}' was not found");
+                throw new CommunicationException($"Registry key '{registryKey}' was not found");
             }
 
             var devicePath = string.Empty;
@@ -50,15 +50,15 @@ namespace CappannaHelper.Printing.Communication.Usb.Windows
 
             foreach (var item in subKeysName)
             {
-                var localRegisterKey = $@"{registerKey}\{item}";
-                var subKey = Registry.LocalMachine.OpenSubKey(localRegisterKey);
+                var localRegistryKey = $@"{registryKey}\{item}";
+                var subKey = Registry.LocalMachine.OpenSubKey(localRegistryKey);
 
                 if (subKey == null)
                 {
                     continue;
                 }
 
-                var subsubKey = Registry.LocalMachine.OpenSubKey($@"{localRegisterKey}\#\Device Parameters");
+                var subsubKey = Registry.LocalMachine.OpenSubKey($@"{localRegistryKey}\#\Device Parameters");
 
                 if (subsubKey == null)
                 {

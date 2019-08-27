@@ -53,9 +53,8 @@ namespace CappannaHelper.Printing.Communication.Usb.Windows
         private const int FILE_SHARE_WRITE = 2;
         private const int WAIT_SUCCESS = 0x00000000;
         private const int WAIT_TIMEOUT = 0x00000102;
-
-        internal int WRITE_TIMEOUT = 200;
-        internal int READ_TIMEOUT = 200;
+        private const int WRITE_TIMEOUT = 200;
+        private const int READ_TIMEOUT = 200;
         private const int USB_PACK = 2048;
 
         private bool _isOpen;

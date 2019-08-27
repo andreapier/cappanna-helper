@@ -40,20 +40,6 @@ namespace CappannaHelper.Api.Printing
             }
         }
 
-        public async Task<IStatus> GetStatusAsync()
-        {
-            await _semaphore.WaitAsync();
-
-            try
-            {
-                return await _printer.GetStatusAsync();
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
-        }
-
         public void Dispose()
         {
             _semaphore.Dispose();

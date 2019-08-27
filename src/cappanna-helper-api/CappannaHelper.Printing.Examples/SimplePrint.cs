@@ -52,7 +52,7 @@ namespace CappannaHelper.Printing.Examples
 
             using (var channel = new UsbChannel(resolver))
             {
-                var printer = new Printer(channel, new StatusFactory(printerName));
+                var printer = new Printer(channel);
 
                 await channel.OpenAsync();
                 await printer.PrintAsync(document);

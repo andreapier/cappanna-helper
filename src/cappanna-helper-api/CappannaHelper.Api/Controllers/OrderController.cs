@@ -127,13 +127,15 @@ namespace CappannaHelper.Api.Controllers
 
                     shift.OrderCounter++;
 
-                    order.Operations = new List<ChOrderOperation>();
-                    order.Operations.Add(new ChOrderOperation
+                    order.Operations = new List<ChOrderOperation>
                     {
-                        OperationTimestamp = DateTime.Now,
-                        TypeId = creationOperationId,
-                        UserId = userId
-                    });
+                        new ChOrderOperation
+                        {
+                            OperationTimestamp = DateTime.Now,
+                            TypeId = creationOperationId,
+                            UserId = userId
+                        }
+                    };
 
                     order.CreatedById = userId;
                     order.Status = creationOperationId;

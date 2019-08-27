@@ -2,6 +2,7 @@ using CappannaHelper.Api.Identity.ComponentModel.User;
 using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Persistence;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -32,7 +33,7 @@ namespace CappannaHelper.Api.Tests.Identity.ComponentModel.User
                 new Mock<ILogger<UserManager<ApplicationUser>>>().Object
             );
 
-            _context = new Mock<ApplicationDbContext>();
+            _context = new Mock<ApplicationDbContext>(new DbContextOptionsBuilder<ApplicationDbContext>().Options);
         }
 
         [Fact]

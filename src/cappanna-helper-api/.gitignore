@@ -43,6 +43,7 @@ UpgradeLog*.htm
 
 # Test and coverage artifacts
 coverage/*
+!coverage/run.ps1
 
 # Application runtime files
 *.db

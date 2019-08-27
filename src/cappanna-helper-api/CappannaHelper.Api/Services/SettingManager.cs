@@ -18,7 +18,7 @@ namespace CappannaHelper.Api.Services
         {
             var setting = await _context.Settings.SingleOrDefaultAsync(s => s.Name == name);
 
-            if (setting==null)
+            if (setting == null)
             {
                 return default(T);
             }

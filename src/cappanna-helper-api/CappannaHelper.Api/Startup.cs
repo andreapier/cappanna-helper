@@ -114,7 +114,7 @@ namespace CappannaHelper.Api
                 .AddChServices();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
             app
                 .UseDefaultFiles()

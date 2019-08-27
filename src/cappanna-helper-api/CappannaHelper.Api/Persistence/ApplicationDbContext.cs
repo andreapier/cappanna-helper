@@ -17,9 +17,6 @@ namespace CappannaHelper.Api.Persistence
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<Setting> Settings { get; set; }
 
-        public ApplicationDbContext()
-        { }
-
         public ApplicationDbContext(DbContextOptions options)
             : base(options)
         { }

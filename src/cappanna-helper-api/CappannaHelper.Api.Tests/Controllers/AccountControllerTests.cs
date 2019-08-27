@@ -40,20 +40,22 @@ namespace CappannaHelper.Api.Tests.Controller
             var userManager = new Mock<IApplicationUserManager>();
             userManager.Setup(m => m.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Success));
             userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(expectedUser));
-            var accountController = new AccountController(userManager.Object, new Mock<IApplicationSignInManager>().Object, new Mock<IConfiguration>().Object);
-            var signupData = new SignupModel
+            using (var accountController = new AccountController(userManager.Object, new Mock<IApplicationSignInManager>().Object, new Mock<IConfiguration>().Object))
             {
-                Username = "test@test.it",
-                FirstName = "test",
-                LastName = "test",
-                Password = "test"
-            };
+                var signupData = new SignupModel
+                {
+                    Username = "test@test.it",
+                    FirstName = "test",
+                    LastName = "test",
+                    Password = "test"
+                };
 
-            var httpResult = await accountController.Signup(signupData);
+                var httpResult = await accountController.Signup(signupData);
 
-            var ok = Assert.IsAssignableFrom<OkObjectResult>(httpResult);
-            var actualUser = Assert.IsAssignableFrom<ApplicationUser>(ok.Value);
-            Assert.Equal(expectedUser, actualUser);
+                var ok = Assert.IsAssignableFrom<OkObjectResult>(httpResult);
+                var actualUser = Assert.IsAssignableFrom<ApplicationUser>(ok.Value);
+                Assert.Equal(expectedUser, actualUser);
+            }
         }
 
         [Fact]
@@ -66,18 +68,20 @@ namespace CappannaHelper.Api.Tests.Controller
                 Code = "Test",
                 Description = expectedMessage
             })));
-            var accountController = new AccountController(userManager.Object, new Mock<IApplicationSignInManager>().Object, new Mock<IConfiguration>().Object);
-            var signupData = new SignupModel
+            using (var accountController = new AccountController(userManager.Object, new Mock<IApplicationSignInManager>().Object, new Mock<IConfiguration>().Object))
             {
-                Username = "test@test.it",
-                FirstName = "test",
-                LastName = "test",
-                Password = "test"
-            };
+                var signupData = new SignupModel
+                {
+                    Username = "test@test.it",
+                    FirstName = "test",
+                    LastName = "test",
+                    Password = "test"
+                };
 
-            var actualException = await Assert.ThrowsAsync<Exception>(async () => await accountController.Signup(signupData));
+                var actualException = await Assert.ThrowsAsync<Exception>(async () => await accountController.Signup(signupData));
 
-            Assert.Equal(expectedMessage, actualException.Message);
+                Assert.Equal(expectedMessage, actualException.Message);
+            }
         }
 
         [Fact]
@@ -95,18 +99,39 @@ namespace CappannaHelper.Api.Tests.Controller
             configuration.Setup(c => c["JwtKey"]).Returns("SOME_RANDOM_KEY_DO_NOT_SHARE");
             configuration.Setup(c => c["JwtExpireDays"]).Returns("1");
             configuration.Setup(c => c["JwtIssuer"]).Returns("http://cappannahelper.it");
-            var accountController = new AccountController(userManager.Object, signInManager.Object, configuration.Object);
-            var signinData = new SigninModel
+            using (var accountController = new AccountController(userManager.Object, signInManager.Object, configuration.Object))
             {
-                Username = "test",
-                Password = "test"
-            };
+                var signinData = new SigninModel
+                {
+                    Username = "test",
+                    Password = "test"
+                };
 
-            var httpResult = await accountController.Signin(signinData);
+                var httpResult = await accountController.Signin(signinData);
 
-            var ok = Assert.IsAssignableFrom<OkObjectResult>(httpResult);
-            var signInResult = Assert.IsAssignableFrom<SigninResultModel>(ok.Value);
-            Assert.Equal(expectedUser.UserName, signInResult.Username);
+                var ok = Assert.IsAssignableFrom<OkObjectResult>(httpResult);
+                var signInResult = Assert.IsAssignableFrom<SigninResultModel>(ok.Value);
+                Assert.Equal(expectedUser.UserName, signInResult.Username);
+            }
+        }
+
+        [Fact]
+        public async Task Returns_NotFound_If_User_Does_Not_Exist()
+        {
+            var userManager = new Mock<IApplicationUserManager>();
+            userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult<ApplicationUser>(null));
+            using (var accountController = new AccountController(userManager.Object, new Mock<IApplicationSignInManager>().Object, new Mock<IConfiguration>().Object))
+            {
+                var signinData = new SigninModel
+                {
+                    Username = "test",
+                    Password = "test"
+                };
+
+                var httpResult = await accountController.Signin(signinData);
+
+                Assert.IsAssignableFrom<NotFoundResult>(httpResult);
+            }
         }
 
         [Fact]
@@ -116,17 +141,19 @@ namespace CappannaHelper.Api.Tests.Controller
             userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(new ApplicationUser()));
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.LockedOut));
-            var accountController = new AccountController(userManager.Object, signInManager.Object, new Mock<IConfiguration>().Object);
-            var signinData = new SigninModel
+            using (var accountController = new AccountController(userManager.Object, signInManager.Object, new Mock<IConfiguration>().Object))
             {
-                Username = "test",
-                Password = "test"
-            };
+                var signinData = new SigninModel
+                {
+                    Username = "test",
+                    Password = "test"
+                };
 
-            var httpResult = await accountController.Signin(signinData);
+                var httpResult = await accountController.Signin(signinData);
 
-            var status = Assert.IsAssignableFrom<StatusCodeResult>(httpResult);
-            Assert.Equal(429, status.StatusCode);
+                var status = Assert.IsAssignableFrom<StatusCodeResult>(httpResult);
+                Assert.Equal(429, status.StatusCode);
+            }
         }
 
         [Fact]
@@ -136,16 +163,18 @@ namespace CappannaHelper.Api.Tests.Controller
             userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(new ApplicationUser()));
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.NotAllowed));
-            var accountController = new AccountController(userManager.Object, signInManager.Object, new Mock<IConfiguration>().Object);
-            var signinData = new SigninModel
+            using (var accountController = new AccountController(userManager.Object, signInManager.Object, new Mock<IConfiguration>().Object))
             {
-                Username = "test",
-                Password = "test"
-            };
+                var signinData = new SigninModel
+                {
+                    Username = "test",
+                    Password = "test"
+                };
 
-            var httpResult = await accountController.Signin(signinData);
+                var httpResult = await accountController.Signin(signinData);
 
-            Assert.IsAssignableFrom<UnauthorizedResult>(httpResult);
+                Assert.IsAssignableFrom<UnauthorizedResult>(httpResult);
+            }
         }
 
         [Fact]
@@ -155,24 +184,28 @@ namespace CappannaHelper.Api.Tests.Controller
             userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(new ApplicationUser()));
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.TwoFactorRequired));
-            var accountController = new AccountController(userManager.Object, signInManager.Object, new Mock<IConfiguration>().Object);
-            var signinData = new SigninModel
+            using (var accountController = new AccountController(userManager.Object, signInManager.Object, new Mock<IConfiguration>().Object))
             {
-                Username = "test",
-                Password = "test"
-            };
+                var signinData = new SigninModel
+                {
+                    Username = "test",
+                    Password = "test"
+                };
 
-            await Assert.ThrowsAsync<NotImplementedException>(async () => await accountController.Signin(signinData));
+                await Assert.ThrowsAsync<NotImplementedException>(async () => await accountController.Signin(signinData));
+            }
         }
 
         [Fact]
         public async Task Signout_User()
         {
-            var accountController = new AccountController(new Mock<IApplicationUserManager>().Object, new Mock<IApplicationSignInManager>().Object, new Mock<IConfiguration>().Object);
-            
-            var httpResult = await accountController.Signout();
+            using (var accountController = new AccountController(new Mock<IApplicationUserManager>().Object, new Mock<IApplicationSignInManager>().Object, new Mock<IConfiguration>().Object))
+            {
 
-            Assert.IsAssignableFrom<OkResult>(httpResult);
+                var httpResult = await accountController.Signout();
+
+                Assert.IsAssignableFrom<OkResult>(httpResult);
+            }
         }
     }
 }

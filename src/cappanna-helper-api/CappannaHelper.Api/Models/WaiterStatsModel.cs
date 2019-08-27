@@ -1,7 +1,10 @@
-public class WaiterStats
+namespace CappannaHelper.Api.Models
 {
-    public int UserId { get; set; }
-    public string Waiter { get; set; }
-    public int OrdersQuantity { get; set; }
-    public decimal Income { get; set; }
+    public class WaiterStats
+    {
+        public int UserId { get; set; }
+        public string Waiter { get; set; }
+        public int OrdersQuantity { get; set; }
+        public decimal Income { get; set; }
+    }
 }

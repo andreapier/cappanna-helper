@@ -44,7 +44,7 @@ namespace CappannaHelper.Printing.Communication.Lan
         public async Task<byte[]> ReadAsync(int length) {
             var stream = _client.GetStream();
             var result = new byte[length];
-            var bytesRead = await stream.ReadAsync(result);
+            await stream.ReadAsync(result);
 
             return result;
         }
