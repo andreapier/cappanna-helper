@@ -13,6 +13,7 @@ export const initialState = {
   id: 0,
   seats: 2,
   chTable: 1,
+  notes: "",
   tableCategory: "",
   totalPrice: 0
 };

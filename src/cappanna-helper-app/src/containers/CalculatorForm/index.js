@@ -137,6 +137,9 @@ Calculator.propTypes = {
 
 const mapStateToProps = state => {
   return {
+    amount: state.calculator.amount,
+    paidAmount: state.calculator.paidAmount,
+    seats: state.calculator.seats,
     chChange: state.calculator.change,
     perPersonAmount: state.calculator.perPersonAmount
   };
