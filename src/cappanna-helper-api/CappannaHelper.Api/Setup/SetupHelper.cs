@@ -41,6 +41,7 @@ namespace CappannaHelper.Api.Setup
                     await SetupMenuAsync(errors);
                     await SetupOperationTypesAsync(errors);
                     await SetupSettingsAsync(errors);
+                    await SetupUserSettingsAsync(errors);
 
                     transaction.Commit();
                 }
@@ -443,7 +444,7 @@ namespace CappannaHelper.Api.Setup
             }
         }
 
-        private async Task SetupSettingAsync(string name, object value, List<string> errors)
+        private async Task SetupUserSettingsAsync(string name, object value, List<string> errors)
         {
             try
             {

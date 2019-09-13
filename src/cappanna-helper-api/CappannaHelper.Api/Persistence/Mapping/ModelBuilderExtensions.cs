@@ -13,7 +13,9 @@ namespace CappannaHelper.Api.Persistence.Mapping
                 .MapMenuDetail()
                 .MapOrderDetail()
                 .MapShift()
-                .MapSetting();
+                .MapSetting()
+                .MapUserSetting()
+                .MapStand();
         }
 
         public static ModelBuilder MapChOrder(this ModelBuilder builder)
@@ -61,6 +63,20 @@ namespace CappannaHelper.Api.Persistence.Mapping
         public static ModelBuilder MapSetting(this ModelBuilder builder)
         {
             var mapping = new SettingMapping(builder);
+            mapping.Build();
+            return builder;
+        }
+
+        public static ModelBuilder MapUserSetting(this ModelBuilder builder)
+        {
+            var mapping = new UserSettingMapping(builder);
+            mapping.Build();
+            return builder;
+        }
+
+        public static ModelBuilder MapStand(this ModelBuilder builder)
+        {
+            var mapping = new StandMapping(builder);
             mapping.Build();
             return builder;
         }

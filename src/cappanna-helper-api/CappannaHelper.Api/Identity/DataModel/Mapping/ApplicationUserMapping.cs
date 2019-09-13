@@ -1,5 +1,4 @@
 using CappannaHelper.Api.Common.DataModel.Mapping;
-using CappannaHelper.Api.Identity.DataModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -18,7 +17,8 @@ namespace CappannaHelper.Api.Identity.DataModel.Mapping
             entityBuilder.Property(u => u.FirstName).IsRequired().HasMaxLength(100);
             entityBuilder.Property(u => u.Surname).IsRequired().HasMaxLength(100);
 
-            entityBuilder.HasMany(u => u.UserRoles).WithOne().HasForeignKey(ur => ur.UserId);
+            entityBuilder.HasMany(u => u.UserRoles).WithOne().HasForeignKey(ur => ur.UserId).IsRequired();
+            entityBuilder.HasMany(u => u.Settings).WithOne().HasForeignKey(ur => ur.UserId).IsRequired();
         }
     }
 }

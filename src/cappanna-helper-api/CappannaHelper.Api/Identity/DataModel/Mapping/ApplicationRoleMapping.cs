@@ -14,7 +14,7 @@ namespace CappannaHelper.Api.Identity.DataModel.Mapping
         {
             entityBuilder.ToTable("Roles");
             
-            entityBuilder.HasMany(r => r.Claims).WithOne().HasForeignKey(c => c.RoleId);
+            entityBuilder.HasMany(r => r.Claims).WithOne().HasForeignKey(c => c.RoleId).IsRequired();
         }
     }
 }

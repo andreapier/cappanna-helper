@@ -19,6 +19,8 @@ namespace CappannaHelper.Api.Persistence.Modelling
         public int ShiftId { get; set; }
         public Shift Shift { get; set; }
         public int ShiftCounter { get; set; }
+        public int StandId { get; set; }
+        public Stand Stand { get; set; }
 
         public ChOrder()
         {
