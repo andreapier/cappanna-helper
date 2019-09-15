@@ -50,7 +50,9 @@ import {
   LOAD_DASHBOARD_DATA_COMPLETED,
   LOAD_SETTINGS_LIST_REQUESTED,
   LOAD_SETTINGS_LIST_COMPLETED,
-  SET_SETTING_VALUE
+  SET_SETTING_VALUE,
+  LOAD_STANDS_LIST_REQUESTED,
+  LOAD_STANDS_LIST_COMPLETED
 } from "actions/types";
 
 export function signinRequested({ username, password, rememberMe }) {
@@ -274,4 +276,12 @@ export function loadSettingsListCompleted(settings) {
 
 export function setSettingValue(settingId, settingValue) {
   return { type: SET_SETTING_VALUE, payload: { settingId, settingValue } };
+}
+
+export function loadStandsListRequested() {
+  return { type: LOAD_STANDS_LIST_REQUESTED };
+}
+
+export function loadStandsListCompleted(stands) {
+  return { type: LOAD_STANDS_LIST_COMPLETED, payload: stands };
 }

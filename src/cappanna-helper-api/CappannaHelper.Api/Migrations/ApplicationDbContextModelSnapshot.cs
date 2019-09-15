@@ -14,7 +14,7 @@ namespace CappannaHelper.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932");
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity("CappannaHelper.Api.Identity.DataModel.ApplicationRole", b =>
                 {
@@ -94,6 +94,8 @@ namespace CappannaHelper.Api.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<int>("SettingsId");
+
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(100);
@@ -111,6 +113,9 @@ namespace CappannaHelper.Api.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasName("UserNameIndex");
+
+                    b.HasIndex("SettingsId")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -154,6 +159,8 @@ namespace CappannaHelper.Api.Migrations
 
                     b.Property<int>("ShiftId");
 
+                    b.Property<int>("StandId");
+
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(1);
@@ -166,9 +173,11 @@ namespace CappannaHelper.Api.Migrations
 
                     b.HasIndex("ShiftId");
 
+                    b.HasIndex("StandId");
+
                     b.HasIndex("Status");
 
-                    b.HasIndex("ShiftId", "ShiftCounter")
+                    b.HasIndex("ShiftId", "ShiftCounter", "StandId")
                         .IsUnique();
 
                     b.ToTable("ChOrders");
@@ -316,6 +325,37 @@ namespace CappannaHelper.Api.Migrations
                     b.ToTable("Shifts");
                 });
 
+            modelBuilder.Entity("CappannaHelper.Api.Persistence.Modelling.Stand", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.Property<string>("PrintLabel");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Description")
+                        .IsUnique();
+
+                    b.ToTable("Stands");
+                });
+
+            modelBuilder.Entity("CappannaHelper.Api.Persistence.Modelling.UserSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("StandId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserSettings");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -374,6 +414,14 @@ namespace CappannaHelper.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("CappannaHelper.Api.Identity.DataModel.ApplicationUser", b =>
+                {
+                    b.HasOne("CappannaHelper.Api.Persistence.Modelling.UserSetting", "Settings")
+                        .WithOne()
+                        .HasForeignKey("CappannaHelper.Api.Identity.DataModel.ApplicationUser", "SettingsId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("CappannaHelper.Api.Identity.DataModel.ApplicationUserRole", b =>
                 {
                     b.HasOne("CappannaHelper.Api.Identity.DataModel.ApplicationRole", "Role")
@@ -397,6 +445,11 @@ namespace CappannaHelper.Api.Migrations
                     b.HasOne("CappannaHelper.Api.Persistence.Modelling.Shift", "Shift")
                         .WithMany()
                         .HasForeignKey("ShiftId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CappannaHelper.Api.Persistence.Modelling.Stand", "Stand")
+                        .WithMany()
+                        .HasForeignKey("StandId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -12,6 +12,7 @@ import calculator from "reducers/calculator";
 import dashboard from "reducers/dashboard";
 import aggregation from "reducers/aggregation";
 import settings from "reducers/settings";
+import stands from "reducers/stands";
 
 const rootReducer = combineReducers({
   user,
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
   calculator,
   dashboard,
   aggregation,
-  settings
+  settings,
+  stands
 });
 
 export default rootReducer;

@@ -10,12 +10,13 @@ namespace CappannaHelper.Api.Identity.DataModel
         public string Surname { get; set; }
 
         public ICollection<ApplicationUserRole> UserRoles { get; private set; }
-        public ICollection<UserSetting> Settings { get; private set; }
+
+        public int SettingsId { get; set; }
+        public UserSetting Settings { get; set; }
 
         public ApplicationUser()
         {
             UserRoles = new HashSet<ApplicationUserRole>();
-            Settings = new HashSet<UserSetting>();
         }
     }
 }

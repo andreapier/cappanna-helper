@@ -36,12 +36,12 @@ namespace CappannaHelper.Api.Setup
             {
                 using (var transaction = await _context.Database.BeginTransactionAsync())
                 {
+                    await SetupStandsAsync(errors);
                     await SetupRolesAsync(errors);
                     await SetupUsersAsync(errors);
                     await SetupMenuAsync(errors);
                     await SetupOperationTypesAsync(errors);
                     await SetupSettingsAsync(errors);
-                    await SetupUserSettingsAsync(errors);
 
                     transaction.Commit();
                 }
@@ -98,7 +98,8 @@ namespace CappannaHelper.Api.Setup
         private async Task SetupUsersAsync(List<string> errors)
         {
             await SetupAdminAsync(errors);
-            await SetupWaiterAsync(errors);
+            await SetupBaseballWaiterAsync(errors);
+            await SetupZenaWaiterAsync(errors);
             await SetupDomeAsync(errors);
         }
 
@@ -122,20 +123,26 @@ namespace CappannaHelper.Api.Setup
 
         private async Task SetupAdminAsync(List<string> errors)
         {
-            await SetupUserAsync("admin", "admin@cappannahelper.it", "Admin", "Admin", "admin12!", errors);
+            await SetupUserAsync("admin", "admin@cappannahelper.it", "Admin", "Admin", "admin12!", null, errors);
             await SetupUserRoleAsync("admin", ApplicationRole.APPLICATION_ROLE_ADMIN, errors);
         }
 
         private async Task SetupDomeAsync(List<string> errors)
         {
-            await SetupUserAsync("dome", "dome@cappannahelper.it", "Dome", "Dome", "dome123!", errors);
+            await SetupUserAsync("dome", "dome@cappannahelper.it", "Dome", "Dome", "dome123!", null, errors);
             await SetupUserRoleAsync("dome", ApplicationRole.APPLICATION_ROLE_DOME, errors);
         }
 
-        private async Task SetupWaiterAsync(List<string> errors)
+        private async Task SetupBaseballWaiterAsync(List<string> errors)
         {
-            await SetupUserAsync("waiter", "waiter@cappannahelper.it", "Waiter", "Waiter", "waiter12!", errors);
+            await SetupUserAsync("waiter", "waiter@cappannahelper.it", "Waiter", "Waiter", "waiter12!", 1, errors);
             await SetupUserRoleAsync("waiter", ApplicationRole.APPLICATION_ROLE_WAITER, errors);
+        }
+
+        private async Task SetupZenaWaiterAsync(List<string> errors)
+        {
+            await SetupUserAsync("waiterzena", "waiterzena@cappannahelper.it", "Waiter", "Zena", "waiterzena12!", 2, errors);
+            await SetupUserRoleAsync("waiterzena", ApplicationRole.APPLICATION_ROLE_WAITER, errors);
         }
 
         private async Task SetupMenuAsync(List<string> errors)
@@ -339,7 +346,7 @@ namespace CappannaHelper.Api.Setup
             }
         }
 
-        private async Task SetupUserAsync(string username, string email, string firstName, string lastName, string password, List<string> errors)
+        private async Task SetupUserAsync(string username, string email, string firstName, string lastName, string password, int? standId, List<string> errors)
         {
             try
             {
@@ -352,7 +359,11 @@ namespace CappannaHelper.Api.Setup
                         UserName = username,
                         Email = email,
                         FirstName = firstName,
-                        Surname = lastName
+                        Surname = lastName,
+                        Settings = new UserSetting
+                        {
+                            StandId = standId
+                        }
                     };
 
                     var result = await _userManager.CreateAsync(user, password);
@@ -444,11 +455,11 @@ namespace CappannaHelper.Api.Setup
             }
         }
 
-        private async Task SetupUserSettingsAsync(string name, object value, List<string> errors)
+        private async Task SetupSettingAsync(string name, object value, List<string> errors)
         {
             try
             {
-                if(!await _context.Settings.AnyAsync(d => d.Name == name))
+                if (!await _context.Settings.AnyAsync(d => d.Name == name))
                 {
                     await _context.AddAsync(new Setting
                     {
@@ -456,9 +467,45 @@ namespace CappannaHelper.Api.Setup
                         Type = value.GetType().Name,
                         Value = value.ToString()
                     });
+
+                    await _context.SaveChangesAsync();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
+            {
+                errors.Add(e.Message);
+            }
+        }
+
+        private async Task SetupStandsAsync(List<string> errors)
+        {
+            await SetupStandAsync("Cupra baseball", "Cupra", errors);
+            await SetupStandAsync("Zena", "Zena", errors);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                errors.Add(e.Message);
+            }
+        }
+
+        private async Task SetupStandAsync(string description, string printLabel, List<string> errors)
+        {
+            try
+            {
+                if (!await _context.Stands.AnyAsync(d => d.Description == description))
+                {
+                    await _context.AddAsync(new Stand
+                    {
+                        Description = description,
+                        PrintLabel = printLabel
+                    });
+                }
+            }
+            catch (Exception e)
             {
                 errors.Add(e.Message);
             }

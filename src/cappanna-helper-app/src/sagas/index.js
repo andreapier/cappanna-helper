@@ -20,6 +20,7 @@ import loadDashboardDataSaga from "./loadDashboardDataSaga";
 import orderDetailsAggregationRequestedSaga from "./orderDetailsAggregationRequestedSaga";
 import loadSettingsListSaga from "./loadSettingsListSaga";
 import setSettingSaga from "./setSettingSaga";
+import loadStandsListSaga from "./loadStandsListSaga";
 
 function* rootSaga() {
   yield all([
@@ -43,7 +44,8 @@ function* rootSaga() {
     loadDashboardDataSaga(),
     orderDetailsAggregationRequestedSaga(),
     loadSettingsListSaga(),
-    setSettingSaga()
+    setSettingSaga(),
+    loadStandsListSaga()
   ]);
 }
 

@@ -6,17 +6,21 @@ import { signupRequested } from "actions";
 import { connect } from "react-redux";
 import Grid from "components/Grid";
 import ItemGrid from "components/Grid/ItemGrid";
+import { loadStandsListRequested } from "actions";
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       username: "",
       password: "",
-      confirmPassword:"",
-      firstName:"",
-      lastName:""
+      confirmPassword: "",
+      firstName: "",
+      lastName: "",
+      settings: {
+        standId: null
+      }
     };
 
     this.setUsername = this.setUsername.bind(this);
@@ -24,6 +28,7 @@ class SignUp extends Component {
     this.setConfirmPassword = this.setConfirmPassword.bind(this);
     this.setFirstName = this.setFirstName.bind(this);
     this.setLastName = this.setLastName.bind(this);
+    this.setStand = this.setStand.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -47,11 +52,21 @@ class SignUp extends Component {
     this.setState({ lastName: event.target.value });
   }
 
+  setStand(event) {
+    this.setState({ settings: { standId: event.target.value } });
+  }
+
   handleSubmit(event) {
     event.stopPropagation();
     event.preventDefault();
 
     this.props.signupRequested(this.state);
+  }
+
+  componentDidMount() {
+    if (this.props.stands.length === 0) {
+      this.loadStandsListRequested();
+    }
   }
 
   render() {
@@ -123,7 +138,15 @@ class SignUp extends Component {
 }
 
 SignUp.propTypes = {
-  signupRequested: PropTypes.func.isRequired
+  signupRequested: PropTypes.func.isRequired,
+  loadStandsListRequested: PropTypes.func.isRequired,
+  stands: PropTypes.array.isRequired
+};
+
+const mapStateToProps = state => {
+  return {
+    stands: state.stands
+  };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -143,8 +166,12 @@ const mapDispatchToProps = dispatch => {
           firstName,
           lastName
         })
-      )
+      ),
+    loadStands: () => dispatch(loadStandsListRequested())
   };
 };
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignUp);
