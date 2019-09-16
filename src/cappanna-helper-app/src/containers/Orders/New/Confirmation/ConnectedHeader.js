@@ -13,9 +13,12 @@ const mapStateToProps = state => {
     id: state.newOrderHeader.id,
     table:
       state.newOrderHeader.chTable +
-      (state.newOrderHeader.tableCategory ? "\\" + state.newOrderHeader.tableCategory : ""),
+      (state.newOrderHeader.tableCategory
+        ? "\\" + state.newOrderHeader.tableCategory
+        : ""),
     seats: state.newOrderHeader.seats,
-    totalPrice: state.newOrderHeader.totalPrice
+    totalPrice: state.newOrderHeader.totalPrice,
+    standId: state.user.settings.standId
   };
 };
 

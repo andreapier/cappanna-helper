@@ -39,6 +39,7 @@ namespace CappannaHelper.Api.Controllers
             {
                 result = await _context.Orders
                     .Include(o => o.CreatedBy)
+                    .Include(o => o.Stand)
                     .Include(o => o.Details)
                     .ThenInclude(d => d.Item)
                     .FirstOrDefaultAsync(o => o.Id == id);

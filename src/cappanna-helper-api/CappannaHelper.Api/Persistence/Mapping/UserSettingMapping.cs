@@ -1,5 +1,4 @@
 ﻿using CappannaHelper.Api.Common.DataModel.Mapping;
-using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Persistence.Modelling;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -16,7 +15,7 @@ namespace CappannaHelper.Api.Persistence.Mapping
             entityBuilder.ToTable("UserSettings");
 
             entityBuilder.Property(o => o.Id).IsRequired().ValueGeneratedOnAdd();
-            entityBuilder.Property(o => o.StandId);
+            entityBuilder.Property(o => o.StandId).IsRequired();
         }
     }
 }

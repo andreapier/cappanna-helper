@@ -4,7 +4,8 @@ const initialState = {
   userId: null,
   username: null,
   token: "",
-  roles: []
+  roles: [],
+  settings: null
 };
 
 export default function(state = initialState, action) {
@@ -14,7 +15,8 @@ export default function(state = initialState, action) {
         userId: action.payload.userId,
         username: action.payload.username,
         token: action.payload.token,
-        roles: action.payload.roles
+        roles: action.payload.roles,
+        settings: action.payload.settings
       };
 
     case SIGNOUT_COMPLETED:

@@ -39,9 +39,20 @@ namespace CappannaHelper.Api.Controllers
                 })
                 .OrderByDescending(r => r.Income)
                 .ToListAsync();
+            var orderStats = await _context.Orders
+                .Where(o => o.ShiftId == shift.Id)
+                .GroupBy(o => o.StandId)
+                .Select(g => new OrderStat
+                {
+                    StandId = g.First().ShiftId,
+                    StandName = g.First().Shift.Description,
+                    Income = g.Sum(o => o.Details.Sum(d => d.Quantity * d.Item.Price))
+                })
+                .OrderByDescending(r => r.Income)
+                .ToListAsync();
             var result = new DashboardModel
             {
-                OrdersQuantity = shift.OrderCounter,
+                OrderStats = orderStats,
                 Income = shift.Income,
                 WaitersStats = waitersStats
             };

@@ -17,9 +17,10 @@ namespace CappannaHelper.Api.Printing
             _document = new Document();
         }
 
-        private void SetHeader(string title, int orderId, string table, int seats, ApplicationUser waiter, DateTime creationTimestamp, int size)
+        private void SetHeader(string title, string stand, int orderId, string table, int seats, ApplicationUser waiter, DateTime creationTimestamp, int size)
         {
             SetTitle(title);
+            SetStand(stand);
             SetOrderId(orderId, size);
             SetTable(table, size);
             SetSeats(seats, size);
@@ -31,10 +32,18 @@ namespace CappannaHelper.Api.Printing
         {
             var section = _document.LastPage.CreateSection();
             section.SetSize(24);
-            section.HorizontalAlignment = HorizontalAlignments.Center;
             section.Bold = true;
             section.CreateLabel().SetContent(title);
             section.NewLine();
+        }
+
+        private void SetStand(string stand)
+        {
+            var section = _document.LastPage.CreateSection();
+            section.SetSize(24);
+            section.Bold = true;
+            section.HorizontalAlignment = HorizontalAlignments.Right;
+            section.CreateLabel().SetContent($"Stand:  {stand.ToString()}");
         }
 
         private void SetOrderId(int orderId, int size)
@@ -111,14 +120,14 @@ namespace CappannaHelper.Api.Printing
         {
             if (order.Details.Any(d => d.Item.IsDish))
             {
-                SetHeader("CUCINA", order.ShiftCounter, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp, 16);
+                SetHeader("CUCINA", order.Stand.PrintLabel, order.ShiftCounter, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp, 16);
                 SetDishes(order.Details, 16);
                 SetNotes(order.Notes, 16);
                 
                 AddPage(16);
             }
             
-            SetHeader("BAR", order.ShiftCounter, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp, 12);
+            SetHeader("BAR", order.Stand.PrintLabel, order.ShiftCounter, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp, 12);
             SetDishes(order.Details, 12);
 
             if (order.Details.Any(d => d.Item.IsDrink))

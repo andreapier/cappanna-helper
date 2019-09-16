@@ -11,7 +11,7 @@ class ConnectedDashboard extends Component {
   render() {
     return (
       <Dashboard
-        ordersQuantity={this.props.ordersQuantity}
+        orderStats={this.props.orderStats}
         income={this.props.income}
         dailySales={this.props.dailySales}
         waitersStats={this.props.waitersStats}
@@ -26,7 +26,7 @@ class ConnectedDashboard extends Component {
 
 const mapStateToProps = state => {
   return {
-    ordersQuantity: state.dashboard.ordersQuantity,
+    orderStats: state.dashboard.orderStats,
     income: state.dashboard.income,
     waitersStats: state.dashboard.waitersStats
   };

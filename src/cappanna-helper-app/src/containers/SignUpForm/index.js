@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Button from "components/CustomButtons";
-import { TextField } from "@material-ui/core";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField
+} from "@material-ui/core";
 import { signupRequested } from "actions";
 import { connect } from "react-redux";
 import Grid from "components/Grid";
@@ -19,7 +25,7 @@ class SignUp extends Component {
       firstName: "",
       lastName: "",
       settings: {
-        standId: null
+        standId: 1
       }
     };
 
@@ -65,7 +71,7 @@ class SignUp extends Component {
 
   componentDidMount() {
     if (this.props.stands.length === 0) {
-      this.loadStandsListRequested();
+      this.props.loadStands();
     }
   }
 
@@ -73,7 +79,7 @@ class SignUp extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <Grid justify="space-between">
-          <ItemGrid xs={12}>
+          <ItemGrid xs={12} md={6} lg={4}>
             <TextField
               name="username"
               autoFocus
@@ -84,7 +90,7 @@ class SignUp extends Component {
             />
           </ItemGrid>
 
-          <ItemGrid xs={12}>
+          <ItemGrid xs={12} md={6} lg={4}>
             <TextField
               name="password"
               type="password"
@@ -95,7 +101,7 @@ class SignUp extends Component {
             />
           </ItemGrid>
 
-          <ItemGrid xs={12}>
+          <ItemGrid xs={12} md={6} lg={4}>
             <TextField
               name="confirmPassword"
               type="password"
@@ -106,7 +112,7 @@ class SignUp extends Component {
             />
           </ItemGrid>
 
-          <ItemGrid xs={12}>
+          <ItemGrid xs={12} md={6} lg={4}>
             <TextField
               name="firstName"
               fullWidth
@@ -116,7 +122,7 @@ class SignUp extends Component {
             />
           </ItemGrid>
 
-          <ItemGrid xs={12}>
+          <ItemGrid xs={12} md={6} lg={4}>
             <TextField
               name="lastName"
               fullWidth
@@ -126,7 +132,21 @@ class SignUp extends Component {
             />
           </ItemGrid>
 
-          <ItemGrid xs={12} md={3}>
+          <ItemGrid xs={12} md={6} lg={4}>
+            <FormControl fullWidth>
+              <InputLabel>Stand</InputLabel>
+              <Select
+                value={this.state.settings.standId}
+                onChange={this.setStand}
+              >
+                {this.props.stands.map(s => (
+                  <MenuItem value={s.id}>{s.description}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </ItemGrid>
+
+          <ItemGrid xs={12} md={3} lg={3}>
             <Button type="submit" fullWidth>
               Registra
             </Button>
@@ -139,7 +159,7 @@ class SignUp extends Component {
 
 SignUp.propTypes = {
   signupRequested: PropTypes.func.isRequired,
-  loadStandsListRequested: PropTypes.func.isRequired,
+  loadStands: PropTypes.func.isRequired,
   stands: PropTypes.array.isRequired
 };
 

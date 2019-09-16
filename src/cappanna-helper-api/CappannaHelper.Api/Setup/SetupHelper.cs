@@ -123,13 +123,13 @@ namespace CappannaHelper.Api.Setup
 
         private async Task SetupAdminAsync(List<string> errors)
         {
-            await SetupUserAsync("admin", "admin@cappannahelper.it", "Admin", "Admin", "admin12!", null, errors);
+            await SetupUserAsync("admin", "admin@cappannahelper.it", "Admin", "Admin", "admin12!", 1, errors);
             await SetupUserRoleAsync("admin", ApplicationRole.APPLICATION_ROLE_ADMIN, errors);
         }
 
         private async Task SetupDomeAsync(List<string> errors)
         {
-            await SetupUserAsync("dome", "dome@cappannahelper.it", "Dome", "Dome", "dome123!", null, errors);
+            await SetupUserAsync("dome", "dome@cappannahelper.it", "Dome", "Dome", "dome123!", 1, errors);
             await SetupUserRoleAsync("dome", ApplicationRole.APPLICATION_ROLE_DOME, errors);
         }
 
@@ -346,7 +346,7 @@ namespace CappannaHelper.Api.Setup
             }
         }
 
-        private async Task SetupUserAsync(string username, string email, string firstName, string lastName, string password, int? standId, List<string> errors)
+        private async Task SetupUserAsync(string username, string email, string firstName, string lastName, string password, int standId, List<string> errors)
         {
             try
             {

@@ -5,30 +5,30 @@ import Table from "components/Table";
 import { formatAmount } from "utils/string";
 
 const buildTableRow = data => [
-  data.waiter,
-  data.ordersQuantity,
+  data.standName,
+  data.orderQuantity,
   formatAmount(data.income)
 ];
 
-const WaitersStatCard = props => {
+const OrderStatCard = props => {
   return (
-    <RegularCard cardTitle="Ordini per cameriere">
+    <RegularCard cardTitle="Ordini per stand">
       <Table
-        tableHead={["Cameriere", "Ordini", "Incasso"]}
+        tableHead={["Stand", "Ordini", "Incasso"]}
         tableData={props.data.map(buildTableRow)}
       />
     </RegularCard>
   );
 };
 
-WaitersStatCard.propTypes = {
+OrderStatCard.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      waiter: PropTypes.string.isRequired,
-      ordersQuantity: PropTypes.number.isRequired,
+      standName: PropTypes.string.isRequired,
+      orderCount: PropTypes.number.isRequired,
       income: PropTypes.number.isRequired
     })
   ).isRequired
 };
 
-export default WaitersStatCard;
+export default OrderStatCard;

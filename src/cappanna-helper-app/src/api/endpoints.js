@@ -10,3 +10,4 @@ export const PRINT = `${API}/print`;
 export const NOTIFICATION = `${API}/notification`;
 export const DASHBOARD = `${API}/dashboard`;
 export const SETTING = `${API}/setting`;
+export const STAND = `${API}/stand`;

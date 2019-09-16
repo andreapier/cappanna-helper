@@ -3,6 +3,6 @@
     public class UserSetting
     {
         public int Id { get; set; }
-        public int? StandId { get; set; }
+        public int StandId { get; set; }
     }
 }

@@ -4,12 +4,13 @@ namespace CappannaHelper.Api.Models
 {
     public class DashboardModel
     {
-        public int OrdersQuantity { get; set; }
+        public IList<OrderStat> OrderStats { get; set; }
         public decimal Income { get; set; }
         public IList<WaiterStats> WaitersStats { get; set; }
 
         public DashboardModel()
         {
+            OrderStats = new List<OrderStat>();
             WaitersStats = new List<WaiterStats>();
         }
     }

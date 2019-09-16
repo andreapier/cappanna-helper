@@ -87,7 +87,8 @@ Header.propTypes = {
   setOrderTable: PropTypes.func.isRequired,
   setOrderTableCategory: PropTypes.func.isRequired,
   setOrderSeats: PropTypes.func.isRequired,
-  goToConfirm: PropTypes.func.isRequired
+  goToConfirm: PropTypes.func.isRequired,
+  standId: PropTypes.number.isRequired
 };
 
 export default Header;

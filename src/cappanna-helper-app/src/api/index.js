@@ -7,7 +7,8 @@ import {
   PRINT,
   NOTIFICATION,
   DASHBOARD,
-  SETTING
+  SETTING,
+  STAND
 } from "api/endpoints";
 import "whatwg-fetch";
 
@@ -33,14 +34,13 @@ const checkStatus = response => {
     return response;
   }
 
-  return parseJSON(response)
-    .then(json => {
-      const error = new Error(json.message);
-      error.stackTrace=json.stackTrace;
-      error.response = response;
-      
-      throw error;
-    });
+  return parseJSON(response).then(json => {
+    const error = new Error(json.message);
+    error.stackTrace = json.stackTrace;
+    error.response = response;
+
+    throw error;
+  });
 };
 
 const post = (url, data, jsonResponse = true) =>
@@ -85,13 +85,16 @@ const getServerOrder = order => {
     chTable:
       order.chTable + (order.tableCategory ? "\\" + order.tableCategory : ""),
     seats: order.seats,
-    details: order.details.filter(e => e.quantity > 0).map(e => {
-      return {
-        id: e.id,
-        quantity: e.quantity,
-        itemId: e.itemId
-      };
-    }),
+    standId: order.standId,
+    details: order.details
+      .filter(e => e.quantity > 0)
+      .map(e => {
+        return {
+          id: e.id,
+          quantity: e.quantity,
+          itemId: e.itemId
+        };
+      }),
     notes: order.notes
   };
 };
@@ -185,7 +188,9 @@ class Api {
   }
 
   aggregateOrderDetails(ordersId) {
-    return get(`${PRINT}/order/aggregate?${ordersId.map(o => "ordersId=" + o).join("&")}`)
+    return get(
+      `${PRINT}/order/aggregate?${ordersId.map(o => "ordersId=" + o).join("&")}`
+    );
   }
 
   getNotifications() {
@@ -202,6 +207,10 @@ class Api {
 
   saveSetting(setting) {
     return patch(SETTING, setting);
+  }
+
+  getStands() {
+    return get(STAND);
   }
 }
 

@@ -40,16 +40,28 @@ namespace CappannaHelper.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] bool openOnly)
         {
             List<ChOrder> result;
 
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
                 var currentShift = await _shiftManager.GetOrCreateCurrentAsync();
-                result = await _context.Orders
+                var query = _context.Orders
                     .Include(o => o.CreatedBy)
-                    .Where(o => o.ShiftId == currentShift.Id)
+                    .Where(o => o.ShiftId == currentShift.Id);
+
+                if (!string.IsNullOrEmpty(User.Identity.Name))
+                {
+                    query = query.Where(o => o.CreatedBy.UserName == User.Identity.Name);
+                }
+
+                if (openOnly)
+                {
+                    query = query.Where(o => o.Status != (int)OperationTypes.Close);
+                }
+
+                result = await query
                     .OrderByDescending(o => o.CreationTimestamp)
                     .ToListAsync();
 
@@ -105,6 +117,11 @@ namespace CappannaHelper.Api.Controllers
             if (order.Seats <= 0)
             {
                 return BadRequest(new { Message = "Impossibile inviare un ordine senza specificare il numero di coperti" });
+            }
+
+            if (order.StandId <= 0)
+            {
+                return BadRequest(new { Message = "Impossibile inviare un ordine senza specificare lo stand" });
             }
 
             if (order.Details == null || order.Details.Count <= 0)
@@ -245,6 +262,11 @@ namespace CappannaHelper.Api.Controllers
             if (order.Seats <= 0)
             {
                 return BadRequest(new { Message = "Impossibile modificare un ordine senza specificare il numero di coperti" });
+            }
+
+            if (order.StandId <= 0)
+            {
+                return BadRequest(new { Message = "Impossibile modificare un ordine senza specificare lo stand" });
             }
 
             if (order.Details == null || order.Details.Count <= 0)
