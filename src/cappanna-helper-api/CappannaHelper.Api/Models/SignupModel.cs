@@ -21,5 +21,8 @@ namespace CappannaHelper.Api.Models
         [Required]
         [StringLength(200)]
         public string LastName { get; set; }
+
+        [Required]
+        public int StandId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 import dashboard from "routes/dashboard";
+import users from "routes/users/list";
 import newUser from "routes/users/new";
 import menu from "routes/menu";
 import orders from "routes/orders/list";
@@ -18,6 +19,7 @@ import settings from "routes/settings";
 
 const appRoutes = [
   dashboard,
+  users,
   newUser,
   menu,
   orders,

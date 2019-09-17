@@ -21,6 +21,7 @@ import orderDetailsAggregationRequestedSaga from "./orderDetailsAggregationReque
 import loadSettingsListSaga from "./loadSettingsListSaga";
 import setSettingSaga from "./setSettingSaga";
 import loadStandsListSaga from "./loadStandsListSaga";
+import loadUsersListSaga from "./loadUsersListSaga";
 
 function* rootSaga() {
   yield all([
@@ -45,7 +46,8 @@ function* rootSaga() {
     orderDetailsAggregationRequestedSaga(),
     loadSettingsListSaga(),
     setSettingSaga(),
-    loadStandsListSaga()
+    loadStandsListSaga(),
+    loadUsersListSaga()
   ]);
 }
 

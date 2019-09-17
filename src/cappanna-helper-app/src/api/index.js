@@ -8,7 +8,8 @@ import {
   NOTIFICATION,
   DASHBOARD,
   SETTING,
-  STAND
+  STAND,
+  ACCOUNT
 } from "api/endpoints";
 import "whatwg-fetch";
 
@@ -211,6 +212,10 @@ class Api {
 
   getStands() {
     return get(STAND);
+  }
+
+  getUsers() {
+    return get(ACCOUNT);
   }
 }
 

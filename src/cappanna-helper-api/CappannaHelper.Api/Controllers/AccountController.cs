@@ -1,11 +1,3 @@
-using CappannaHelper.Api.Identity.ComponentModel.SignIn;
-using CappannaHelper.Api.Identity.ComponentModel.User;
-using CappannaHelper.Api.Identity.DataModel;
-using CappannaHelper.Api.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,6 +5,17 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using CappannaHelper.Api.Identity.ComponentModel.SignIn;
+using CappannaHelper.Api.Identity.ComponentModel.User;
+using CappannaHelper.Api.Identity.DataModel;
+using CappannaHelper.Api.Models;
+using CappannaHelper.Api.Persistence;
+using CappannaHelper.Api.Persistence.Modelling;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CappannaHelper.Api.Controllers
 {
@@ -21,15 +24,18 @@ namespace CappannaHelper.Api.Controllers
     {
         private readonly IApplicationUserManager _userManager;
         private readonly IApplicationSignInManager _signInManager;
+        private readonly ApplicationDbContext _context;
         private readonly IConfiguration _configuration;
 
         public AccountController(
             IApplicationUserManager userManager,
             IApplicationSignInManager signInManager,
+            ApplicationDbContext context,
             IConfiguration configuration)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
@@ -37,20 +43,30 @@ namespace CappannaHelper.Api.Controllers
         [Authorize]
         public async Task<IActionResult> Signup([FromBody] SignupModel model)
         {
-            var user = new ApplicationUser
-            {
-                UserName = model.Username,
-                FirstName = model.FirstName,
-                Surname = model.LastName
-            };
-            var result = await _userManager.CreateAsync(user, model.Password);
-            
-            if (!result.Succeeded)
-            {
-                throw new Exception(string.Join("\n", result.Errors.Select(e => e.Description)));
-            }
+            ApplicationUser user;
 
-            user = await _userManager.FindByNameAsync(user.UserName);
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                user = new ApplicationUser
+                {
+                    UserName = model.Username,
+                    FirstName = model.FirstName,
+                    Surname = model.LastName,
+                    Settings = new UserSetting
+                    {
+                        StandId = model.StandId
+                    }
+                };
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (!result.Succeeded)
+                {
+                    throw new Exception(string.Join("\n", result.Errors.Select(e => e.Description)));
+                }
+
+                user = await _userManager.FindByNameAsync(user.UserName);
+                transaction.Commit();
+            }
             
             return Ok(user);
         }
@@ -58,39 +74,49 @@ namespace CappannaHelper.Api.Controllers
         [HttpPost("signin")]
         public async Task<IActionResult> Signin([FromBody] SigninModel signinData)
         {
-            var user = await _userManager.FindByNameAsync(signinData.Username);
+            SigninResultModel result;
 
-            if (user == null)
+            using (var transaction = await _context.Database.BeginTransactionAsync())
             {
-                return NotFound();
-            }
+                var user = await _userManager.FindByNameAsync(signinData.Username);
 
-            var result = await _signInManager.PasswordSignInAsync(user, signinData.Password, signinData.RememberMe, true);
-
-            if (result.Succeeded)
-            {
-                var jwt = GenerateJwtToken(user);
-
-                return Ok(new SigninResultModel
+                if (user == null)
                 {
-                    UserId = user.Id,
-                    Username = user.UserName,
-                    Roles = user.UserRoles.Select(ur => ur.Role).Select(r => r.Name),
-                    Token = jwt
-                });
+                    return NotFound();
+                }
+
+                var signInresult = await _signInManager.PasswordSignInAsync(user, signinData.Password, signinData.RememberMe, true);
+
+                if (signInresult.Succeeded)
+                {
+                    var jwt = GenerateJwtToken(user);
+
+                    result = new SigninResultModel
+                    {
+                        UserId = user.Id,
+                        Username = user.UserName,
+                        Roles = user.UserRoles.Select(ur => ur.Role).Select(r => r.Name),
+                        Token = jwt,
+                        Settings = user.Settings
+                    };
+                }
+                else if (signInresult.IsLockedOut)
+                {
+                    return new StatusCodeResult(429);
+                }
+                else if (signInresult.IsNotAllowed)
+                {
+                    return Unauthorized();
+                }
+                else
+                {
+                    throw new NotImplementedException("Sign in result is not implemented (not 'Succeded', not 'IsLockedOut', not 'IsNotAllowed')");
+                }
+
+                transaction.Commit();
             }
 
-            if (result.IsLockedOut)
-            {
-                return new StatusCodeResult(429);
-            }
-
-            if (result.IsNotAllowed)
-            {
-                return Unauthorized();
-            }
-
-            throw new NotImplementedException("Sign in result is not implemented (not 'Succeded', not 'IsLockedOut', not 'IsNotAllowed')");
+            return Ok(result);
         }
 
         [HttpPost("signout")]
@@ -100,6 +126,21 @@ namespace CappannaHelper.Api.Controllers
             await _signInManager.SignOutAsync();
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Get()
+        {
+            IList<ApplicationUser> result;
+
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                result = await _context.Users.ToListAsync();
+                transaction.Commit();
+            }
+
+            return Ok(result);
         }
 
         private string GenerateJwtToken(ApplicationUser user)

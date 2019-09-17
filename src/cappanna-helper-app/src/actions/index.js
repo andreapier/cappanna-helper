@@ -52,7 +52,9 @@ import {
   LOAD_SETTINGS_LIST_COMPLETED,
   SET_SETTING_VALUE,
   LOAD_STANDS_LIST_REQUESTED,
-  LOAD_STANDS_LIST_COMPLETED
+  LOAD_STANDS_LIST_COMPLETED,
+  LOAD_USERS_LIST_REQUESTED,
+  LOAD_USERS_LIST_COMPLETED
 } from "actions/types";
 
 export function signinRequested({ username, password, rememberMe }) {
@@ -284,4 +286,12 @@ export function loadStandsListRequested() {
 
 export function loadStandsListCompleted(stands) {
   return { type: LOAD_STANDS_LIST_COMPLETED, payload: stands };
+}
+
+export function loadUsersListRequested() {
+  return { type: LOAD_USERS_LIST_REQUESTED };
+}
+
+export function loadUsersListCompleted(stands) {
+  return { type: LOAD_USERS_LIST_COMPLETED, payload: stands };
 }

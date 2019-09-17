@@ -13,6 +13,7 @@ import dashboard from "reducers/dashboard";
 import aggregation from "reducers/aggregation";
 import settings from "reducers/settings";
 import stands from "reducers/stands";
+import users from "reducers/users";
 
 const rootReducer = combineReducers({
   user,
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
   dashboard,
   aggregation,
   settings,
-  stands
+  stands,
+  users
 });
 
 export default rootReducer;
