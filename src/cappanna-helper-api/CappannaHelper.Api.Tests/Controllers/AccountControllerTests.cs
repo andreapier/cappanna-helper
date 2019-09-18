@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using CappannaHelper.Api.Controllers;
@@ -10,7 +11,9 @@ using CappannaHelper.Api.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using Xunit;
@@ -25,7 +28,7 @@ namespace CappannaHelper.Api.Tests.Controller
             Assert.Throws<ArgumentNullException>(() => new AccountController(
                 null,
                 new Mock<IApplicationSignInManager>().Object,
-                CreateContext().Object,
+                CreateContext(),
                 new Mock<IConfiguration>().Object));
         }
 
@@ -35,7 +38,7 @@ namespace CappannaHelper.Api.Tests.Controller
             Assert.Throws<ArgumentNullException>(() => new AccountController(
                 new Mock<IApplicationUserManager>().Object,
                 null,
-                CreateContext().Object,
+                CreateContext(),
                 new Mock<IConfiguration>().Object));
         }
 
@@ -55,7 +58,7 @@ namespace CappannaHelper.Api.Tests.Controller
             Assert.Throws<ArgumentNullException>(() => new AccountController(
                 new Mock<IApplicationUserManager>().Object,
                 new Mock<IApplicationSignInManager>().Object,
-                CreateContext().Object,
+                CreateContext(),
                 null));
         }
 
@@ -70,7 +73,7 @@ namespace CappannaHelper.Api.Tests.Controller
             using (var accountController = new AccountController(
                 userManager.Object,
                 new Mock<IApplicationSignInManager>().Object,
-                context.Object,
+                context,
                 new Mock<IConfiguration>().Object))
             {
                 var signupData = new SignupModel
@@ -103,7 +106,7 @@ namespace CappannaHelper.Api.Tests.Controller
             using (var accountController = new AccountController(
                 userManager.Object,
                 new Mock<IApplicationSignInManager>().Object,
-                context.Object,
+                context,
                 new Mock<IConfiguration>().Object))
             {
                 var signupData = new SignupModel
@@ -139,7 +142,7 @@ namespace CappannaHelper.Api.Tests.Controller
             using (var accountController = new AccountController(
                 userManager.Object,
                 signInManager.Object,
-                context.Object,
+                context,
                 configuration.Object))
             {
                 var signinData = new SigninModel
@@ -165,7 +168,7 @@ namespace CappannaHelper.Api.Tests.Controller
             using (var accountController = new AccountController(
                 userManager.Object,
                 new Mock<IApplicationSignInManager>().Object,
-                context.Object,
+                context,
                 new Mock<IConfiguration>().Object))
             {
                 var signinData = new SigninModel
@@ -191,7 +194,7 @@ namespace CappannaHelper.Api.Tests.Controller
             using (var accountController = new AccountController(
                 userManager.Object,
                 signInManager.Object,
-                context.Object,
+                context,
                 new Mock<IConfiguration>().Object))
             {
                 var signinData = new SigninModel
@@ -218,7 +221,7 @@ namespace CappannaHelper.Api.Tests.Controller
             using (var accountController = new AccountController(
                 userManager.Object,
                 signInManager.Object,
-                context.Object,
+                context,
                 new Mock<IConfiguration>().Object))
             {
                 var signinData = new SigninModel
@@ -244,7 +247,7 @@ namespace CappannaHelper.Api.Tests.Controller
             using (var accountController = new AccountController(
                 userManager.Object,
                 signInManager.Object,
-                context.Object,
+                context,
                 new Mock<IConfiguration>().Object))
             {
                 var signinData = new SigninModel
@@ -264,7 +267,7 @@ namespace CappannaHelper.Api.Tests.Controller
             using (var accountController = new AccountController(
                 new Mock<IApplicationUserManager>().Object,
                 new Mock<IApplicationSignInManager>().Object,
-                context.Object,
+                context,
                 new Mock<IConfiguration>().Object))
             {
 
@@ -274,17 +277,39 @@ namespace CappannaHelper.Api.Tests.Controller
             }
         }
 
-        private Mock<ApplicationDbContext> CreateContext()
+        [Fact]
+        public async Task Returns_All_Users()
         {
-            var context = new Mock<ApplicationDbContext>(new DbContextOptionsBuilder<ApplicationDbContext>().Options);
-            var database = new Mock<DatabaseFacade>(context.Object);
+            var expected = new List<ApplicationUser>
+            {
+                new ApplicationUser()
+            };
+            var context = CreateContext();
+            context.AddRange(expected);
+            context.SaveChanges();
 
-            database.Setup(d => d.BeginTransactionAsync(It.IsAny<CancellationToken>()));
-            database.Setup(d => d.CommitTransaction());
-            database.Setup(d => d.RollbackTransaction());
-            context.Setup(c => c.Database).Returns(database.Object);
+            using (var accountController = new AccountController(
+                new Mock<IApplicationUserManager>().Object,
+                new Mock<IApplicationSignInManager>().Object,
+                context,
+                new Mock<IConfiguration>().Object))
+            {
 
-            return context;
+                var httpResult = await accountController.Get();
+
+                var okResult = Assert.IsAssignableFrom<OkObjectResult>(httpResult);
+                var actual = Assert.IsAssignableFrom<List<ApplicationUser>>(okResult.Value);
+                Assert.Equal(expected, actual);
+            }
+        }
+
+        private ApplicationDbContext CreateContext()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase("AccountControllerTest")
+                .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning));
+
+            return new ApplicationDbContext(optionsBuilder.Options);
         }
     }
 }
