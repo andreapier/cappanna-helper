@@ -33,6 +33,7 @@ namespace CappannaHelper.Api.Identity.ComponentModel.User
         {
             var result = await _userManager.FindByNameAsync(userName);
             var userRoles = _context.UserRoles.Where(ur => ur.UserId == result.Id).Include(ur => ur.Role);
+            result.Settings = await _context.Users.Select(u => u.Settings).FirstOrDefaultAsync(u => u.Id == result.Id);
 
             foreach (var userRole in userRoles)
             {

@@ -14,16 +14,20 @@ const mapStateToProps = state => {
   return {
     order: {
       ...state.newOrderHeader,
+      standId: state.user.settings.standId,
       details: state.newOrderDetails
     },
     canConfirm:
       state.newOrderHeader.totalPrice > 0 &&
       state.newOrderHeader.chTable > 0 &&
       state.newOrderHeader.seats > 0 &&
-      !state.newOrderDetails.filter(d => d.quantity > 0).some(d => {
-        const menuDetail = state.menuDetails.find(m => m.id === d.itemId);
-        return menuDetail.unitsInStock + d.initialQuantity < d.quantity;
-      })
+      state.user.settings.standId > 0 &&
+      !state.newOrderDetails
+        .filter(d => d.quantity > 0)
+        .some(d => {
+          const menuDetail = state.menuDetails.find(m => m.id === d.itemId);
+          return menuDetail.unitsInStock + d.initialQuantity < d.quantity;
+        })
   };
 };
 
