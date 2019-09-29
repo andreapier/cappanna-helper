@@ -25,6 +25,7 @@ namespace CappannaHelper.Printing
                 await _channel.OpenAsync();
                 var documentContent = document.Render();
                 await _channel.WriteAsync(documentContent);
+                await Task.Delay(2000);
             }
         }
     }
