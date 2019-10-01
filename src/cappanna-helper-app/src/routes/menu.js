@@ -9,7 +9,7 @@ const menu = {
   protected: true,
   name: "menu",
   headerTitle: "Menu",
-  roles: ["waiter", "admin", "dome"]
+  roles: ["waiter", "admin", "dome", "cashier"]
 };
 
 export default menu;

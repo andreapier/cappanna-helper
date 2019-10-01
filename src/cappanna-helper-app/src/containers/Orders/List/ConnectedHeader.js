@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import {
   resetOrder,
   loadOrdersListRequested,
-  toggleOrdersListFilter
+  toggleOrdersListFilterByUser,
+  toggleOrdersListFilterByStand
 } from "actions";
 import Header from "components/Orders/List/Header";
 import { withRouter } from "react-router-dom";
@@ -16,7 +17,7 @@ class ConnectedHeader extends Component {
 
 const mapStateToProps = state => {
   return {
-    isFiltered: state.orders.isFiltered
+    filters: state.orders.filters
   };
 };
 
@@ -27,7 +28,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(resetOrder());
       ownProps.history.push("/order/new");
     },
-    toggleOrdersListFilter: () => dispatch(toggleOrdersListFilter())
+    toggleOrdersListFilterByUser: () =>
+      dispatch(toggleOrdersListFilterByUser()),
+    toggleOrdersListFilterByStand: () =>
+      dispatch(toggleOrdersListFilterByStand())
   };
 };
 

@@ -79,7 +79,7 @@ namespace CappannaHelper.Api.Setup
 
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText= "PRAGMA journal_mode=WAL;";
+                    command.CommandText = "PRAGMA journal_mode=WAL;";
                     await command.ExecuteNonQueryAsync();
                 }
             }
@@ -89,10 +89,12 @@ namespace CappannaHelper.Api.Setup
             }
         }
 
-        private async Task SetupRolesAsync(List<string> errors) {
+        private async Task SetupRolesAsync(List<string> errors)
+        {
             await SetupAdminRoleAsync(errors);
             await SetupWaiterRoleAsync(errors);
             await SetupDomeRoleAsync(errors);
+            await SetupCashierRoleAsync(errors);
         }
 
         private async Task SetupUsersAsync(List<string> errors)
@@ -101,6 +103,8 @@ namespace CappannaHelper.Api.Setup
             await SetupBaseballWaiterAsync(errors);
             await SetupZenaWaiterAsync(errors);
             await SetupDomeAsync(errors);
+            await SetupBaseballCashierAsync(errors);
+            await SetupZenaCashierAsync(errors);
         }
 
         private async Task SetupAdminRoleAsync(List<string> errors)
@@ -119,6 +123,12 @@ namespace CappannaHelper.Api.Setup
         {
             await SetupRoleAsync(ApplicationRole.APPLICATION_ROLE_DOME, errors);
             await SetupRoleClaimAsync(ApplicationRole.APPLICATION_ROLE_DOME, ClaimTypes.Name, ApplicationRoleClaim.CLAIM_VALUE_DOME, errors);
+        }
+
+        private async Task SetupCashierRoleAsync(List<string> errors)
+        {
+            await SetupRoleAsync(ApplicationRole.APPLICATION_ROLE_CASHIER, errors);
+            await SetupRoleClaimAsync(ApplicationRole.APPLICATION_ROLE_CASHIER, ClaimTypes.Name, ApplicationRoleClaim.CLAIM_VALUE_CASHIER, errors);
         }
 
         private async Task SetupAdminAsync(List<string> errors)
@@ -143,6 +153,18 @@ namespace CappannaHelper.Api.Setup
         {
             await SetupUserAsync("waiterzena", "waiterzena@cappannahelper.it", "Waiter", "Zena", "waiterzena12!", 2, errors);
             await SetupUserRoleAsync("waiterzena", ApplicationRole.APPLICATION_ROLE_WAITER, errors);
+        }
+
+        private async Task SetupBaseballCashierAsync(List<string> errors)
+        {
+            await SetupUserAsync("cashier", "cashier@cappannahelper.it", "Cashier", "Cashier", "cashier12!", 1, errors);
+            await SetupUserRoleAsync("cashier", ApplicationRole.APPLICATION_ROLE_CASHIER, errors);
+        }
+
+        private async Task SetupZenaCashierAsync(List<string> errors)
+        {
+            await SetupUserAsync("cashierzena", "cashierzena@cappannahelper.it", "Cashier", "Cashier", "cashierzena12!", 2, errors);
+            await SetupUserRoleAsync("cashierzena", ApplicationRole.APPLICATION_ROLE_CASHIER, errors);
         }
 
         private async Task SetupMenuAsync(List<string> errors)
@@ -419,7 +441,7 @@ namespace CappannaHelper.Api.Setup
                 errors.Add(e.Message);
             }
         }
-        
+
         private async Task SetupOperationTypeAsync(OperationTypes type, string description, List<string> errors)
         {
             try
@@ -449,7 +471,7 @@ namespace CappannaHelper.Api.Setup
             {
                 await _context.SaveChangesAsync();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 errors.Add(e.Message);
             }

@@ -6,7 +6,7 @@ import {
 
 const initialState = [];
 
-export default function(state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case RESET_ORDER_SELECTION_FOR_AGGREGATION:
     case SIGNOUT_COMPLETED:
@@ -16,13 +16,13 @@ export default function(state = initialState, action) {
       const index = state.indexOf(action.payload);
 
       if (index === -1) {
-          return [...state, action.payload];
+        return [...state, action.payload];
       } else {
-          return state.filter(i => i !== action.payload);
+        return state.filter(i => i !== action.payload);
       }
     }
 
     default:
       return state;
   }
-}
+};

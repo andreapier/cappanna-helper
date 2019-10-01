@@ -4,6 +4,8 @@ import { Toolbar, withStyles } from "@material-ui/core";
 import ContentAdd from "@material-ui/icons/Add";
 import IconButton from "components/CustomButtons/IconButton";
 import PermIdentity from "@material-ui/icons/PermIdentity";
+import Public from "@material-ui/icons/Public";
+import Storefront from "@material-ui/icons/Storefront";
 import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
 import NavigationRefresh from "@material-ui/icons/Refresh";
 
@@ -25,13 +27,22 @@ const Header = props => {
       >
         <NavigationRefresh />
       </IconButton>
-      {props.isFiltered ? (
-        <IconButton onClick={props.toggleOrdersListFilter}>
+      {props.filters.user ? (
+        <IconButton onClick={props.toggleOrdersListFilterByUser}>
           <SupervisorAccount />
         </IconButton>
       ) : (
-        <IconButton onClick={props.toggleOrdersListFilter}>
+        <IconButton onClick={props.toggleOrdersListFilterByUser}>
           <PermIdentity />
+        </IconButton>
+      )}
+      {props.filters.stand ? (
+        <IconButton onClick={props.toggleOrdersListFilterByStand}>
+          <Storefront />
+        </IconButton>
+      ) : (
+        <IconButton onClick={props.toggleOrdersListFilterByStand}>
+          <Public />
         </IconButton>
       )}
     </Toolbar>
@@ -41,8 +52,12 @@ const Header = props => {
 Header.propTypes = {
   loadOrdersListRequested: PropTypes.func.isRequired,
   goToNewOrder: PropTypes.func.isRequired,
-  toggleOrdersListFilter: PropTypes.func.isRequired,
-  isFiltered: PropTypes.bool.isRequired,
+  toggleOrdersListFilterByUser: PropTypes.func.isRequired,
+  toggleOrdersListFilterByStand: PropTypes.func.isRequired,
+  filters: PropTypes.shape({
+    user: PropTypes.bool.isRequired,
+    stand: PropTypes.bool.isRequired
+  }).isRequired,
   classes: PropTypes.object.isRequired
 };
 

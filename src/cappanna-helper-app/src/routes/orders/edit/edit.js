@@ -6,7 +6,7 @@ const order = {
   protected: true,
   name: "order",
   headerTitle: "Ordine",
-  roles: ["waiter", "admin"]
+  roles: ["waiter", "admin", "cashier"]
 };
 
 export default order;

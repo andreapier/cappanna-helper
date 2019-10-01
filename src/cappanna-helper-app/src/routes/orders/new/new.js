@@ -9,7 +9,7 @@ const newOrder = {
   protected: true,
   name: "order-new",
   headerTitle: "Nuovo ordine",
-  roles: ["waiter", "admin"]
+  roles: ["waiter", "admin", "cashier"]
 };
 
 export default newOrder;

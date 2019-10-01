@@ -34,7 +34,8 @@ import {
   INCREMENT_ORDER_DETAIL_QUANTITY,
   LOAD_ORDERS_LIST_REQUESTED,
   LOAD_ORDERS_LIST_COMPLETED,
-  TOGGLE_ORDERS_LIST_FILTER,
+  TOGGLE_ORDERS_LIST_FILTER_BY_USER,
+  TOGGLE_ORDERS_LIST_FILTER_BY_STAND,
   RESET_ORDER_SELECTION_FOR_AGGREGATION,
   TOGGLE_ORDER_SELECTION_FOR_AGGREGATION,
   ORDER_DETAILS_AGGREGATION_REQUESTED,
@@ -212,8 +213,12 @@ export function loadOrdersListCompleted(orders) {
   return { type: LOAD_ORDERS_LIST_COMPLETED, payload: orders };
 }
 
-export function toggleOrdersListFilter() {
-  return { type: TOGGLE_ORDERS_LIST_FILTER };
+export function toggleOrdersListFilterByUser() {
+  return { type: TOGGLE_ORDERS_LIST_FILTER_BY_USER };
+}
+
+export function toggleOrdersListFilterByStand() {
+  return { type: TOGGLE_ORDERS_LIST_FILTER_BY_STAND };
 }
 
 export function resetOrderSelectionForAggregation() {

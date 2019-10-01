@@ -9,7 +9,7 @@ const signout = {
   protected: true,
   name: "signout",
   headerTitle: "Bevi poco",
-  roles: ["waiter", "admin", "dome"]
+  roles: ["waiter", "admin", "dome", "cashier"]
 };
 
 export default signout;

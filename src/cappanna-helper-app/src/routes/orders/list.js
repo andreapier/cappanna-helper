@@ -9,7 +9,7 @@ const orders = {
   protected: true,
   name: "orders",
   headerTitle: "Ordini",
-  roles: ["waiter", "admin", "dome"]
+  roles: ["waiter", "admin", "dome", "cashier"]
 };
 
 export default orders;

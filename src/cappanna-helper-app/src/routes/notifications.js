@@ -9,7 +9,7 @@ const notifications = {
   protected: true,
   name: "notifications",
   headerTitle: "Notifiche",
-  roles: ["admin"]
+  roles: ["admin", "cashier"]
 };
 
 export default notifications;

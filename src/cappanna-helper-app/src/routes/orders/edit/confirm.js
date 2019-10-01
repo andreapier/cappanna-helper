@@ -6,7 +6,7 @@ const confirmOrder = {
   protected: true,
   name: "order-confirm",
   headerTitle: "Conferma ordine",
-  roles: ["waiter", "admin"]
+  roles: ["waiter", "admin", "cashier"]
 };
 
 export default confirmOrder;

@@ -3,13 +3,18 @@ import {
   ORDER_CREATED,
   ORDER_CHANGED,
   ORDER_PRINTED,
-  TOGGLE_ORDERS_LIST_FILTER,
+  TOGGLE_ORDERS_LIST_FILTER_BY_USER,
+  TOGGLE_ORDERS_LIST_FILTER_BY_STAND,
+  SIGNIN_COMPLETED,
   SIGNOUT_COMPLETED
 } from "actions/types";
 
 const initialState = {
   items: [],
-  isFiltered: false
+  filters: {
+    user: false,
+    stand: true
+  }
 };
 
 export default function(state = initialState, action) {
@@ -45,10 +50,31 @@ export default function(state = initialState, action) {
       };
     }
 
-    case TOGGLE_ORDERS_LIST_FILTER:
+    case SIGNIN_COMPLETED:
       return {
         ...state,
-        isFiltered: !state.isFiltered
+        filters: {
+          ...state.filters,
+          user: action.payload.roles[0] === "waiter"
+        }
+      };
+
+    case TOGGLE_ORDERS_LIST_FILTER_BY_USER:
+      return {
+        ...state,
+        filters: {
+          user: !state.filters.user,
+          stand: false
+        }
+      };
+
+    case TOGGLE_ORDERS_LIST_FILTER_BY_STAND:
+      return {
+        ...state,
+        filters: {
+          user: false,
+          stand: !state.filters.stand
+        }
       };
 
     default:

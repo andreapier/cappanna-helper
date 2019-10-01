@@ -9,6 +9,7 @@ const getDefaultRoute = role => {
       return "dashboard";
 
     case "dome":
+    case "cashier":
       return "order";
 
     default:

@@ -51,6 +51,7 @@ namespace CappannaHelper.Api.Printing
             var section = _document.LastPage.CreateSection();
             section.SetSize(size);
             section.CreateLabel().SetContent($"Ordine:  {orderId.ToString().PadLeft(3, ' ')}  ");
+            section.NewLine();
         }
 
         private void SetTable(string table, int size)

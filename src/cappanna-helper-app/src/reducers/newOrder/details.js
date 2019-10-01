@@ -11,11 +11,19 @@ export const initialState = [];
 export default function(state = initialState, action) {
   switch (action.type) {
     case RESET_ORDER:
-      return state.map(e => ({ itemId: e.itemId, quantity: 0, initialQuantity: 0 }));
+      return state.map(e => ({
+        itemId: e.itemId,
+        quantity: 0,
+        initialQuantity: 0
+      }));
 
     case LOAD_MENU_DETAILS_COMPLETED:
       if (state.length === 0) {
-        return action.payload.map(e => ({ itemId: e.id, quantity: 0, initialQuantity: 0 }));
+        return action.payload.map(e => ({
+          itemId: e.id,
+          quantity: 0,
+          initialQuantity: 0
+        }));
       }
       return state;
 

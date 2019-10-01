@@ -11,6 +11,7 @@ class NewOrder extends Component {
     if (this.props.needsMenuDetailsLoading) {
       this.props.loadMenuDetailsRequested();
     }
+
     if (this.props.needsReset) {
       this.props.resetOrder();
     }
