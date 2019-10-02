@@ -1,6 +1,11 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "api";
-import { signinCompleted, signalApiError, loadingChanged } from "actions";
+import {
+  signinCompleted,
+  signalApiError,
+  loadingChanged,
+  loadStandsListRequested
+} from "actions";
 import { SIGNIN_REQUESTED } from "actions/types";
 import localforage from "localforage";
 
@@ -20,6 +25,8 @@ function* signin(action) {
     if (action.payload.rememberMe) {
       yield saveUserData(userData);
     }
+
+    yield put(loadStandsListRequested());
 
     yield put(signinCompleted(userData));
   } catch (e) {

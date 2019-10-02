@@ -506,8 +506,8 @@ namespace CappannaHelper.Api.Setup
 
         private async Task SetupStandsAsync(List<string> errors)
         {
-            await SetupStandAsync("Cupra baseball", Stand.KEY_CUPRA, "Cupra", errors);
-            await SetupStandAsync("Zena", Stand.KEY_ZENA, "Zena", errors);
+            await SetupStandAsync("Cupra baseball", Stand.KEY_CUPRA, errors);
+            await SetupStandAsync("Zena", Stand.KEY_ZENA, errors);
 
             try
             {
@@ -519,7 +519,7 @@ namespace CappannaHelper.Api.Setup
             }
         }
 
-        private async Task SetupStandAsync(string description, string key, string printLabel, List<string> errors)
+        private async Task SetupStandAsync(string description, string printLabel, List<string> errors)
         {
             try
             {
@@ -527,7 +527,6 @@ namespace CappannaHelper.Api.Setup
                 {
                     await _context.AddAsync(new Stand
                     {
-                        Key = key,
                         Description = description,
                         PrintLabel = printLabel
                     });

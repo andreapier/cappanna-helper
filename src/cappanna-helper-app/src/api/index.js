@@ -128,14 +128,8 @@ class Api {
     });
   }
 
-  signup({ username, password, confirmPassword, firstName, lastName }) {
-    return post(SIGNUP, {
-      username,
-      password,
-      confirmPassword,
-      firstName,
-      lastName
-    });
+  signup(data) {
+    return post(SIGNUP, data);
   }
 
   getOrders() {

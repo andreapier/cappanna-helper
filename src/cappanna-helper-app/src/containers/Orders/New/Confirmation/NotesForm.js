@@ -44,7 +44,7 @@ class Notes extends Component {
               rows={4}
               rowsMax={10}
               fullWidth
-              onBlur={this.setNotes}
+              onChange={this.setNotes}
               value={this.props.notes}
             />
           </ExpansionPanelDetails>

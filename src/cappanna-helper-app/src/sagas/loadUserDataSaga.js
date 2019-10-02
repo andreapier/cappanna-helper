@@ -1,5 +1,10 @@
 import { put, takeLatest } from "redux-saga/effects";
-import { signinCompleted, loadingChanged, signalApiError } from "actions";
+import {
+  signinCompleted,
+  loadingChanged,
+  loadStandsListRequested,
+  signalApiError
+} from "actions";
 import { LOAD_USER_DATA } from "actions/types";
 import localforage from "localforage";
 import Api from "api";
@@ -26,6 +31,7 @@ function* loadUserData() {
     api.setToken(userData.token);
 
     yield put(signinCompleted(userData));
+    yield put(loadStandsListRequested());
 
     const route = getDefaultRoute(userData.roles[0]);
     history.push(route);

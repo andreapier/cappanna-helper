@@ -67,7 +67,7 @@ const Header = props => {
             label="N° pers"
             className="CreateOrderForm-TextField"
             style={textFieldStyle}
-            value={props.seats}
+            value={isNaN(props.seats) ? undefined : props.seats}
             onChange={e => props.setOrderSeats(parseInt(e.target.value, 10))}
             InputLabelProps={{
               shrink: true

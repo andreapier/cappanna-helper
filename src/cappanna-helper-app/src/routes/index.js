@@ -1,6 +1,7 @@
 import dashboard from "routes/dashboard";
-import users from "routes/users/list";
+//import users from "routes/users/list";
 import newUser from "routes/users/new";
+//import editUser from "routes/users/edit";
 import menu from "routes/menu";
 import orders from "routes/orders/list";
 import newOrder from "routes/orders/new/new";
@@ -19,8 +20,9 @@ import settings from "routes/settings";
 
 const appRoutes = [
   dashboard,
-  users,
+  //users,
   newUser,
+  //editUser,
   menu,
   orders,
   newOrder,

@@ -13,8 +13,12 @@ class ConnectedFooter extends Component {
 const mapStateToProps = state => {
   //TODO: Refactor variable stand management
   let standId = state.user.settings.standId;
-  const cupraStand = state.stands.find(e => e.key === "CUPRA");
-  const zenaStand = state.stands.find(e => e.key !== "CUPRA");
+  const cupraStand = state.stands.find(
+    e => e.description.toLowerCase() === "cupra baseball"
+  );
+  const zenaStand = state.stands.find(
+    e => e.description.toLowerCase() !== "cupra baseball"
+  );
 
   if (isNaN(state.newOrderHeader.chTable) && standId === cupraStand.id) {
     standId = zenaStand.id;

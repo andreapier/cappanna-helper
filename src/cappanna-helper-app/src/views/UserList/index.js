@@ -1,12 +1,12 @@
 import React from "react";
-import ConnectedHeader from "containers/Orders/List/ConnectedHeader";
-import ConnectedOrdersList from "containers/Orders/List/ConnectedOrdersList";
+import ConnectedHeader from "containers/Users/List/ConnectedHeader";
+import ConnectedUsersList from "containers/Users/List/ConnectedUsersList";
 
 const UserList = () => {
   return (
     <div>
       <ConnectedHeader />
-      <ConnectedOrdersList />
+      <ConnectedUsersList />
     </div>
   );
 };

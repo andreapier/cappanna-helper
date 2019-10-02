@@ -77,16 +77,10 @@ export function signoutCompleted() {
   return { type: SIGNOUT_COMPLETED };
 }
 
-export function signupRequested({
-  username,
-  password,
-  confirmPassword,
-  firstName,
-  lastName
-}) {
+export function signupRequested(payload) {
   return {
     type: SIGNUP_REQUESTED,
-    payload: { username, password, confirmPassword, firstName, lastName }
+    payload
   };
 }
 

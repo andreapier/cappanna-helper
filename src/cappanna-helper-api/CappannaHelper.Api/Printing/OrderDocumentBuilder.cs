@@ -42,8 +42,8 @@ namespace CappannaHelper.Api.Printing
             var section = _document.LastPage.CreateSection();
             section.SetSize(24);
             section.Bold = true;
-            section.HorizontalAlignment = HorizontalAlignments.Right;
             section.CreateLabel().SetContent($"Stand:  {stand.ToString()}");
+            section.NewLine();
         }
 
         private void SetOrderId(int orderId, int size)

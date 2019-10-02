@@ -48,6 +48,7 @@ namespace CappannaHelper.Api.Controllers
             {
                 var currentShift = await _shiftManager.GetOrCreateCurrentAsync();
                 result = await _context.Orders
+                    .Include(e => e.CreatedBy)
                     .Where(o => o.ShiftId == currentShift.Id)
                     .OrderByDescending(o => o.CreationTimestamp)
                     .ToListAsync();
