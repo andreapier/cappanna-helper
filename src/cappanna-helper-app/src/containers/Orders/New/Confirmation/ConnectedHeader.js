@@ -11,11 +11,7 @@ class ConnectedHeader extends Component {
 const mapStateToProps = state => {
   return {
     id: state.newOrderHeader.id,
-    table:
-      state.newOrderHeader.chTable +
-      (state.newOrderHeader.tableCategory
-        ? "\\" + state.newOrderHeader.tableCategory
-        : ""),
+    table: state.newOrderHeader.chTable,
     seats: state.newOrderHeader.seats,
     totalPrice: state.newOrderHeader.totalPrice,
     standId: state.user.settings.standId

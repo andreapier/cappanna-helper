@@ -8,7 +8,7 @@ import {
 
 export const initialState = [];
 
-export default function(state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case RESET_ORDER:
       return state.map(e => ({
@@ -56,4 +56,4 @@ export default function(state = initialState, action) {
     default:
       return state;
   }
-}
+};

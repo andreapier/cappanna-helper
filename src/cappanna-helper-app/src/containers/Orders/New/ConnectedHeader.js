@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setOrderTable, setOrderTableCategory, setOrderSeats } from "actions";
+import { setOrderTable, setOrderSeats } from "actions";
 import Header from "components/Orders/New/Header";
 import { withRouter } from "react-router-dom";
 import { isNewOrder } from "routes/helpers";
@@ -16,12 +16,11 @@ const mapStateToProps = state => {
     id: state.newOrderHeader.id,
     totalPrice: state.newOrderHeader.totalPrice,
     chTable: state.newOrderHeader.chTable,
-    tableCategory: state.newOrderHeader.tableCategory,
     standId: state.user.settings.standId,
     seats: state.newOrderHeader.seats,
     canConfirm:
       state.newOrderHeader.totalPrice > 0 &&
-      state.newOrderHeader.chTable > 0 &&
+      state.newOrderHeader.chTable &&
       state.newOrderHeader.seats > 0 &&
       state.user.settings.standId > 0 &&
       !state.newOrderDetails
@@ -41,8 +40,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
   return {
     setOrderTable: table => dispatch(setOrderTable(table)),
-    setOrderTableCategory: tableCategory =>
-      dispatch(setOrderTableCategory(tableCategory)),
     setOrderSeats: seats => dispatch(setOrderSeats(seats)),
     goToConfirm: id =>
       ownProps.history.push(confirmLocation.replace("_ORDER_ID_", id))

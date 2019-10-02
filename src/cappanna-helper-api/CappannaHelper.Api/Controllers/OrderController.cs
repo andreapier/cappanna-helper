@@ -40,28 +40,15 @@ namespace CappannaHelper.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] bool openOnly)
+        public async Task<IActionResult> Get()
         {
             List<ChOrder> result;
 
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
                 var currentShift = await _shiftManager.GetOrCreateCurrentAsync();
-                var query = _context.Orders
-                    .Include(o => o.CreatedBy)
-                    .Where(o => o.ShiftId == currentShift.Id);
-
-                if (!string.IsNullOrEmpty(User.Identity.Name))
-                {
-                    query = query.Where(o => o.CreatedBy.UserName == User.Identity.Name);
-                }
-
-                if (openOnly)
-                {
-                    query = query.Where(o => o.Status != (int)OperationTypes.Close);
-                }
-
-                result = await query
+                result = await _context.Orders
+                    .Where(o => o.ShiftId == currentShift.Id)
                     .OrderByDescending(o => o.CreationTimestamp)
                     .ToListAsync();
 

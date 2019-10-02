@@ -8,11 +8,11 @@ import {
 
 const initialState = null;
 
-export default function(state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SELECTED_ORDER_COMPLETED:
       return action.payload;
-      
+
     case SIGNOUT_COMPLETED:
       return initialState;
 
@@ -28,4 +28,4 @@ export default function(state = initialState, action) {
     default:
       return state;
   }
-}
+};

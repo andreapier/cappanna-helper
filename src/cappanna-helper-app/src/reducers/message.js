@@ -1,20 +1,26 @@
-import { NOTIFY_INFO, NOTIFY_WARNING, NOTIFY_ERROR, RESET_NOTIFICATION, SIGNOUT_COMPLETED } from "actions/types";
+import {
+  NOTIFY_INFO,
+  NOTIFY_WARNING,
+  NOTIFY_ERROR,
+  RESET_NOTIFICATION,
+  SIGNOUT_COMPLETED
+} from "actions/types";
 
 const initialState = {
-  message: '',
-  type: ''
+  message: "",
+  type: ""
 };
 
-export default function(state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case NOTIFY_INFO:
-      return { type: 'info', message: action.payload };
+      return { type: "info", message: action.payload };
 
     case NOTIFY_WARNING:
-      return { type: 'warning', message: action.payload };
+      return { type: "warning", message: action.payload };
 
     case NOTIFY_ERROR:
-      return { type: 'error', message: action.payload };
+      return { type: "error", message: action.payload };
 
     case RESET_NOTIFICATION:
     case SIGNOUT_COMPLETED:
@@ -23,4 +29,4 @@ export default function(state = initialState, action) {
     default:
       return state;
   }
-}
+};

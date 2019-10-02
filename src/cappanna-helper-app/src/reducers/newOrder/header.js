@@ -1,25 +1,28 @@
 import {
   INCREMENT_ORDER_DETAIL_QUANTITY,
   SET_ORDER_TABLE,
-  SET_ORDER_TABLE_CATEGORY,
   SET_ORDER_SEATS,
   RESET_ORDER,
   SET_ORDER_NOTES,
   EDIT_ORDER,
+  SIGNIN_COMPLETED,
   SIGNOUT_COMPLETED
 } from "actions/types";
 
 export const initialState = {
   id: 0,
   seats: 2,
-  chTable: 1,
+  chTable: "1",
   notes: "",
-  tableCategory: "",
   totalPrice: 0
 };
 
-export default function(state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
+    case SIGNIN_COMPLETED:
+      initialState.chTable = action.payload.settings.standId;
+      return state;
+
     case RESET_ORDER:
     case SIGNOUT_COMPLETED:
       return initialState;
@@ -35,12 +38,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         chTable: action.payload
-      };
-
-    case SET_ORDER_TABLE_CATEGORY:
-      return {
-        ...state,
-        tableCategory: action.payload
       };
 
     case SET_ORDER_SEATS:
@@ -59,7 +56,6 @@ export default function(state = initialState, action) {
       return {
         id: action.payload.id,
         chTable: action.payload.chTable,
-        tableCategory: action.payload.tableCategory,
         seats: action.payload.seats,
         notes: action.payload.notes,
         totalPrice: action.payload.totalPrice
@@ -68,4 +64,4 @@ export default function(state = initialState, action) {
     default:
       return state;
   }
-}
+};

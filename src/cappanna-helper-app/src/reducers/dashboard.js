@@ -12,7 +12,7 @@ export const initialState = {
   income: 0
 };
 
-export default function(state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_DASHBOARD_DATA_COMPLETED:
       return action.payload;
@@ -79,4 +79,4 @@ export default function(state = initialState, action) {
     default:
       return state;
   }
-}
+};

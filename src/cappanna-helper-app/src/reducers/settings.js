@@ -6,7 +6,7 @@ import {
 
 const initialState = [];
 
-export default function(state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SETTINGS_LIST_COMPLETED:
       return action.payload;
@@ -20,9 +20,10 @@ export default function(state = initialState, action) {
         {
           ...state.find(e => e.id === action.payload.settingId),
           value: action.payload.settingValue
-        }];
+        }
+      ];
 
     default:
       return state;
   }
-}
+};

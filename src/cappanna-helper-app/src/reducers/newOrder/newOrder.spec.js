@@ -4,7 +4,6 @@ import {
   createEmptyOrder,
   incrementOrderDetailQuantity,
   setOrderTable,
-  setOrderTableCategory,
   setOrderSeats,
   setOrderNotes
 } from "actions";
@@ -17,8 +16,7 @@ describe("new order reducer", () => {
   it("should reset header data to initial and details' quantity", () => {
     const state = {
       seats: 10,
-      chTable: 10,
-      tableCategory: "whatever",
+      chTable: "10",
       totalPrice: 100,
       details: [{ itemId: 1, quantity: 1 }, { itemId: 2, quantity: 2 }]
     };
@@ -73,7 +71,7 @@ describe("new order reducer", () => {
   });
 
   it("should set table", () => {
-    const table = 1;
+    const table = "1";
     const expectedState = {
       ...initialState,
       chTable: table,
@@ -83,19 +81,6 @@ describe("new order reducer", () => {
     expect(newOrderReducer(initialState, setOrderTable(table))).toEqual(
       expectedState
     );
-  });
-
-  it("should set table category", () => {
-    const category = "whatever";
-    const expectedState = {
-      ...initialState,
-      tableCategory: category,
-      details: initialState.details
-    };
-
-    expect(
-      newOrderReducer(initialState, setOrderTableCategory(category))
-    ).toEqual(expectedState);
   });
 
   it("should set seats number", () => {

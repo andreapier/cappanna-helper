@@ -34,7 +34,7 @@ class SignIn extends Component {
   }
 
   setRememberMe(event) {
-    this.setState({ rememberMe: event.target.value });
+    this.setState({ rememberMe: event.target.checked });
   }
 
   handleSubmit(event) {
@@ -80,9 +80,7 @@ class SignIn extends Component {
             <FormControlLabel
               control={
                 <Checkbox
-                  name="rememberMe"
                   color="primary"
-                  component={Checkbox}
                   checked={this.state.rememberMe}
                   onChange={this.setRememberMe}
                 />

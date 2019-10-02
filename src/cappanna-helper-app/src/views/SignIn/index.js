@@ -11,14 +11,15 @@ const SignInPage = () => {
       cardTitle=""
       cardSubtitle={
         <P>Inserisci le credenziali per iniziare ad utilizzare il sistema</P>
-      }>
-        <Grid justify="center">
-          <ItemGrid xs={12} sm={12} md={6}>
-            <SignInForm />
-          </ItemGrid>
-        </Grid>
+      }
+    >
+      <Grid justify="center">
+        <ItemGrid xs={12} sm={12} md={6}>
+          <SignInForm />
+        </ItemGrid>
+      </Grid>
     </RegularCard>
   );
-}
+};
 
 export default SignInPage;

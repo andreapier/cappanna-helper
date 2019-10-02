@@ -5,6 +5,7 @@ import {
   ORDER_PRINTED,
   TOGGLE_ORDERS_LIST_FILTER_BY_USER,
   TOGGLE_ORDERS_LIST_FILTER_BY_STAND,
+  TOGGLE_ORDERS_LIST_FILTER_BY_STATUS,
   SIGNIN_COMPLETED,
   SIGNOUT_COMPLETED
 } from "actions/types";
@@ -13,7 +14,8 @@ const initialState = {
   items: [],
   filters: {
     user: false,
-    stand: true
+    stand: true,
+    status: true
   }
 };
 
@@ -63,6 +65,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         filters: {
+          ...state.filters,
           user: !state.filters.user,
           stand: false
         }
@@ -72,8 +75,18 @@ export default function(state = initialState, action) {
       return {
         ...state,
         filters: {
+          ...state.filters,
           user: false,
           stand: !state.filters.stand
+        }
+      };
+
+    case TOGGLE_ORDERS_LIST_FILTER_BY_STATUS:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          status: !state.filters.status
         }
       };
 

@@ -4,7 +4,8 @@ import {
   resetOrder,
   loadOrdersListRequested,
   toggleOrdersListFilterByUser,
-  toggleOrdersListFilterByStand
+  toggleOrdersListFilterByStand,
+  toggleOrdersListFilterByStatus
 } from "actions";
 import Header from "components/Orders/List/Header";
 import { withRouter } from "react-router-dom";
@@ -17,7 +18,13 @@ class ConnectedHeader extends Component {
 
 const mapStateToProps = state => {
   return {
-    filters: state.orders.filters
+    filters: state.orders.filters,
+    showToggleOrdersListFilterByStand: state.user.roles.some(
+      r => r === "admin" || r === "cashier"
+    ),
+    showToggleOrdersListFilterByStatus: state.user.roles.some(
+      r => r === "admin"
+    )
   };
 };
 
@@ -31,7 +38,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     toggleOrdersListFilterByUser: () =>
       dispatch(toggleOrdersListFilterByUser()),
     toggleOrdersListFilterByStand: () =>
-      dispatch(toggleOrdersListFilterByStand())
+      dispatch(toggleOrdersListFilterByStand()),
+    toggleOrdersListFilterByStatus: () =>
+      dispatch(toggleOrdersListFilterByStatus())
   };
 };
 

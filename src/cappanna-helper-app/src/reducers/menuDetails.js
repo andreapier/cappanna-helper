@@ -6,11 +6,14 @@ import {
 
 const initialState = [];
 
-const calculateUnitsInStock = unitsInStock => unitsInStock === null || unitsInStock === undefined
-  ? Infinity
-  : (unitsInStock < 0) ? 0 : unitsInStock;
+const calculateUnitsInStock = unitsInStock =>
+  unitsInStock === null || unitsInStock === undefined
+    ? Infinity
+    : unitsInStock < 0
+    ? 0
+    : unitsInStock;
 
-export default function(state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_MENU_DETAILS_COMPLETED:
       return action.payload.map(e => {
@@ -40,4 +43,4 @@ export default function(state = initialState, action) {
     default:
       return state;
   }
-}
+};

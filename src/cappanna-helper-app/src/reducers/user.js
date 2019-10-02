@@ -8,7 +8,7 @@ const initialState = {
   settings: null
 };
 
-export default function(state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case SIGNIN_COMPLETED:
       return {
@@ -25,4 +25,4 @@ export default function(state = initialState, action) {
     default:
       return state;
   }
-}
+};

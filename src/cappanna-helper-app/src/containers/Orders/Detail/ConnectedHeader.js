@@ -35,8 +35,7 @@ const mapStateToProps = state => {
     order: {
       id: 0,
       totalPrice: 0,
-      chTable: 0,
-      tableCategory: "",
+      chTable: "",
       seats: 0,
       status: 0,
       details: []
@@ -48,11 +47,7 @@ const mapStateToProps = state => {
   if (state.selectedOrder) {
     result.order.id = state.selectedOrder.id;
     result.order.totalPrice = calculateOrderTotalPrice(state.selectedOrder);
-    result.order.chTable = parseInt(
-      state.selectedOrder.chTable.split("\\")[0],
-      10
-    );
-    result.order.tableCategory = state.selectedOrder.chTable.split("\\")[1] || "";
+    result.order.chTable = state.selectedOrder.chTable;
     result.order.seats = state.selectedOrder.seats;
     result.order.status = state.selectedOrder.status;
     result.order.notes = state.selectedOrder.notes;

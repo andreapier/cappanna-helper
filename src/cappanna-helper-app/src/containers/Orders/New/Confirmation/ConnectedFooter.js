@@ -11,21 +11,31 @@ class ConnectedFooter extends Component {
 }
 
 const mapStateToProps = state => {
+  //TODO: Refactor variable stand management
+  let standId = state.user.settings.standId;
+  const cupraStand = state.stands.find(e => e.key === "CUPRA");
+  const zenaStand = state.stands.find(e => e.key !== "CUPRA");
+
+  if (isNaN(state.newOrderHeader.chTable) && standId === cupraStand.id) {
+    standId = zenaStand.id;
+  }
+
   return {
     order: {
       ...state.newOrderHeader,
-      standId: state.user.settings.standId,
+      standId,
       details: state.newOrderDetails
     },
     canConfirm:
       state.newOrderHeader.totalPrice > 0 &&
-      state.newOrderHeader.chTable > 0 &&
+      state.newOrderHeader.chTable &&
       state.newOrderHeader.seats > 0 &&
-      state.user.settings.standId > 0 &&
+      standId > 0 &&
       !state.newOrderDetails
         .filter(d => d.quantity > 0)
         .some(d => {
           const menuDetail = state.menuDetails.find(m => m.id === d.itemId);
+
           return menuDetail.unitsInStock + d.initialQuantity < d.quantity;
         })
   };

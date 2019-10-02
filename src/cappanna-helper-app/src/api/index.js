@@ -83,8 +83,7 @@ const parseJSON = response => response.json();
 const getServerOrder = order => {
   return {
     id: order.id,
-    chTable:
-      order.chTable + (order.tableCategory ? "\\" + order.tableCategory : ""),
+    chTable: order.chTable,
     seats: order.seats,
     standId: order.standId,
     details: order.details

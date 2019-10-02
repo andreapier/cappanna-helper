@@ -3,14 +3,17 @@ import PropTypes from "prop-types";
 import ToBePrintedOrdersNotifications from "components/Notifications/ToBePrintedOrdersNotifications";
 
 const Notifications = props => {
-  const toBePrintedOrdersNotifications = props.notifications.filter(n => n.type === "ORDER");
+  const toBePrintedOrdersNotifications = props.notifications.filter(
+    n => n.type === "ORDER"
+  );
 
-  return ([
+  return [
     <ToBePrintedOrdersNotifications
       notifications={toBePrintedOrdersNotifications}
       printRequested={props.printRequested}
-      key={1} />
-  ]);
+      key={1}
+    />
+  ];
 };
 
 Notifications.propTypes = {

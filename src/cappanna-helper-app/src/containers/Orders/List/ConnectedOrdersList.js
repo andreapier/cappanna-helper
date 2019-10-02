@@ -19,17 +19,25 @@ class ConnectedOrdersList extends Component {
 
 const mapStateToProps = state => {
   return {
-    orders: state.orders.items.filter(o => {
-      if (state.orders.filters.user) {
-        return o.createdById === state.user.userId;
-      }
+    orders: state.orders.items
+      .filter(o => {
+        if (state.orders.filters.user) {
+          return o.createdById === state.user.userId;
+        }
 
-      if (state.orders.filters.stand) {
-        return o.standId === state.user.settings.standId;
-      }
+        if (state.orders.filters.stand) {
+          return o.standId === state.user.settings.standId;
+        }
 
-      return true;
-    })
+        return true;
+      })
+      .filter(o => {
+        if (state.orders.filters.status) {
+          return o.status < 4;
+        }
+
+        return true;
+      })
   };
 };
 

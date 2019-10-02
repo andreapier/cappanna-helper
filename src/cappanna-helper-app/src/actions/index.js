@@ -28,7 +28,6 @@ import {
   ORDER_DELETED,
   ORDER_CLOSED,
   SET_ORDER_TABLE,
-  SET_ORDER_TABLE_CATEGORY,
   SET_ORDER_SEATS,
   SET_ORDER_NOTES,
   INCREMENT_ORDER_DETAIL_QUANTITY,
@@ -36,6 +35,7 @@ import {
   LOAD_ORDERS_LIST_COMPLETED,
   TOGGLE_ORDERS_LIST_FILTER_BY_USER,
   TOGGLE_ORDERS_LIST_FILTER_BY_STAND,
+  TOGGLE_ORDERS_LIST_FILTER_BY_STATUS,
   RESET_ORDER_SELECTION_FOR_AGGREGATION,
   TOGGLE_ORDER_SELECTION_FOR_AGGREGATION,
   ORDER_DETAILS_AGGREGATION_REQUESTED,
@@ -186,10 +186,6 @@ export function setOrderTable(table) {
   return { type: SET_ORDER_TABLE, payload: table };
 }
 
-export function setOrderTableCategory(tableCategory) {
-  return { type: SET_ORDER_TABLE_CATEGORY, payload: tableCategory };
-}
-
 export function setOrderSeats(seats) {
   return { type: SET_ORDER_SEATS, payload: seats };
 }
@@ -219,6 +215,10 @@ export function toggleOrdersListFilterByUser() {
 
 export function toggleOrdersListFilterByStand() {
   return { type: TOGGLE_ORDERS_LIST_FILTER_BY_STAND };
+}
+
+export function toggleOrdersListFilterByStatus() {
+  return { type: TOGGLE_ORDERS_LIST_FILTER_BY_STATUS };
 }
 
 export function resetOrderSelectionForAggregation() {

@@ -1,6 +1,6 @@
 import React from "react";
 import IconButton from "components/CustomButtons/IconButton";
-import { TextField } from "@material-ui/core";
+import { MenuItem, Select, TextField } from "@material-ui/core";
 import ContentSend from "@material-ui/icons/Send";
 import AmountFormat from "components/AmountFormat";
 import PropTypes from "prop-types";
@@ -15,41 +15,55 @@ const textFieldStyle = {
   width: "60px"
 };
 
+const renderTables = () => {
+  const cupra = [...Array(30).keys()]
+    .map(e => `${e + 1}`)
+    .map(e => (
+      <MenuItem key={e} value={e}>
+        {e}
+      </MenuItem>
+    ));
+  const zena = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P"
+  ].map(e => (
+    <MenuItem key={e} value={e}>
+      {e}
+    </MenuItem>
+  ));
+
+  return cupra.concat(zena);
+};
+
 const Header = props => {
   return (
     <div>
       <div style={containerStyle}>
         <div>
-          <TextField
-            name="table"
-            type="number"
+          <Select
             label="Tav."
             className="CreateOrderForm-TextField"
             style={textFieldStyle}
             value={props.chTable}
-            onChange={e => props.setOrderTable(parseInt(e.target.value, 10))}
-            InputLabelProps={{
-              shrink: true
-            }}
-          />
+            onChange={e => props.setOrderTable(e.target.value)}
+          >
+            {renderTables()}
+          </Select>
         </div>
         <div>
           <TextField
-            name="tableCategory"
-            label="Cliente"
-            className="CreateOrderForm-TextField"
-            style={textFieldStyle}
-            value={props.tableCategory}
-            onChange={e => props.setOrderTableCategory(e.target.value)}
-            InputLabelProps={{
-              shrink: true
-            }}
-          />
-        </div>
-        <div>
-          <TextField
-            name="personNumber"
-            type="number"
             label="N° pers"
             className="CreateOrderForm-TextField"
             style={textFieldStyle}
@@ -80,12 +94,10 @@ const Header = props => {
 Header.propTypes = {
   id: PropTypes.number,
   totalPrice: PropTypes.number.isRequired,
-  chTable: PropTypes.number.isRequired,
-  tableCategory: PropTypes.string,
+  chTable: PropTypes.string.isRequired,
   seats: PropTypes.number.isRequired,
   canConfirm: PropTypes.bool.isRequired,
   setOrderTable: PropTypes.func.isRequired,
-  setOrderTableCategory: PropTypes.func.isRequired,
   setOrderSeats: PropTypes.func.isRequired,
   goToConfirm: PropTypes.func.isRequired,
   standId: PropTypes.number.isRequired

@@ -8,7 +8,7 @@ export const initialState = {
   perPersonAmount: 0
 };
 
-export default function(state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case SIGNOUT_COMPLETED:
       return initialState;
@@ -24,4 +24,4 @@ export default function(state = initialState, action) {
     default:
       return state;
   }
-}
+};

@@ -74,8 +74,6 @@ const Header = props => {
       <div className={props.classes.root}>
         <div>
           <TextField
-            name="table"
-            type="number"
             label="Tav."
             className={props.classes.textField}
             value={props.order.chTable}
@@ -85,17 +83,6 @@ const Header = props => {
         </div>
         <div>
           <TextField
-            name="tableCategory"
-            label="Cliente"
-            className={props.classes.textField}
-            value={props.order.tableCategory}
-            InputLabelProps={{ shrink: true }}
-            readOnly
-          />
-        </div>
-        <div>
-          <TextField
-            name="personNumber"
             type="number"
             label="N° pers"
             className={props.classes.textField}
@@ -116,8 +103,7 @@ Header.propTypes = {
   order: PropTypes.shape({
     id: PropTypes.number.isRequired,
     totalPrice: PropTypes.number.isRequired,
-    chTable: PropTypes.number.isRequired,
-    tableCategory: PropTypes.string,
+    chTable: PropTypes.string.isRequired,
     seats: PropTypes.number.isRequired,
     status: PropTypes.number.isRequired
   }).isRequired,
