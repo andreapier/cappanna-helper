@@ -12,14 +12,14 @@ const containerStyle = {
 };
 
 const textFieldStyle = {
-  width: "60px"
+  width: "80px"
 };
 
 const renderTables = () => {
   const cupra = [...Array(30).keys()]
-    .map(e => `${e + 1}`)
+    .map(e => e + 1)
     .map(e => (
-      <MenuItem key={e} value={e}>
+      <MenuItem key={e} value={e + ""}>
         {e}
       </MenuItem>
     ));
@@ -54,7 +54,6 @@ const Header = props => {
         <div>
           <Select
             label="Tav."
-            className="CreateOrderForm-TextField"
             style={textFieldStyle}
             value={props.chTable}
             onChange={e => props.setOrderTable(e.target.value)}
@@ -65,9 +64,8 @@ const Header = props => {
         <div>
           <TextField
             label="N° pers"
-            className="CreateOrderForm-TextField"
             style={textFieldStyle}
-            value={isNaN(props.seats) ? undefined : props.seats}
+            value={isNaN(props.seats) ? "" : props.seats}
             onChange={e => props.setOrderSeats(parseInt(e.target.value, 10))}
             InputLabelProps={{
               shrink: true

@@ -24,9 +24,7 @@ class SignUp extends Component {
       confirmPassword: "",
       firstName: "",
       lastName: "",
-      settings: {
-        standId: 1
-      }
+      standId: 1
     };
 
     this.setUsername = this.setUsername.bind(this);
@@ -59,7 +57,7 @@ class SignUp extends Component {
   }
 
   setStand(event) {
-    this.setState({ settings: { standId: event.target.value } });
+    this.setState({ standId: event.target.value });
   }
 
   handleSubmit(event) {
@@ -135,12 +133,11 @@ class SignUp extends Component {
           <ItemGrid xs={12} md={6} lg={4}>
             <FormControl fullWidth>
               <InputLabel>Stand</InputLabel>
-              <Select
-                value={this.state.settings.standId}
-                onChange={this.setStand}
-              >
+              <Select value={this.state.standId} onChange={this.setStand}>
                 {this.props.stands.map(s => (
-                  <MenuItem value={s.id}>{s.description}</MenuItem>
+                  <MenuItem value={s.id} key={s.id}>
+                    {s.description}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -171,22 +168,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signupRequested: ({
-      username,
-      password,
-      confirmPassword,
-      firstName,
-      lastName
-    }) =>
-      dispatch(
-        signupRequested({
-          username,
-          password,
-          confirmPassword,
-          firstName,
-          lastName
-        })
-      ),
+    signupRequested: data => dispatch(signupRequested(data)),
     loadStands: () => dispatch(loadStandsListRequested())
   };
 };
