@@ -6,7 +6,7 @@ import { formatAmount } from "utils/string";
 
 const buildTableRow = data => [
   data.standName,
-  data.orderQuantity,
+  data.ordersQuantity,
   formatAmount(data.income)
 ];
 

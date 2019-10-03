@@ -44,8 +44,9 @@ namespace CappannaHelper.Api.Controllers
                 .GroupBy(o => o.StandId)
                 .Select(g => new OrderStat
                 {
-                    StandId = g.First().ShiftId,
-                    StandName = g.First().Shift.Description,
+                    StandId = g.First().StandId,
+                    StandName = g.First().Stand.Description,
+                    OrdersQuantity = g.Count(),
                     Income = g.Sum(o => o.Details.Sum(d => d.Quantity * d.Item.Price))
                 })
                 .OrderByDescending(r => r.Income)

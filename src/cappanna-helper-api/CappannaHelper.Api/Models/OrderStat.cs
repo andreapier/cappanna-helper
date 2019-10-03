@@ -4,7 +4,7 @@
     {
         public int StandId { get; set; }
         public string StandName { get; set; }
-        public int OrderCount { get; set; }
+        public int OrdersQuantity { get; set; }
         public decimal Income { get; set; }
     }
 }

@@ -9,7 +9,7 @@ const OrdersIncomeStartCard = props => {
     <StatsCard
       icon={EuroSymbol}
       title="Incasso"
-      description={formatAmount(props.income, false)}
+      description={formatAmount(props.income, true)}
     />
   );
 };

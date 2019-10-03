@@ -57,7 +57,8 @@ export default function(state = initialState, action) {
         ...state,
         filters: {
           ...state.filters,
-          user: action.payload.roles[0] === "waiter"
+          user: action.payload.roles[0] === "waiter",
+          stand: action.payload.roles.every(r => r !== "admin")
         }
       };
 
