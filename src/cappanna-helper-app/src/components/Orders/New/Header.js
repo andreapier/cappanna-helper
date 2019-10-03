@@ -1,6 +1,12 @@
 import React from "react";
 import IconButton from "components/CustomButtons/IconButton";
-import { MenuItem, Select, TextField } from "@material-ui/core";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField
+} from "@material-ui/core";
 import ContentSend from "@material-ui/icons/Send";
 import AmountFormat from "components/AmountFormat";
 import PropTypes from "prop-types";
@@ -37,7 +43,14 @@ const renderTables = () => {
     "M",
     "N",
     "O",
-    "P"
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "Z"
   ].map(e => (
     <MenuItem key={e} value={e}>
       {e}
@@ -52,14 +65,16 @@ const Header = props => {
     <div>
       <div style={containerStyle}>
         <div>
-          <Select
-            label="Tav."
-            style={textFieldStyle}
-            value={props.chTable}
-            onChange={e => props.setOrderTable(e.target.value)}
-          >
-            {renderTables()}
-          </Select>
+          <FormControl>
+            <InputLabel shrink>Tav.</InputLabel>
+            <Select
+              style={textFieldStyle}
+              value={props.chTable}
+              onChange={e => props.setOrderTable(e.target.value)}
+            >
+              {renderTables()}
+            </Select>
+          </FormControl>
         </div>
         <div>
           <TextField

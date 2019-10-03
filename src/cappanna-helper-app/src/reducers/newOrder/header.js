@@ -20,7 +20,7 @@ export const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SIGNIN_COMPLETED:
-      initialState.chTable = action.payload.settings.standId;
+      initialState.chTable = action.payload.settings.standId === 1 ? "1" : "A";
       return state;
 
     case RESET_ORDER:
