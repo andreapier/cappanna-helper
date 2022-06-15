@@ -25,7 +25,7 @@ namespace CappannaHelper.Api.Persistence.Mapping
                 .HasConversion(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
             entityBuilder.Property(o => o.Status).IsRequired().HasDefaultValue(1);
             entityBuilder.Property(o => o.ShiftId).IsRequired();
-            entityBuilder.Property(o => o.Notes).HasMaxLength(-1);
+            entityBuilder.Property(o => o.Notes).HasColumnType("NVARCHAR(MAX)");
             entityBuilder.Property(o => o.ShiftCounter).IsRequired();
             entityBuilder.Property(o => o.StandId).IsRequired();
 

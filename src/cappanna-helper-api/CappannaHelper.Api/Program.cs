@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using System.Net;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace CappannaHelper.Api
 {
@@ -13,12 +14,19 @@ namespace CappannaHelper.Api
                 .Run();
         }
 
-        private static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseKestrel(options =>
+        private static IHostBuilder CreateWebHostBuilder(string[] args) =>
+            Host
+                .CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((ctx, builder) =>
                 {
-                    options.Listen(IPAddress.Any, 80);
+                    builder
+                        .AddEnvironmentVariables()
+                        .AddJsonFile("appsettings.json", false, true);
+                })
+                .UseSerilog((hostingContext, services, loggerConfiguration) => loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration), writeToProviders: true)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }

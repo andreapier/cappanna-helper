@@ -1,4 +1,7 @@
-﻿using CappannaHelper.Api.Common.ErrorManagement;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using CappannaHelper.Api.Common.ErrorManagement;
 using CappannaHelper.Api.Hubs;
 using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Identity.Extensions;
@@ -9,16 +12,11 @@ using CappannaHelper.Api.Services.Extensions;
 using CappannaHelper.Api.Setup.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
 
 namespace CappannaHelper.Api
 {
@@ -26,20 +24,9 @@ namespace CappannaHelper.Api
     {
         private readonly IConfiguration _configuration;
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json");
-
-            if (env.IsDevelopment())
-            {
-                builder.AddUserSecrets<Startup>();
-            }
-
-            builder.AddEnvironmentVariables();
-
-            _configuration = builder.Build();
+            _configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -47,12 +34,9 @@ namespace CappannaHelper.Api
             var persistenceConfiguration = _configuration.GetSection("Persistence").Get<PersistenceConfiguration>();
 
             services
-                .AddEntityFrameworkSqlite()
                 .AddDbContext<ApplicationDbContext>(o => o.UseSqlite(persistenceConfiguration.ConnectionString));
 
-            services
-                .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc();
 
             services
                 .AddIdentity<ApplicationUser, ApplicationRole>()
@@ -121,21 +105,26 @@ namespace CappannaHelper.Api
                 .UseStaticFiles()
                 .UseSetupMiddleware()
                 .UseAuthentication()
-                .UseSignalR(routes =>
-                {
-                    routes.MapHub<ChHub>("/hubs/ch");
-                })
-				.Use(async (context, next) =>
-				 {
-					if (!context.Request.Path.Value.Contains("/api") && !context.Request.Path.Value.Contains("/hubs"))
-					{
-						context.Response.Redirect("/");
-						return;
-					}
-					await next();
-				 })
+                .Use(async (context, next) =>
+                 {
+                     var path = context.Request.Path.Value;
+
+                     if (!path.Contains("/api") && !path.Contains("/hubs") && path != "/")
+                     {
+                         context.Response.Redirect("/");
+
+                         return;
+                     }
+
+                     await next();
+                 })
                 .UseMiddleware<ErrorHandlingMiddleware>()
-                .UseMvc();
+                .UseRouting()
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapRazorPages();
+                    endpoints.MapHub<ChHub>("/hubs/ch");
+                });
         }
     }
 }

@@ -17,7 +17,7 @@ namespace CappannaHelper.Api.Persistence.Mapping
             entityBuilder.Property(o => o.Id).IsRequired().ValueGeneratedOnAdd();
             entityBuilder.Property(o => o.Name).HasMaxLength(50).IsRequired();
             entityBuilder.Property(o => o.Type).HasMaxLength(50).IsRequired();
-            entityBuilder.Property(o => o.Value).HasMaxLength(-1).IsRequired();
+            entityBuilder.Property(o => o.Value).HasColumnType("NVARCHAR(MAX)").IsRequired();
 
             entityBuilder.HasIndex(o => o.Name).IsUnique();
         }

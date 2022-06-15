@@ -34,17 +34,15 @@ namespace CappannaHelper.Api.Setup
 
             try
             {
-                using (var transaction = await _context.Database.BeginTransactionAsync())
-                {
-                    await SetupStandsAsync(errors);
-                    await SetupRolesAsync(errors);
-                    await SetupUsersAsync(errors);
-                    await SetupMenuAsync(errors);
-                    await SetupOperationTypesAsync(errors);
-                    await SetupSettingsAsync(errors);
+                using var transaction = await _context.Database.BeginTransactionAsync();
+                await SetupStandsAsync(errors);
+                await SetupRolesAsync(errors);
+                await SetupUsersAsync(errors);
+                await SetupMenuAsync(errors);
+                await SetupOperationTypesAsync(errors);
+                await SetupSettingsAsync(errors);
 
-                    transaction.Commit();
-                }
+                transaction.Commit();
             }
             catch (Exception e)
             {
@@ -77,11 +75,9 @@ namespace CappannaHelper.Api.Setup
                     await connection.OpenAsync();
                 }
 
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText = "PRAGMA journal_mode=WAL;";
-                    await command.ExecuteNonQueryAsync();
-                }
+                using var command = connection.CreateCommand();
+                command.CommandText = "PRAGMA journal_mode=WAL;";
+                await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
             {
