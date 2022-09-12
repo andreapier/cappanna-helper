@@ -6,7 +6,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "Build web api",
-            "program": "${workspaceRoot}/CappannaHelper.Api/bin/Debug/netcoreapp2.1/CappannaHelper.Api.dll",
+            "program": "${workspaceRoot}/CappannaHelper.Api/bin/Debug/net6.0/CappannaHelper.Api.dll",
             "args": [],
             "cwd": "${workspaceRoot}/CappannaHelper.Api",
             "stopAtEntry": false,

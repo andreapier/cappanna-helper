@@ -1,9 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace CappannaHelper.Api.Migrations
 {
-    public partial class All : Migration
+    public partial class v1_0_0 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,12 +13,12 @@ namespace CappannaHelper.Api.Migrations
                 name: "MenuDetails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Price = table.Column<decimal>(nullable: false),
-                    Group = table.Column<string>(maxLength: 50, nullable: false),
-                    Name = table.Column<string>(maxLength: 200, nullable: false),
-                    UnitsInStock = table.Column<int>(nullable: true)
+                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Group = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    UnitsInStock = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,9 +29,9 @@ namespace CappannaHelper.Api.Migrations
                 name: "OperationTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Description = table.Column<string>(maxLength: 200, nullable: false)
+                    Description = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,11 +42,11 @@ namespace CappannaHelper.Api.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -55,11 +57,11 @@ namespace CappannaHelper.Api.Migrations
                 name: "Settings",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    Type = table.Column<string>(maxLength: 50, nullable: false),
-                    Value = table.Column<string>(maxLength: -1, nullable: false)
+                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Type = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Value = table.Column<string>(type: "TEXT", maxLength: 2048, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,13 +72,12 @@ namespace CappannaHelper.Api.Migrations
                 name: "Shifts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    OpenTimestamp = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    Description = table.Column<string>(maxLength: 100, nullable: false),
-                    OrderCounter = table.Column<int>(nullable: false, defaultValue: 0)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Income = table.Column<decimal>(nullable: false, defaultValue: 0m)
+                    OpenTimestamp = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    OrderCounter = table.Column<int>(type: "INTEGER", nullable: false, defaultValue: 0),
+                    Income = table.Column<decimal>(type: "TEXT", nullable: false, defaultValue: 0m)
                 },
                 constraints: table =>
                 {
@@ -87,10 +88,10 @@ namespace CappannaHelper.Api.Migrations
                 name: "Stands",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Description = table.Column<string>(maxLength: 200, nullable: false),
-                    PrintLabel = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    PrintLabel = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -101,9 +102,9 @@ namespace CappannaHelper.Api.Migrations
                 name: "UserSettings",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    StandId = table.Column<int>(nullable: false)
+                    StandId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -114,11 +115,11 @@ namespace CappannaHelper.Api.Migrations
                 name: "RoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    RoleId = table.Column<int>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    RoleId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
+                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -135,25 +136,25 @@ namespace CappannaHelper.Api.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(maxLength: 100, nullable: false),
-                    Surname = table.Column<string>(maxLength: 100, nullable: false),
-                    SettingsId = table.Column<int>(nullable: false)
+                    FirstName = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    Surname = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    SettingsId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "TEXT", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -170,11 +171,11 @@ namespace CappannaHelper.Api.Migrations
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<int>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
+                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -191,29 +192,21 @@ namespace CappannaHelper.Api.Migrations
                 name: "ChOrders",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ChTable = table.Column<string>(maxLength: 50, nullable: false),
-                    Seats = table.Column<int>(nullable: false, defaultValue: 2)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CreatedById = table.Column<int>(nullable: false),
-                    CreationTimestamp = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    Status = table.Column<int>(nullable: false, defaultValue: 1)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Notes = table.Column<string>(maxLength: -1, nullable: true),
-                    ShiftId = table.Column<int>(nullable: false),
-                    ShiftCounter = table.Column<int>(nullable: false),
-                    StandId = table.Column<int>(nullable: false)
+                    ChTable = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Seats = table.Column<int>(type: "INTEGER", nullable: false, defaultValue: 2),
+                    CreatedById = table.Column<int>(type: "INTEGER", nullable: false),
+                    CreationTimestamp = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    Status = table.Column<int>(type: "INTEGER", nullable: false, defaultValue: 1),
+                    Notes = table.Column<string>(type: "TEXT", maxLength: 2048, nullable: true),
+                    ShiftId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ShiftCounter = table.Column<int>(type: "INTEGER", nullable: false),
+                    StandId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ChOrders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ChOrders_Users_CreatedById",
-                        column: x => x.CreatedById,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ChOrders_Shifts_ShiftId",
                         column: x => x.ShiftId,
@@ -226,16 +219,22 @@ namespace CappannaHelper.Api.Migrations
                         principalTable: "Stands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChOrders_Users_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "UserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(nullable: false),
-                    ProviderKey = table.Column<string>(nullable: false),
-                    ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: false)
+                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
+                    ProviderKey = table.Column<string>(type: "TEXT", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "TEXT", nullable: true),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -252,8 +251,8 @@ namespace CappannaHelper.Api.Migrations
                 name: "UserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(nullable: false),
-                    RoleId = table.Column<int>(nullable: false)
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    RoleId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -276,10 +275,10 @@ namespace CappannaHelper.Api.Migrations
                 name: "UserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true)
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Value = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -296,12 +295,12 @@ namespace CappannaHelper.Api.Migrations
                 name: "ChOrderOperations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    OperationTimestamp = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    OrderId = table.Column<int>(nullable: false),
-                    TypeId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false)
+                    OperationTimestamp = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    OrderId = table.Column<int>(type: "INTEGER", nullable: false),
+                    TypeId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -330,27 +329,26 @@ namespace CappannaHelper.Api.Migrations
                 name: "OrderDetails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Quantity = table.Column<int>(nullable: false, defaultValue: 1)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CreationTimestamp = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    ItemId = table.Column<int>(nullable: false),
-                    OrderId = table.Column<int>(nullable: false)
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false, defaultValue: 1),
+                    CreationTimestamp = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    ItemId = table.Column<int>(type: "INTEGER", nullable: false),
+                    OrderId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderDetails_MenuDetails_ItemId",
-                        column: x => x.ItemId,
-                        principalTable: "MenuDetails",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_OrderDetails_ChOrders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "ChOrders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderDetails_MenuDetails_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "MenuDetails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -391,6 +389,12 @@ namespace CappannaHelper.Api.Migrations
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ChOrders_ShiftId_ShiftCounter_StandId",
+                table: "ChOrders",
+                columns: new[] { "ShiftId", "ShiftCounter", "StandId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ChOrders_StandId",
                 table: "ChOrders",
                 column: "StandId");
@@ -399,12 +403,6 @@ namespace CappannaHelper.Api.Migrations
                 name: "IX_ChOrders_Status",
                 table: "ChOrders",
                 column: "Status");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ChOrders_ShiftId_ShiftCounter_StandId",
-                table: "ChOrders",
-                columns: new[] { "ShiftId", "ShiftCounter", "StandId" },
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_ItemId",
@@ -461,15 +459,15 @@ namespace CappannaHelper.Api.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
-                table: "Users",
-                column: "NormalizedUserName",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Users_SettingsId",
                 table: "Users",
                 column: "SettingsId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "Users",
+                column: "NormalizedUserName",
                 unique: true);
         }
 
@@ -503,22 +501,22 @@ namespace CappannaHelper.Api.Migrations
                 name: "OperationTypes");
 
             migrationBuilder.DropTable(
-                name: "MenuDetails");
-
-            migrationBuilder.DropTable(
                 name: "ChOrders");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "MenuDetails");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Shifts");
 
             migrationBuilder.DropTable(
                 name: "Stands");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "UserSettings");

@@ -26,7 +26,9 @@ namespace CappannaHelper.Api
                 .UseSerilog((hostingContext, services, loggerConfiguration) => loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration), writeToProviders: true)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder
+                        .UseStartup<Startup>()
+                        .UseKestrel();
                 });
     }
 }
