@@ -17,6 +17,7 @@ namespace CappannaHelper.Api.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
+    [ApiController]
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _context;

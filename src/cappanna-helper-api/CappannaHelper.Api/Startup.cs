@@ -36,7 +36,7 @@ namespace CappannaHelper.Api
             services
                 .AddDbContext<ApplicationDbContext>(o => o.UseSqlite(persistenceConfiguration.ConnectionString));
 
-            services.AddMvc();
+            services.AddControllers();
 
             services
                 .AddIdentity<ApplicationUser, ApplicationRole>()
@@ -82,7 +82,7 @@ namespace CappannaHelper.Api
             {
                 options.Cookie.Name = "CappannaHelper";
                 options.Cookie.HttpOnly = true;
-                options.Cookie.Expiration = TimeSpan.FromDays(1);
+                options.ExpireTimeSpan = TimeSpan.FromDays(1);
                 options.SlidingExpiration = true;
             });
 
@@ -120,9 +120,10 @@ namespace CappannaHelper.Api
                  })
                 .UseMiddleware<ErrorHandlingMiddleware>()
                 .UseRouting()
+                .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
-                    endpoints.MapRazorPages();
+                    endpoints.MapControllers();
                     endpoints.MapHub<ChHub>("/hubs/ch");
                 });
         }

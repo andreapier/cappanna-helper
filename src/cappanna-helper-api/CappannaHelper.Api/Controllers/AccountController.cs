@@ -20,6 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace CappannaHelper.Api.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class AccountController : Controller
     {
         private readonly IApplicationUserManager _userManager;

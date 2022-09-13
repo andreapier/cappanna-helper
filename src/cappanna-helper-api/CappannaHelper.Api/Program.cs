@@ -27,8 +27,8 @@ namespace CappannaHelper.Api
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-                        .UseStartup<Startup>()
-                        .UseKestrel();
+                        .UseIISIntegration()
+                        .UseStartup<Startup>();
                 });
     }
 }

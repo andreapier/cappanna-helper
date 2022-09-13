@@ -14,6 +14,7 @@ namespace CappannaHelper.Api.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
+    [ApiController]
     public class NotificationController : Controller
     {
         private readonly ApplicationDbContext _context;

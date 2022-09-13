@@ -12,6 +12,7 @@ namespace CappannaHelper.Api.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
+    [ApiController]
     public class DashboardController : Controller
     {
         private readonly ApplicationDbContext _context;
