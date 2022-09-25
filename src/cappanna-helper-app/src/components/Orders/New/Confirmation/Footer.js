@@ -10,7 +10,7 @@ import { flex } from "variables/styles";
 
 const Footer = props => {
   return (
-    <Grid className={props.classes.root} justify="space-between">
+    <Grid className={props.classes.root} justifyContent="space-between">
       <ItemGrid>
         <Button variant="contained" onClick={props.goBack}>
           <Create />

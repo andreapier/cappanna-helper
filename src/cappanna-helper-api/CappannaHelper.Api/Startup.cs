@@ -70,19 +70,16 @@ namespace CappannaHelper.Api
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 8;
+                options.Password.RequiredLength = 5;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
-
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-                options.Lockout.MaxFailedAccessAttempts = 5;
             });
 
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Name = "CappannaHelper";
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromDays(1);
+                options.ExpireTimeSpan = TimeSpan.FromDays(5);
                 options.SlidingExpiration = true;
             });
 

@@ -6,7 +6,7 @@ import ItemGrid from "components/Grid/ItemGrid";
 
 const SignUpOk = props => {
   return (
-    <Grid justify="space-between">
+    <Grid justifyContent="space-between">
       <ItemGrid xs={12}>
         <P key={1}>Registrazione eseguita con successo!</P>
       </ItemGrid>

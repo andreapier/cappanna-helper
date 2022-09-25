@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import { setOrderNotes } from "actions";
 import { TextField } from "@material-ui/core";
 import {
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Typography
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -31,24 +31,24 @@ class Notes extends Component {
   render() {
     return (
       <form>
-        <ExpansionPanel>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>Note</Typography>
-          </ExpansionPanelSummary>
+          </AccordionSummary>
 
-          <ExpansionPanelDetails>
+          <AccordionDetails>
             <TextField
               name="notes"
               label="Inserire le note dell'ordine"
               multiline
-              rows={4}
-              rowsMax={10}
+              minRows={4}
+              maxRows={10}
               fullWidth
               onChange={this.setNotes}
               value={this.props.notes}
             />
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
+          </AccordionDetails>
+        </Accordion>
       </form>
     );
   }

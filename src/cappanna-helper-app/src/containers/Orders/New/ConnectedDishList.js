@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Typography,
   withStyles
 } from "@material-ui/core";
@@ -24,16 +24,16 @@ const styles = {
 class ConnectedDishList extends Component {
   render() {
     return (
-      <ExpansionPanel>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>{this.props.title}</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails className={this.props.classes.expansion}>
+        </AccordionSummary>
+        <AccordionDetails className={this.props.classes.expansion}>
           {this.props.details.map(i => (
             <ConnectedMenuItemDetail key={i.id} itemId={i.id} />
           ))}
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+        </AccordionDetails>
+      </Accordion>
     );
   }
 

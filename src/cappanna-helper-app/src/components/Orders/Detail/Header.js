@@ -19,6 +19,9 @@ const style = {
   textField: {
     width: "60px"
   },
+  tableField: {
+    width: "120px"
+  },
   icon: {
     marginRight: "10px"
   }
@@ -75,7 +78,7 @@ const Header = props => {
         <div>
           <TextField
             label="Tav."
-            className={props.classes.textField}
+            className={props.classes.tableField}
             value={props.order.chTable}
             InputLabelProps={{ shrink: true }}
             readOnly

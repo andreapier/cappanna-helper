@@ -11,7 +11,7 @@ import ConnectedSidebar from "containers/ConnectedSidebar";
 import ConnectedWaitDialog from "containers/ConnectedWaitDialog";
 import ConnectedNotificationSnackbar from "containers/ConnectedNotificationSnackbar";
 import RoutingAwareHeader from "containers/RoutingAwareHeader";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 
 const switchRoutes = routes => (
   <Switch>

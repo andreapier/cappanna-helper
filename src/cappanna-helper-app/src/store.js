@@ -9,7 +9,7 @@ export default (initialState = {}) => {
   const sagaMiddleware = createSagaMiddleware();
   const middlewares = [signalRMiddleware, sagaMiddleware];
   const composeEnhancers = composeWithDevTools({
-    actionsBlacklist: ["@@"]
+    actionsDenylist: ["@@"]
   });
 
   const store = createStore(

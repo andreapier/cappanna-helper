@@ -8,7 +8,7 @@ class SignOutPage extends React.Component {
   render() {
     return (
       <RegularCard cardTitle="Sign out">
-        <Grid justify="center">
+        <Grid justifyContent="center">
           <ItemGrid xs={12} sm={12} md={6}>
             <SignOut />
           </ItemGrid>

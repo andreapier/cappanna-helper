@@ -4,9 +4,9 @@ import App from "containers/App";
 import storeGenerator from "./store";
 import { loadUserData } from "actions";
 import "assets/css/index.css";
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 
-const theme = createMuiTheme();
+const theme = createTheme();
 const store = storeGenerator();
 store.dispatch(loadUserData());
 

@@ -53,7 +53,7 @@ class SignIn extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <Grid justify="space-between">
+        <Grid justifyContent="space-between">
           <ItemGrid xs={12}>
             <TextField
               name="username"

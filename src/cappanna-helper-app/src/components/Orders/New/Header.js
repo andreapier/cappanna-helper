@@ -1,10 +1,6 @@
 import React from "react";
 import IconButton from "components/CustomButtons/IconButton";
 import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
   TextField
 } from "@material-ui/core";
 import ContentSend from "@material-ui/icons/Send";
@@ -21,43 +17,8 @@ const textFieldStyle = {
   width: "80px"
 };
 
-const renderTables = () => {
-  const cupra = [...Array(30).keys()]
-    .map(e => e + 1)
-    .map(e => (
-      <MenuItem key={e} value={e + ""}>
-        {e}
-      </MenuItem>
-    ));
-  const zena = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "Z"
-  ].map(e => (
-    <MenuItem key={e} value={e}>
-      {e}
-    </MenuItem>
-  ));
-
-  return cupra.concat(zena);
+const tableFieldStyle = {
+  width: "120px"
 };
 
 const Header = props => {
@@ -65,16 +26,15 @@ const Header = props => {
     <div>
       <div style={containerStyle}>
         <div>
-          <FormControl>
-            <InputLabel shrink>Tav.</InputLabel>
-            <Select
-              style={textFieldStyle}
-              value={props.chTable}
-              onChange={e => props.setOrderTable(e.target.value)}
-            >
-              {renderTables()}
-            </Select>
-          </FormControl>
+          <TextField
+            label="Tav."
+            style={tableFieldStyle}
+            value={props.chTable}
+            onChange={e => props.setOrderTable(e.target.value)}
+            InputLabelProps={{
+              shrink: true
+            }}
+          />
         </div>
         <div>
           <TextField

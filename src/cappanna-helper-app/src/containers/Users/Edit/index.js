@@ -78,7 +78,7 @@ class EditUser extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <Grid justify="space-between">
+        <Grid justifyContent="space-between">
           <ItemGrid xs={12} md={6} lg={4}>
             <TextField
               name="username"

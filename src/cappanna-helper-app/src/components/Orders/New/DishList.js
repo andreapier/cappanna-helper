@@ -1,8 +1,8 @@
 import React from "react";
 import {
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Typography,
   withStyles
 } from "@material-ui/core";
@@ -19,11 +19,11 @@ const styles = {
 const DishList = props => {
   return (
     <div className={props.classes.root}>
-      <ExpansionPanel>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>{props.title}</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
+        </AccordionSummary>
+        <AccordionDetails>
           <div>
             {props.details.map(i => (
               <MenuItemDetail
@@ -35,8 +35,8 @@ const DishList = props => {
               />
             ))}
           </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 };

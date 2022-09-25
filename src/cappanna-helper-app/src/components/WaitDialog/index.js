@@ -13,10 +13,16 @@ import waitDialogStyle from "variables/styles/waitDialogStyle";
 const WaitDialog = props => {
   const { classes, loading, message } = props;
 
+  const onClose = (event, reason) => {
+    if (reason !== "backdropClick") {
+      onClose(event, reason);
+    }
+  };
+
   return (
     <Dialog
       open={loading}
-      disableBackdropClick
+      onClose={onClose}
       disableEscapeKeyDown
       className={classes.root}
     >

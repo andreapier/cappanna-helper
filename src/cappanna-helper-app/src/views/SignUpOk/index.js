@@ -9,7 +9,7 @@ import history from "./../../history";
 const SignUpOkPage = () => {
   return (
     <RegularCard cardTitle="Registrazione completata">
-      <Grid justify="center">
+      <Grid justifyContent="center">
         <ItemGrid xs={12} sm={12} md={6}>
           <SignUpOk handleClick={() => history.push("/dasboard")} />
         </ItemGrid>
