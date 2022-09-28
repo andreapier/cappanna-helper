@@ -75,6 +75,11 @@ namespace CappannaHelper.Api.Controllers
         [HttpPost("signin")]
         public async Task<IActionResult> Signin([FromBody] SigninModel signinData)
         {
+            if (signinData == null)
+            {
+                return BadRequest("Invalid data");
+            }
+
             SigninResultModel result;
 
             using (var transaction = await _context.Database.BeginTransactionAsync())

@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -26,7 +27,7 @@ namespace CappannaHelper.Api.Common.ErrorManagement
             this.next = next;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context, ILogger<ErrorHandlingMiddleware> logger)
         {
             try
             {
@@ -34,12 +35,13 @@ namespace CappannaHelper.Api.Common.ErrorManagement
             }
             catch(Exception ex)
             {
-                await HandleExceptionAsync(context, ex);
+                await HandleExceptionAsync(context, ex, logger);
             }
         }
 
-        private async Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private async Task HandleExceptionAsync(HttpContext context, Exception exception, ILogger logger)
         {
+            logger.LogError(exception, "Errore imprevisto");
             var code = HttpStatusCode.InternalServerError;
             var result = JsonConvert.SerializeObject(new
             {
