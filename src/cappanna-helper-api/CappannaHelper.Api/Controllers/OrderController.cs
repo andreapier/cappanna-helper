@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CappannaHelper.Api.Hubs;
 using CappannaHelper.Api.Persistence;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace CappannaHelper.Api.Controllers
 {
@@ -25,19 +27,22 @@ namespace CappannaHelper.Api.Controllers
         private readonly IHubContext<ChHub> _hub;
         private readonly IShiftManager _shiftManager;
         private readonly ISettingManager _settingManager;
+        private readonly ILogger _logger;
 
         public OrderController(
             ApplicationDbContext context,
             IPrintService printService,
             IHubContext<ChHub> hub,
             IShiftManager shiftManager,
-            ISettingManager settingManager)
+            ISettingManager settingManager,
+            ILogger<OrderController> logger)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-            _printService = printService ?? throw new ArgumentNullException(nameof(printService));
-            _hub = hub ?? throw new ArgumentNullException(nameof(hub));
-            _shiftManager = shiftManager ?? throw new ArgumentNullException(nameof(shiftManager));
-            _settingManager = settingManager ?? throw new ArgumentNullException(nameof(settingManager));
+            _context = context;
+            _printService = printService;
+            _hub = hub;
+            _logger = logger;
+            _shiftManager = shiftManager;
+            _settingManager = settingManager;
         }
 
         [HttpGet]
@@ -129,6 +134,7 @@ namespace CappannaHelper.Api.Controllers
                     var creationOperationId = (int)OperationTypes.Creation;
                     var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
                     var shift = await _shiftManager.GetOrCreateCurrentAsync();
+
                     autoPrint = await _settingManager.GetSettingValue<bool>(Setting.AUTO_PRINT);
 
                     shift.OrderCounter++;
@@ -147,6 +153,8 @@ namespace CappannaHelper.Api.Controllers
                     order.Status = creationOperationId;
                     order.ShiftId = shift.Id;
                     order.ShiftCounter = shift.OrderCounter;
+
+                    SetStand(order);
 
                     var dbOrder = await _context.Orders.AddAsync(order);
                     await _context.SaveChangesAsync();
@@ -299,8 +307,10 @@ namespace CappannaHelper.Api.Controllers
                     dbOrder.Notes = order.Notes;
                     dbOrder.Seats = order.Seats;
                     dbOrder.Status = operationId;
-                    
-                    foreach(var detail in order.Details)
+
+                    SetStand(dbOrder);
+
+                    foreach (var detail in order.Details)
                     {
                         var dbDetail = dbOrder.Details.FirstOrDefault(d => d.ItemId == detail.ItemId);
                         
@@ -548,6 +558,31 @@ namespace CappannaHelper.Api.Controllers
             await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_CLOSED, result);
 
             return Ok(result);
+        }
+
+        private void SetStand(ChOrder order)
+        {
+            try
+            {
+                // z1, Z12, 50 => stand Zena
+                // 1, 12, 49   => stand Baseball
+                var table = Convert.ToInt32(Regex.Match(order.ChTable, @"^(z|Z)?\d+").Value);
+
+                if (table < 50)
+                {
+                    order.Stand = _context.Stands.Single(s => s.Description == "Cupra baseball");
+                }
+                else
+                {
+                    order.Stand = _context.Stands.Single(s => s.Description == "Zena");
+                }
+
+                order.StandId = order.Stand.Id;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Impossibile calcolare stand automaticamente per ordine {order.Id}. Verrà usato lo stand nativo dell'ordine: {order.Stand?.Description}");
+            }
         }
     }
 }
