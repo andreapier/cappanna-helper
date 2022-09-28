@@ -210,11 +210,11 @@ namespace CappannaHelper.Api.Setup
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Fritto calamari e gamberi", 12.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Coda di rospo e finocchio", 9.5M, errors);
 			await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Seppie con piselli", 9.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Costarelle fagioli salsiccia", 8.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Piadina prosciutto", 4.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Piadina prosciutto formaggio", 5.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Cresciola di polenta", 3.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Bruschetta salsa pesce", 2.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Bruschetta salsa verdure", 1.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Panino con salsiccia", 5.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Panino con hamburger", 5.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Panino con bistecca", 5.0M, errors);

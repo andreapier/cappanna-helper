@@ -1,4 +1,4 @@
-import { HubConnectionBuilder, JsonHubProtocol } from "@aspnet/signalr";
+import { HubConnectionBuilder, JsonHubProtocol } from "@microsoft/signalr";
 import {
   orderCreated,
   orderChanged,
