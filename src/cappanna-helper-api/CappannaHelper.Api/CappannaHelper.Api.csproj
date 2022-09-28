@@ -19,6 +19,8 @@
 
   <ItemGroup>
     <None Remove="Persistence\CappannaHelper.db" />
+    <None Remove="Persistence\CappannaHelper.db-shm" />
+    <None Remove="Persistence\CappannaHelper.db-wal" />
   </ItemGroup>
   
   <ItemGroup>

@@ -189,51 +189,50 @@ namespace CappannaHelper.Api.Setup
 
         private async Task SetupAppetizersAsync(List<string> errors)
         {
-            await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Insalata di mare", 7.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Totano patate olive", 7.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Alici marinate", 5.5M, errors);
-            await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Degustazione di antipasti", 9.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Insalata di mare", 7.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Totano patate olive", 7.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Bruschetta baccalà mantec.", 2.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Degustazione di antipasti", 10.0M, errors);
         }
 
         private async Task SetupFirstDishesAsync(List<string> errors)
         {
-            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Chitarrine dell'Adriatico", 8.5M, errors);
-            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Gnocchi ai frutti di mare", 8.5M, errors);
-            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Pennette alla vodka", 7.5M, errors);
-            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Gnocchi alla papera", 8.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Polenta con sugo di papera", 6.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Polenta con sugo di pesce", 7.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Chitarrine dell'Adriatico", 9.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Gnocchi ai frutti di mare", 9.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Pennette alla vodka", 8.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Gnocchi alla papera", 8.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Polenta con sugo di papera", 6.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.FIRST_DISH, "Polenta con sugo di pesce", 7.5M, errors);
         }
 
         private async Task SetupSecondDishesAsync(List<string> errors)
         {
-            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Fritto calamari e gamberi", 10.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Coda di rospo", 9.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Sardoncini scottadito", 6.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Costarelle fagioli salsiccia", 8.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Piadina prosciutto", 4.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Piadina prosciutto formaggio", 5.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Cresciola di polenta", 3.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Bruschetta salsa pesce", 1.5M, errors);
-            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Panino con salsiccia", 4.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Panino con hamburger", 4.5M, errors);
-            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Panino con bistecca", 4.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Fritto calamari e gamberi", 12.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Coda di rospo e finocchio", 9.5M, errors);
+			await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Seppie con piselli", 9.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Costarelle fagioli salsiccia", 8.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Piadina prosciutto", 4.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Piadina prosciutto formaggio", 5.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Cresciola di polenta", 3.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Bruschetta salsa pesce", 2.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Panino con salsiccia", 5.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Panino con hamburger", 5.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Panino con bistecca", 5.0M, errors);
         }
 
         private async Task SetupSideDishesAsync(List<string> errors)
         {
-            await SetupMenuDetailAsync(MenuDetail.SIDE_DISH, "Olive all'ascolana", 4.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.SIDE_DISH, "Cremini fritti", 3.5M, errors);
-            await SetupMenuDetailAsync(MenuDetail.SIDE_DISH, "Patatine fritte", 3.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SIDE_DISH, "Olive all'ascolana", 4.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SIDE_DISH, "Cremini fritti", 4.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SIDE_DISH, "Patatine fritte", 4.0M, errors);
         }
 
         private async Task SetupDessertDishesAsync(List<string> errors)
         {
             await SetupMenuDetailAsync(MenuDetail.DESSERT_DISH, "Rose del deserto", 3.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.DESSERT_DISH, "Salame al cioccolato", 3.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.DESSERT_DISH, "Ciambelline all'anice", 3.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.DESSERT_DISH, "Bisc. mosto cioccolato", 3.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.DESSERT_DISH, "Degustazione Dolci", 5.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.DESSERT_DISH, "Biscotti al vino", 3.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.DESSERT_DISH, "Degustazione Dolci", 6.0M, errors);
         }
 
         private async Task SetupDrinksAsync(List<string> errors)
@@ -246,41 +245,37 @@ namespace CappannaHelper.Api.Setup
 
         private async Task SetupWhiteWinesAsync(List<string> errors)
         {
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Vino al bicchiere (Verdicchio)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Vino al bicchiere (Verdicchio)", 1.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Verdicchio doc 1 L", 6.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Verdicchio doc 0,5 L", 3M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Bersò (frizzante)", 6.5M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Lyricus", 6.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Cuapro", 10.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Cuprese", 10.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Tufico", 13.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Bersò", 7.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Lyricus", 7.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Cuapro (Bio)", 10.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Cuprese", 12.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Tufico", 14.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "San Michele", 15.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Manciano", 9.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Il Priore", 13.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Salerna", 10.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Capovolto", 14.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Vale", 12.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Il Priore", 15.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Salerna", 12.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Capovolto", 15.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Saltatempo", 13.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Fonte Cherubini", 11.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Kypra", 14.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Oinochoe", 12.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Raggi d'uva (Bio)", 8.0M, errors);
+			await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Oinochoe (Bio)", 14.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Valdè", 11.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Brecciole", 10.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Spumante 'Cuvee Tradition'", 10.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Brecciole", 12.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Spumante 'Cuvee Tradition'", 11.0M, errors);
         }
 
         private async Task SetupRedWinesAsync(List<string> errors)
         {
-            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Vino al bicchiere (Lacrima)", 1.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Vino al bicchiere (Lacrima)", 1.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Vino al bicchiere (Visciola)", 2.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Vino rosso doc 1 L", 6.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Vino rosso doc 0,5 L", 3.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Lyricus (Rosso Piceno)", 6.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Tornamagno (Rosso IGT)", 12.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Lyricus (Rosso Piceno)", 7.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Tornamagno (IGT)", 14.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Bastian Contrario", 13.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Grana d'Elia", 12.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Superbo (Lacrima Morro d'Alba)", 12.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Rubus (Rosso Piceno)", 10.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Nerium (Rosso Piceno)", 10.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Superbo (Lacrima)", 14.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Visciola (bottiglia 0,5L)", 13.0M, errors);
         }
 
@@ -297,7 +292,7 @@ namespace CappannaHelper.Api.Setup
             await SetupMenuDetailAsync(MenuDetail.DRINK, "Coca cola", 2.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.DRINK, "Fanta", 2.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.DRINK, "Sprite", 2.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.DRINK, "Birra (bottiglia)", 2.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.DRINK, "Birra (bottiglia)", 3.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.DRINK, "Caffe", 1.0M, errors);
         }
 
