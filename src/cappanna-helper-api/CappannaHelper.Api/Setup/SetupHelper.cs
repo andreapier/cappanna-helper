@@ -191,7 +191,7 @@ namespace CappannaHelper.Api.Setup
         {
             await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Insalata di mare", 7.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Totano patate olive", 7.5M, errors);
-            await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Bruschetta baccalà mantec.", 2.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Bruschetta baccala mantec.", 2.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.APPETIZER, "Degustazione di antipasti", 10.0M, errors);
         }
 
@@ -248,7 +248,7 @@ namespace CappannaHelper.Api.Setup
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Vino al bicchiere (Verdicchio)", 1.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Verdicchio doc 1 L", 6.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Verdicchio doc 0,5 L", 3M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Bersò", 7.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Berso", 7.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Lyricus", 7.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Cuapro (Bio)", 10.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Cuprese", 12.0M, errors);
@@ -261,7 +261,7 @@ namespace CappannaHelper.Api.Setup
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Saltatempo", 13.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Raggi d'uva (Bio)", 8.0M, errors);
 			await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Oinochoe (Bio)", 14.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Valdè", 11.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Valde", 11.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Brecciole", 12.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Spumante 'Cuvee Tradition'", 11.0M, errors);
         }

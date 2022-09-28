@@ -42,7 +42,7 @@ namespace CappannaHelper.Api.Printing
             var section = _document.LastPage.CreateSection();
             section.SetSize(24);
             section.Bold = true;
-            section.CreateLabel().SetContent($"Stand: {stand}");
+            section.CreateLabel().SetContent($"Stand:  {stand.ToString()}");
             section.NewLine();
         }
 
@@ -50,7 +50,7 @@ namespace CappannaHelper.Api.Printing
         {
             var section = _document.LastPage.CreateSection();
             section.SetSize(size);
-            section.CreateLabel().SetContent($"Ordine:  {orderId,3}  ");
+            section.CreateLabel().SetContent($"Ordine:  {orderId.ToString().PadLeft(3, ' ')}  ");
             section.NewLine();
         }
 
@@ -65,7 +65,7 @@ namespace CappannaHelper.Api.Printing
             }
             else
             {
-                tableStr = tableStr[..11];
+                tableStr = tableStr.Substring(0, 11);
             }
             
             section.SetSize(size);
@@ -77,13 +77,13 @@ namespace CappannaHelper.Api.Printing
         {
             var section = _document.LastPage.CreateSection();
             section.SetSize(size);
-            section.CreateLabel().SetContent($"Coperti: {seats,3}  ");
+            section.CreateLabel().SetContent($"Coperti: {seats.ToString().PadLeft(3, ' ')}  ");
         }
 
         private void SetWaiter(ApplicationUser waiter, int size)
         {
             var section = _document.LastPage.CreateSection();
-            var firstName = waiter.FirstName.Length <= 11 ? waiter.FirstName.PadLeft(11, ' ') : waiter.FirstName[..11];
+            var firstName = waiter.FirstName.Length <= 11 ? waiter.FirstName.PadLeft(11, ' ') : waiter.FirstName.Substring(0, 11);
             section.SetSize(size);
             section.CreateLabel().SetContent($"Camer: {firstName}");
             section.NewLine();
@@ -94,7 +94,7 @@ namespace CappannaHelper.Api.Printing
             var section = _document.LastPage.CreateSection();
             var localCreationTimestamp = TimeZoneInfo.ConvertTime(creationTimestamp, TimeZoneInfo.Local);
             section.SetSize(size);
-            section.CreateLabel().SetContent($"Orario: {localCreationTimestamp:HH:mm:ss}");
+            section.CreateLabel().SetContent($"Orario: {localCreationTimestamp.ToString("HH:mm:ss")}");
             section.NewLine();
         }
 
@@ -128,7 +128,15 @@ namespace CappannaHelper.Api.Printing
                 AddPage(16);
             }
             
-            SetHeader("BAR", order.Stand.PrintLabel, order.ShiftCounter, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp, 12);
+            if (order.Details.Any(d => d.Item.IsDrink))
+            {
+                SetHeader("BAR", order.Stand.PrintLabel, order.ShiftCounter, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp, 12);
+
+                SetDrinks(order.Details, 12);
+                AddPage(16);
+            }
+
+            SetHeader("CAMERIERE", order.Stand.PrintLabel, order.ShiftCounter, order.ChTable, order.Seats, order.CreatedBy, order.CreationTimestamp, 16);
             SetDishes(order.Details, 12);
 
             if (order.Details.Any(d => d.Item.IsDrink))
@@ -149,7 +157,7 @@ namespace CappannaHelper.Api.Printing
 
         private void AddAppetizers(IEnumerable<OrderDetail> appetizers, int size)
         {
-            if (!appetizers.Any())
+            if (appetizers.Count() == 0)
             {
                 return;
             }
@@ -160,7 +168,7 @@ namespace CappannaHelper.Api.Printing
 
         private void AddFirstDishes(IEnumerable<OrderDetail> firstDishes, int size)
         {
-            if (!firstDishes.Any())
+            if (firstDishes.Count() == 0)
             {
                 return;
             }
@@ -171,7 +179,7 @@ namespace CappannaHelper.Api.Printing
 
         private void AddSecondDishes(IEnumerable<OrderDetail> secondDishes, int size)
         {
-            if (!secondDishes.Any())
+            if (secondDishes.Count() == 0)
             {
                 return;
             }
@@ -182,7 +190,7 @@ namespace CappannaHelper.Api.Printing
 
         private void AddSideDishes(IEnumerable<OrderDetail> sideDishes, int size)
         {
-            if (!sideDishes.Any())
+            if (sideDishes.Count() == 0)
             {
                 return;
             }
@@ -193,7 +201,7 @@ namespace CappannaHelper.Api.Printing
 
         private void AddWines(IEnumerable<OrderDetail> wines, int size)
         {
-            if (!wines.Any())
+            if (wines.Count() == 0)
             {
                 return;
             }
@@ -204,7 +212,7 @@ namespace CappannaHelper.Api.Printing
 
         private void AddWaters(IEnumerable<OrderDetail> waters, int size)
         {
-            if (!waters.Any())
+            if (waters.Count() == 0)
             {
                 return;
             }
@@ -215,7 +223,7 @@ namespace CappannaHelper.Api.Printing
 
         private void AddOtherDrinks(IEnumerable<OrderDetail> otherDrinks, int size)
         {
-            if (!otherDrinks.Any())
+            if (otherDrinks.Count() == 0)
             {
                 return;
             }
@@ -226,7 +234,7 @@ namespace CappannaHelper.Api.Printing
 
         private void AddDesserts(IEnumerable<OrderDetail> desserts, int size)
         {
-            if (!desserts.Any())
+            if (desserts.Count() == 0)
             {
                 return;
             }
@@ -277,7 +285,7 @@ namespace CappannaHelper.Api.Printing
                 section.SetSize(size);
                 section.CreateLabel().SetContent(name);
                 section.CreateLabel().SetContent($"{dots}");
-                section.CreateLabel().SetContent($"{detail.Quantity,2}");
+                section.CreateLabel().SetContent($"{detail.Quantity.ToString().PadLeft(2, ' ')}");
                 section.NewLine();
             }
         }
