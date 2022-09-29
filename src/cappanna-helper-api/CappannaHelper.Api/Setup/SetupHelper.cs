@@ -214,7 +214,7 @@ namespace CappannaHelper.Api.Setup
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Piadina prosciutto formaggio", 5.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Cresciola di polenta", 3.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Bruschetta salsa pesce", 2.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Bruschetta salsa verdure", 1.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Bruschetta salsa", 1.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Panino con salsiccia", 5.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Panino con hamburger", 5.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.SECOND_DISH, "Panino con bistecca", 5.0M, errors);
@@ -261,7 +261,7 @@ namespace CappannaHelper.Api.Setup
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Saltatempo", 13.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Raggi d'uva (Bio)", 8.0M, errors);
 			await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Oinochoe (Bio)", 14.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Valde", 11.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Le Vele", 12.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Brecciole", 12.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Spumante 'Cuvee Tradition'", 11.0M, errors);
         }
