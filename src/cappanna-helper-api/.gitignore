@@ -19,8 +19,6 @@ bld/
 
 # Publish Web Output
 *.[Pp]ublish.xml
-# TODO: Comment the next line if you want to checkin your web deploy settings
-# but database connection strings (with potential passwords) will be unencrypted
 *.pubxml
 *.publishproj
 wwwroot/
@@ -43,11 +41,6 @@ UpgradeLog*.htm
 
 # Test and coverage artifacts
 coverage/*
-!coverage/run.ps1
 
-# Application runtime files
-*.db
-*.db-journal
-*.db-shm
-*.db-wal
-RawPrint.txt
+# Docker
+.env

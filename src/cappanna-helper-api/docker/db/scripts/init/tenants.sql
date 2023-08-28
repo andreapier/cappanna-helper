@@ -1,0 +1,2 @@
+CREATE DATABASE tenants;
+GRANT ALL PRIVILEGES ON DATABASE tenants TO postgres;

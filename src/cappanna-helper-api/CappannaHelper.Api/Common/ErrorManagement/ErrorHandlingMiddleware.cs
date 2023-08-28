@@ -1,26 +1,11 @@
-﻿using System;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+﻿using System.Net;
+using System.Text.Json;
 
 namespace CappannaHelper.Api.Common.ErrorManagement
 {
     public class ErrorHandlingMiddleware
     {
-        private readonly static JsonSerializerSettings _jsonSettings;
-
         private readonly RequestDelegate next;
-
-        static ErrorHandlingMiddleware()
-        {
-            _jsonSettings = new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-        }
 
         public ErrorHandlingMiddleware(RequestDelegate next)
         {
@@ -39,15 +24,15 @@ namespace CappannaHelper.Api.Common.ErrorManagement
             }
         }
 
-        private async Task HandleExceptionAsync(HttpContext context, Exception exception, ILogger logger)
+        private static async Task HandleExceptionAsync(HttpContext context, Exception exception, ILogger logger)
         {
             logger.LogError(exception, "Errore imprevisto");
             var code = HttpStatusCode.InternalServerError;
-            var result = JsonConvert.SerializeObject(new
+            var result = JsonSerializer.Serialize(new
             {
                 exception.Message,
                 exception.StackTrace
-            }, _jsonSettings);
+            });
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int) code;
 

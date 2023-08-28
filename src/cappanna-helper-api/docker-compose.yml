@@ -1,0 +1,103 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./docker/db/scripts/init/keycloak.sql:/docker-entrypoint-initdb.d/keycloak.sql
+      - ./docker/db/scripts/init/cappanna_helper_orders.sql:/docker-entrypoint-initdb.d/cappanna_helper_orders.sql
+      - ./docker/db/scripts/init/tenants.sql:/docker-entrypoint-initdb.d/tenants.sql
+
+  pgadmin:
+    image: dpage/pgadmin4:7
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - 5050:80
+
+  seq:
+    image: datalust/seq:2023
+    environment:
+      ACCEPT_EULA: Y
+    ports:
+      - 5051:80
+      - 5341:5341
+    volumes:
+      - seq-data:/data
+
+  smtp:
+    image: marcopas/docker-mailslurper
+    ports:
+      - 2500:2500
+      - 5052:8080
+      - 8085:8085
+
+  keycloak:
+    depends_on:
+      - db
+    image: quay.io/keycloak/keycloak:22.0.1
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      KC_DB_URL_HOST: jdbc:postgres://db/keycloak
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 8443
+      KC_HOSTNAME_STRICT_BACKCHANNEL: true
+      KC_DB_USERNAME: ${POSTGRES_USER}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      KC_HEALTH_ENABLED: true
+      KC_LOG_LEVEL: info
+      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/conf/server.crt.pem
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/conf/server.key.pem
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM}
+      KEYCLOAK_CH_TENANT_SECRET: ${KEYCLOAK_CH_TENANT_SECRET}
+    command: start-dev --features=token-exchange,declarative-user-profile --import-realm --override=true
+    ports:
+      - 8443:8443
+    volumes:
+      - ./docker/keycloak/cert.pem:/opt/keycloak/conf/server.crt.pem:ro
+      - ./docker/keycloak/key.pem:/opt/keycloak/conf/server.key.pem:ro
+      - ./docker/keycloak/realm.json:/opt/keycloak/data/import/realm.json:ro
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_VHOST}
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker/rabbitmq/log/:/var/log/rabbitmq
+
+  # ch-tenant:
+  #   depends_on:
+  #     - db
+  #   build:
+  #     context: .
+  #     dockerfile: ./CappannaHelper.Tenant/Dockerfile
+  #   environment:
+  #     ASPNETCORE_ENVIRONMENT: Development
+  #     ConnectionStrings__AppDbContext: Host=db;Database=tenants;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};
+  #     Persistence__Migrations__Enabled: true
+  #     Seeds__Enabled: true
+  #     Auth__Authority: https://keycloak:8443/realms/${KEYCLOAK_REALM}
+  #     Auth__Audience: ch-tenant
+  #     MassTransit__Host: rabbitmq
+  #     MassTransit__Username: ${RABBITMQ_USER}
+  #     MassTransit__Password: ${RABBITMQ_PASS}
+  #   ports:
+  #     - 5100:80
+    
+volumes:
+  db-data:
+  seq-data:

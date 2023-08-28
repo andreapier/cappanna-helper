@@ -2,42 +2,39 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build web api",
-            "identifier": "Build web api",
+            "label": "build",
             "command": "dotnet",
+            "type": "process",
             "args": [
                 "build",
-                "${workspaceRoot}/CappannaHelper.Api/CappannaHelper.Api.csproj"
+                "${workspaceFolder}/CappannaHelper.sln",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
             ],
-            "type": "shell",
-            "group": "build",
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "Build tests",
-            "identifier": "Build tests",
+            "label": "publish",
             "command": "dotnet",
+            "type": "process",
             "args": [
-                "build",
-                "${workspaceRoot}/CappannaHelper.Api.Tests/CappannaHelper.Api.Tests.csproj"
+                "publish",
+                "${workspaceFolder}/CappannaHelper.sln",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
             ],
-            "type": "shell",
-            "group": "build",
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "Build all",
-            "identifier": "Build all",
+            "label": "watch",
             "command": "dotnet",
+            "type": "process",
             "args": [
-                "build",
-                "${workspaceRoot}/CappannaHelper.Api.sln"
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/CappannaHelper.sln"
             ],
-            "type": "shell",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
             "problemMatcher": "$msCompile"
         }
     ]
