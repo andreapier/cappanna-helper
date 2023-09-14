@@ -5,32 +5,27 @@ import { SIGNOUT_REQUESTED } from "actions/types";
 import localforage from "localforage";
 import history from "./../history";
 
-const deleteUserData = () =>
-  localforage
-    .removeItem("userData")
-    .catch(err =>
-      console.error("Error removing user data from local storage", err)
-    );
+const deleteUserData = () => localforage.removeItem("userData").catch((err) => console.error("Error removing user data from local storage", err));
 
 function* signout(action) {
-  try {
-    yield put(loadingChanged(true, "Logout in corso..."));
-    yield deleteUserData();
+    try {
+        yield put(loadingChanged(true, "Logout in corso..."));
+        yield deleteUserData();
 
-    const api = new Api();
-    yield call(api.signout);
-  } catch (e) {
-    console.error(e);
-    yield put(notifyError(e.message));
-  }
+        const api = new Api();
+        yield call(api.signout);
+    } catch (e) {
+        console.error(e);
+        yield put(notifyError(e.message));
+    }
 
-  yield put(signoutCompleted());
-  history.push("/");
-  yield put(loadingChanged(false));
+    yield put(signoutCompleted());
+    history.push("/");
+    yield put(loadingChanged(false));
 }
 
 function* signoutSaga() {
-  yield takeLatest(SIGNOUT_REQUESTED, signout);
+    yield takeLatest(SIGNOUT_REQUESTED, signout);
 }
 
 export default signoutSaga;

@@ -8,35 +8,31 @@ import Grid from "components/Grid";
 import ItemGrid from "components/Grid/ItemGrid";
 import { flex } from "variables/styles";
 
-const Footer = props => {
-  return (
-    <Grid className={props.classes.root} justifyContent="space-between">
-      <ItemGrid>
-        <Button variant="contained" onClick={props.goBack}>
-          <Create />
-          Modifica
-        </Button>
-      </ItemGrid>
-      <ItemGrid>
-        <Button
-          variant="contained"
-          onClick={() => props.confirmOrder(props.order)}
-          disabled={!props.canConfirm}
-        >
-          <ActionDone />
-          Conferma
-        </Button>
-      </ItemGrid>
-    </Grid>
-  );
+const Footer = (props) => {
+    return (
+        <Grid className={props.classes.root} justifyContent="space-between">
+            <ItemGrid>
+                <Button variant="contained" onClick={props.goBack}>
+                    <Create />
+                    Modifica
+                </Button>
+            </ItemGrid>
+            <ItemGrid>
+                <Button variant="contained" onClick={() => props.confirmOrder(props.order)} disabled={!props.canConfirm}>
+                    <ActionDone />
+                    Conferma
+                </Button>
+            </ItemGrid>
+        </Grid>
+    );
 };
 
 Footer.propTypes = {
-  goBack: PropTypes.func.isRequired,
-  confirmOrder: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired,
-  order: PropTypes.object.isRequired,
-  canConfirm: PropTypes.bool.isRequired
+    goBack: PropTypes.func.isRequired,
+    confirmOrder: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired,
+    order: PropTypes.object.isRequired,
+    canConfirm: PropTypes.bool.isRequired
 };
 
 export default withStyles(flex)(Footer);

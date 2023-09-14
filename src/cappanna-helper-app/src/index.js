@@ -11,14 +11,11 @@ const store = storeGenerator();
 store.dispatch(loadUserData());
 
 const renderApp = () => {
-  ReactDOM.render(
-    <App store={store} theme={theme} />,
-    document.getElementById("root")
-  );
+    ReactDOM.render(<App store={store} theme={theme} />, document.getElementById("root"));
 };
 
 renderApp();
 
 if (module.hot) {
-  module.hot.accept("containers/App", renderApp);
+    module.hot.accept("containers/App", renderApp);
 }

@@ -2,7 +2,7 @@ import React from "react";
 import EditUser from "containers/Users/Edit";
 
 const EditUserPage = () => {
-  return <EditUser />;
+    return <EditUser />;
 };
 
 export default EditUserPage;

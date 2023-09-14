@@ -19,25 +19,25 @@ import redirect from "routes/redirect";
 import settings from "routes/settings";
 
 const appRoutes = [
-  dashboard,
-  //users,
-  newUser,
-  //editUser,
-  menu,
-  orders,
-  newOrder,
-  confirmNewOrder,
-  order,
-  editOrder,
-  confirmEditedOrder,
-  aggregate,
-  calculator,
-  notifications,
-  signin,
-  settings,
-  signout,
-  signupOk,
-  redirect
+    dashboard,
+    //users,
+    newUser,
+    //editUser,
+    menu,
+    orders,
+    newOrder,
+    confirmNewOrder,
+    order,
+    editOrder,
+    confirmEditedOrder,
+    aggregate,
+    calculator,
+    notifications,
+    signin,
+    settings,
+    signout,
+    signupOk,
+    redirect
 ];
 
 export default appRoutes;

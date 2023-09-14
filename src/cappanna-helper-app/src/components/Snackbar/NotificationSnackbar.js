@@ -6,35 +6,35 @@ import ErrorIcon from "@material-ui/icons/Error";
 import Snackbar from "components/Snackbar/Snackbar";
 import SlideUpTransition from "components/Snackbar/SlideUpTransition";
 
-const NotificationSnackbar = props => {
-  let icon = ErrorIcon;
-  let color = "danger";
+const NotificationSnackbar = (props) => {
+    let icon = ErrorIcon;
+    let color = "danger";
 
-  if (props.type === 'info') {
-    icon = Info;
-    color = "primary";
-  } else if (props.type === 'warning') {
-    icon = Warning;
-    color = "warning";
-  }
-  
-  return (
-    <Snackbar
-      onClose={props.handleClose}
-      message={props.message}
-      color={color}
-      icon={icon}
-      autoHideDuration={5000}
-      transition={SlideUpTransition}
-      open={!!props.message}
-      place="bc"
-    />
-  );
+    if (props.type === "info") {
+        icon = Info;
+        color = "primary";
+    } else if (props.type === "warning") {
+        icon = Warning;
+        color = "warning";
+    }
+
+    return (
+        <Snackbar
+            onClose={props.handleClose}
+            message={props.message}
+            color={color}
+            icon={icon}
+            autoHideDuration={5000}
+            transition={SlideUpTransition}
+            open={!!props.message}
+            place="bc"
+        />
+    );
 };
 
 NotificationSnackbar.propTypes = {
-  type: PropTypes.string.isRequired,
-  message: PropTypes.string.isRequired
+    type: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired
 };
 
 export default NotificationSnackbar;

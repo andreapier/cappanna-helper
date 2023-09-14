@@ -5,28 +5,26 @@ import rootSaga from "./sagas";
 import createSagaMiddleware from "redux-saga";
 import signalRMiddleware from "api/signalR/middleware";
 
-export default (initialState = {}) => {
-  const sagaMiddleware = createSagaMiddleware();
-  const middlewares = [signalRMiddleware, sagaMiddleware];
-  const composeEnhancers = composeWithDevTools({
-    actionsDenylist: ["@@"]
-  });
+const store = (initialState = {}) => {
+    const sagaMiddleware = createSagaMiddleware();
+    const middlewares = [signalRMiddleware, sagaMiddleware];
+    const composeEnhancers = composeWithDevTools({
+        actionsDenylist: ["@@"]
+    });
 
-  const store = createStore(
-    rootReducer,
-    initialState,
-    composeEnhancers(applyMiddleware(...middlewares))
-  );
+    const store = createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(...middlewares)));
 
-  if (process.env.NODE_ENV !== "production") {
-    if (module.hot) {
-      module.hot.accept("reducers", () => {
-        store.replaceReducer(rootReducer);
-      });
+    if (process.env.NODE_ENV !== "production") {
+        if (module.hot) {
+            module.hot.accept("reducers", () => {
+                store.replaceReducer(rootReducer);
+            });
+        }
     }
-  }
 
-  sagaMiddleware.run(rootSaga);
+    sagaMiddleware.run(rootSaga);
 
-  return store;
+    return store;
 };
+
+export default store;

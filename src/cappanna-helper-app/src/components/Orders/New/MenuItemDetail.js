@@ -8,89 +8,72 @@ import { withStyles } from "@material-ui/core";
 import { flex } from "variables/styles";
 
 const style = {
-  root: {
-    ...flex.alignCenter,
-    margin: "2px 0px",
-    fontSize: "0.875em"
-  },
-  end: {
-    ...flex.root,
-    ...flex.alignCenter,
-    justifyContent: "flex-end"
-  },
-  item55: {
-    ...flex.alignCenter,
-    minWidth: "55px",
-    textAlign: "center"
-  },
-  item17: {
-    ...flex.alignCenter,
-    textAlign: "center",
-    minWidth: "17px",
-    justifyContent: "center"
-  }
+    root: {
+        ...flex.alignCenter,
+        margin: "2px 0px",
+        fontSize: "0.875em"
+    },
+    end: {
+        ...flex.root,
+        ...flex.alignCenter,
+        justifyContent: "flex-end"
+    },
+    item55: {
+        ...flex.alignCenter,
+        minWidth: "55px",
+        textAlign: "center"
+    },
+    item17: {
+        ...flex.alignCenter,
+        textAlign: "center",
+        minWidth: "17px",
+        justifyContent: "center"
+    }
 };
 
-const MenuItemDetail = props => {
-  return (
-    <div className={props.classes.root}>
-      <div>{props.detail.item.name}</div>
-      <div className={props.classes.end}>
-        <div className={props.classes.item55}>
-          <AmountFormat amount={props.detail.item.price} />
+const MenuItemDetail = (props) => {
+    return (
+        <div className={props.classes.root}>
+            <div>{props.detail.item.name}</div>
+            <div className={props.classes.end}>
+                <div className={props.classes.item55}>
+                    <AmountFormat amount={props.detail.item.price} />
+                </div>
+                <div>
+                    <IconButton
+                        onClick={() => props.incrementOrderDetailQuantity(props.detail.item.id, 1, props.detail.item.price)}
+                        disabled={props.detail.item.unitsInStock + props.detail.initialQuantity - props.detail.quantity <= 0}
+                    >
+                        <ContentAdd />
+                    </IconButton>
+                </div>
+                <div className={props.classes.item17}>{props.detail.quantity}</div>
+                <div>
+                    <IconButton
+                        onClick={() => props.incrementOrderDetailQuantity(props.detail.item.id, -1, props.detail.item.price)}
+                        disabled={props.detail.quantity === 0}
+                    >
+                        <ContentRemove />
+                    </IconButton>
+                </div>
+            </div>
         </div>
-        <div>
-          <IconButton
-            onClick={() =>
-              props.incrementOrderDetailQuantity(
-                props.detail.item.id,
-                1,
-                props.detail.item.price
-              )
-            }
-            disabled={
-              props.detail.item.unitsInStock +
-                props.detail.initialQuantity -
-                props.detail.quantity <=
-              0
-            }
-          >
-            <ContentAdd />
-          </IconButton>
-        </div>
-        <div className={props.classes.item17}>{props.detail.quantity}</div>
-        <div>
-          <IconButton
-            onClick={() =>
-              props.incrementOrderDetailQuantity(
-                props.detail.item.id,
-                -1,
-                props.detail.item.price
-              )
-            }
-            disabled={props.detail.quantity === 0}
-          >
-            <ContentRemove />
-          </IconButton>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 MenuItemDetail.propTypes = {
-  detail: PropTypes.shape({
-    id: PropTypes.number,
-    quantity: PropTypes.number.isRequired,
-    initialQuantity: PropTypes.number.isRequired,
-    item: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      unitsInStock: PropTypes.number.isRequired
-    }).isRequired
-  }).isRequired,
-  incrementOrderDetailQuantity: PropTypes.func.isRequired
+    detail: PropTypes.shape({
+        id: PropTypes.number,
+        quantity: PropTypes.number.isRequired,
+        initialQuantity: PropTypes.number.isRequired,
+        item: PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+            price: PropTypes.number.isRequired,
+            unitsInStock: PropTypes.number.isRequired
+        }).isRequired
+    }).isRequired,
+    incrementOrderDetailQuantity: PropTypes.func.isRequired
 };
 
 export default withStyles(style)(MenuItemDetail);

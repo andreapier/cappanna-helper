@@ -16,21 +16,21 @@ import stands from "reducers/stands";
 import users from "reducers/users";
 
 const rootReducer = combineReducers({
-  user,
-  api,
-  menuDetails,
-  orders,
-  newOrderHeader,
-  newOrderDetails,
-  message,
-  selectedOrder,
-  notifications,
-  calculator,
-  dashboard,
-  aggregation,
-  settings,
-  stands,
-  users
+    user,
+    api,
+    menuDetails,
+    orders,
+    newOrderHeader,
+    newOrderDetails,
+    message,
+    selectedOrder,
+    notifications,
+    calculator,
+    dashboard,
+    aggregation,
+    settings,
+    stands,
+    users
 });
 
 export default rootReducer;

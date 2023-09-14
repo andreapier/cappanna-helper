@@ -5,14 +5,14 @@ import NotesForm from "containers/Orders/New/Confirmation/NotesForm";
 import ConnectedFooter from "containers/Orders/New/Confirmation/ConnectedFooter";
 
 const OrderConfirmationPage = () => {
-  return (
-    <div>
-      <ConnectedHeader />
-      <ConnectedMain />
-      <NotesForm />
-      <ConnectedFooter />
-    </div>
-  );
+    return (
+        <div>
+            <ConnectedHeader />
+            <ConnectedMain />
+            <NotesForm />
+            <ConnectedFooter />
+        </div>
+    );
 };
 
 export default OrderConfirmationPage;

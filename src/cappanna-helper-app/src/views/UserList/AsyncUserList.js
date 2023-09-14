@@ -3,11 +3,11 @@ import WaitLoader from "components/WaitDialog/WaitLoader";
 
 const UserList = lazy(() => import("views/UserList"));
 const AsyncUserList = () => {
-  return (
-    <Suspense fallback={<WaitLoader />}>
-      <UserList />
-    </Suspense>
-  );
+    return (
+        <Suspense fallback={<WaitLoader />}>
+            <UserList />
+        </Suspense>
+    );
 };
 
 export default AsyncUserList;

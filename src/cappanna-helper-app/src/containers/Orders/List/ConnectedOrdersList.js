@@ -4,51 +4,49 @@ import { loadOrdersListRequested, resetOrder } from "actions";
 import List from "components/Orders/List";
 
 class ConnectedOrdersList extends Component {
-  componentDidMount() {
-    this.props.loadOrdersListRequested();
-  }
+    componentDidMount() {
+        this.props.loadOrdersListRequested();
+    }
 
-  render() {
-    return <List orders={this.props.orders} />;
-  }
+    render() {
+        return <List orders={this.props.orders} filters={this.props.filters} />;
+    }
 
-  componentWillUnmount() {
-    this.props.resetOrder();
-  }
+    componentWillUnmount() {
+        this.props.resetOrder();
+    }
 }
 
-const mapStateToProps = state => {
-  return {
-    orders: state.orders.items
-      .filter(o => {
-        if (state.orders.filters.user) {
-          return o.createdById === state.user.userId;
-        }
+const mapStateToProps = (state) => {
+    return {
+        orders: state.orders.items
+            .filter((o) => {
+                if (state.orders.filters.user) {
+                    return o.createdById === state.user.userId;
+                }
 
-        if (state.orders.filters.stand) {
-          return o.standId === state.user.settings.standId;
-        }
+                if (state.orders.filters.stand) {
+                    return o.standId === state.user.settings.standId;
+                }
 
-        return true;
-      })
-      .filter(o => {
-        if (state.orders.filters.status) {
-          return o.status < 4;
-        }
+                return true;
+            })
+            .filter((o) => {
+                if (state.orders.filters.status) {
+                    return o.status < 4;
+                }
 
-        return true;
-      })
-  };
+                return true;
+            }),
+        filters: state.orders.filters
+    };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    loadOrdersListRequested: () => dispatch(loadOrdersListRequested()),
-    resetOrder: () => dispatch(resetOrder())
-  };
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadOrdersListRequested: () => dispatch(loadOrdersListRequested()),
+        resetOrder: () => dispatch(resetOrder())
+    };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ConnectedOrdersList);
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectedOrdersList);

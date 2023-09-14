@@ -4,31 +4,24 @@ import RegularCard from "components/Cards/RegularCard";
 import Table from "components/Table";
 import { formatAmount } from "utils/string";
 
-const buildTableRow = data => [
-  data.standName,
-  data.ordersQuantity,
-  formatAmount(data.income)
-];
+const buildTableRow = (data) => [data.standName, data.ordersQuantity, formatAmount(data.income)];
 
-const OrderStatCard = props => {
-  return (
-    <RegularCard cardTitle="Ordini per stand">
-      <Table
-        tableHead={["Stand", "Ordini", "Incasso"]}
-        tableData={props.data.map(buildTableRow)}
-      />
-    </RegularCard>
-  );
+const OrderStatCard = (props) => {
+    return (
+        <RegularCard cardTitle="Ordini per stand">
+            <Table tableHead={["Stand", "Ordini", "Incasso"]} tableData={props.data.map(buildTableRow)} />
+        </RegularCard>
+    );
 };
 
 OrderStatCard.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      standName: PropTypes.string.isRequired,
-      orderCount: PropTypes.number.isRequired,
-      income: PropTypes.number.isRequired
-    })
-  ).isRequired
+    data: PropTypes.arrayOf(
+        PropTypes.shape({
+            standName: PropTypes.string.isRequired,
+            ordersQuantity: PropTypes.number.isRequired,
+            income: PropTypes.number.isRequired
+        })
+    ).isRequired
 };
 
 export default OrderStatCard;

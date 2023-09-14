@@ -6,45 +6,37 @@ import { withRouter } from "react-router-dom";
 import buildFilledOrderDetails from "utils/buildFilledOrderDetails";
 
 class ConnectedBody extends Component {
-  componentDidMount() {
-    if (this.props.needsMenuDetailsLoading) {
-      this.props.loadMenuDetailsRequested();
-    }
-    this.props.loadSelectedOrderRequested();
-  }
-
-  render() {
-    if (this.props.needsMenuDetailsLoading) {
-      return null;
+    componentDidMount() {
+        if (this.props.needsMenuDetailsLoading) {
+            this.props.loadMenuDetailsRequested();
+        }
+        this.props.loadSelectedOrderRequested();
     }
 
-    return <Body dishList={this.props.dishList} notes={this.props.notes} />;
-  }
+    render() {
+        if (this.props.needsMenuDetailsLoading) {
+            return null;
+        }
+
+        return <Body dishList={this.props.dishList} notes={this.props.notes} />;
+    }
 }
 
-const mapStateToProps = state => {
-  const needsMenuDetailsLoading = state.menuDetails.length === 0;
+const mapStateToProps = (state) => {
+    const needsMenuDetailsLoading = state.menuDetails.length === 0;
 
-  return {
-    dishList: state.selectedOrder && !needsMenuDetailsLoading
-      ? buildFilledOrderDetails(state.selectedOrder.details, state.menuDetails)
-      : [],
-    notes: state.selectedOrder ? state.selectedOrder.notes || "" : "",
-    needsMenuDetailsLoading
-  };
+    return {
+        dishList: state.selectedOrder && !needsMenuDetailsLoading ? buildFilledOrderDetails(state.selectedOrder.details, state.menuDetails) : [],
+        notes: state.selectedOrder ? state.selectedOrder.notes || "" : "",
+        needsMenuDetailsLoading
+    };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    loadSelectedOrderRequested: () =>
-      dispatch(loadSelectedOrderRequested(ownProps.match.params.id)),
-    loadMenuDetailsRequested: () => dispatch(loadMenuDetailsRequested())
-  };
+    return {
+        loadSelectedOrderRequested: () => dispatch(loadSelectedOrderRequested(ownProps.match.params.id)),
+        loadMenuDetailsRequested: () => dispatch(loadMenuDetailsRequested())
+    };
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ConnectedBody)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ConnectedBody));

@@ -3,18 +3,18 @@ import PropTypes from "prop-types";
 import Preview from "components/Users/List/Preview";
 import { List } from "@material-ui/core";
 
-const UsersList = props => {
-  return (
-    <List>
-      {props.users.map(u => (
-        <Preview user={u} key={u.id} />
-      ))}
-    </List>
-  );
+const UsersList = (props) => {
+    return (
+        <List>
+            {props.users.map((u) => (
+                <Preview user={u} key={u.id} />
+            ))}
+        </List>
+    );
 };
 
 UsersList.propTypes = {
-  users: PropTypes.array.isRequired
+    users: PropTypes.array.isRequired
 };
 
 export default UsersList;

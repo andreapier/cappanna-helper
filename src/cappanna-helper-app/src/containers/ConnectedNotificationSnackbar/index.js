@@ -4,28 +4,26 @@ import NotificationSnackbar from "components/Snackbar/NotificationSnackbar";
 import { resetNotification } from "actions";
 
 class ConnectedNotificationSnackbar extends Component {
-  render() {
-    if (this.props.message === '') {
-      return null;
-    }
+    render() {
+        if (this.props.message === "") {
+            return null;
+        }
 
-    return <NotificationSnackbar {...this.props} />;
-  }
+        return <NotificationSnackbar {...this.props} />;
+    }
 }
 
-const mapStateToProps = state => {
-  return {
-    type: state.message.type,
-    message: state.message.message
-  };
+const mapStateToProps = (state) => {
+    return {
+        type: state.message.type,
+        message: state.message.message
+    };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    handleClose: () => dispatch(resetNotification())
-  };
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handleClose: () => dispatch(resetNotification())
+    };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  ConnectedNotificationSnackbar
-);
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectedNotificationSnackbar);

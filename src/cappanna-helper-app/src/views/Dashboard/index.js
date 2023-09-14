@@ -2,7 +2,7 @@ import React from "react";
 import ConnectedDashboard from "containers/ConnectedDashboard";
 
 const DashboardPage = () => {
-  return <ConnectedDashboard />;
+    return <ConnectedDashboard />;
 };
 
 export default DashboardPage;

@@ -24,31 +24,31 @@ import loadStandsListSaga from "./loadStandsListSaga";
 import loadUsersListSaga from "./loadUsersListSaga";
 
 function* rootSaga() {
-  yield all([
-    signinSaga(),
-    signoutSaga(),
-    signupSaga(),
-    loadUserDataSaga(),
-    loadOrdersListSaga(),
-    confirmOrderSaga(),
-    orderChangedSaga(),
-    deleteOrderSaga(),
-    closeOrderSaga(),
-    loadSelectedOrderSaga(),
-    printOrderSaga(),
-    loadMenuDetailsSaga(),
-    editMenuDetailSaga(),
-    menuDetailsChangedSaga(),
-    signalApiErrorSaga(),
-    signalApiSuccessSaga(),
-    loadNotificationsListSaga(),
-    loadDashboardDataSaga(),
-    orderDetailsAggregationRequestedSaga(),
-    loadSettingsListSaga(),
-    setSettingSaga(),
-    loadStandsListSaga(),
-    loadUsersListSaga()
-  ]);
+    yield all([
+        signinSaga(),
+        signoutSaga(),
+        signupSaga(),
+        loadUserDataSaga(),
+        loadOrdersListSaga(),
+        confirmOrderSaga(),
+        orderChangedSaga(),
+        deleteOrderSaga(),
+        closeOrderSaga(),
+        loadSelectedOrderSaga(),
+        printOrderSaga(),
+        loadMenuDetailsSaga(),
+        editMenuDetailSaga(),
+        menuDetailsChangedSaga(),
+        signalApiErrorSaga(),
+        signalApiSuccessSaga(),
+        loadNotificationsListSaga(),
+        loadDashboardDataSaga(),
+        orderDetailsAggregationRequestedSaga(),
+        loadSettingsListSaga(),
+        setSettingSaga(),
+        loadStandsListSaga(),
+        loadUsersListSaga()
+    ]);
 }
 
 export default rootSaga;
