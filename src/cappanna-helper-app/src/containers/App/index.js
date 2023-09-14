@@ -6,22 +6,34 @@ import React, { Component } from "react";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import history from "./../../history";
 import { Provider } from "react-redux";
-import ConnectedPrivateRoute from "containers/ConnectedPrivateRoute";
+import ConnectedRequireAuth from "containers/ConnectedRequireAuth";
 import ConnectedSidebar from "containers/ConnectedSidebar";
 import ConnectedWaitDialog from "containers/ConnectedWaitDialog";
 import ConnectedNotificationSnackbar from "containers/ConnectedNotificationSnackbar";
 import RoutingAwareHeader from "containers/RoutingAwareHeader";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
+import signinRoute from "routes/users/signin";
 
 const switchRoutes = (routes) => (
     <Switch>
         {routes.map((route, key) => {
             if (route.redirect) {
-                return <Redirect from={route.path} to={route.to} key={key} />;
+                return <Route path={route.path} render={() => <Redirect to={route.to}/>} key={key} />;
             }
 
             if (route.protected) {
-                return <ConnectedPrivateRoute roles={route.roles} path={route.path} component={route.component} key={key} exact />;
+                return (
+                    <Route
+                        key={key}
+                        exact
+                        component={() => 
+                            (<ConnectedRequireAuth redirectTo={signinRoute.path} roles={route.roles}>
+                                {route.component}
+                            </ConnectedRequireAuth>)
+                        }
+                        path={route.path}
+                    />
+                );
             }
 
             return <Route path={route.path} component={route.component} key={key} exact />;
