@@ -10,28 +10,23 @@ namespace CappannaHelper.Api.Common.ErrorManagement
 {
     public class ErrorHandlingMiddleware
     {
-        private readonly static JsonSerializerSettings _jsonSettings;
-
-        private readonly RequestDelegate next;
-
-        static ErrorHandlingMiddleware()
+        private readonly static JsonSerializerSettings _jsonSettings = new JsonSerializerSettings
         {
-            _jsonSettings = new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-        }
+            ContractResolver = new CamelCasePropertyNamesContractResolver()
+        };
+
+        private readonly RequestDelegate _next;
 
         public ErrorHandlingMiddleware(RequestDelegate next)
         {
-            this.next = next;
+            _next = next;
         }
 
         public async Task Invoke(HttpContext context, ILogger<ErrorHandlingMiddleware> logger)
         {
             try
             {
-                await next(context);
+                await _next(context);
             }
             catch(Exception ex)
             {

@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
 namespace CappannaHelper.Api.Common.DataModel.Mapping
 {
@@ -10,12 +9,12 @@ namespace CappannaHelper.Api.Common.DataModel.Mapping
 
         protected EntityMapping(ModelBuilder builder)
         {
-            _builder = builder ?? throw new ArgumentNullException(nameof(builder));
+            _builder = builder;
         }
 
         public void Build()
         {
-            _builder.Entity<T>(e => BuildEntityConfiguration(e));
+            _builder.Entity<T>(BuildEntityConfiguration);
         }
 
         protected abstract void BuildEntityConfiguration(EntityTypeBuilder<T> entityBuilder);

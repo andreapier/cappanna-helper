@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using CappannaHelper.Api.Hubs;
 using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Persistence.Modelling;
@@ -14,6 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace CappannaHelper.Api.Controllers
 {
@@ -48,45 +48,36 @@ namespace CappannaHelper.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            List<ChOrder> result;
+            var transaction = await _context.Database.BeginTransactionAsync();
+            var currentShift = await _shiftManager.GetOrCreateCurrentAsync();
+            var result = await _context.Orders
+                .Include(e => e.CreatedBy)
+                .Where(o => o.ShiftId == currentShift.Id)
+                .OrderByDescending(o => o.CreationTimestamp)
+                .ToListAsync();
 
-            using (var transaction = await _context.Database.BeginTransactionAsync())
-            {
-                var currentShift = await _shiftManager.GetOrCreateCurrentAsync();
-                result = await _context.Orders
-                    .Include(e => e.CreatedBy)
-                    .Where(o => o.ShiftId == currentShift.Id)
-                    .OrderByDescending(o => o.CreationTimestamp)
-                    .ToListAsync();
-
-                transaction.Commit();
-            }
-
+            await transaction.CommitAsync();
             return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            ChOrder result;
-
-            using (var transaction = await _context.Database.BeginTransactionAsync())
-            {
-                result = await _context
-                    .Orders
-                    .Include(o => o.CreatedBy)
-                    .Include(o => o.Details)
-                    .ThenInclude(d => d.Item)
-                    .SingleOrDefaultAsync(o => o.Id == id);
-
-                transaction.Commit();
-            }
+            var transaction = await _context.Database.BeginTransactionAsync();
+            var result = await _context
+                .Orders
+                .Include(o => o.CreatedBy)
+                .Include(o => o.Details)
+                .ThenInclude(d => d.Item)
+                .SingleOrDefaultAsync(o => o.Id == id);
 
             if (result == null)
             {
+                await transaction.RollbackAsync();
                 return NotFound(new { Message = $"L'ordine con Id '{id}' non esiste" });
             }
 
+            await transaction.CommitAsync();
             return Ok(result);
         }
 
@@ -103,9 +94,14 @@ namespace CappannaHelper.Api.Controllers
                 return BadRequest(new { Message = "Impossibile inviare un ordine con il campo Id valorizzato" });
             }
 
-            if (order.ChTable == null)
+            if (string.IsNullOrWhiteSpace(order.ChTable))
             {
                 return BadRequest(new { Message = "Impossibile inviare un ordine senza specificare il tavolo" });
+            }
+
+            if (string.IsNullOrWhiteSpace(order.Customer))
+            {
+                return BadRequest(new { Message = "Impossibile inviare un ordine senza specificare il cliente" });
             }
 
             if (order.Seats <= 0)
@@ -127,112 +123,110 @@ namespace CappannaHelper.Api.Controllers
             var limitedStockMenuDetails = new List<MenuDetail>();
             var autoPrint = false;
 
-            using (var transaction = await _context.Database.BeginTransactionAsync())
+            var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                try
+                var creationOperation = OperationTypes.Creation;
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                var shift = await _shiftManager.GetOrCreateCurrentAsync();
+
+                autoPrint = await _settingManager.GetSettingValue<bool>(Setting.AUTO_PRINT);
+
+                shift.OrderCounter++;
+
+                order.Operations = new List<ChOrderOperation>
                 {
-                    var creationOperationId = (int)OperationTypes.Creation;
-                    var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                    var shift = await _shiftManager.GetOrCreateCurrentAsync();
-
-                    autoPrint = await _settingManager.GetSettingValue<bool>(Setting.AUTO_PRINT);
-
-                    shift.OrderCounter++;
-
-                    order.Operations = new List<ChOrderOperation>
+                    new ChOrderOperation
                     {
-                        new ChOrderOperation
+                        OperationTimestamp = DateTime.Now,
+                        Type = creationOperation,
+                        UserId = userId
+                    }
+                };
+
+                order.CreatedById = userId;
+                order.Status = creationOperation;
+                order.ShiftId = shift.Id;
+                order.ShiftCounter = shift.OrderCounter;
+
+                await SetStandAsync(order);
+
+                var dbOrder = await _context.Orders.AddAsync(order);
+                await _context.SaveChangesAsync();
+
+                result = await _context
+                    .Orders
+                    .Include(o => o.CreatedBy)
+                    .Include(o => o.Details)
+                    .ThenInclude(d => d.Item)
+                    .SingleAsync(o => o.Id == dbOrder.Entity.Id);
+                    
+                shift.Income += result.Details.Sum(d => d.Quantity * d.Item.Price);
+
+                foreach(var detail in result.Details)
+                {
+                    if (detail.Item.UnitsInStock.HasValue)
+                    {
+                        detail.Item.UnitsInStock -= result.Details.Single(d => d.ItemId == detail.ItemId).Quantity;
+
+                        if (detail.Item.UnitsInStock.Value < 0)
+                        {
+                            detail.Item.UnitsInStock = 0;
+                        }
+
+                        limitedStockMenuDetails.Add(detail.Item);
+                    }
+                }
+
+                if (autoPrint)
+                {
+                    try
+                    {
+                        await _printService.PrintAsync(result);
+                    }
+                    catch(Exception e)
+                    {
+                        throw new Exception("Impossibile stampare l'ordine", e);
+                    }
+
+                    try
+                    {
+                        var printOperation = OperationTypes.Print;
+
+                        result.Operations.Add(new ChOrderOperation
                         {
                             OperationTimestamp = DateTime.Now,
-                            TypeId = creationOperationId,
-                            UserId = userId
-                        }
-                    };
-
-                    order.CreatedById = userId;
-                    order.Status = creationOperationId;
-                    order.ShiftId = shift.Id;
-                    order.ShiftCounter = shift.OrderCounter;
-
-                    SetStand(order);
-
-                    var dbOrder = await _context.Orders.AddAsync(order);
-                    await _context.SaveChangesAsync();
-
-                    result = await _context
-                        .Orders
-                        .Include(o => o.CreatedBy)
-                        .Include(o => o.Details)
-                        .ThenInclude(d => d.Item)
-                        .SingleAsync(o => o.Id == dbOrder.Entity.Id);
-                    
-                    shift.Income += result.Details.Sum(d => d.Quantity * d.Item.Price);
-
-                    foreach(var detail in result.Details)
-                    {
-                        if (detail.Item.UnitsInStock.HasValue)
-                        {
-                            detail.Item.UnitsInStock -= result.Details.Single(d => d.ItemId == detail.ItemId).Quantity;
-
-                            if (detail.Item.UnitsInStock.Value < 0)
-                            {
-                                detail.Item.UnitsInStock = 0;
-                            }
-
-                            limitedStockMenuDetails.Add(detail.Item);
-                        }
+                            Type = printOperation,
+                            UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                        });
+                        result.Status = printOperation;
                     }
-
-                    if (autoPrint)
+                    catch(Exception e)
                     {
-                        try
-                        {
-                            await _printService.PrintAsync(result);
-                        }
-                        catch(Exception e)
-                        {
-                            throw new Exception("Impossibile stampare l'ordine", e);
-                        }
-
-                        try
-                        {
-                            var printOperationId = (int) OperationTypes.Print;
-
-                            result.Operations.Add(new ChOrderOperation
-                            {
-                                OperationTimestamp = DateTime.Now,
-                                TypeId = printOperationId,
-                                UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
-                            });
-                            result.Status = printOperationId;
-                        }
-                        catch(Exception e)
-                        {
-                            throw new Exception("Impossibile salvare l'operazione di stampa dell'ordine", e);
-                        }
+                        throw new Exception("Impossibile salvare l'operazione di stampa dell'ordine", e);
                     }
+                }
 
-                    await _context.SaveChangesAsync();
-                    transaction.Commit();
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Impossibile salvare l'ordine. Reinviare l'ordine", e);
-                }
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Impossibile salvare l'ordine. Reinviare l'ordine", e);
             }
 
             if (autoPrint)
             {
-                await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_PRINTED, result);
+                await _hub.NotifyOrderChangedAsync(ChHub.NOTIFY_ORDER_PRINTED, result);
             }
             else
             {
-                await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_CREATED, result);
+                await _hub.NotifyOrderChangedAsync(ChHub.NOTIFY_ORDER_CREATED, result);
             }
 
             if (limitedStockMenuDetails.Any())
             {
-                await _hub.Clients.All.SendAsync(ChHub.NOTIFY_MENU_DETAILS_CHANGED, limitedStockMenuDetails);
+                await _hub.NotifyMenuChangedAsync(limitedStockMenuDetails);
             }
 
             return Ok(result);
@@ -251,9 +245,14 @@ namespace CappannaHelper.Api.Controllers
                 return BadRequest(new { Message = "Impossibile modificare un ordine senza specificare l'Id" });
             }
 
-            if (order.ChTable == null)
+            if (string.IsNullOrEmpty(order.ChTable))
             {
                 return BadRequest(new { Message = "Impossibile modificare un ordine senza specificare il tavolo" });
+            }
+
+            if (string.IsNullOrEmpty(order.Customer))
+            {
+                return BadRequest(new { Message = "Impossibile modificare un ordine senza specificare il cliente" });
             }
 
             if (order.Seats <= 0)
@@ -274,147 +273,144 @@ namespace CappannaHelper.Api.Controllers
             ChOrder result;
             var limitedStockMenuDetails = new List<MenuDetail>();
 
-            using (var transaction = await _context.Database.BeginTransactionAsync())
+            var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                try
+                var editOperation = OperationTypes.Edit;
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                var shift = await _shiftManager.GetOrCreateCurrentAsync();
+
+                var dbOrder = await _context.Orders
+                    .Include(o => o.Operations)
+                    .Include(o => o.Details)
+                    .ThenInclude(d => d.Item)
+                    .SingleOrDefaultAsync(o => o.Id == order.Id);
+
+                if (dbOrder.Operations.Any(o => o.Type == OperationTypes.Print))
                 {
-                    var operationId = (int) OperationTypes.Edit;
-                    var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                    var shift = await _shiftManager.GetOrCreateCurrentAsync();
+                    await transaction.RollbackAsync();
+                    return BadRequest(new { Message = "Impossibile modificare un ordine stampato" });
+                }
 
-                    var dbOrder = await _context.Orders
-                        .Include(o => o.Operations)
-                        .Include(o => o.Details)
-                        .ThenInclude(d => d.Item)
-                        .SingleOrDefaultAsync(o => o.Id == order.Id);
+                if (dbOrder.ShiftId != shift.Id)
+                {
+                    await transaction.RollbackAsync();
+                    return BadRequest(new { Message = "Impossibile modificare un ordine creato in un altro turno" });
+                }
 
-                    if (dbOrder.Operations.Any(o => o.TypeId == (int)OperationTypes.Print))
-                    {
-                        transaction.Rollback();
+                shift.Income -= dbOrder.Details.Sum(d => d.Quantity * d.Item.Price);
+                dbOrder.ChTable = order.ChTable;
+                dbOrder.Notes = order.Notes;
+                dbOrder.Seats = order.Seats;
+                dbOrder.Customer = order.Customer;
+                dbOrder.Status = editOperation;
 
-                        return BadRequest(new { Message = "Impossibile modificare un ordine stampato" });
-                    }
+                await SetStandAsync(dbOrder);
 
-                    if (dbOrder.ShiftId != shift.Id)
-                    {
-                        transaction.Rollback();
-
-                        return BadRequest(new { Message = "Impossibile modificare un ordine creato in un altro turno" });
-                    }
-
-                    shift.Income -= dbOrder.Details.Sum(d => d.Quantity * d.Item.Price);
-                    dbOrder.ChTable = order.ChTable;
-                    dbOrder.Notes = order.Notes;
-                    dbOrder.Seats = order.Seats;
-                    dbOrder.Status = operationId;
-
-                    SetStand(dbOrder);
-
-                    foreach (var detail in order.Details)
-                    {
-                        var dbDetail = dbOrder.Details.FirstOrDefault(d => d.ItemId == detail.ItemId);
+                foreach (var detail in order.Details)
+                {
+                    var dbDetail = dbOrder.Details.FirstOrDefault(d => d.ItemId == detail.ItemId);
                         
-                        if (dbDetail == null)
+                    if (dbDetail == null)
+                    {
+                        dbOrder.Details.Add(detail);
+
+                        var dbItem = await _context.MenuDetails.FirstAsync(d => d.Id == detail.ItemId);
+
+                        if(dbItem.UnitsInStock.HasValue)
                         {
-                            dbOrder.Details.Add(detail);
+                            dbItem.UnitsInStock -= detail.Quantity;
 
-                            var dbItem = await _context.MenuDetails.FirstAsync(d => d.Id == detail.ItemId);
-
-                            if(dbItem.UnitsInStock.HasValue)
+                            if(dbItem.UnitsInStock.Value < 0)
                             {
-                                dbItem.UnitsInStock -= detail.Quantity;
-
-                                if(dbItem.UnitsInStock.Value < 0)
-                                {
-                                    dbItem.UnitsInStock = 0;
-                                }
-
-                                limitedStockMenuDetails.Add(dbItem);
+                                dbItem.UnitsInStock = 0;
                             }
-                        }
-                        else
-                        {
-                            var changedQuantity = detail.Quantity - dbDetail.Quantity;
-                            dbDetail.Quantity = detail.Quantity;
 
-                            if(dbDetail.Item.UnitsInStock.HasValue)
-                            {
-                                dbDetail.Item.UnitsInStock -= changedQuantity;
-
-                                if(dbDetail.Item.UnitsInStock.Value < 0)
-                                {
-                                    dbDetail.Item.UnitsInStock = 0;
-                                }
-
-                                limitedStockMenuDetails.Add(dbDetail.Item);
-                            }
+                            limitedStockMenuDetails.Add(dbItem);
                         }
                     }
-
-                    var toBeRemoveDetails = new List<OrderDetail>();
-
-                    foreach (var detail in dbOrder.Details)
+                    else
                     {
-                        if (!order.Details.Any(d => d.ItemId == detail.ItemId))
-                        {
-                            toBeRemoveDetails.Add(detail);
-                        }
-                    }
-
-                    foreach(var detail in toBeRemoveDetails)
-                    {
-                        var dbDetail = dbOrder.Details.Single(d => d.ItemId == detail.ItemId);
+                        var changedQuantity = detail.Quantity - dbDetail.Quantity;
+                        dbDetail.Quantity = detail.Quantity;
 
                         if(dbDetail.Item.UnitsInStock.HasValue)
                         {
-                            dbDetail.Item.UnitsInStock += detail.Quantity;
+                            dbDetail.Item.UnitsInStock -= changedQuantity;
 
                             if(dbDetail.Item.UnitsInStock.Value < 0)
                             {
-                                detail.Item.UnitsInStock = 0;
+                                dbDetail.Item.UnitsInStock = 0;
                             }
 
-                            if (!limitedStockMenuDetails.Any(d => d.Id == dbDetail.ItemId))
-                            {
-                                limitedStockMenuDetails.Add(dbDetail.Item);
-                            }
+                            limitedStockMenuDetails.Add(dbDetail.Item);
+                        }
+                    }
+                }
+
+                var toBeRemoveDetails = new List<OrderDetail>();
+
+                foreach (var detail in dbOrder.Details)
+                {
+                    if (!order.Details.Any(d => d.ItemId == detail.ItemId))
+                    {
+                        toBeRemoveDetails.Add(detail);
+                    }
+                }
+
+                foreach(var detail in toBeRemoveDetails)
+                {
+                    var dbDetail = dbOrder.Details.Single(d => d.ItemId == detail.ItemId);
+
+                    if(dbDetail.Item.UnitsInStock.HasValue)
+                    {
+                        dbDetail.Item.UnitsInStock += detail.Quantity;
+
+                        if(dbDetail.Item.UnitsInStock.Value < 0)
+                        {
+                            detail.Item.UnitsInStock = 0;
                         }
 
-                        dbOrder.Details.Remove(detail);
+                        if (!limitedStockMenuDetails.Any(d => d.Id == dbDetail.ItemId))
+                        {
+                            limitedStockMenuDetails.Add(dbDetail.Item);
+                        }
                     }
 
-                    dbOrder.Operations.Add(new ChOrderOperation
-                    {
-                        OperationTimestamp = DateTime.Now,
-                        TypeId = operationId,
-                        UserId = userId
-                    });
-
-                    await _context.SaveChangesAsync();
-
-                    result = await _context.Orders
-                        .Include(o => o.CreatedBy)
-                        .Include(o => o.Details)
-                        .ThenInclude(d => d.Item)
-                        .SingleOrDefaultAsync(o => o.Id == order.Id);
-
-                    shift.Income += result.Details.Sum(d => d.Quantity * d.Item.Price);
-
-                    await _context.SaveChangesAsync();
-
-                    transaction.Commit();
+                    dbOrder.Details.Remove(detail);
                 }
-                catch (Exception e)
+
+                dbOrder.Operations.Add(new ChOrderOperation
                 {
-                    throw new Exception("Impossibile salvare l'ordine. Ripetere l'operazione", e);
-                }
+                    OperationTimestamp = DateTime.Now,
+                    Type = editOperation,
+                    UserId = userId
+                });
+
+                await _context.SaveChangesAsync();
+
+                result = await _context.Orders
+                    .Include(o => o.CreatedBy)
+                    .Include(o => o.Details)
+                    .ThenInclude(d => d.Item)
+                    .SingleOrDefaultAsync(o => o.Id == order.Id);
+
+                shift.Income += result.Details.Sum(d => d.Quantity * d.Item.Price);
+
+                await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Impossibile salvare l'ordine. Ripetere l'operazione", e);
             }
 
-            await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_CHANGED, result);
+            await _hub.NotifyOrderChangedAsync(ChHub.NOTIFY_ORDER_CHANGED, result);
 
             if(limitedStockMenuDetails.Any())
             {
-                await _hub.Clients.All.SendAsync(ChHub.NOTIFY_MENU_DETAILS_CHANGED, limitedStockMenuDetails);
+                await _hub.NotifyMenuChangedAsync(limitedStockMenuDetails);
             }
 
             return Ok(result);
@@ -423,76 +419,70 @@ namespace CappannaHelper.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            ChOrder result;
             var limitedStockMenuDetails = new List<MenuDetail>();
 
-            using (var transaction = await _context.Database.BeginTransactionAsync())
+            var transaction = await _context.Database.BeginTransactionAsync();
+            var shift = await _shiftManager.GetOrCreateCurrentAsync();
+
+            var result = await _context
+                .Orders
+                .Include(o => o.CreatedBy)
+                .Include(o => o.Operations)
+                .Include(o => o.Details)
+                .ThenInclude(d => d.Item)
+                .SingleOrDefaultAsync(o => o.Id == id);
+
+            if (result == null)
             {
-                var shift = await _shiftManager.GetOrCreateCurrentAsync();
-                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-                result = await _context
-                    .Orders
-                    .Include(o => o.Operations)
-                    .Include(o => o.Details)
-                    .ThenInclude(d => d.Item)
-                    .SingleOrDefaultAsync(o => o.Id == id);
-
-                if (result == null)
-                {
-                    transaction.Rollback();
-
-                    return NotFound(new { Message = $"L'ordine con Id '{id}' non esiste" });
-                }
-
-                if (result.Operations.Any(o => o.TypeId == (int)OperationTypes.Print))
-                {
-                    transaction.Rollback();
-                    
-                    return BadRequest(new { Message = "Impossibile eliminare un ordine stampato" });
-                }
-
-                if(result.ShiftId != shift.Id)
-                {
-                    transaction.Rollback();
-
-                    return BadRequest(new { Message = "Impossibile eliminare un ordine creato in un altro turno" });
-                }
-
-                try
-                {
-                    shift.Income -= result.Details.Sum(d => d.Quantity * d.Item.Price);
-                    _context.Orders.Remove(result);
-
-                    foreach(var detail in result.Details)
-                     {
-                        if(detail.Item.UnitsInStock.HasValue)
-                        {
-                            detail.Item.UnitsInStock += result.Details.Single(d => d.ItemId == detail.ItemId).Quantity;
-
-                            if(detail.Item.UnitsInStock.Value < 0)
-                            {
-                                detail.Item.UnitsInStock = 0;
-                            }
-
-                            limitedStockMenuDetails.Add(detail.Item);
-                        }
-                    }
-
-                    await _context.SaveChangesAsync();
-                    transaction.Commit();
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Impossibile eliminare l'ordine. Ripetere l'operazione", e);
-                }
+                await transaction.RollbackAsync();
+                return NotFound(new { Message = $"L'ordine con Id '{id}' non esiste" });
             }
 
-            await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_DELETED, result);
-
-            if(limitedStockMenuDetails.Any())
+            if (result.Operations.Any(o => o.Type == OperationTypes.Print))
             {
-                await _hub.Clients.All.SendAsync(ChHub.NOTIFY_MENU_DETAILS_CHANGED, limitedStockMenuDetails);
+                await transaction.RollbackAsync();
+                return BadRequest(new { Message = "Impossibile eliminare un ordine stampato" });
+            }
+
+            if (result.ShiftId != shift.Id)
+            {
+                await transaction.RollbackAsync();
+                return BadRequest(new { Message = "Impossibile eliminare un ordine creato in un altro turno" });
+            }
+
+            try
+            {
+                shift.Income -= result.Details.Sum(d => d.Quantity * d.Item.Price);
+                _context.Orders.Remove(result);
+
+                foreach (var detail in result.Details)
+                {
+                    if (detail.Item.UnitsInStock.HasValue)
+                    {
+                        detail.Item.UnitsInStock += result.Details.Single(d => d.ItemId == detail.ItemId).Quantity;
+
+                        if (detail.Item.UnitsInStock.Value < 0)
+                        {
+                            detail.Item.UnitsInStock = 0;
+                        }
+
+                        limitedStockMenuDetails.Add(detail.Item);
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Impossibile eliminare l'ordine. Ripetere l'operazione", e);
+            }
+
+            await _hub.NotifyOrderChangedAsync(ChHub.NOTIFY_ORDER_DELETED, result);
+
+            if (limitedStockMenuDetails.Any())
+            {
+                await _hub.NotifyMenuChangedAsync(limitedStockMenuDetails);
             }
 
             return Ok(result);
@@ -501,66 +491,59 @@ namespace CappannaHelper.Api.Controllers
         [HttpPatch("{id}/close")]
         public async Task<IActionResult> Close(int id)
         {
-            ChOrder result;
+            var transaction = await _context.Database.BeginTransactionAsync();
+            var closeOperation = OperationTypes.Close;
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var shift = await _shiftManager.GetOrCreateCurrentAsync();
 
-            using(var transaction = await _context.Database.BeginTransactionAsync())
+            var result = await _context
+                .Orders
+                .Include(o => o.Operations)
+                .Include(o => o.CreatedBy)
+                .Include(o => o.Details)
+                .ThenInclude(d => d.Item)
+                .SingleOrDefaultAsync(o => o.Id == id);
+
+            if(result == null)
             {
-                var operationId = (int) OperationTypes.Close;
-                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                var shift = await _shiftManager.GetOrCreateCurrentAsync();
-
-                result = await _context
-                    .Orders
-                    .Include(o => o.Operations)
-                    .Include(o => o.CreatedBy)
-                    .Include(o => o.Details)
-                    .ThenInclude(d => d.Item)
-                    .SingleOrDefaultAsync(o => o.Id == id);
-
-                if(result == null)
-                {
-                    return NotFound(new { Message = $"L'ordine con Id '{id}' non esiste" });
-                }
-
-                if(!result.Operations.Any(o => o.TypeId == (int) OperationTypes.Print))
-                {
-                    transaction.Rollback();
-
-                    return BadRequest(new { Message = "Impossibile chiudere un ordine non stampato" });
-                }
-
-                if(result.Operations.Any(o => o.TypeId == (int) OperationTypes.Close))
-                {
-                    transaction.Rollback();
-
-                    return BadRequest(new { Message = "Impossibile chiudere un ordine già chiuso" });
-                }
-
-                if(result.ShiftId != shift.Id)
-                {
-                    transaction.Rollback();
-
-                    return BadRequest(new { Message = "Impossibile chiudere un ordine creato in un altro turno" });
-                }
-
-                result.Status = operationId;
-                result.Operations.Add(new ChOrderOperation
-                {
-                    OperationTimestamp = DateTime.Now,
-                    TypeId = operationId,
-                    UserId = userId
-                });
-
-                await _context.SaveChangesAsync();
-                transaction.Commit();
+                return NotFound(new { Message = $"L'ordine con Id '{id}' non esiste" });
             }
 
-            await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_CLOSED, result);
+            if(!result.Operations.Any(o => o.Type == OperationTypes.Print))
+            {
+                await transaction.RollbackAsync();
+                return BadRequest(new { Message = "Impossibile chiudere un ordine non stampato" });
+            }
+
+            if(result.Operations.Any(o => o.Type == OperationTypes.Close))
+            {
+                await transaction.RollbackAsync();
+                return BadRequest(new { Message = "Impossibile chiudere un ordine già chiuso" });
+            }
+
+            if(result.ShiftId != shift.Id)
+            {
+                await transaction.RollbackAsync();
+                return BadRequest(new { Message = "Impossibile chiudere un ordine creato in un altro turno" });
+            }
+
+            result.Status = closeOperation;
+            result.Operations.Add(new ChOrderOperation
+            {
+                OperationTimestamp = DateTime.Now,
+                Type = closeOperation,
+                UserId = userId
+            });
+
+            await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
+
+            await _hub.NotifyOrderChangedAsync(ChHub.NOTIFY_ORDER_CLOSED, result);
 
             return Ok(result);
         }
 
-        private void SetStand(ChOrder order)
+        private async Task SetStandAsync(ChOrder order)
         {
             try
             {
@@ -570,18 +553,18 @@ namespace CappannaHelper.Api.Controllers
 
                 if (table < 50)
                 {
-                    order.Stand = _context.Stands.Single(s => s.Description == "Cupra baseball");
+                    order.Stand = await _context.Stands.SingleAsync(s => s.Description == "Cupra baseball");
                 }
                 else
                 {
-                    order.Stand = _context.Stands.Single(s => s.Description == "Zena");
+                    order.Stand = await _context.Stands.SingleAsync(s => s.Description == "Zena");
                 }
 
                 order.StandId = order.Stand.Id;
             }
             catch (Exception e)
             {
-                _logger.LogError(e, $"Impossibile calcolare stand automaticamente per ordine {order.Id}. Verrà usato lo stand nativo dell'ordine: {order.Stand?.Description}");
+                _logger.LogError(e, "Impossibile calcolare stand automaticamente per ordine {Id}. Verrà usato lo stand nativo dell'ordine: {description}", order.Id, order.Stand?.Description);
             }
         }
     }

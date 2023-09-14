@@ -26,65 +26,61 @@ namespace CappannaHelper.Api.Controllers
 
         public PrintController(ApplicationDbContext context, IPrintService printService, IHubContext<ChHub> hub)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-            _printService = printService ?? throw new ArgumentNullException(nameof(printService));
-            _hub = hub ?? throw new ArgumentNullException(nameof(hub));
+            _context = context;
+            _printService = printService;
+            _hub = hub;
         }
 
         [Route("order/{id}")]
         public async Task<IActionResult> GetPrint(int id)
         {
-            ChOrder result;
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            var result = await _context.Orders
+                .Include(o => o.CreatedBy)
+                .Include(o => o.Stand)
+                .Include(o => o.Details)
+                .ThenInclude(d => d.Item)
+                .FirstOrDefaultAsync(o => o.Id == id);
 
-            using (var transaction = await _context.Database.BeginTransactionAsync())
+            if (result == null)
             {
-                result = await _context.Orders
-                    .Include(o => o.CreatedBy)
-                    .Include(o => o.Stand)
-                    .Include(o => o.Details)
-                    .ThenInclude(d => d.Item)
-                    .FirstOrDefaultAsync(o => o.Id == id);
-
-                if (result == null)
-                {
-                    transaction.Rollback();
-
-                    return NotFound(new { Message = $"L'ordine con Id '{id}' non esiste" });
-                }
-
-                try
-                {
-                    await _printService.PrintAsync(result);
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Impossibile stampare l'ordine", e);
-                }
-
-                try
-                {
-                    var printOperationId = (int)OperationTypes.Print;
-
-                    result.Operations.Add(new ChOrderOperation
-                    {
-                        OperationTimestamp = DateTime.Now,
-                        TypeId = printOperationId,
-                        UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
-                    });
-                    result.Status = printOperationId;
-
-                    await _context.SaveChangesAsync();
-                    transaction.Commit();
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Impossibile salvare l'operazione di stampa dell'ordine", e);
-                }
-
-                await _hub.Clients.All.SendAsync(ChHub.NOTIFY_ORDER_PRINTED, result);
-
-                return Ok(result);
+                await transaction.RollbackAsync();
+                return NotFound(new { Message = $"L'ordine con Id '{id}' non esiste" });
             }
+
+            try
+            {
+                await _printService.PrintAsync(result);
+            }
+            catch (Exception e)
+            {
+                await transaction.RollbackAsync();
+                throw new Exception("Impossibile stampare l'ordine", e);
+            }
+
+            try
+            {
+                var printOperation = OperationTypes.Print;
+                result.Operations.Add(new ChOrderOperation
+                {
+                    OperationTimestamp = DateTime.Now,
+                    Type = printOperation,
+                    UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                });
+                result.Status = printOperation;
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception e)
+            {
+                await transaction.RollbackAsync();
+                throw new Exception("Impossibile salvare l'operazione di stampa dell'ordine", e);
+            }
+
+            await _hub.NotifyOrderChangedAsync(ChHub.NOTIFY_ORDER_PRINTED, result);
+
+            return Ok(result);
         }
 
         [HttpGet("order/aggregate")]
@@ -95,26 +91,22 @@ namespace CappannaHelper.Api.Controllers
                 return BadRequest(new { Message = "Lista ordini da stampare non specificata" });
             }
 
-            IList<OrderDetailsAggregateModel> result;
+            var transaction = await _context.Database.BeginTransactionAsync();
+            var result = await _context
+                .OrderDetails
+                .Where(d =>
+                    ordersId.Contains(d.OrderId)
+                    && d.Item.Group == MenuDetail.FIRST_DISH)
+                .GroupBy(d => d.ItemId)
+                .Select(g => new OrderDetailsAggregateModel
+                {
+                    ItemId = g.Key,
+                    Name = g.First().Item.Name,
+                    Quantity = g.Sum(d => d.Quantity)
+                })
+                .ToListAsync();
 
-            using(var transaction = await _context.Database.BeginTransactionAsync())
-            {
-                result = await _context
-                    .OrderDetails
-                    .Where(d =>
-                        ordersId.Contains(d.OrderId)
-                        && d.Item.Group == MenuDetail.FIRST_DISH)
-                    .GroupBy(d => d.ItemId)
-                    .Select(g => new OrderDetailsAggregateModel
-                    {
-                        ItemId = g.Key,
-                        Name = g.First().Item.Name,
-                        Quantity = g.Sum(d => d.Quantity)
-                    })
-                    .ToListAsync();
-
-                transaction.Commit();
-            }
+            await transaction.CommitAsync();
 
             if (result.Count == 0)
             {

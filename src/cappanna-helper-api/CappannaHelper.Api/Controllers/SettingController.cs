@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CappannaHelper.Api.Persistence;
+﻿using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Persistence.Modelling;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace CappannaHelper.Api.Controllers
 {
@@ -18,21 +17,17 @@ namespace CappannaHelper.Api.Controllers
 
         public SettingController(ApplicationDbContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            IList<Setting> result;
-
-            using(var transaction = await _context.Database.BeginTransactionAsync())
-            {
-                result = await _context.Settings.ToListAsync();
-                transaction.Commit();
-            }
-
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            var result = await _context.Settings.ToListAsync();
+            await transaction.CommitAsync();
             return Ok(result);
+
         }
 
         [HttpPatch]
@@ -53,33 +48,28 @@ namespace CappannaHelper.Api.Controllers
                 return BadRequest(new { Message = "Impossibile modificare un'impostazione senza specificare il nome" });
             }
 
-            Setting result;
-
-            using(var transaction = await _context.Database.BeginTransactionAsync())
+            var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                try
+                var result = await _context.Settings.SingleOrDefaultAsync(o => o.Id == setting.Id);
+
+                if(result == null)
                 {
-                    result = await _context.Settings.SingleOrDefaultAsync(o => o.Id == setting.Id);
-
-                    if(result == null)
-                    {
-                        transaction.Rollback();
-
-                        return NotFound(new { Message = $"L'impostazione Id '{setting.Id}' non esiste" });
-                    }
-
-                    result.Value = setting.Value;
-
-                    await _context.SaveChangesAsync();
-                    transaction.Commit();
+                    await transaction.RollbackAsync();
+                    return NotFound(new { Message = $"L'impostazione Id '{setting.Id}' non esiste" });
                 }
-                catch(Exception e)
-                {
-                    throw new Exception("Impossibile salvare il piatto. Ripetere l'operazione", e);
-                }
+
+                result.Value = setting.Value;
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return Ok(result);
+            }
+            catch(Exception e)
+            {
+                throw new Exception("Impossibile modificare l'impostazione. Ripetere l'operazione", e);
             }
 
-            return Ok(result);
         }
     }
 }

@@ -4,7 +4,6 @@ using CappannaHelper.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,13 +19,14 @@ namespace CappannaHelper.Api.Controllers
 
         public DashboardController(ApplicationDbContext context, IShiftManager shiftManager)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-            _shiftManager = shiftManager ?? throw new ArgumentNullException(nameof(shiftManager));
+            _context = context;
+            _shiftManager = shiftManager;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
             var shift = await _shiftManager.GetOrCreateCurrentAsync();
             var waitersStats = await _context.Orders
                 .Where(o => o.ShiftId == shift.Id)
@@ -58,6 +58,7 @@ namespace CappannaHelper.Api.Controllers
                 Income = shift.Income,
                 WaitersStats = waitersStats
             };
+            await transaction.CommitAsync();
 
             return Ok(result);
         }

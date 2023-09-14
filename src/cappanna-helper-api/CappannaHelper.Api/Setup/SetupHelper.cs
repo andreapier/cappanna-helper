@@ -39,7 +39,6 @@ namespace CappannaHelper.Api.Setup
                 await SetupRolesAsync(errors);
                 await SetupUsersAsync(errors);
                 await SetupMenuAsync(errors);
-                await SetupOperationTypesAsync(errors);
                 await SetupSettingsAsync(errors);
 
                 transaction.Commit();
@@ -413,44 +412,6 @@ namespace CappannaHelper.Api.Setup
                     {
                         errors.AddRange(result.Errors.Select(e => e.Description));
                     }
-                }
-            }
-            catch (Exception e)
-            {
-                errors.Add(e.Message);
-            }
-        }
-
-        private async Task SetupOperationTypesAsync(List<string> errors)
-        {
-            await SetupOperationTypeAsync(OperationTypes.Creation, "creation", errors);
-            await SetupOperationTypeAsync(OperationTypes.Print, "print", errors);
-            await SetupOperationTypeAsync(OperationTypes.Edit, "edit", errors);
-            await SetupOperationTypeAsync(OperationTypes.Close, "close", errors);
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
-                errors.Add(e.Message);
-            }
-        }
-
-        private async Task SetupOperationTypeAsync(OperationTypes type, string description, List<string> errors)
-        {
-            try
-            {
-                var id = (int)type;
-
-                if (!await _context.OperationTypes.AnyAsync(d => d.Id == id))
-                {
-                    await _context.AddAsync(new OperationType
-                    {
-                        Id = id,
-                        Description = description
-                    });
                 }
             }
             catch (Exception e)

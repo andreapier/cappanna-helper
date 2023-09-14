@@ -1,7 +1,4 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using CappannaHelper.Api.Common.ErrorManagement;
+﻿using CappannaHelper.Api.Common.ErrorManagement;
 using CappannaHelper.Api.Hubs;
 using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Identity.Extensions;
@@ -17,6 +14,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CappannaHelper.Api
 {
@@ -31,10 +32,8 @@ namespace CappannaHelper.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var persistenceConfiguration = _configuration.GetSection("Persistence").Get<PersistenceConfiguration>();
-
             services
-                .AddDbContext<ApplicationDbContext>(o => o.UseSqlite(persistenceConfiguration.ConnectionString));
+                .AddDbContext<ApplicationDbContext>(o => o.UseSqlite(_configuration.GetConnectionString(nameof(ApplicationDbContext)));
 
             services.AddControllers();
 
@@ -52,18 +51,38 @@ namespace CappannaHelper.Api
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
                 })
                 .AddJwtBearer(cfg =>
                 {
+                    var authorithy = _configuration["JwtIssuer"];
+                    var audience = _configuration["JwtAudience"];
+
+                    //cfg.Authority = authorithy;
+                    //cfg.Audience = audience;
                     cfg.RequireHttpsMetadata = false;
                     cfg.SaveToken = true;
                     cfg.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidIssuer = _configuration["JwtIssuer"],
-                        ValidAudience = _configuration["JwtIssuer"],
+                        ValidIssuer = authorithy,
+                        ValidAudience = audience,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"])),
                         ClockSkew = TimeSpan.Zero
+                    };
+
+                    cfg.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+                            var path = context.HttpContext.Request.Path;
+
+                            if (!string.IsNullOrWhiteSpace(accessToken) && path.StartsWithSegments("/hubs/ch"))
+                            {
+                                context.Token = accessToken;
+                            }
+
+                            return Task.CompletedTask;
+                        }
                     };
                 });
 
@@ -79,7 +98,7 @@ namespace CappannaHelper.Api
             {
                 options.Cookie.Name = "CappannaHelper";
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromDays(5);
+                options.ExpireTimeSpan = TimeSpan.FromDays(int.Parse(_configuration["JwtExpireDays"]));
                 options.SlidingExpiration = true;
             });
 

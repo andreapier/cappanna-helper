@@ -11,7 +11,7 @@ namespace CappannaHelper.Api.Services
 
         public SettingManager(ApplicationDbContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context;
         }
 
         public async Task<T> GetSettingValue<T>(string name)
@@ -20,10 +20,10 @@ namespace CappannaHelper.Api.Services
 
             if (setting == null)
             {
-                return default(T);
+                return default;
             }
 
-            return (T) Convert.ChangeType(setting.Value, typeof(T));
+            return (T)Convert.ChangeType(setting.Value, typeof(T));
         }
     }
 }

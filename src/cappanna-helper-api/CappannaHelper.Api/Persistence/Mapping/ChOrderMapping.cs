@@ -18,12 +18,13 @@ namespace CappannaHelper.Api.Persistence.Mapping
             
             entityBuilder.Property(o => o.Id).IsRequired().ValueGeneratedOnAdd();
             entityBuilder.Property(o => o.ChTable).HasMaxLength(50).IsRequired();
+            entityBuilder.Property(o => o.Customer).HasMaxLength(500).IsRequired();
             entityBuilder.Property(o => o.Seats).IsRequired().HasDefaultValue(2);
             entityBuilder.Property(o => o.CreationTimestamp)
                 .IsRequired()
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasConversion(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
-            entityBuilder.Property(o => o.Status).IsRequired().HasDefaultValue(1);
+            entityBuilder.Property(o => o.Status).IsRequired().HasDefaultValue(OperationTypes.Creation);
             entityBuilder.Property(o => o.ShiftId).IsRequired();
             entityBuilder.Property(o => o.Notes).HasMaxLength(2048);
             entityBuilder.Property(o => o.ShiftCounter).IsRequired();

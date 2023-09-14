@@ -22,21 +22,18 @@ namespace CappannaHelper.Api.Controllers
 
         public MenuDetailController(ApplicationDbContext context, IHubContext<ChHub> hub)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-            _hub = hub ?? throw new ArgumentNullException(nameof(hub));
+            _context = context;
+            _hub = hub;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            List<MenuDetail> result;
-
-            using (var transaction = await _context.Database.BeginTransactionAsync())
-            {
-                result = await _context.MenuDetails
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            var result = await _context.MenuDetails
                     .OrderBy(m => m.Id)
                     .ToListAsync();
-            }
+            await transaction.CommitAsync();
 
             return Ok(result);
         }
@@ -71,26 +68,26 @@ namespace CappannaHelper.Api.Controllers
 
             MenuDetail result;
 
-            using (var transaction = await _context.Database.BeginTransactionAsync())
+            var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                try
-                {
-                    result = await _context.MenuDetails.SingleOrDefaultAsync(o => o.Id == detail.Id);
+                result = await _context.MenuDetails.SingleOrDefaultAsync(o => o.Id == detail.Id);
 
-                    result.Group = detail.Group;
-                    result.Name = detail.Name;
-                    result.Price = detail.Price;
-                    result.UnitsInStock = detail.UnitsInStock;
+                result.Group = detail.Group;
+                result.Name = detail.Name;
+                result.Price = detail.Price;
+                result.UnitsInStock = detail.UnitsInStock;
 
-                    await _context.SaveChangesAsync();
-                    transaction.Commit();
-                } catch (Exception e)
-                {
-                    throw new Exception("Impossibile salvare il piatto. Ripetere l'operazione", e);
-                }
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception e)
+            {
+                await transaction.RollbackAsync();
+                throw new Exception("Impossibile salvare il piatto. Ripetere l'operazione", e);
             }
 
-            await _hub.Clients.All.SendAsync(ChHub.NOTIFY_MENU_DETAILS_CHANGED, new List<MenuDetail>{ result });
+            await _hub.NotifyMenuChangedAsync(new List<MenuDetail>{ result });
 
             return Ok(result);
         }

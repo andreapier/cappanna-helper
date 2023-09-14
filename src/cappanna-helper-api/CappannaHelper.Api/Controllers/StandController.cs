@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CappannaHelper.Api.Persistence;
-using CappannaHelper.Api.Persistence.Modelling;
+﻿using CappannaHelper.Api.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace CappannaHelper.Api.Controllers
 {
@@ -18,19 +15,15 @@ namespace CappannaHelper.Api.Controllers
 
         public StandController(ApplicationDbContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            IList<Stand> result;
-
-            using(var transaction = await _context.Database.BeginTransactionAsync())
-            {
-                result = await _context.Stands.ToListAsync();
-                transaction.Commit();
-            }
+            var transaction = await _context.Database.BeginTransactionAsync();
+            var result = await _context.Stands.ToListAsync();
+            await transaction.CommitAsync();
 
             return Ok(result);
         }
