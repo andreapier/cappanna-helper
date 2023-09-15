@@ -1,5 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { useMatch } from "react-router-dom";
+import { loadSelectedOrderRequested, loadMenuDetailsRequested } from "actions";
+import { selectNeedsMenuDetailsLoading } from "selectors";
+import buildFilledOrderDetails from "utils/buildFilledOrderDetails";
 import Table from "components/Table";
 import { formatAmount } from "utils/string";
 import { TextField, withStyles } from "@material-ui/core";
@@ -13,27 +18,35 @@ const style = {
 };
 
 const Body = (props) => {
+    const needsMenuDetailsLoading = useSelector(selectNeedsMenuDetailsLoading);
+    const order = useSelector(state => state.selectedOrder);
+    const menuDetails = useSelector(state => state.menuDetails);
+
+    const dishList = order && !needsMenuDetailsLoading ? buildFilledOrderDetails(order.details, menuDetails) : [];
+    const notes = order ? order.notes || "" : "";
+
+    const dispatch = useDispatch();
+    const match = useMatch("/order/:id");
+
+    useEffect(() => {
+        if (needsMenuDetailsLoading) {
+            dispatch(loadMenuDetailsRequested());
+        }
+    }, [dispatch, needsMenuDetailsLoading]);
+
+    useEffect(() => {
+        dispatch(loadSelectedOrderRequested(match.params.id));
+    }, [dispatch, match]);
+
     return (
         <div>
-            <Table tableHead={["Nome", "Prezzo (€)", "Quantità"]} tableData={props.dishList.map(buildTableRow)} />
-            <TextField label="Note" multiline readOnly fullWidth value={props.notes} className={props.classes.notes} />
+            <Table tableHead={["Nome", "Prezzo (€)", "Quantità"]} tableData={dishList.map(buildTableRow)} />
+            <TextField label="Note" multiline readOnly fullWidth value={notes} className={props.classes.notes} />
         </div>
     );
 };
 
 Body.propTypes = {
-    dishList: PropTypes.arrayOf(
-        PropTypes.shape({
-            subtotal: PropTypes.number.isRequired,
-            quantity: PropTypes.number.isRequired,
-            item: PropTypes.shape({
-                group: PropTypes.string.isRequired,
-                name: PropTypes.string.isRequired,
-                price: PropTypes.number.isRequired
-            })
-        })
-    ).isRequired,
-    notes: PropTypes.string.isRequired,
     classes: PropTypes.object.isRequired
 };
 

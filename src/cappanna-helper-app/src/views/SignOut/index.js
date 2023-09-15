@@ -2,7 +2,7 @@ import React from "react";
 import Grid from "components/Grid";
 import RegularCard from "components/Cards/RegularCard";
 import ItemGrid from "components/Grid/ItemGrid";
-import SignOut from "containers/SignOut";
+import SignOut from "components/SignOut";
 
 class SignOutPage extends React.Component {
     render() {

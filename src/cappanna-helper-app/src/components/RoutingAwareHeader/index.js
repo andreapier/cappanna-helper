@@ -1,11 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useLocation } from "react-router-dom";
+import { getActiveRoute } from "routes/helpers";
 import Menu from "@material-ui/icons/Menu";
 import { AppBar, Hidden, IconButton, Toolbar, Typography, withStyles } from "@material-ui/core";
 import headerStyle from "variables/styles/headerStyle";
 
-function Header(props) {
-    const { classes, title, handleDrawerToggle } = props;
+function RoutingAwareHeader(props) {
+    const { classes, handleDrawerToggle, routes } = props;
+    const location = useLocation();
+    const selectedRoute = getActiveRoute(routes, location);
+    let title = selectedRoute.headerTitle;
+
+    if (selectedRoute.redirect) {
+        title = "";
+    }
 
     return (
         <div className={classes.flex.root}>
@@ -25,9 +34,8 @@ function Header(props) {
     );
 }
 
-Header.propTypes = {
+RoutingAwareHeader.propTypes = {
     handleDrawerToggle: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired
 };
 
-export default withStyles(headerStyle)(Header);
+export default withStyles(headerStyle)(RoutingAwareHeader);

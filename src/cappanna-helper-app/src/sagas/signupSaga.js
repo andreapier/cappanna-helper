@@ -2,7 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "api";
 import { signupCompleted, signalApiError, loadingChanged } from "actions";
 import { SIGNUP_REQUESTED } from "actions/types";
-import history from "./../history";
+import history from "../chHistory";
 
 function* signup(action) {
     try {
@@ -10,7 +10,7 @@ function* signup(action) {
         const api = new Api();
         const userData = yield call(api.signup, action.payload);
         yield put(signupCompleted(userData));
-        history.push("/users/signup/ok");
+        history.navigate("/users/signup/ok");
     } catch (e) {
         yield put(signalApiError(e));
     } finally {

@@ -16,7 +16,7 @@ const calculator = (state = initialState, action) => {
         case CALCULATE:
             return {
                 ...action.payload,
-                change: action.payload.paidAmount - action.payload.amount,
+                change: action.payload.paidAmount > action.payload.amount ? action.payload.paidAmount - action.payload.amount : 0,
                 perPersonAmount: Math.ceil((action.payload.amount / action.payload.seats) * 100) / 100
             };
 

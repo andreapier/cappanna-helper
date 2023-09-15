@@ -33,7 +33,7 @@ namespace CappannaHelper.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddDbContext<ApplicationDbContext>(o => o.UseSqlite(_configuration.GetConnectionString(nameof(ApplicationDbContext)));
+                .AddDbContext<ApplicationDbContext>(o => o.UseSqlite(_configuration.GetConnectionString(nameof(ApplicationDbContext))));
 
             services.AddControllers();
 

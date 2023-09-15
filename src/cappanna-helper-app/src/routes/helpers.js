@@ -5,14 +5,14 @@ const getActiveRoute = (routes, location) => routes.find((r) => location.pathnam
 const getDefaultRoute = (role) => {
     switch (role) {
         case "admin":
-            return "dashboard";
+            return "/dashboard";
 
         case "dome":
         case "cashier":
-            return "order";
+            return "/order";
 
         default:
-            return "order/new";
+            return "/order/new";
     }
 };
 

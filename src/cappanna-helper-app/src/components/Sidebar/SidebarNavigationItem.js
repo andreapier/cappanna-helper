@@ -31,7 +31,7 @@ const SidebarNavigationItem = (props) => {
     const selectedItemLinkClasses = active ? classes.selectedItemLink : "";
 
     return (
-        <NavLink to={routeData.path} className={classes.item} activeClassName="active" onClick={handleSidebarNavigationItemClick}>
+        <NavLink to={routeData.path} className={classes.item} onClick={handleSidebarNavigationItemClick}>
             <ListItem button className={classes.itemLink + selectedItemLinkClasses}>
                 <ListItemIcon className={classes.itemIcon}>
                     <routeData.icon />
@@ -45,7 +45,6 @@ const SidebarNavigationItem = (props) => {
 SidebarNavigationItem.propTypes = {
     classes: PropTypes.object.isRequired,
     handleSidebarNavigationItemClick: PropTypes.func.isRequired,
-    //active: PropTypes.bool.isRequired,
     user: PropTypes.shape({
         roles: PropTypes.arrayOf(PropTypes.string).isRequired,
         token: PropTypes.string

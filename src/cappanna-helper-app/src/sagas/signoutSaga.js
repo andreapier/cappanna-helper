@@ -3,11 +3,11 @@ import Api from "api/";
 import { signoutCompleted, loadingChanged, notifyError } from "actions";
 import { SIGNOUT_REQUESTED } from "actions/types";
 import localforage from "localforage";
-import history from "./../history";
+import history from "../chHistory";
 
 const deleteUserData = () => localforage.removeItem("userData").catch((err) => console.error("Error removing user data from local storage", err));
 
-function* signout(action) {
+function* signout() {
     try {
         yield put(loadingChanged(true, "Logout in corso..."));
         yield deleteUserData();
@@ -20,7 +20,7 @@ function* signout(action) {
     }
 
     yield put(signoutCompleted());
-    history.push("/");
+    history.navigate("/signin");
     yield put(loadingChanged(false));
 }
 

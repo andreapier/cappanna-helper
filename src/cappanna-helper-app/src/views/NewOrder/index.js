@@ -1,5 +1,5 @@
 import React from "react";
-import NewOrder from "containers/Orders/New";
+import NewOrder from "components/Orders/New";
 
 const NewOrderPage = () => {
     return <NewOrder />;

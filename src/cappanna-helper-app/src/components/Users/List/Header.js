@@ -1,5 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { loadUsersListRequested } from "actions";
 import { Toolbar, withStyles } from "@material-ui/core";
 import ContentAdd from "@material-ui/icons/Add";
 import IconButton from "components/CustomButtons/IconButton";
@@ -12,12 +15,17 @@ const style = {
 };
 
 const Header = (props) => {
+    const dispatch = useDispatch();
+    const doLoadUsersListRequested = () => dispatch(loadUsersListRequested());
+    const navigate = useNavigate();
+    const goToNewUser = navigate("/user/new");
+
     return (
         <Toolbar>
-            <IconButton onClick={props.goToNewUser} customClass={props.classes.icon}>
+            <IconButton onClick={goToNewUser} customClass={props.classes.icon}>
                 <ContentAdd />
             </IconButton>
-            <IconButton onClick={props.loadUsersListRequested} customClass={props.classes.icon}>
+            <IconButton onClick={doLoadUsersListRequested} customClass={props.classes.icon}>
                 <NavigationRefresh />
             </IconButton>
         </Toolbar>
@@ -25,8 +33,6 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-    loadUsersListRequested: PropTypes.func.isRequired,
-    goToNewUser: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired
 };
 

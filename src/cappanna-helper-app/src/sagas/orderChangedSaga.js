@@ -1,6 +1,6 @@
 import { select, takeLatest, put } from "redux-saga/effects";
 import { ORDER_CHANGED, ORDER_PRINTED, ORDER_DELETED, ORDER_CLOSED } from "actions/types";
-import history from "./../history";
+import history from "../chHistory";
 import { notifyWarning, resetOrder } from "actions";
 
 function* orderChanged(action) {
@@ -9,13 +9,13 @@ function* orderChanged(action) {
     if (state.newOrderHeader.id === action.payload.id) {
         if (action.type === ORDER_DELETED) {
             yield put(notifyWarning("L'ordine è stato cancellato, ricrearlo se necessario"));
-            history.push("order/new");
+            history.navigate("/order/new");
         } else if (action.type === ORDER_CLOSED) {
             yield put(notifyWarning("L'ordine è stato chiuso, non è più possibile modificarlo"));
-            history.push(`order/${action.payload.id}`);
+            history.navigate(`/order/${action.payload.id}`);
         } else {
             yield put(notifyWarning("L'ordine è cambiato, ripetere le modifiche"));
-            history.push(`order/${action.payload.id}`);
+            history.navigate(`/order/${action.payload.id}`);
         }
 
         yield put(resetOrder());

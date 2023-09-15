@@ -2,7 +2,7 @@ import { put, takeLatest, call } from "redux-saga/effects";
 import { loadingChanged, signalApiError, loadNotificationsListCompleted } from "actions";
 import { LOAD_NOTIFICATIONS_LIST_REQUESTED } from "actions/types";
 import Api from "api";
-import history from "./../history";
+import history from "../chHistory";
 
 function* loadNotificationsList(action) {
     try {
@@ -10,7 +10,7 @@ function* loadNotificationsList(action) {
         const api = new Api();
         const notifications = yield call(api.getNotifications);
         yield put(loadNotificationsListCompleted(notifications));
-        history.push("/notifications");
+        history.navigate("/notifications");
     } catch (e) {
         yield put(signalApiError(e));
     } finally {

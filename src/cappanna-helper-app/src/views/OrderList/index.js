@@ -1,11 +1,11 @@
 import React from "react";
-import ConnectedHeader from "containers/Orders/List/ConnectedHeader";
+import Header from "components/Orders/List/Header";
 import ConnectedOrdersList from "containers/Orders/List/ConnectedOrdersList";
 
 const OrderList = () => {
     return (
         <div>
-            <ConnectedHeader />
+            <Header />
             <ConnectedOrdersList />
         </div>
     );

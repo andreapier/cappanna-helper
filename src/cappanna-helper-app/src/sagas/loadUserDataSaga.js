@@ -3,7 +3,7 @@ import { signinCompleted, loadingChanged, loadStandsListRequested, signalApiErro
 import { LOAD_USER_DATA } from "actions/types";
 import localforage from "localforage";
 import Api from "api";
-import history from "./../history";
+import history from "../chHistory";
 import { getDefaultRoute } from "routes/helpers";
 
 const loadUserDataFromStorage = () => localforage.getItem("userData").catch((err) => console.error("Error loading user data from local storage", err));
@@ -24,7 +24,7 @@ function* loadUserData() {
         yield put(loadStandsListRequested());
 
         const route = getDefaultRoute(userData.roles[0]);
-        history.push(route);
+        history.navigate(route);
     } catch (e) {
         yield put(signalApiError(e));
     } finally {

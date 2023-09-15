@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "containers/App";
+import App from "components/App";
 import storeGenerator from "./store";
 import { loadUserData } from "actions";
 import "assets/css/index.css";
@@ -17,5 +17,5 @@ const renderApp = () => {
 renderApp();
 
 if (module.hot) {
-    module.hot.accept("containers/App", renderApp);
+    module.hot.accept("components/App", renderApp);
 }

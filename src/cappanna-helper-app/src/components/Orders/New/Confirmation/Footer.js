@@ -1,6 +1,10 @@
 import React from "react";
-import { withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { withStyles } from "@material-ui/core";
+import { confirmOrder } from "actions";
+import { selectCanConfirmOrder } from "selectors";
 import Button from "components/CustomButtons";
 import ActionDone from "@material-ui/icons/Done";
 import Create from "@material-ui/icons/Create";
@@ -9,16 +13,29 @@ import ItemGrid from "components/Grid/ItemGrid";
 import { flex } from "variables/styles";
 
 const Footer = (props) => {
+    const standId = useSelector(state => state.user.settings.standId);
+    const order = {
+        ...useSelector(state => state.newOrderHeader),
+        standId,
+        details: useSelector(state => state.newOrderDetails)
+    };
+    const canConfirm = useSelector(selectCanConfirmOrder);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const goBack = () => navigate(-1);
+    const doConfirmOrder = () => dispatch(confirmOrder(order));
+
     return (
         <Grid className={props.classes.root} justifyContent="space-between">
             <ItemGrid>
-                <Button variant="contained" onClick={props.goBack}>
+                <Button variant="contained" onClick={goBack}>
                     <Create />
                     Modifica
                 </Button>
             </ItemGrid>
             <ItemGrid>
-                <Button variant="contained" onClick={() => props.confirmOrder(props.order)} disabled={!props.canConfirm}>
+                <Button variant="contained" onClick={doConfirmOrder} disabled={!canConfirm}>
                     <ActionDone />
                     Conferma
                 </Button>
@@ -28,11 +45,7 @@ const Footer = (props) => {
 };
 
 Footer.propTypes = {
-    goBack: PropTypes.func.isRequired,
-    confirmOrder: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
-    order: PropTypes.object.isRequired,
-    canConfirm: PropTypes.bool.isRequired
 };
 
 export default withStyles(flex)(Footer);

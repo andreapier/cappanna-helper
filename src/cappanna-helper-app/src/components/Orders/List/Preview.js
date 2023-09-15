@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { ListItem, ListItemIcon, ListItemText, withStyles } from "@material-ui/core";
-import { NavLink, withRouter } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import sidebarStyle from "variables/styles/sidebarStyle";
 import Print from "@material-ui/icons/Print";
 import Done from "@material-ui/icons/Done";
@@ -42,4 +42,4 @@ Preview.propTypes = {
     classes: PropTypes.object.isRequired
 };
 
-export default withRouter(withStyles(sidebarStyle)(Preview));
+export default withStyles(sidebarStyle)(Preview);

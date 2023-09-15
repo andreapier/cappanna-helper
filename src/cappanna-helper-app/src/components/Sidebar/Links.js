@@ -3,7 +3,6 @@ import React from "react";
 import SidebarNavigationItem from "./SidebarNavigationItem";
 import { List, withStyles } from "@material-ui/core";
 import sidebarStyle from "variables/styles/sidebarStyle";
-// import { isRouteActive } from "routes/helpers";
 
 const Links = (props) => {
     const {
@@ -11,8 +10,6 @@ const Links = (props) => {
         routes,
         user,
         handleSidebarNavigationItemClick
-        // match,
-        // location
     } = props;
 
     return (
@@ -24,7 +21,6 @@ const Links = (props) => {
                         user,
                         handleSidebarNavigationItemClick
                     };
-                    //active: isRouteActive(routeData.name, match)
 
                     return <SidebarNavigationItem {...itemProps} key={key} />;
                 })}
@@ -36,9 +32,6 @@ const Links = (props) => {
 Links.propTypes = {
     classes: PropTypes.object.isRequired,
     routes: PropTypes.array.isRequired
-    // location: PropTypes.shape({
-    //   path: PropTypes.string.isRequired
-    // }).isRequired
 };
 
 export default withStyles(sidebarStyle)(Links);

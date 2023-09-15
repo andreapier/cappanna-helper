@@ -1,62 +1,18 @@
 import React from "react";
-import DishList from "components/Orders/New/DishList";
-import PropTypes from "prop-types";
+import DishList from "./DishList";
 
-const Body = (props) => {
-    const appetizers = [];
-    const firstDishes = [];
-    const secondDishes = [];
-    const sideDishes = [];
-    const desserts = [];
-    const whiteWines = [];
-    const redWines = [];
-    const waters = [];
-    const drinks = [];
-
-    props.details.forEach((i) => {
-        if (i.item.group === "Antipasti") {
-            appetizers.push(i);
-        } else if (i.item.group === "Primi piatti") {
-            firstDishes.push(i);
-        } else if (i.item.group === "Secondi piatti") {
-            secondDishes.push(i);
-        } else if (i.item.group === "Contorni") {
-            sideDishes.push(i);
-        } else if (i.item.group === "Dolci") {
-            desserts.push(i);
-        } else if (i.item.group === "Vini Bianchi") {
-            whiteWines.push(i);
-        } else if (i.item.group === "Vini Rossi") {
-            redWines.push(i);
-        } else if (i.item.group === "Acqua") {
-            waters.push(i);
-        } else if (i.item.group === "Bibite") {
-            drinks.push(i);
-        }
-    });
-
+const Body = () => {
     return [
-        <DishList key={1} details={appetizers} title="Antipasti" incrementOrderDetailQuantity={props.incrementOrderDetailQuantity} />,
-        <DishList key={2} details={firstDishes} title="Primi" incrementOrderDetailQuantity={props.incrementOrderDetailQuantity} />,
-        <DishList key={3} details={secondDishes} title="Secondi" incrementOrderDetailQuantity={props.incrementOrderDetailQuantity} />,
-        <DishList key={4} details={sideDishes} title="Contorni" incrementOrderDetailQuantity={props.incrementOrderDetailQuantity} />,
-        <DishList key={5} details={desserts} title="Dolci" incrementOrderDetailQuantity={props.incrementOrderDetailQuantity} />,
-        <DishList key={6} details={whiteWines} title="Vini Bianchi" incrementOrderDetailQuantity={props.incrementOrderDetailQuantity} />,
-        <DishList key={7} details={redWines} title="Vini Rossi" incrementOrderDetailQuantity={props.incrementOrderDetailQuantity} />,
-        <DishList key={8} details={waters} title="Acqua" incrementOrderDetailQuantity={props.incrementOrderDetailQuantity} />,
-        <DishList key={9} details={drinks} title="Bibite" incrementOrderDetailQuantity={props.incrementOrderDetailQuantity} />
+        <DishList key={1} group="Antipasti" title="Antipasti" />,
+        <DishList key={2} group="Primi piatti" title="Primi" />,
+        <DishList key={3} group="Secondi piatti" title="Secondi" />,
+        <DishList key={4} group="Contorni" title="Contorni" />,
+        <DishList key={5} group="Dolci" title="Dolci" />,
+        <DishList key={6} group="Vini Bianchi" title="Vini Bianchi" />,
+        <DishList key={7} group="Vini Rossi" title="Vini Rossi" />,
+        <DishList key={8} group="Acqua" title="Acqua" />,
+        <DishList key={9} group="Bibite" title="Bibite" />
     ];
-};
-
-Body.propTypes = {
-    details: PropTypes.arrayOf(
-        PropTypes.shape({
-            item: PropTypes.shape({
-                group: PropTypes.string.isRequired
-            })
-        })
-    ).isRequired,
-    incrementOrderDetailQuantity: PropTypes.func.isRequired
 };
 
 export default Body;

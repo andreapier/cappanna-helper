@@ -7,7 +7,8 @@ import {
     TOGGLE_ORDERS_LIST_FILTER_BY_STAND,
     TOGGLE_ORDERS_LIST_FILTER_BY_STATUS,
     SIGNIN_COMPLETED,
-    SIGNOUT_COMPLETED
+    SIGNOUT_COMPLETED,
+    LOAD_ORDERS_LIST_REQUESTED
 } from "actions/types";
 
 const initialState = {
@@ -25,6 +26,12 @@ const orders = (state = initialState, action) => {
             return {
                 ...state,
                 items: action.payload
+            };
+
+        case LOAD_ORDERS_LIST_REQUESTED:
+            return {
+                ...state,
+                items: []
             };
 
         case SIGNOUT_COMPLETED:

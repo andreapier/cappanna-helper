@@ -1,9 +1,13 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { isNewOrder } from "routes/helpers";
+import { setOrderCustomer, setOrderTable, setOrderSeats } from "actions";
+import { selectCanConfirmOrder } from "selectors";
 import IconButton from "components/CustomButtons/IconButton";
 import { TextField } from "@material-ui/core";
 import ContentSend from "@material-ui/icons/Send";
 import AmountFormat from "components/AmountFormat";
-import PropTypes from "prop-types";
 
 const containerStyle = {
     display: "flex",
@@ -23,7 +27,23 @@ const customerFieldStyle = {
     width: "90px"
 };
 
-const Header = (props) => {
+const Header = () => {
+    const id = useSelector(state => state.newOrderHeader.id);
+    const totalPrice = useSelector(state => state.newOrderHeader.totalPrice);
+    const chTable = useSelector(state => state.newOrderHeader.chTable);
+    const seats = useSelector(state => state.newOrderHeader.seats);
+    const customer = useSelector(state => state.newOrderHeader.customer);
+    const canConfirm = useSelector(selectCanConfirmOrder);
+    
+    const location = useLocation();
+    const navigate = useNavigate();
+    const newOrder = isNewOrder(location);
+    const confirmLocation = newOrder ? "/order/new/confirm" : `/order/${id}/edit/confirm`;
+    const dispatch = useDispatch();
+    const setTable = (table) => dispatch(setOrderTable(table));
+    const setSeats = (seats) => dispatch(setOrderSeats(seats));
+    const setCustomer = (customer) => dispatch(setOrderCustomer(customer));
+    const goToConfirm = () => navigate(confirmLocation);
     return (
         <div>
             <div style={containerStyle}>
@@ -31,8 +51,8 @@ const Header = (props) => {
                     <TextField
                         label="Tav."
                         style={tableFieldStyle}
-                        value={props.chTable}
-                        onChange={(e) => props.setOrderTable(e.target.value)}
+                        value={chTable}
+                        onChange={(e) => setTable(e.target.value)}
                         InputLabelProps={{
                             shrink: true
                         }}
@@ -42,8 +62,8 @@ const Header = (props) => {
                     <TextField
                         label="N° pers"
                         style={textFieldStyle}
-                        value={isNaN(props.seats) ? "" : props.seats}
-                        onChange={(e) => props.setOrderSeats(parseInt(e.target.value, 10))}
+                        value={isNaN(seats) ? "" : seats}
+                        onChange={(e) => setSeats(parseInt(e.target.value, 10))}
                         InputLabelProps={{
                             shrink: true
                         }}
@@ -53,38 +73,24 @@ const Header = (props) => {
                     <TextField
                         label="Cliente"
                         style={customerFieldStyle}
-                        value={props.customer}
-                        onChange={(e) => props.setCustomer(e.target.value)}
+                        value={customer}
+                        onChange={(e) => setCustomer(e.target.value)}
                         InputLabelProps={{
                             shrink: true
                         }}
                     />
                 </div>
                 <div style={textFieldStyle}>
-                    Tot: <AmountFormat amount={props.totalPrice} />
+                    Tot: <AmountFormat amount={totalPrice} />
                 </div>
                 <div>
-                    <IconButton type="submit" disabled={!props.canConfirm} onClick={() => props.goToConfirm(props.id)}>
+                    <IconButton type="submit" disabled={!canConfirm} onClick={() => goToConfirm(id)}>
                         <ContentSend />
                     </IconButton>
                 </div>
             </div>
         </div>
     );
-};
-
-Header.propTypes = {
-    id: PropTypes.number,
-    totalPrice: PropTypes.number.isRequired,
-    chTable: PropTypes.string.isRequired,
-    seats: PropTypes.number.isRequired,
-    customer: PropTypes.string.isRequired,
-    canConfirm: PropTypes.bool.isRequired,
-    setOrderTable: PropTypes.func.isRequired,
-    setOrderSeats: PropTypes.func.isRequired,
-    setCustomer: PropTypes.func.isRequired,
-    goToConfirm: PropTypes.func.isRequired,
-    standId: PropTypes.number.isRequired
 };
 
 export default Header;

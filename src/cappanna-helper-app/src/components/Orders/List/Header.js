@@ -1,5 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { resetOrder, loadOrdersListRequested, toggleOrdersListFilterByUser, toggleOrdersListFilterByStand, toggleOrdersListFilterByStatus } from "actions";
+import { selectIsAdmin, selectIsAdminOrDome } from "selectors";
 import { Toolbar, withStyles } from "@material-ui/core";
 import ContentAdd from "@material-ui/icons/Add";
 import IconButton from "components/CustomButtons/IconButton";
@@ -18,25 +22,40 @@ const style = {
 };
 
 const Header = (props) => {
+    const filters =  useSelector(state => state.orders.filters);
+    const showToggleOrdersListFilterByStand = useSelector(selectIsAdminOrDome);
+    const showToggleOrdersListFilterByStatus = useSelector(selectIsAdmin);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const doLoadOrdersListRequested = () => dispatch(loadOrdersListRequested());
+    const goToNewOrder = () => {
+            dispatch(resetOrder());
+            navigate("/order/new");
+        };
+    const doToggleOrdersListFilterByUser = () => dispatch(toggleOrdersListFilterByUser());
+    const doToggleOrdersListFilterByStand = () => dispatch(toggleOrdersListFilterByStand());
+    const doToggleOrdersListFilterByStatus = () => dispatch(toggleOrdersListFilterByStatus());
+
     return (
         <Toolbar>
-            <IconButton onClick={props.goToNewOrder} customClass={props.classes.icon}>
+            <IconButton onClick={goToNewOrder} customClass={props.classes.icon}>
                 <ContentAdd />
             </IconButton>
-            <IconButton onClick={props.loadOrdersListRequested} customClass={props.classes.icon}>
+            <IconButton onClick={doLoadOrdersListRequested} customClass={props.classes.icon}>
                 <NavigationRefresh />
             </IconButton>
-            <IconButton onClick={props.toggleOrdersListFilterByUser} customClass={props.classes.icon}>
-                {props.filters.user ? <SupervisorAccount /> : <PermIdentity />}
+            <IconButton onClick={doToggleOrdersListFilterByUser} customClass={props.classes.icon}>
+                {filters.user ? <SupervisorAccount /> : <PermIdentity />}
             </IconButton>
-            {props.showToggleOrdersListFilterByStand ? (
-                <IconButton onClick={props.toggleOrdersListFilterByStand} customClass={props.classes.icon}>
-                    {props.filters.stand ? <Storefront /> : <Public />}
+            {showToggleOrdersListFilterByStand ? (
+                <IconButton onClick={doToggleOrdersListFilterByStand} customClass={props.classes.icon}>
+                    {filters.stand ? <Storefront /> : <Public />}
                 </IconButton>
             ) : null}
-            {props.showToggleOrdersListFilterByStatus ? (
-                <IconButton onClick={props.toggleOrdersListFilterByStatus} customClass={props.classes.icon}>
-                    {props.filters.status ? <LockOpen /> : <Lock />}
+            {showToggleOrdersListFilterByStatus ? (
+                <IconButton onClick={doToggleOrdersListFilterByStatus} customClass={props.classes.icon}>
+                    {filters.status ? <LockOpen /> : <Lock />}
                 </IconButton>
             ) : null}
         </Toolbar>
@@ -44,18 +63,6 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-    loadOrdersListRequested: PropTypes.func.isRequired,
-    goToNewOrder: PropTypes.func.isRequired,
-    toggleOrdersListFilterByUser: PropTypes.func.isRequired,
-    toggleOrdersListFilterByStand: PropTypes.func.isRequired,
-    toggleOrdersListFilterByStatus: PropTypes.func.isRequired,
-    showToggleOrdersListFilterByStand: PropTypes.bool.isRequired,
-    showToggleOrdersListFilterByStatus: PropTypes.bool.isRequired,
-    filters: PropTypes.shape({
-        user: PropTypes.bool.isRequired,
-        stand: PropTypes.bool.isRequired,
-        status: PropTypes.bool.isRequired
-    }).isRequired,
     classes: PropTypes.object.isRequired
 };
 

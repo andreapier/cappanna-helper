@@ -2,7 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "api";
 import { loadingChanged, signalApiError, resetOrder, signalApiSuccess } from "actions";
 import { DELETE_ORDER } from "actions/types";
-import history from "./../history";
+import history from "../chHistory";
 
 function* deleteOrder(action) {
     try {
@@ -11,7 +11,7 @@ function* deleteOrder(action) {
         yield call(api.deleteOrder, action.payload);
         yield put(signalApiSuccess());
         yield put(resetOrder());
-        history.push("/order");
+        history.navigate("/order");
     } catch (e) {
         yield put(signalApiError(e));
     } finally {

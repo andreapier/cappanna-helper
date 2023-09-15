@@ -1,11 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { makeSelectOrderItemsByItemId } from "selectors";
 import IconButton from "components/CustomButtons/IconButton";
 import ContentAdd from "@material-ui/icons/Add";
 import ContentRemove from "@material-ui/icons/Remove";
 import AmountFormat from "components/AmountFormat";
 import { withStyles } from "@material-ui/core";
 import { flex } from "variables/styles";
+import { incrementOrderDetailQuantity } from "actions";
 
 const style = {
     root: {
@@ -32,26 +35,32 @@ const style = {
 };
 
 const MenuItemDetail = (props) => {
+    const selectOrderItemsByItemId = makeSelectOrderItemsByItemId();
+    const orderDetail = useSelector(state => selectOrderItemsByItemId(state, props.detail.id));
+    
+    const dispatch = useDispatch();
+    const doIncrementOrderDetailQuantity = quantity => dispatch(incrementOrderDetailQuantity(props.detail.id, quantity, props.detail.price));
+
     return (
         <div className={props.classes.root}>
-            <div>{props.detail.item.name}</div>
+            <div>{props.detail.name}</div>
             <div className={props.classes.end}>
                 <div className={props.classes.item55}>
-                    <AmountFormat amount={props.detail.item.price} />
+                    <AmountFormat amount={props.detail.price} />
                 </div>
                 <div>
                     <IconButton
-                        onClick={() => props.incrementOrderDetailQuantity(props.detail.item.id, 1, props.detail.item.price)}
-                        disabled={props.detail.item.unitsInStock + props.detail.initialQuantity - props.detail.quantity <= 0}
+                        onClick={() => doIncrementOrderDetailQuantity(1)}
+                        disabled={props.detail.unitsInStock + orderDetail.initialQuantity - orderDetail.quantity <= 0}
                     >
                         <ContentAdd />
                     </IconButton>
                 </div>
-                <div className={props.classes.item17}>{props.detail.quantity}</div>
+                <div className={props.classes.item17}>{orderDetail.quantity}</div>
                 <div>
                     <IconButton
-                        onClick={() => props.incrementOrderDetailQuantity(props.detail.item.id, -1, props.detail.item.price)}
-                        disabled={props.detail.quantity === 0}
+                        onClick={() => doIncrementOrderDetailQuantity(-1)}
+                        disabled={orderDetail.quantity === 0}
                     >
                         <ContentRemove />
                     </IconButton>
@@ -63,17 +72,11 @@ const MenuItemDetail = (props) => {
 
 MenuItemDetail.propTypes = {
     detail: PropTypes.shape({
-        id: PropTypes.number,
-        quantity: PropTypes.number.isRequired,
-        initialQuantity: PropTypes.number.isRequired,
-        item: PropTypes.shape({
-            id: PropTypes.number.isRequired,
-            name: PropTypes.string.isRequired,
-            price: PropTypes.number.isRequired,
-            unitsInStock: PropTypes.number.isRequired
-        }).isRequired
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        unitsInStock: PropTypes.number.isRequired
     }).isRequired,
-    incrementOrderDetailQuantity: PropTypes.func.isRequired
 };
 
 export default withStyles(style)(MenuItemDetail);

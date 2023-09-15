@@ -1,44 +1,41 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import { makeSelectMenuItemsByGroup } from "selectors";
 import { Accordion, AccordionDetails, AccordionSummary, Typography, withStyles } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MenuItemDetail from "components/Orders/New/MenuItemDetail";
-import PropTypes from "prop-types";
 
 const styles = {
-    root: {
-        flexGrow: 1
+    expansion: {
+        padding: "8px 2px",
+        display: "block"
     }
 };
 
 const DishList = (props) => {
+    const selectMenuItemsByGroup = makeSelectMenuItemsByGroup();
+    const menuItemDetails = useSelector(state => selectMenuItemsByGroup(state, props.group));
+
     return (
-        <div className={props.classes.root}>
             <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography>{props.title}</Typography>
                 </AccordionSummary>
-                <AccordionDetails>
+                <AccordionDetails className={props.classes.expansion}>
                     <div>
-                        {props.details.map((i) => (
-                            <MenuItemDetail key={i.item.id} detail={i} incrementOrderDetailQuantity={props.incrementOrderDetailQuantity} />
+                        {menuItemDetails.map((i) => (
+                            <MenuItemDetail key={i.id} detail={i} />
                         ))}
                     </div>
                 </AccordionDetails>
             </Accordion>
-        </div>
     );
 };
 
 DishList.propTypes = {
-    title: PropTypes.string.isRequired,
-    details: PropTypes.arrayOf(
-        PropTypes.shape({
-            item: PropTypes.shape({
-                id: PropTypes.number.isRequired
-            }).isRequired
-        }).isRequired
-    ).isRequired,
-    incrementOrderDetailQuantity: PropTypes.func.isRequired
+    group: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
 };
 
 export default withStyles(styles)(DishList);

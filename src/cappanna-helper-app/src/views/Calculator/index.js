@@ -1,5 +1,5 @@
 import React from "react";
-import CalculatorForm from "containers/CalculatorForm";
+import CalculatorForm from "components/CalculatorForm";
 
 const CalculatorPage = () => <CalculatorForm />;
 
