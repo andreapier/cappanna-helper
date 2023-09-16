@@ -16,9 +16,10 @@ const styles = {
 const DishList = (props) => {
     const selectMenuItemsByGroup = makeSelectMenuItemsByGroup();
     const menuItemDetails = useSelector(state => selectMenuItemsByGroup(state, props.group));
+    const handleSetExpanded = () => props.onExpandedChange(props.group);
 
     return (
-            <Accordion>
+            <Accordion expanded={props.expanded} onChange={handleSetExpanded}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography>{props.title}</Typography>
                 </AccordionSummary>
@@ -35,7 +36,9 @@ const DishList = (props) => {
 
 DishList.propTypes = {
     group: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    expanded: PropTypes.bool.isRequired,
+    onExpandedChange: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(DishList);
