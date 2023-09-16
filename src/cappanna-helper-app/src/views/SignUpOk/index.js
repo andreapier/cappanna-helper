@@ -2,7 +2,7 @@ import React from "react";
 import Grid from "components/Grid";
 import RegularCard from "components/Cards/RegularCard";
 import ItemGrid from "components/Grid/ItemGrid";
-import SignUpOk from "components/SignUpOk";
+import SignUpOk from "components/Users/SignUpOk";
 
 const SignUpOkPage = () => {
     return (

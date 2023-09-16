@@ -1,6 +1,6 @@
 import React from "react";
 import RegularCard from "components/Cards/RegularCard";
-import SignUpForm from "containers/Users/SignUpForm";
+import SignUpForm from "components/Users/SignUpForm";
 
 const Users = () => {
     return (
