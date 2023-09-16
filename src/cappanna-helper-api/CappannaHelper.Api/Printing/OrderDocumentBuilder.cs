@@ -22,11 +22,11 @@ namespace CappannaHelper.Api.Printing
             SetTitle(title);
             SetStand(stand);
             SetOrderId(orderId, size);
-            SetTable(table, size);
-            SetSeats(seats, size);
-            SetCustomer(customer, size);
-            SetWaiter(waiter, size);
             SetCreationTimestamp(creationTimestamp, size);
+            SetTable(table, size);
+            SetCustomer(customer, size);
+            SetSeats(seats, size);
+            SetWaiter(waiter, size);
         }
 
         private void SetTitle(string title)
@@ -51,8 +51,7 @@ namespace CappannaHelper.Api.Printing
         {
             var section = _document.LastPage.CreateSection();
             section.SetSize(size);
-            section.CreateLabel().SetContent($"Ordine:  {orderId,3}  ");
-            section.NewLine();
+            section.CreateLabel().SetContent($"Ordine:  {orderId,-3}  ");
         }
 
         private void SetTable(string table, int size)
@@ -60,17 +59,13 @@ namespace CappannaHelper.Api.Printing
             var section = _document.LastPage.CreateSection();
             var tableStr = table.ToString();
 
-            if (tableStr.Length <= 11)
+            if (tableStr.Length > 23)
             {
-                tableStr = tableStr.PadLeft(11, ' ');
-            }
-            else
-            {
-                tableStr = tableStr[..11];
+                tableStr = tableStr[..23];
             }
 
             section.SetSize(size);
-            section.CreateLabel().SetContent($"Tav:   {tableStr}");
+            section.CreateLabel().SetContent($"Tav:     {tableStr}");
             section.NewLine();
         }
 
@@ -78,7 +73,7 @@ namespace CappannaHelper.Api.Printing
         {
             var section = _document.LastPage.CreateSection();
             section.SetSize(size);
-            section.CreateLabel().SetContent($"Coperti: {seats,3}  ");
+            section.CreateLabel().SetContent($"Coperti: {seats,-2}   ");
         }
 
         private void SetCustomer(string customer, int size)
@@ -86,26 +81,22 @@ namespace CappannaHelper.Api.Printing
             var section = _document.LastPage.CreateSection();
             var customerStr = customer.ToString();
 
-            if (customerStr.Length <= 11)
+            if (customerStr.Length > 23)
             {
-                customerStr = customerStr.PadLeft(11, ' ');
-            }
-            else
-            {
-                customerStr = customerStr[..11];
+                customerStr = customerStr[..23];
             }
 
             section.SetSize(size);
-            section.CreateLabel().SetContent($"Cliente:{customerStr}");
+            section.CreateLabel().SetContent($"Cliente: {customerStr}");
             section.NewLine();
         }
 
         private void SetWaiter(ApplicationUser waiter, int size)
         {
             var section = _document.LastPage.CreateSection();
-            var firstName = waiter.FirstName.Length <= 11 ? waiter.FirstName.PadLeft(11, ' ') : waiter.FirstName[..11];
+            var firstName = waiter.FirstName.Length > 14 ? waiter.FirstName[..14] : waiter.FirstName;
             section.SetSize(size);
-            section.CreateLabel().SetContent($"Camer: {firstName}");
+            section.CreateLabel().SetContent($"Cam: {firstName}");
             section.NewLine();
         }
 
@@ -114,7 +105,7 @@ namespace CappannaHelper.Api.Printing
             var section = _document.LastPage.CreateSection();
             var localCreationTimestamp = TimeZoneInfo.ConvertTime(creationTimestamp, TimeZoneInfo.Local);
             section.SetSize(size);
-            section.CreateLabel().SetContent($"Orario: {localCreationTimestamp:HH:mm:ss}");
+            section.CreateLabel().SetContent($"Ora: {localCreationTimestamp:HH:mm}");
             section.NewLine();
         }
 

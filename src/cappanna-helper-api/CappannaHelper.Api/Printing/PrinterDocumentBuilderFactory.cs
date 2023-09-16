@@ -15,9 +15,9 @@ namespace CappannaHelper.Api.Printing
                 return (IPrinterDocumentBuilder<T>) CreateChOrderDocumentBuilder<ChOrder>();
             }
 
-            if(typeof(T) == typeof(IList<OrderDetailsAggregateModel>))
+            if(typeof(T) == typeof(List<OrderDetailsAggregateModel>))
             {
-                return (IPrinterDocumentBuilder<T>) CreateOrderAggregateDocumentBuilder<IList<OrderDetailsAggregateModel>>();
+                return (IPrinterDocumentBuilder<T>) CreateOrderAggregateDocumentBuilder<List<OrderDetailsAggregateModel>>();
             }
 
             throw new NotImplementedException($"Document type not implemented: {typeof(T)}");

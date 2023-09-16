@@ -6,7 +6,7 @@ using CappannaHelper.Printing.EscPos;
 
 namespace CappannaHelper.Api.Printing
 {
-    public class OrderDetailsAggregateDocumentBuilder: IPrinterDocumentBuilder<IList<OrderDetailsAggregateModel>>
+    public class OrderDetailsAggregateDocumentBuilder: IPrinterDocumentBuilder<List<OrderDetailsAggregateModel>>
     {
         private readonly Document _document;
 
@@ -15,7 +15,7 @@ namespace CappannaHelper.Api.Printing
             _document = new Document();
         }
 
-        public IPrinterDocumentBuilder<IList<OrderDetailsAggregateModel>> SetData(IList<OrderDetailsAggregateModel> aggregation)
+        public IPrinterDocumentBuilder<List<OrderDetailsAggregateModel>> SetData(List<OrderDetailsAggregateModel> aggregation)
         {
             SetTitle("Primi piatti");
             SetAggregates(aggregation);
