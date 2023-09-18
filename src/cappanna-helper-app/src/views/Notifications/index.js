@@ -1,5 +1,5 @@
 import React from "react";
-import Notifications from "containers/Notifications";
+import Notifications from "components/Notifications";
 
 const NotificationsPage = () => <Notifications />;
 

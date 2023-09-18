@@ -1,5 +1,5 @@
 import React from "react";
-import MenuTable from "containers/MenuTable";
+import MenuTable from "components/Menu/MenuTable";
 
 const MenuPage = () => {
     return <MenuTable />;

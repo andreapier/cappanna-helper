@@ -1,14 +1,14 @@
 import React from "react";
-import ConnectedHeader from "containers/Orders/New/Confirmation/ConnectedHeader";
-import ConnectedMain from "containers/Orders/New/Confirmation/ConnectedMain";
-import NotesForm from "containers/Orders/New/Confirmation/NotesForm";
+import Header from "components/Orders/New/Confirmation/Header";
+import Main from "components/Orders/New/Confirmation/Main";
+import NotesForm from "components/Orders/New/Confirmation/NotesForm";
 import Footer from "components/Orders/New/Confirmation/Footer";
 
 const OrderConfirmationPage = () => {
     return (
         <div>
-            <ConnectedHeader />
-            <ConnectedMain />
+            <Header />
+            <Main />
             <NotesForm />
             <Footer />
         </div>

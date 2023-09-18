@@ -1,5 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { resetNotification } from "actions";
 import Info from "@material-ui/icons/Info";
 import Warning from "@material-ui/icons/Warning";
 import ErrorIcon from "@material-ui/icons/Error";
@@ -7,34 +8,34 @@ import Snackbar from "components/Snackbar/Snackbar";
 import SlideUpTransition from "components/Snackbar/SlideUpTransition";
 
 const NotificationSnackbar = (props) => {
+    const type = useSelector(state => state.message.type);
+    const message = useSelector(state => state.message.message);
+    const dispatch = useDispatch();
+    const handleClose = () => dispatch(resetNotification());
+
     let icon = ErrorIcon;
     let color = "danger";
 
-    if (props.type === "info") {
+    if (type === "info") {
         icon = Info;
         color = "primary";
-    } else if (props.type === "warning") {
+    } else if (type === "warning") {
         icon = Warning;
         color = "warning";
     }
 
     return (
         <Snackbar
-            onClose={props.handleClose}
-            message={props.message}
+            onClose={handleClose}
+            message={message}
             color={color}
             icon={icon}
             autoHideDuration={5000}
             transition={SlideUpTransition}
-            open={!!props.message}
+            open={!!message}
             place="bc"
         />
     );
-};
-
-NotificationSnackbar.propTypes = {
-    type: PropTypes.string.isRequired,
-    message: PropTypes.string.isRequired
 };
 
 export default NotificationSnackbar;

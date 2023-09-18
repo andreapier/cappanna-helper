@@ -1,16 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
-import ToBePrintedOrdersNotifications from "components/Notifications/ToBePrintedOrdersNotifications";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loadNotificationsListRequested, resetOrder, printRequested } from "actions";
+import Notifications from "components/Notifications/Notifications";
 
-const Notifications = (props) => {
-    const toBePrintedOrdersNotifications = props.notifications.filter((n) => n.type === "ORDER");
+const NotificationsList = () => {
+  const notifications = useSelector(state => state.notifications);
+  const dispatch = useDispatch();
 
-    return [<ToBePrintedOrdersNotifications notifications={toBePrintedOrdersNotifications} printRequested={props.printRequested} key={1} />];
-};
+  useEffect(() => {
+    dispatch(loadNotificationsListRequested());
 
-Notifications.propTypes = {
-    notifications: PropTypes.array.isRequired,
-    printRequested: PropTypes.func.isRequired
-};
+    return () => dispatch(resetOrder());
+  }, [dispatch]);
 
-export default Notifications;
+  const handlePrintRequested = (orderId) => dispatch(printRequested(orderId));
+  
+  return <Notifications notifications={notifications} printRequested={handlePrintRequested} />;
+}
+
+export default NotificationsList;

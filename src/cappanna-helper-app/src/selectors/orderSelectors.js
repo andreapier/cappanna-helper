@@ -19,11 +19,34 @@ const makeSelectOrderItemsByItemId = () => {
   return createSelector(
     [state => state.newOrderDetails, (state, itemId) => itemId],
     (newOrderDetails, itemId) => newOrderDetails.find(item => item.itemId === itemId)
-  )
+  );
 }
+
+const selectFilteredOrders = createSelector(
+  [
+    state => state.orders.items,
+    state => state.orders.filters,
+    state => state.user
+  ],
+  (items, filters, user) => items.filter(o => {
+    if (filters.user) {
+      return o.createdById === user.userId;
+    }
+
+    if (filters.stand) {
+      return o.standId === user.settings.standId;
+    }
+
+    if (filters.status) {
+      return o.status < 4;
+    }
+
+    return true;
+  })
+);
 
 const selectOrderTotalPrice = state => {
   return state.selectedOrder ? calculateOrderTotalPrice(state.selectedOrder) : 0;
 }
 
-export { makeSelectOrderItemsByItemId, selectCanConfirmOrder, selectOrderTotalPrice };
+export { makeSelectOrderItemsByItemId, selectCanConfirmOrder, selectFilteredOrders, selectOrderTotalPrice };

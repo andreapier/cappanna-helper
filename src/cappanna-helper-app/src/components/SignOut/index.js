@@ -8,7 +8,7 @@ const SignOut = () => {
 
     useEffect(() => {
         dispatch(signoutRequested());
-    });
+    }, [dispatch]);
 
     return <P>Arrivedorci!</P>;
 }

@@ -6,10 +6,10 @@ import NavigateSetter from "./NaviagteSetter";
 import appStyle from "variables/styles/appStyle";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Provider } from "react-redux";
-import ConnectedRequireAuth from "containers/ConnectedRequireAuth";
+import RequireAuth from "components/RequireAuth";
 import Sidebar from "components/Sidebar";
-import ConnectedWaitDialog from "containers/ConnectedWaitDialog";
-import ConnectedNotificationSnackbar from "containers/ConnectedNotificationSnackbar";
+import WaitDialog from "components/WaitDialog";
+import NotificationSnackbar from "components/Snackbar/NotificationSnackbar";
 import RoutingAwareHeader from "components/RoutingAwareHeader";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import signinRoute from "routes/users/signin";
@@ -27,9 +27,9 @@ const switchRoutes = (routes) => (
                         key={key}
                         exact
                         element={
-                            (<ConnectedRequireAuth redirectTo={signinRoute.path} roles={route.roles}>
+                            (<RequireAuth redirectTo={signinRoute.path} roles={route.roles}>
                                 {route.component}
-                            </ConnectedRequireAuth>)
+                            </RequireAuth>)
                         }
                         path={route.path}
                     />
@@ -59,8 +59,8 @@ const App = props => {
                     <div className={props.classes.wrapper}>
                         <MuiThemeProvider theme={props.theme}>
                             <CssBaseline />
-                            <ConnectedWaitDialog />
-                            <ConnectedNotificationSnackbar />
+                            <WaitDialog />
+                            <NotificationSnackbar />
                             <Sidebar
                                 routes={appRoutes}
                                 handleDrawerToggle={handleDrawerToggle}

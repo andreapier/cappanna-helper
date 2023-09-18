@@ -1,19 +1,20 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import Table from "components/Table";
 import { formatAmount } from "utils/string";
 
-const Header = (props) => {
-    return <Table tableHead={["Tav.", "N° coperti", "Cliente", "Tot (€)"]} tableData={[[props.table, "" + props.seats, props.customer, formatAmount(props.totalPrice, false)]]} />;
-};
+const Header = () => {
+    const totalPrice = useSelector(state => state.newOrderHeader.totalPrice);
+    const chTable = useSelector(state => state.newOrderHeader.chTable);
+    const seats = useSelector(state => state.newOrderHeader.seats);
+    const customer = useSelector(state => state.newOrderHeader.customer);
 
-Header.propTypes = {
-    id: PropTypes.number,
-    table: PropTypes.string.isRequired,
-    customer: PropTypes.string.isRequired,
-    seats: PropTypes.number.isRequired,
-    totalPrice: PropTypes.number.isRequired,
-    standId: PropTypes.number.isRequired
+    return (
+        <Table
+            tableHead={["Tav.", "N° coperti", "Cliente", "Tot (€)"]}
+            tableData={[[chTable, "" + seats, customer, formatAmount(totalPrice, false)]]}
+        />
+    );
 };
 
 export default Header;

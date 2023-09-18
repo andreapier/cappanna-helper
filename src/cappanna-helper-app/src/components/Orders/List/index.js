@@ -1,21 +1,29 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useEffect } from "react";
+import { loadOrdersListRequested, resetOrder } from "actions";
 import Preview from "components/Orders/List/Preview";
 import { List } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { selectFilteredOrders } from "selectors";
 
-const OrdersList = (props) => {
+const OrdersList = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(loadOrdersListRequested());
+
+        return () => dispatch(resetOrder());
+    }, [dispatch]);
+
+    const orders = useSelector(selectFilteredOrders);
+    const filters = useSelector(state => state.orders.filters);
+
     return (
         <List>
-            {props.orders.map((o) => (
-                <Preview order={o} filters={props.filters} key={o.id} />
+            {orders.map((o) => (
+                <Preview order={o} filters={filters} key={o.id} />
             ))}
         </List>
     );
-};
-
-OrdersList.propTypes = {
-    orders: PropTypes.array.isRequired,
-    filters: PropTypes.object.isRequired,
 };
 
 export default OrdersList;

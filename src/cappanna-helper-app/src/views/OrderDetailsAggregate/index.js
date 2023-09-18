@@ -1,5 +1,5 @@
 import React from "react";
-import OrderDetailsAggregate from "containers/Orders/OrderDetailsAggregate";
+import OrderDetailsAggregate from "components/Orders/OrderDetailsAggregate";
 
 const OrderDetailsAggregatePage = () => <OrderDetailsAggregate />;
 

@@ -1,8 +1,8 @@
 import React from "react";
-import ConnectedSettings from "containers/ConnectedSettings";
+import Settings from "components/Settings";
 
 const SettingsPage = () => {
-    return <ConnectedSettings />;
+    return <Settings />;
 };
 
 export default SettingsPage;
