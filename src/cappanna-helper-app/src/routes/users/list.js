@@ -1,5 +1,5 @@
 import AsyncUserList from "views/UserList/AsyncUserList";
-import Person from "@material-ui/icons/Person";
+import Person from "@mui/icons-material/Person";
 
 const orders = {
     path: "/user",

@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { makeSelectOrderItemsByItemId } from "selectors";
 import IconButton from "components/CustomButtons/IconButton";
-import ContentAdd from "@material-ui/icons/Add";
-import ContentRemove from "@material-ui/icons/Remove";
+import ContentAdd from "@mui/icons-material/Add";
+import ContentRemove from "@mui/icons-material/Remove";
 import AmountFormat from "components/AmountFormat";
-import { withStyles } from "@material-ui/core";
+import { withStyles } from '@mui/styles';
 import { flex } from "variables/styles";
 import { incrementOrderDetailQuantity } from "actions";
 
@@ -52,7 +52,7 @@ const MenuItemDetail = (props) => {
                     <IconButton
                         onClick={() => doIncrementOrderDetailQuantity(1)}
                         disabled={props.detail.unitsInStock + orderDetail.initialQuantity - orderDetail.quantity <= 0}
-                    >
+                        size="large">
                         <ContentAdd />
                     </IconButton>
                 </div>
@@ -61,7 +61,7 @@ const MenuItemDetail = (props) => {
                     <IconButton
                         onClick={() => doIncrementOrderDetailQuantity(-1)}
                         disabled={orderDetail.quantity === 0}
-                    >
+                        size="large">
                         <ContentRemove />
                     </IconButton>
                 </div>

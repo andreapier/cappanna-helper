@@ -5,7 +5,7 @@ import { signinRequested } from "actions";
 import Button from "components/CustomButtons";
 import ItemGrid from "components/Grid/ItemGrid";
 import Grid from "components/Grid";
-import { Checkbox, FormControlLabel, TextField } from "@material-ui/core";
+import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { getDefaultRoute } from "routes/helpers";
 
 const SignInForm = () => {
@@ -39,11 +39,25 @@ const SignInForm = () => {
         <form onSubmit={handleSubmit}>
             <Grid justifyContent="space-between">
                 <ItemGrid xs={12}>
-                    <TextField name="username" autoFocus fullWidth label="Username" value={username} onChange={setUsernameCallback} />
+                    <TextField
+                        variant="standard"
+                        name="username"
+                        autoFocus
+                        fullWidth
+                        label="Username"
+                        value={username}
+                        onChange={setUsernameCallback} />
                 </ItemGrid>
 
                 <ItemGrid xs={12}>
-                    <TextField name="password" type="password" fullWidth label="Password" value={password} onChange={setPasswordCallback} />
+                    <TextField
+                        variant="standard"
+                        name="password"
+                        type="password"
+                        fullWidth
+                        label="Password"
+                        value={password}
+                        onChange={setPasswordCallback} />
                 </ItemGrid>
 
                 <ItemGrid xs={12} md={3}>

@@ -1,5 +1,6 @@
 import React from "react";
-import { IconButton, withStyles } from "@material-ui/core";
+import { IconButton } from "@mui/material";
+import { withStyles } from '@mui/styles';
 import PropTypes from "prop-types";
 import iconButtonStyle from "variables/styles/iconButtonStyle";
 
@@ -8,7 +9,10 @@ const IconCustomButton = (props) => {
     const colorWithDisabled = props.disabled ? "" : color;
 
     return (
-        <IconButton {...rest} className={classes.button + " " + classes[colorWithDisabled] + (customClass ? " " + customClass : "")}>
+        <IconButton
+            {...rest}
+            className={classes.button + " " + classes[colorWithDisabled] + (customClass ? " " + customClass : "")}
+            size="large">
             {children}
         </IconButton>
     );

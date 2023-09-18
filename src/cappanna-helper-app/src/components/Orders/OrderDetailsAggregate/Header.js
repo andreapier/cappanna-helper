@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Toolbar, withStyles } from "@material-ui/core";
-import Assignment from "@material-ui/icons/Assignment";
+import { Toolbar } from "@mui/material";
+import { withStyles } from '@mui/styles';
+import Assignment from "@mui/icons-material/Assignment";
 import IconButton from "components/CustomButtons/IconButton";
 
 const style = {
@@ -17,7 +18,7 @@ const Header = (props) => {
                 onClick={() => props.orderDetailsAggregationRequested(props.ordersId)}
                 customClass={props.classes.icon}
                 disabled={props.ordersId.length === 0}
-            >
+                size="large">
                 <Assignment />
             </IconButton>
         </Toolbar>

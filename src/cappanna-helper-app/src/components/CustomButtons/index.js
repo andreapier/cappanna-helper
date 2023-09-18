@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, withStyles } from "@material-ui/core";
+import { Button } from "@mui/material";
+import { withStyles } from '@mui/styles';
 import PropTypes from "prop-types";
 import cx from "classnames";
 import buttonStyle from "variables/styles/buttonStyle";

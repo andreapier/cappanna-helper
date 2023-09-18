@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { TextField, withStyles } from "@material-ui/core";
+import { TextField } from "@mui/material";
+import { withStyles } from '@mui/styles';
 import { calculate } from "actions";
 import Button from "components/CustomButtons";
 import ItemGrid from "components/Grid/ItemGrid";
@@ -37,27 +38,34 @@ const Calculator = (props) => {
             <Grid>
                 <ItemGrid xs={12} md={4}>
                     <TextField
+                        variant="standard"
                         name="amount"
                         autoFocus
                         fullWidth
                         label="Da pagare"
                         type="number"
                         onChange={handleSetAmount}
-                        value={amount}
-                    />
+                        value={amount} />
                 </ItemGrid>
                 <ItemGrid xs={12} md={4}>
                     <TextField
+                        variant="standard"
                         name="paidAmount"
                         fullWidth
                         label="Pagato"
                         type="number"
                         onChange={handleSetPaidAmount}
-                        value={paidAmount}
-                    />
+                        value={paidAmount} />
                 </ItemGrid>
                 <ItemGrid xs={12} md={4}>
-                    <TextField name="seats" fullWidth label="Coperti" type="number" onChange={handleSetSeats} value={seats} />
+                    <TextField
+                        variant="standard"
+                        name="seats"
+                        fullWidth
+                        label="Coperti"
+                        type="number"
+                        onChange={handleSetSeats}
+                        value={seats} />
                 </ItemGrid>
                 <ItemGrid xs={12} className={props.classes.buttonContainer}>
                     <Button type="submit" fullWidth>
@@ -66,17 +74,25 @@ const Calculator = (props) => {
                 </ItemGrid>
                 <ItemGrid xs={12} md={6}>
                     <TextField
+                        variant="standard"
                         name="perPersonAmount"
                         fullWidth
                         label="Da pagare a persona"
                         type="number"
                         readOnly
                         value={calculator.perPersonAmount}
-                        normalize={formatAmount}
-                    />
+                        normalize={formatAmount} />
                 </ItemGrid>
                 <ItemGrid xs={12} md={6}>
-                    <TextField name="chChange" fullWidth label="Resto" type="number" readOnly value={calculator.change} normalize={formatAmount} />
+                    <TextField
+                        variant="standard"
+                        name="chChange"
+                        fullWidth
+                        label="Resto"
+                        type="number"
+                        readOnly
+                        value={calculator.change}
+                        normalize={formatAmount} />
                 </ItemGrid>
             </Grid>
         </form>

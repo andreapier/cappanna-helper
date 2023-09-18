@@ -1,5 +1,5 @@
 import AsyncSettings from "views/Settings/AsyncSettings";
-import Settings from "@material-ui/icons/Settings";
+import Settings from "@mui/icons-material/Settings";
 
 const settings = {
     path: "/settings",

@@ -5,8 +5,8 @@ import { isNewOrder } from "routes/helpers";
 import { setOrderCustomer, setOrderTable, setOrderSeats } from "actions";
 import { selectCanConfirmOrder } from "selectors";
 import IconButton from "components/CustomButtons/IconButton";
-import { TextField } from "@material-ui/core";
-import ContentSend from "@material-ui/icons/Send";
+import { TextField } from "@mui/material";
+import ContentSend from "@mui/icons-material/Send";
 import AmountFormat from "components/AmountFormat";
 
 const containerStyle = {
@@ -44,47 +44,52 @@ const Header = () => {
     const setSeats = (seats) => dispatch(setOrderSeats(seats));
     const setCustomer = (customer) => dispatch(setOrderCustomer(customer));
     const goToConfirm = () => navigate(confirmLocation);
+
     return (
         <div>
             <div style={containerStyle}>
                 <div>
                     <TextField
+                        variant="standard"
                         label="Tav."
                         style={tableFieldStyle}
                         value={chTable}
                         onChange={(e) => setTable(e.target.value)}
                         InputLabelProps={{
                             shrink: true
-                        }}
-                    />
+                        }} />
                 </div>
                 <div>
                     <TextField
+                        variant="standard"
                         label="N° pers"
                         style={textFieldStyle}
                         value={isNaN(seats) ? "" : seats}
                         onChange={(e) => setSeats(parseInt(e.target.value, 10))}
                         InputLabelProps={{
                             shrink: true
-                        }}
-                    />
+                        }} />
                 </div>
                 <div>
                     <TextField
+                        variant="standard"
                         label="Cliente"
                         style={customerFieldStyle}
                         value={customer}
                         onChange={(e) => setCustomer(e.target.value)}
                         InputLabelProps={{
                             shrink: true
-                        }}
-                    />
+                        }} />
                 </div>
                 <div style={textFieldStyle}>
                     Tot: <AmountFormat amount={totalPrice} />
                 </div>
                 <div>
-                    <IconButton type="submit" disabled={!canConfirm} onClick={() => goToConfirm(id)}>
+                    <IconButton
+                        type="submit"
+                        disabled={!canConfirm}
+                        onClick={goToConfirm}
+                        size="large">
                         <ContentSend />
                     </IconButton>
                 </div>

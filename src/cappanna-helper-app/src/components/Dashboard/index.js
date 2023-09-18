@@ -7,7 +7,7 @@ import ItemGrid from "components/Grid/ItemGrid";
 import OrderStatCard from "components/Dashboard/OrderStatCard";
 import OrdersIncomeStartCard from "components/Dashboard/OrdersIncomeStartCard";
 import WaitersStatCard from "components/Dashboard/WaitersStatCard";
-import { withStyles } from "@material-ui/core";
+import { withStyles } from '@mui/styles';
 
 const style = {
     container: {

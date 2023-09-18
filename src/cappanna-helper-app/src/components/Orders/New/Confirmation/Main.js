@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { withStyles } from "@material-ui/core";
+import { withStyles } from '@mui/styles';
 import Table from "components/Table";
 import { formatAmount } from "utils/string";
 import buildFilledOrderDetails from "utils/buildFilledOrderDetails";

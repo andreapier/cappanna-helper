@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrderNotes } from "actions";
-import { TextField } from "@material-ui/core";
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { TextField } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const Notes = () => {
     const notes = useSelector(state => state.newOrderHeader.notes);
@@ -19,6 +19,7 @@ const Notes = () => {
 
                 <AccordionDetails>
                     <TextField
+                        variant="standard"
                         name="notes"
                         label="Inserire le note dell'ordine"
                         multiline
@@ -26,8 +27,7 @@ const Notes = () => {
                         maxRows={10}
                         fullWidth
                         onChange={handleSetNotes}
-                        value={notes}
-                    />
+                        value={notes} />
                 </AccordionDetails>
             </Accordion>
         </form>

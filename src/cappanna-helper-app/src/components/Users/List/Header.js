@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loadUsersListRequested } from "actions";
-import { Toolbar, withStyles } from "@material-ui/core";
-import ContentAdd from "@material-ui/icons/Add";
+import { Toolbar } from "@mui/material";
+import { withStyles } from '@mui/styles';
+import ContentAdd from "@mui/icons-material/Add";
 import IconButton from "components/CustomButtons/IconButton";
-import NavigationRefresh from "@material-ui/icons/Refresh";
+import NavigationRefresh from "@mui/icons-material/Refresh";
 
 const style = {
     icon: {
@@ -22,10 +23,13 @@ const Header = (props) => {
 
     return (
         <Toolbar>
-            <IconButton onClick={goToNewUser} customClass={props.classes.icon}>
+            <IconButton onClick={goToNewUser} customClass={props.classes.icon} size="large">
                 <ContentAdd />
             </IconButton>
-            <IconButton onClick={doLoadUsersListRequested} customClass={props.classes.icon}>
+            <IconButton
+                onClick={doLoadUsersListRequested}
+                customClass={props.classes.icon}
+                size="large">
                 <NavigationRefresh />
             </IconButton>
         </Toolbar>

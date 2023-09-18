@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadSettingsListRequested, resetOrder, setSettingValue } from "actions";
-import { List } from "@material-ui/core";
+import { List } from "@mui/material";
 import SettingsItem from "components/Settings/SettingsItem";
 
 const SettingsList = () => {

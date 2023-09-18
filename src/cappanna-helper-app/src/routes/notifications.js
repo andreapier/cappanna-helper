@@ -1,5 +1,5 @@
 import AsyncNotifications from "views/Notifications/AsyncNotifications";
-import Notifications from "@material-ui/icons/Notifications";
+import Notifications from "@mui/icons-material/Notifications";
 
 const notifications = {
     path: "/notifications",

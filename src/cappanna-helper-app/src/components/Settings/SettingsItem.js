@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FormControlLabel, ListItem, Switch, TextField, withStyles } from "@material-ui/core";
+import { FormControlLabel, ListItem, Switch, TextField } from "@mui/material";
+import { withStyles } from '@mui/styles';
 import sidebarStyle from "variables/styles/sidebarStyle";
 
 const SettingsItem = (props) => {
@@ -11,7 +12,10 @@ const SettingsItem = (props) => {
             <Switch checked={props.setting.value.toLowerCase() === "true"} onChange={(e) => props.setSettingValue(props.setting.id, `${e.target.checked}`)} />
         );
     } else {
-        element = <TextField value={props.setting.value} onChange={(e) => props.setSettingValue(props.setting.id, e.target.value)} />;
+        element = <TextField
+            variant="standard"
+            value={props.setting.value}
+            onChange={(e) => props.setSettingValue(props.setting.id, e.target.value)} />;
     }
 
     return (

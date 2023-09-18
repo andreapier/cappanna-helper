@@ -1,5 +1,5 @@
 import AsyncCalculator from "views/Calculator/AsyncCalculator";
-import Apps from "@material-ui/icons/Apps";
+import Apps from "@mui/icons-material/Apps";
 
 const calculator = {
     path: "/calc",

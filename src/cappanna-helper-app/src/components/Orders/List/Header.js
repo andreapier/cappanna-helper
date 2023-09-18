@@ -4,16 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { resetOrder, loadOrdersListRequested, toggleOrdersListFilterByUser, toggleOrdersListFilterByStand, toggleOrdersListFilterByStatus } from "actions";
 import { selectIsAdmin, selectIsAdminOrDome } from "selectors";
-import { Toolbar, withStyles } from "@material-ui/core";
-import ContentAdd from "@material-ui/icons/Add";
+import { Toolbar } from "@mui/material";
+import { withStyles } from '@mui/styles';
+import ContentAdd from "@mui/icons-material/Add";
 import IconButton from "components/CustomButtons/IconButton";
-import PermIdentity from "@material-ui/icons/PermIdentity";
-import Public from "@material-ui/icons/Public";
-import Storefront from "@material-ui/icons/Storefront";
-import Lock from "@material-ui/icons/Lock";
-import LockOpen from "@material-ui/icons/LockOpen";
-import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
-import NavigationRefresh from "@material-ui/icons/Refresh";
+import PermIdentity from "@mui/icons-material/PermIdentity";
+import Public from "@mui/icons-material/Public";
+import Storefront from "@mui/icons-material/Storefront";
+import Lock from "@mui/icons-material/Lock";
+import LockOpen from "@mui/icons-material/LockOpen";
+import SupervisorAccount from "@mui/icons-material/SupervisorAccount";
+import NavigationRefresh from "@mui/icons-material/Refresh";
 
 const style = {
     icon: {
@@ -39,22 +40,34 @@ const Header = (props) => {
 
     return (
         <Toolbar>
-            <IconButton onClick={goToNewOrder} customClass={props.classes.icon}>
+            <IconButton onClick={goToNewOrder} customClass={props.classes.icon} size="large">
                 <ContentAdd />
             </IconButton>
-            <IconButton onClick={doLoadOrdersListRequested} customClass={props.classes.icon}>
+            <IconButton
+                onClick={doLoadOrdersListRequested}
+                customClass={props.classes.icon}
+                size="large">
                 <NavigationRefresh />
             </IconButton>
-            <IconButton onClick={doToggleOrdersListFilterByUser} customClass={props.classes.icon}>
+            <IconButton
+                onClick={doToggleOrdersListFilterByUser}
+                customClass={props.classes.icon}
+                size="large">
                 {filters.user ? <SupervisorAccount /> : <PermIdentity />}
             </IconButton>
             {showToggleOrdersListFilterByStand ? (
-                <IconButton onClick={doToggleOrdersListFilterByStand} customClass={props.classes.icon}>
+                <IconButton
+                    onClick={doToggleOrdersListFilterByStand}
+                    customClass={props.classes.icon}
+                    size="large">
                     {filters.stand ? <Storefront /> : <Public />}
                 </IconButton>
             ) : null}
             {showToggleOrdersListFilterByStatus ? (
-                <IconButton onClick={doToggleOrdersListFilterByStatus} customClass={props.classes.icon}>
+                <IconButton
+                    onClick={doToggleOrdersListFilterByStatus}
+                    customClass={props.classes.icon}
+                    size="large">
                     {filters.status ? <LockOpen /> : <Lock />}
                 </IconButton>
             ) : null}

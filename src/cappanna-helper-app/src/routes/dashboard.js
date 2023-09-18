@@ -1,5 +1,5 @@
 import AsyncDashboard from "views/Dashboard/AsyncDashboard";
-import Dashboard from "@material-ui/icons/Dashboard";
+import Dashboard from "@mui/icons-material/Dashboard";
 
 const dashboard = {
     path: "/dashboard",

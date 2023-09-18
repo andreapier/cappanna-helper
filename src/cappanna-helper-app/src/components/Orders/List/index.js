@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { loadOrdersListRequested, resetOrder } from "actions";
 import Preview from "components/Orders/List/Preview";
-import { List } from "@material-ui/core";
+import { List } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { selectFilteredOrders } from "selectors";
 

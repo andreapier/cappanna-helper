@@ -1,5 +1,5 @@
 import AsyncNewOrder from "views/NewOrder/AsyncNewOrder";
-import Add from "@material-ui/icons/Add";
+import Add from "@mui/icons-material/Add";
 
 const newOrder = {
     path: "/order/new",

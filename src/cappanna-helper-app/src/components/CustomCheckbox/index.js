@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Checkbox, withStyles } from "@material-ui/core";
+import { Checkbox } from "@mui/material";
+import { withStyles } from '@mui/styles';
 import checkboxStyle from "variables/styles/checkboxStyle";
 
 const CustomCheckbox = (props) => {
@@ -12,7 +13,6 @@ const CustomCheckbox = (props) => {
                 root: classes.root
             }}
             id={id}
-            color="primary"
             {...inputProps}
         />
     );

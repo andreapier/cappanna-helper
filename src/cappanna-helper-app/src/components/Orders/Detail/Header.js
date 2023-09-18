@@ -2,16 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { TextField, Toolbar, withStyles } from "@material-ui/core";
+import { TextField, Toolbar } from "@mui/material";
+import { withStyles } from '@mui/styles';
 import { printRequested, editOrder, deleteOrder, closeOrder, calculate } from "actions";
 import { selectIsAdmin, selectIsAdminOrDome, selectOrderTotalPrice } from "selectors";
 import AmountFormat from "components/AmountFormat";
-import Print from "@material-ui/icons/Print";
+import Print from "@mui/icons-material/Print";
 import IconButton from "components/CustomButtons/IconButton";
-import Create from "@material-ui/icons/Create";
-import Apps from "@material-ui/icons/Apps";
-import Delete from "@material-ui/icons/Delete";
-import Done from "@material-ui/icons/Done";
+import Create from "@mui/icons-material/Create";
+import Apps from "@mui/icons-material/Apps";
+import Delete from "@mui/icons-material/Delete";
+import Done from "@mui/icons-material/Done";
 import isNotEditable from "utils/isOrderNotEditable";
 import { flex } from "variables/styles";
 
@@ -102,50 +103,68 @@ const Header = (props) => {
     return (
         <div>
             <Toolbar>
-                <IconButton onClick={doEditOrder} disabled={notEditable} customClass={props.classes.icon}>
+                <IconButton
+                    onClick={doEditOrder}
+                    disabled={notEditable}
+                    customClass={props.classes.icon}
+                    size="large">
                     <Create />
                 </IconButton>
                 {userIsAdmin ? (
-                    <IconButton onClick={doDeleteOrder} disabled={notEditable} customClass={props.classes.icon}>
+                    <IconButton
+                        onClick={doDeleteOrder}
+                        disabled={notEditable}
+                        customClass={props.classes.icon}
+                        size="large">
                         <Delete />
                     </IconButton>
                 ) : null}
-                <IconButton onClick={doGoToCalc} customClass={props.classes.icon}>
+                <IconButton onClick={doGoToCalc} customClass={props.classes.icon} size="large">
                     <Apps />
                 </IconButton>
                 {userIsAdmin ? (
-                    <IconButton onClick={doPrintRequested} customClass={props.classes.icon}>
+                    <IconButton onClick={doPrintRequested} customClass={props.classes.icon} size="large">
                         <Print />
                     </IconButton>
                 ) : null}
                 {canCloseOrders ? (
-                    <IconButton onClick={doCloseOrder} disabled={!closable} customClass={props.classes.icon}>
+                    <IconButton
+                        onClick={doCloseOrder}
+                        disabled={!closable}
+                        customClass={props.classes.icon}
+                        size="large">
                         <Done />
                     </IconButton>
                 ) : null}
             </Toolbar>
             <div className={props.classes.root}>
                 <div>
-                    <TextField label="Tav." className={props.classes.tableField} value={chTable} InputLabelProps={{ shrink: true }} readOnly />
+                    <TextField
+                        variant="standard"
+                        label="Tav."
+                        className={props.classes.tableField}
+                        value={chTable}
+                        InputLabelProps={{ shrink: true }}
+                        readOnly />
                 </div>
                 <div>
                     <TextField
+                        variant="standard"
                         type="number"
                         label="N° pers"
                         className={props.classes.textField}
                         value={seats}
                         InputLabelProps={{ shrink: true }}
-                        readOnly
-                    />
+                        readOnly />
                 </div>
                 <div>
                     <TextField
+                        variant="standard"
                         label="Cliente"
                         className={props.classes.customerField}
                         value={customer}
                         InputLabelProps={{ shrink: true }}
-                        readOnly
-                    />
+                        readOnly />
                 </div>
                 <div className={props.classes.textField}>
                     Tot: <AmountFormat amount={totalPrice} />

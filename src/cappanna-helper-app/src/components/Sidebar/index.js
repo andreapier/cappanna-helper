@@ -1,4 +1,5 @@
-import { Drawer, Hidden, withStyles } from "@material-ui/core";
+import { Drawer, Hidden } from "@mui/material";
+import { withStyles } from '@mui/styles';
 import PropTypes from "prop-types";
 import React from "react";
 import sidebarStyle from "variables/styles/sidebarStyle";
@@ -18,7 +19,7 @@ const Sidebar = (props) => {
                     <Links routes={routes} user={user} handleSidebarNavigationItemClick={handleSidebarNavigationItemClick} />
                 </Drawer>
             </Hidden>
-            <Hidden smDown>
+            <Hidden mdDown>
                 <Drawer variant="permanent" open classes={{ paper: classes.drawerPaper }}>
                     <Logo />
                     <Links routes={routes} user={user} handleSidebarNavigationItemClick={handleSidebarNavigationItemClick} />

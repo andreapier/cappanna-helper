@@ -6,7 +6,7 @@ const iconButtonStyle = {
         minWidth: "40px",
         width: "40px",
         borderRadius: "50%",
-        fontSize: "24px",
+        fontSize: "34px",
         padding: "0",
         overflow: "hidden",
         position: "relative",

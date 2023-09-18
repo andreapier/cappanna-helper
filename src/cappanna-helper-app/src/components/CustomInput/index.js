@@ -1,6 +1,7 @@
-import Clear from "@material-ui/icons/Clear";
-import Check from "@material-ui/icons/Check";
-import { FormControl, Input, InputLabel, withStyles } from "@material-ui/core";
+import Clear from "@mui/icons-material/Clear";
+import Check from "@mui/icons-material/Check";
+import { FormControl, Input, InputLabel } from "@mui/material";
+import { withStyles } from '@mui/styles';
 import customInputStyle from "variables/styles/customInputStyle";
 import cx from "classnames";
 import PropTypes from "prop-types";
@@ -23,7 +24,10 @@ function CustomInput({ ...props }) {
     });
 
     return (
-        <FormControl {...formControlProps} className={formControlProps.className + " " + classes.formControl}>
+        <FormControl
+            variant="standard"
+            {...formControlProps}
+            className={formControlProps.className + " " + classes.formControl}>
             {labelText !== undefined ? (
                 <InputLabel className={classes.labelRoot + labelClasses} htmlFor={id} {...labelProps}>
                     {labelText}

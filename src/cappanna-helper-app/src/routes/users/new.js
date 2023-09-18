@@ -1,5 +1,5 @@
 import AsyncUsers from "views/Users/AsyncUsers";
-import Person from "@material-ui/icons/Person";
+import Person from "@mui/icons-material/Person";
 
 const users = {
     path: "/users/new",

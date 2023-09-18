@@ -1,4 +1,4 @@
-import { Slide } from "@material-ui/core";
+import { Slide } from "@mui/material";
 import React from "react";
 
 const SlideUpTransition = (props) => <Slide direction="up" {...props} />;

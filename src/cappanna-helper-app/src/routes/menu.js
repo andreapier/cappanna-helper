@@ -1,5 +1,5 @@
 import AsyncMenu from "views/Menu/AsyncMenu";
-import List from "@material-ui/icons/List";
+import List from "@mui/icons-material/List";
 
 const menu = {
     path: "/menu",

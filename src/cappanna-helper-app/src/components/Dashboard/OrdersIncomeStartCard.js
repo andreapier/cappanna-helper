@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import EuroSymbol from "@material-ui/icons/EuroSymbol";
+import EuroSymbol from "@mui/icons-material/EuroSymbol";
 import StatsCard from "components/Cards/StatsCard";
 import { formatAmount } from "utils/string";
 

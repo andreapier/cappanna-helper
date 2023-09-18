@@ -2,8 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { makeSelectMenuItemsByGroup } from "selectors";
-import { Accordion, AccordionDetails, AccordionSummary, Typography, withStyles } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
+import { withStyles } from '@mui/styles';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MenuItemDetail from "components/Orders/New/MenuItemDetail";
 
 const styles = {

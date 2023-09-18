@@ -17,7 +17,7 @@ const sidebarStyle = (theme) => ({
             position: "fixed",
             height: "100%"
         },
-        [theme.breakpoints.down("sm")]: {
+        [theme.breakpoints.down('md')]: {
             width: drawerWidth,
             ...boxShadow,
             height: "100vh",

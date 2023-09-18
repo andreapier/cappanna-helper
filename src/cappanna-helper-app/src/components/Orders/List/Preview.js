@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ListItem, ListItemIcon, ListItemText, withStyles } from "@material-ui/core";
+import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { withStyles } from '@mui/styles';
 import { NavLink } from "react-router-dom";
 import sidebarStyle from "variables/styles/sidebarStyle";
-import Print from "@material-ui/icons/Print";
-import Done from "@material-ui/icons/Done";
-import PrintDisabled from "@material-ui/icons/PrintDisabled";
+import Print from "@mui/icons-material/Print";
+import Done from "@mui/icons-material/Done";
+import PrintDisabled from "@mui/icons-material/PrintDisabled";
 
 const Preview = (props) => {
     let text = `Ordine: ${props.order.shiftCounter}, Cliente: ${props.order.customer}, `;

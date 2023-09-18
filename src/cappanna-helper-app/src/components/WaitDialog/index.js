@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { Dialog, CircularProgress, DialogContent, DialogContentText, DialogTitle, withStyles } from "@material-ui/core";
+import { Dialog, CircularProgress, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { withStyles } from '@mui/styles';
 import waitDialogStyle from "variables/styles/waitDialogStyle";
 
 const WaitDialog = (props) => {
@@ -10,7 +11,6 @@ const WaitDialog = (props) => {
     const message = useSelector(state => state.api.message);
 
     const onClose = (event, reason) => {
-        console.log("onClose", reason);
         if (reason !== "backdropClick") {
             onClose(event, reason);
         }

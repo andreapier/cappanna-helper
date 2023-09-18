@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetNotification } from "actions";
-import Info from "@material-ui/icons/Info";
-import Warning from "@material-ui/icons/Warning";
-import ErrorIcon from "@material-ui/icons/Error";
+import Info from "@mui/icons-material/Info";
+import Warning from "@mui/icons-material/Warning";
+import ErrorIcon from "@mui/icons-material/Error";
 import Snackbar from "components/Snackbar/Snackbar";
 import SlideUpTransition from "components/Snackbar/SlideUpTransition";
 

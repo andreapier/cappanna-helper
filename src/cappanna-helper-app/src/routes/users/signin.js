@@ -1,5 +1,5 @@
 import AsyncSignIn from "views/SignIn/AsyncSignIn";
-import Input from "@material-ui/icons/Input";
+import Input from "@mui/icons-material/Input";
 
 const signin = {
     path: "/signin",

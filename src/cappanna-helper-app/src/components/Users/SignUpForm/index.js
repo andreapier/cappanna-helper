@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "components/CustomButtons";
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@material-ui/core";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { signupRequested } from "actions";
 import Grid from "components/Grid";
 import ItemGrid from "components/Grid/ItemGrid";
@@ -48,36 +48,62 @@ const SignUp = () => {
         <form onSubmit={handleSubmit}>
             <Grid justifyContent="space-between">
                 <ItemGrid xs={12} md={6} lg={4}>
-                    <TextField name="username" autoFocus fullWidth label="Username" value={username} onChange={handleSetUsername} />
-                </ItemGrid>
-
-                <ItemGrid xs={12} md={6} lg={4}>
-                    <TextField name="password" type="password" fullWidth label="Password" value={password} onChange={handleSetPassword} />
+                    <TextField
+                        variant="standard"
+                        name="username"
+                        autoFocus
+                        fullWidth
+                        label="Username"
+                        value={username}
+                        onChange={handleSetUsername} />
                 </ItemGrid>
 
                 <ItemGrid xs={12} md={6} lg={4}>
                     <TextField
+                        variant="standard"
+                        name="password"
+                        type="password"
+                        fullWidth
+                        label="Password"
+                        value={password}
+                        onChange={handleSetPassword} />
+                </ItemGrid>
+
+                <ItemGrid xs={12} md={6} lg={4}>
+                    <TextField
+                        variant="standard"
                         name="confirmPassword"
                         type="password"
                         fullWidth
                         label="Conferma password"
                         value={confirmPassword}
-                        onChange={handleSetConfirmPassword}
-                    />
+                        onChange={handleSetConfirmPassword} />
                 </ItemGrid>
 
                 <ItemGrid xs={12} md={6} lg={4}>
-                    <TextField name="firstName" fullWidth label="Nome" value={firstName} onChange={handleSetFirstName} />
+                    <TextField
+                        variant="standard"
+                        name="firstName"
+                        fullWidth
+                        label="Nome"
+                        value={firstName}
+                        onChange={handleSetFirstName} />
                 </ItemGrid>
 
                 <ItemGrid xs={12} md={6} lg={4}>
-                    <TextField name="lastName" fullWidth label="Cognome" value={lastName} onChange={handleSetLastName} />
+                    <TextField
+                        variant="standard"
+                        name="lastName"
+                        fullWidth
+                        label="Cognome"
+                        value={lastName}
+                        onChange={handleSetLastName} />
                 </ItemGrid>
 
                 <ItemGrid xs={12} md={6} lg={4}>
-                    <FormControl fullWidth>
+                    <FormControl variant="standard" fullWidth>
                         <InputLabel>Stand</InputLabel>
-                        <Select value={standId} onChange={handleSetStandId}>
+                        <Select variant="standard" value={standId} onChange={handleSetStandId}>
                             {stands.map((s) => (
                                 <MenuItem value={s.id} key={s.id}>
                                     {s.description}

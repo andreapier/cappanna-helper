@@ -2,8 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
 import { getActiveRoute } from "routes/helpers";
-import Menu from "@material-ui/icons/Menu";
-import { AppBar, Hidden, IconButton, Toolbar, Typography, withStyles } from "@material-ui/core";
+import Menu from "@mui/icons-material/Menu";
+import { AppBar, Hidden, IconButton, Toolbar, Typography } from "@mui/material";
+import { withStyles } from '@mui/styles';
 import headerStyle from "variables/styles/headerStyle";
 
 function RoutingAwareHeader(props) {
@@ -21,7 +22,11 @@ function RoutingAwareHeader(props) {
             <AppBar position="static" className={classes.appBar}>
                 <Toolbar>
                     <Hidden mdUp>
-                        <IconButton color="inherit" aria-label="open drawer" onClick={handleDrawerToggle}>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerToggle}
+                            size="large">
                             <Menu />
                         </IconButton>
                     </Hidden>

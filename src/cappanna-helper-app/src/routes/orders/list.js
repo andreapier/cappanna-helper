@@ -1,5 +1,5 @@
 import AsyncOrderList from "views/OrderList/AsyncOrderList";
-import LibraryBooks from "@material-ui/icons/LibraryBooks";
+import LibraryBooks from "@mui/icons-material/LibraryBooks";
 
 const orders = {
     path: "/order",

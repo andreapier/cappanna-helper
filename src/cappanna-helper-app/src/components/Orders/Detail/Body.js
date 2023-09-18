@@ -7,7 +7,9 @@ import { selectNeedsMenuDetailsLoading } from "selectors";
 import buildFilledOrderDetails from "utils/buildFilledOrderDetails";
 import Table from "components/Table";
 import { formatAmount } from "utils/string";
-import { TextField, withStyles } from "@material-ui/core";
+import { TextField } from "@mui/material";
+
+import { withStyles } from '@mui/styles';
 
 const buildTableRow = (dish) => [dish.item.name, formatAmount(dish.item.price, false), dish.quantity];
 
@@ -41,7 +43,14 @@ const Body = (props) => {
     return (
         <div>
             <Table tableHead={["Nome", "Prezzo (€)", "Quantità"]} tableData={dishList.map(buildTableRow)} />
-            <TextField label="Note" multiline readOnly fullWidth value={notes} className={props.classes.notes} />
+            <TextField
+                variant="standard"
+                label="Note"
+                multiline
+                readOnly
+                fullWidth
+                value={notes}
+                className={props.classes.notes} />
         </div>
     );
 };

@@ -7,7 +7,7 @@ import {
     toggleOrderSelectionForAggregation,
     orderDetailsAggregationRequested
 } from "actions";
-import { List } from "@material-ui/core";
+import { List } from "@mui/material";
 import Header from "components/Orders/OrderDetailsAggregate/Header";
 import Preview from "components/Orders/OrderDetailsAggregate/Preview";
 

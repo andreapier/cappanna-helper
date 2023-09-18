@@ -1,6 +1,7 @@
 import React from "react";
-import { IconButton, Snackbar, withStyles } from "@material-ui/core";
-import Close from "@material-ui/icons/Close";
+import { IconButton, Snackbar } from "@mui/material";
+import { withStyles } from '@mui/styles';
+import Close from "@mui/icons-material/Close";
 import PropTypes from "prop-types";
 import cx from "classnames";
 import snackbarContentStyle from "variables/styles/snackbarContentStyle";
@@ -15,7 +16,14 @@ const CustomSnackbar = (props) => {
 
     if (close !== undefined) {
         action = [
-            <IconButton className={classes.iconButton} key="close" aria-label="Close" color="inherit" onClick={() => props.closeNotification()}>
+            <IconButton
+                className={classes.iconButton}
+                key="close"
+                aria-label="Close"
+                color="inherit"
+                onClick={() => props.closeNotification()}
+                size="large"
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
                 <Close className={classes.close} />
             </IconButton>
         ];

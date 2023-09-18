@@ -1,5 +1,5 @@
 import AsyncOrderDetailsAggregate from "views/OrderDetailsAggregate/AsyncOrderDetailsAggregate";
-import Assignment from "@material-ui/icons/Assignment";
+import Assignment from "@mui/icons-material/Assignment";
 
 const orderDetailsAggregate = {
     path: "/aggregate",

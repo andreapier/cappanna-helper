@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ListItem, ListItemText, withStyles } from "@material-ui/core";
+import { ListItem, ListItemText } from "@mui/material";
+import { withStyles } from '@mui/styles';
 import { NavLink } from "react-router-dom";
 import sidebarStyle from "variables/styles/sidebarStyle";
 

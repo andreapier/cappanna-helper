@@ -4,9 +4,16 @@ import App from "components/App";
 import storeGenerator from "./store";
 import { loadUserData } from "actions";
 import "assets/css/index.css";
-import { createTheme } from "@material-ui/core/styles";
+import { createTheme } from "@mui/material/styles";
+import { primaryColor } from "variables/styles";
 
-const theme = createTheme();
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: primaryColor
+        },
+    },
+});
 const store = storeGenerator();
 store.dispatch(loadUserData());
 

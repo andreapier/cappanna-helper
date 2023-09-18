@@ -2,14 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import Table from "components/Table";
 import { formatAmount } from "utils/string";
-import Print from "@material-ui/icons/Print";
+import Print from "@mui/icons-material/Print";
 import IconButton from "components/CustomButtons/IconButton";
 
 const buildTableRow = (notification, printRequested) => [
     notification.orderId,
     notification.username,
     formatAmount(notification.totalPrice, false),
-    <IconButton onClick={() => printRequested(notification.orderId)}>
+    <IconButton onClick={() => printRequested(notification.orderId)} size="large">
         <Print />
     </IconButton>
 ];
