@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -547,9 +548,9 @@ namespace CappannaHelper.Api.Controllers
         {
             try
             {
-                // z1, Z12, 50 => stand Zena
                 // 1, 12, 49   => stand Baseball
-                var table = Convert.ToInt32(Regex.Match(order.ChTable, @"^(z|Z)?\d+").Value);
+                // 50, 51, 100 => stand Zena
+                var table = int.Parse(order.ChTable);
 
                 if (table < 50)
                 {
