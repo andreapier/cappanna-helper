@@ -1,5 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { StrictMode } from "react";
+import ReactDOM from "react-dom/client";
 import App from "components/App";
 import storeGenerator from "./store";
 import { loadUserData } from "actions";
@@ -17,8 +17,14 @@ const theme = createTheme({
 const store = storeGenerator();
 store.dispatch(loadUserData());
 
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
 const renderApp = () => {
-    ReactDOM.render(<App store={store} theme={theme} />, document.getElementById("root"));
+    root.render((
+        <StrictMode>
+            <App store={store} theme={theme} />
+        </StrictMode>
+    ));
 };
 
 renderApp();

@@ -5,8 +5,9 @@ import { notifyWarning, resetOrder } from "actions";
 
 function* orderChanged(action) {
     const state = yield select();
+    const lastOperation = action.payload.operations.slice(-1)[0];
 
-    if (state.newOrderHeader.id === action.payload.id) {
+    if (state.newOrderHeader.id === action.payload.id && lastOperation.userId !== state.user.userId) {
         if (action.type === ORDER_DELETED) {
             yield put(notifyWarning("L'ordine è stato cancellato, ricrearlo se necessario"));
             history.navigate("/order/new");

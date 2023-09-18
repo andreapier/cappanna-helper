@@ -1,9 +1,10 @@
-function selectIsAdmin(state) {
-  return state.user.roles.some((r) => r === "admin");
-}
+import { createSelector } from "reselect";
 
-function selectIsAdminOrDome(state) {
-  return state.user.roles.some((r) => r === "admin" || r === "dome");
-}
+const selectIsAdmin = createSelector(
+  [state => state.user.roles],
+  roles => roles.some(r => r === "admin"));
+const selectIsAdminOrDome = createSelector(
+  [state => state.user.roles],
+  roles =>  roles.some((r) => r === "admin" || r === "dome"));
 
 export { selectIsAdmin, selectIsAdminOrDome };

@@ -1,5 +1,4 @@
 import { createSelector } from "reselect";
-import calculateOrderTotalPrice from "utils/calculateOrderTotalPrice";
 
 const selectCanConfirmOrder = state => {
   return state.newOrderHeader.totalPrice > 0 &&
@@ -45,8 +44,9 @@ const selectFilteredOrders = createSelector(
   })
 );
 
-const selectOrderTotalPrice = state => {
-  return state.selectedOrder ? calculateOrderTotalPrice(state.selectedOrder) : 0;
-}
+const selectOrderTotalPrice = createSelector(
+  [state => state.selectedOrder],
+  order => order ? order.details.reduce((acc, e) => acc + e.quantity * e.item.price, 0) : 0
+);
 
 export { makeSelectOrderItemsByItemId, selectCanConfirmOrder, selectFilteredOrders, selectOrderTotalPrice };
