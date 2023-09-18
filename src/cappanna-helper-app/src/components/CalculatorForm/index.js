@@ -1,26 +1,26 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TextField } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import { calculate } from "actions";
 import Button from "components/CustomButtons";
 import ItemGrid from "components/Grid/ItemGrid";
 import Grid from "components/Grid";
-import { formatAmount } from "utils/string";
 
-const style = {
+const useStyles = makeStyles({
     buttonContainer: {
         paddingTop: "40px",
         paddingBottom: "40px"
     }
-};
+});
 
-const Calculator = (props) => {
+const Calculator = () => {
+    const classes = useStyles();
     const calculator = useSelector(state => state.calculator);
     const dispatch = useDispatch();
 
     const [amount, setAmount] = useState(calculator.amount);
-    const [paidAmount, setPaidAmount] = useState(calculator.calculatorPaidAmount);
+    const [paidAmount, setPaidAmount] = useState(calculator.paidAmount);
     const [seats, setSeats] = useState(calculator.seats);
 
     const handleSetAmount = (event) => setAmount(parseFloat(event.target.value));
@@ -67,7 +67,7 @@ const Calculator = (props) => {
                         onChange={handleSetSeats}
                         value={seats} />
                 </ItemGrid>
-                <ItemGrid xs={12} className={props.classes.buttonContainer}>
+                <ItemGrid xs={12} className={classes.buttonContainer}>
                     <Button type="submit" fullWidth>
                         Calcola
                     </Button>
@@ -80,8 +80,7 @@ const Calculator = (props) => {
                         label="Da pagare a persona"
                         type="number"
                         readOnly
-                        value={calculator.perPersonAmount}
-                        normalize={formatAmount} />
+                        value={calculator.perPersonAmount} />
                 </ItemGrid>
                 <ItemGrid xs={12} md={6}>
                     <TextField
@@ -91,12 +90,11 @@ const Calculator = (props) => {
                         label="Resto"
                         type="number"
                         readOnly
-                        value={calculator.change}
-                        normalize={formatAmount} />
+                        value={calculator.change} />
                 </ItemGrid>
             </Grid>
         </form>
     );
 }
 
-export default withStyles(style)(Calculator);
+export default Calculator;

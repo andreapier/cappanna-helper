@@ -1,9 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { TextField, Toolbar } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import { printRequested, editOrder, deleteOrder, closeOrder, calculate } from "actions";
 import { selectIsAdmin, selectIsAdminOrDome, selectOrderTotalPrice } from "selectors";
 import AmountFormat from "components/AmountFormat";
@@ -16,7 +15,7 @@ import Done from "@mui/icons-material/Done";
 import isNotEditable from "utils/isOrderNotEditable";
 import { flex } from "variables/styles";
 
-const style = {
+const useStyles = makeStyles({
     root: {
         ...flex.alignCenter,
         justifyContent: "space-between"
@@ -33,9 +32,10 @@ const style = {
     icon: {
         marginRight: "10px"
     }
-};
+});
 
-const Header = (props) => {
+const Header = () => {
+    const classes = useStyles();
     const userIsAdmin = useSelector(selectIsAdmin);
     const canCloseOrders = useSelector(selectIsAdminOrDome);
 
@@ -106,7 +106,7 @@ const Header = (props) => {
                 <IconButton
                     onClick={doEditOrder}
                     disabled={notEditable}
-                    customClass={props.classes.icon}
+                    customClass={classes.icon}
                     size="large">
                     <Create />
                 </IconButton>
@@ -114,16 +114,16 @@ const Header = (props) => {
                     <IconButton
                         onClick={doDeleteOrder}
                         disabled={notEditable}
-                        customClass={props.classes.icon}
+                        customClass={classes.icon}
                         size="large">
                         <Delete />
                     </IconButton>
                 ) : null}
-                <IconButton onClick={doGoToCalc} customClass={props.classes.icon} size="large">
+                <IconButton onClick={doGoToCalc} customClass={classes.icon} size="large">
                     <Apps />
                 </IconButton>
                 {userIsAdmin ? (
-                    <IconButton onClick={doPrintRequested} customClass={props.classes.icon} size="large">
+                    <IconButton onClick={doPrintRequested} customClass={classes.icon} size="large">
                         <Print />
                     </IconButton>
                 ) : null}
@@ -131,18 +131,18 @@ const Header = (props) => {
                     <IconButton
                         onClick={doCloseOrder}
                         disabled={!closable}
-                        customClass={props.classes.icon}
+                        customClass={classes.icon}
                         size="large">
                         <Done />
                     </IconButton>
                 ) : null}
             </Toolbar>
-            <div className={props.classes.root}>
+            <div className={classes.root}>
                 <div>
                     <TextField
                         variant="standard"
                         label="Tav."
-                        className={props.classes.tableField}
+                        className={classes.tableField}
                         value={chTable}
                         InputLabelProps={{ shrink: true }}
                         readOnly />
@@ -152,7 +152,7 @@ const Header = (props) => {
                         variant="standard"
                         type="number"
                         label="N° pers"
-                        className={props.classes.textField}
+                        className={classes.textField}
                         value={seats}
                         InputLabelProps={{ shrink: true }}
                         readOnly />
@@ -161,12 +161,12 @@ const Header = (props) => {
                     <TextField
                         variant="standard"
                         label="Cliente"
-                        className={props.classes.customerField}
+                        className={classes.customerField}
                         value={customer}
                         InputLabelProps={{ shrink: true }}
                         readOnly />
                 </div>
-                <div className={props.classes.textField}>
+                <div className={classes.textField}>
                     Tot: <AmountFormat amount={totalPrice} />
                 </div>
             </div>
@@ -174,8 +174,4 @@ const Header = (props) => {
     );
 };
 
-Header.propTypes = {
-    classes: PropTypes.object.isRequired
-};
-
-export default withStyles(style)(Header);
+export default Header;

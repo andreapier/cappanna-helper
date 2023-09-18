@@ -1,14 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { makeStyles } from '@mui/styles';
 import { NavLink } from "react-router-dom";
 import sidebarStyle from "variables/styles/sidebarStyle";
 import Print from "@mui/icons-material/Print";
 import Done from "@mui/icons-material/Done";
 import PrintDisabled from "@mui/icons-material/PrintDisabled";
 
+const useStyles = makeStyles(sidebarStyle);
+
 const Preview = (props) => {
+    const classes = useStyles();
     let text = `Ordine: ${props.order.shiftCounter}, Cliente: ${props.order.customer}, `;
     if (!props.filters.user) {
         text += `Cameriere: ${props.order.createdBy.userName}, `;
@@ -19,11 +22,11 @@ const Preview = (props) => {
     const closed = props.order.status === 4;
 
     return (
-        <NavLink to={`/order/${props.order.id}`} className={props.classes.item}>
-            <ListItem button className={props.classes.itemLink}>
-                <ListItemText primary={text} className={props.classes.itemText} disableTypography />
+        <NavLink to={`/order/${props.order.id}`} className={classes.item}>
+            <ListItemButton className={classes.itemLink}>
+                <ListItemText primary={text} className={classes.itemText} disableTypography />
                 <ListItemIcon>{closed ? <Done /> : printed ? <Print /> : <PrintDisabled />}</ListItemIcon>
-            </ListItem>
+            </ListItemButton>
         </NavLink>
     );
 };
@@ -40,7 +43,6 @@ Preview.propTypes = {
         }).isRequired
     }).isRequired,
     filters: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired
 };
 
-export default withStyles(sidebarStyle)(Preview);
+export default Preview;

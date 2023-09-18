@@ -1,22 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Toolbar } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import Assignment from "@mui/icons-material/Assignment";
 import IconButton from "components/CustomButtons/IconButton";
 
-const style = {
+const useStyles = makeStyles({
     icon: {
         marginRight: "20px"
     }
-};
+});
 
 const Header = (props) => {
+    const classes = useStyles();
+
     return (
         <Toolbar>
             <IconButton
                 onClick={() => props.orderDetailsAggregationRequested(props.ordersId)}
-                customClass={props.classes.icon}
+                customClass={classes.icon}
                 disabled={props.ordersId.length === 0}
                 size="large">
                 <Assignment />
@@ -28,7 +30,6 @@ const Header = (props) => {
 Header.propTypes = {
     ordersId: PropTypes.arrayOf(PropTypes.number).isRequired,
     orderDetailsAggregationRequested: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired
 };
 
-export default withStyles(style)(Header);
+export default Header;

@@ -1,10 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FormControlLabel, ListItem, Switch, TextField } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import sidebarStyle from "variables/styles/sidebarStyle";
 
+const useStyles = makeStyles(sidebarStyle);
+
 const SettingsItem = (props) => {
+    const classes = useStyles();
     let element;
 
     if (props.setting.type === "Boolean") {
@@ -19,7 +22,7 @@ const SettingsItem = (props) => {
     }
 
     return (
-        <ListItem className={props.classes.item}>
+        <ListItem className={classes.item}>
             <FormControlLabel control={element} label={props.setting.name} labelPlacement="start" />
         </ListItem>
     );
@@ -32,8 +35,7 @@ SettingsItem.propTypes = {
         type: PropTypes.string.isRequired,
         value: PropTypes.string.isRequired
     }).isRequired,
-    classes: PropTypes.object.isRequired,
     setSettingValue: PropTypes.func.isRequired
 };
 
-export default withStyles(sidebarStyle)(SettingsItem);
+export default SettingsItem;

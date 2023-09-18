@@ -1,12 +1,15 @@
 import cx from "classnames";
 import { Card, CardActions, CardContent, CardHeader } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import PropTypes from "prop-types";
 import React from "react";
 import regularCardStyle from "variables/styles/regularCardStyle";
 
+const useStyles = makeStyles(regularCardStyle);
+
 const RegularCard = (props) => {
-    const { classes, plainCard, cardTitle, cardSubtitle, children, footer } = props;
+    const classes = useStyles();
+    const { plainCard, cardTitle, cardSubtitle, children, footer } = props;
     const plainCardClasses = cx({
         [" " + classes.cardPlain]: plainCard
     });
@@ -37,11 +40,10 @@ RegularCard.defaultProps = {
 
 RegularCard.propTypes = {
     plainCard: PropTypes.bool,
-    classes: PropTypes.object.isRequired,
     cardTitle: PropTypes.node.isRequired,
     cardSubtitle: PropTypes.node,
     children: PropTypes.node.isRequired,
     footer: PropTypes.node
 };
 
-export default withStyles(regularCardStyle)(RegularCard);
+export default RegularCard;

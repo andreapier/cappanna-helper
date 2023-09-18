@@ -1,18 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ListItem, ListItemText } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { ListItemButton, ListItemText } from "@mui/material";
+import { makeStyles } from '@mui/styles';
 import sidebarStyle from "variables/styles/sidebarStyle";
 import Checkbox from "components/CustomCheckbox";
 
+const useStyles = makeStyles(sidebarStyle);
+
 const Preview = (props) => {
+    const classes = useStyles();
     const text = `Ordine N° ${props.order.shiftCounter} - ${props.order.createdBy.userName} (Tav. ${props.order.chTable})`;
 
     return (
-        <ListItem button className={props.classes.itemLink} onClick={() => props.toggleOrderSelectionForAggregation(props.order.id)}>
+        <ListItemButton className={classes.itemLink} onClick={() => props.toggleOrderSelectionForAggregation(props.order.id)}>
             <Checkbox checked={props.order.selected} disableRipple disableTouchRipple />
-            <ListItemText primary={text} className={props.classes.itemText} disableTypography />
-        </ListItem>
+            <ListItemText primary={text} className={classes.itemText} disableTypography />
+        </ListItemButton>
     );
 };
 
@@ -26,8 +29,7 @@ Preview.propTypes = {
         }).isRequired,
         selected: PropTypes.bool.isRequired
     }).isRequired,
-    classes: PropTypes.object.isRequired,
     toggleOrderSelectionForAggregation: PropTypes.func.isRequired
 };
 
-export default withStyles(sidebarStyle)(Preview);
+export default Preview;

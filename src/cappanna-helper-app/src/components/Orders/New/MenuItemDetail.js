@@ -6,11 +6,11 @@ import IconButton from "components/CustomButtons/IconButton";
 import ContentAdd from "@mui/icons-material/Add";
 import ContentRemove from "@mui/icons-material/Remove";
 import AmountFormat from "components/AmountFormat";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import { flex } from "variables/styles";
 import { incrementOrderDetailQuantity } from "actions";
 
-const style = {
+const useStyles = makeStyles({
     root: {
         ...flex.alignCenter,
         margin: "2px 0px",
@@ -32,9 +32,10 @@ const style = {
         minWidth: "17px",
         justifyContent: "center"
     }
-};
+});
 
-const MenuItemDetail = (props) => {
+const MenuItemDetail = props => {
+    const classes = useStyles();
     const selectOrderItemsByItemId = makeSelectOrderItemsByItemId();
     const orderDetail = useSelector(state => selectOrderItemsByItemId(state, props.detail.id));
     
@@ -42,10 +43,10 @@ const MenuItemDetail = (props) => {
     const doIncrementOrderDetailQuantity = quantity => dispatch(incrementOrderDetailQuantity(props.detail.id, quantity, props.detail.price));
 
     return (
-        <div className={props.classes.root}>
+        <div className={classes.root}>
             <div>{props.detail.name}</div>
-            <div className={props.classes.end}>
-                <div className={props.classes.item55}>
+            <div className={classes.end}>
+                <div className={classes.item55}>
                     <AmountFormat amount={props.detail.price} />
                 </div>
                 <div>
@@ -56,7 +57,7 @@ const MenuItemDetail = (props) => {
                         <ContentAdd />
                     </IconButton>
                 </div>
-                <div className={props.classes.item17}>{orderDetail.quantity}</div>
+                <div className={classes.item17}>{orderDetail.quantity}</div>
                 <div>
                     <IconButton
                         onClick={() => doIncrementOrderDetailQuantity(-1)}
@@ -79,4 +80,4 @@ MenuItemDetail.propTypes = {
     }).isRequired,
 };
 
-export default withStyles(style)(MenuItemDetail);
+export default MenuItemDetail;

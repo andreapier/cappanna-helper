@@ -1,15 +1,17 @@
 import { Drawer, Hidden } from "@mui/material";
-import { withStyles } from '@mui/styles';
-import PropTypes from "prop-types";
+import { makeStyles } from '@mui/styles';
 import React from "react";
 import sidebarStyle from "variables/styles/sidebarStyle";
 import Links from "components/Sidebar/Links";
 import Logo from "components/Sidebar/Logo";
 import { useSelector } from "react-redux";
 
+const useStyles = makeStyles(sidebarStyle);
+
 const Sidebar = (props) => {
+    const classes = useStyles();
     const user = useSelector(state => state.user);
-    const { classes, routes, handleSidebarNavigationItemClick } = props;
+    const { routes, handleSidebarNavigationItemClick } = props;
 
     return (
         <div>
@@ -29,8 +31,4 @@ const Sidebar = (props) => {
     );
 };
 
-Sidebar.propTypes = {
-    classes: PropTypes.object.isRequired
-};
-
-export default withStyles(sidebarStyle)(Sidebar);
+export default Sidebar;

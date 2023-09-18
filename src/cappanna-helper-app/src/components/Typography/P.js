@@ -1,15 +1,13 @@
 import React from "react";
-import { withStyles } from '@mui/styles';
-import PropTypes from "prop-types";
+import { makeStyles } from '@mui/styles';
 import typographyStyle from "variables/styles/typographyStyle";
 
-function P({ ...props }) {
-    const { classes, children } = props;
+const useStyles = makeStyles(typographyStyle);
+
+const P = ({ children }) => {
+    const classes = useStyles();
+    
     return <p className={classes.defaultFontStyle + " " + classes.pStyle}>{children}</p>;
 }
 
-P.propTypes = {
-    classes: PropTypes.object.isRequired
-};
-
-export default withStyles(typographyStyle)(P);
+export default P;

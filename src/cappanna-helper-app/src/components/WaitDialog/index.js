@@ -1,12 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { Dialog, CircularProgress, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import waitDialogStyle from "variables/styles/waitDialogStyle";
 
-const WaitDialog = (props) => {
-    const { classes } = props;
+const useStyles = makeStyles(waitDialogStyle);
+
+const WaitDialog = () => {
+    const classes = useStyles();
     const loading = useSelector(state => state.api.loading);
     const message = useSelector(state => state.api.message);
 
@@ -27,8 +28,4 @@ const WaitDialog = (props) => {
     );
 };
 
-WaitDialog.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(waitDialogStyle)(WaitDialog);
+export default WaitDialog;

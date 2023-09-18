@@ -1,14 +1,17 @@
 import Clear from "@mui/icons-material/Clear";
 import Check from "@mui/icons-material/Check";
 import { FormControl, Input, InputLabel } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import customInputStyle from "variables/styles/customInputStyle";
 import cx from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
 
+const useStyles = makeStyles(customInputStyle);
+
 function CustomInput({ ...props }) {
-    const { classes, formControlProps, labelText, id, labelProps, inputProps, error, success } = props;
+    const classes = useStyles();
+    const { formControlProps, labelText, id, labelProps, inputProps, error, success } = props;
 
     const labelClasses = cx({
         [" " + classes.labelRootError]: error,
@@ -52,7 +55,6 @@ function CustomInput({ ...props }) {
 }
 
 CustomInput.propTypes = {
-    classes: PropTypes.object.isRequired,
     labelText: PropTypes.node,
     labelProps: PropTypes.object,
     id: PropTypes.string,
@@ -62,4 +64,4 @@ CustomInput.propTypes = {
     success: PropTypes.bool
 };
 
-export default withStyles(customInputStyle)(CustomInput);
+export default CustomInput;

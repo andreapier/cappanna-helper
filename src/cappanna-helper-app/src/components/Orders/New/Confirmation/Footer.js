@@ -1,8 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import { confirmOrder } from "actions";
 import { selectCanConfirmOrder } from "selectors";
 import Button from "components/CustomButtons";
@@ -12,7 +11,10 @@ import Grid from "components/Grid";
 import ItemGrid from "components/Grid/ItemGrid";
 import { flex } from "variables/styles";
 
-const Footer = (props) => {
+const useStyles = makeStyles(flex);
+
+const Footer = () => {
+    const classes = useStyles();
     const standId = useSelector(state => state.user.settings.standId);
     const order = {
         ...useSelector(state => state.newOrderHeader),
@@ -27,7 +29,7 @@ const Footer = (props) => {
     const doConfirmOrder = () => dispatch(confirmOrder(order));
 
     return (
-        <Grid className={props.classes.root} justifyContent="space-between">
+        <Grid className={classes.root} justifyContent="space-between">
             <ItemGrid>
                 <Button variant="contained" onClick={goBack}>
                     <Create />
@@ -44,8 +46,4 @@ const Footer = (props) => {
     );
 };
 
-Footer.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(flex)(Footer);
+export default Footer;

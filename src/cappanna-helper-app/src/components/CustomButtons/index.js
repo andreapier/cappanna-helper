@@ -1,12 +1,15 @@
 import React from "react";
 import { Button } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import PropTypes from "prop-types";
 import cx from "classnames";
 import buttonStyle from "variables/styles/buttonStyle";
 
+const useStyles = makeStyles(buttonStyle);
+
 const RegularButton = (props) => {
-    const { classes, color, round, children, fullWidth, disabled, ...rest } = props;
+    const classes = useStyles();
+    const { color, round, children, fullWidth, disabled, ...rest } = props;
     const btnClasses = cx({
         [classes[color]]: color,
         [classes.round]: round,
@@ -26,11 +29,10 @@ RegularButton.defaultProps = {
 };
 
 RegularButton.propTypes = {
-    classes: PropTypes.object.isRequired,
     color: PropTypes.oneOf(["primary", "success", "warning", "danger", "white", "simple", "transparent"]),
     round: PropTypes.bool,
     fullWidth: PropTypes.bool,
     disabled: PropTypes.bool
 };
 
-export default withStyles(buttonStyle)(RegularButton);
+export default RegularButton;

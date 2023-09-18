@@ -1,11 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Checkbox } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import checkboxStyle from "variables/styles/checkboxStyle";
 
+const useStyles = makeStyles(checkboxStyle);
+
 const CustomCheckbox = (props) => {
-    const { id, classes, ...inputProps } = props;
+    const classes = useStyles();
+    const { id, ...inputProps } = props;
 
     return (
         <Checkbox
@@ -19,8 +22,7 @@ const CustomCheckbox = (props) => {
 };
 
 CustomCheckbox.propTypes = {
-    classes: PropTypes.object.isRequired,
     id: PropTypes.string
 };
 
-export default withStyles(checkboxStyle)(CustomCheckbox);
+export default CustomCheckbox;

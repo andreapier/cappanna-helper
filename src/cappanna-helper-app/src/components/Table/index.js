@@ -1,11 +1,14 @@
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import PropTypes from "prop-types";
 import React from "react";
 import tableStyle from "variables/styles/tableStyle";
 
+const useStyles = makeStyles(tableStyle);
+
 const CustomTable = (props) => {
-    const { classes, tableHead, tableData } = props;
+    const classes = useStyles();
+    const { tableHead, tableData } = props;
 
     return (
         <div className={classes.tableResponsive}>
@@ -62,9 +65,8 @@ const CustomTable = (props) => {
 };
 
 CustomTable.propTypes = {
-    classes: PropTypes.object.isRequired,
     tableHead: PropTypes.arrayOf(PropTypes.string),
     tableData: PropTypes.arrayOf(PropTypes.array).isRequired
 };
 
-export default withStyles(tableStyle)(CustomTable);
+export default CustomTable;

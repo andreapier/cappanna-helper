@@ -1,11 +1,14 @@
 import React from "react";
 import { Card, CardContent, CardHeader, Typography } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import PropTypes from "prop-types";
 import statsCardStyle from "variables/styles/statsCardStyle";
 
+const useStyles = makeStyles(statsCardStyle);
+
 const StatsCard = (props) => {
-    const { classes, title, description } = props;
+    const classes = useStyles();
+    const { title, description } = props;
 
     return (
         <Card className={classes.card}>
@@ -29,10 +32,9 @@ const StatsCard = (props) => {
 };
 
 StatsCard.propTypes = {
-    classes: PropTypes.object.isRequired,
     icon: PropTypes.object.isRequired,
     title: PropTypes.node,
     description: PropTypes.node
 };
 
-export default withStyles(statsCardStyle)(StatsCard);
+export default StatsCard;

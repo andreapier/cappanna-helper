@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
 import { CssBaseline } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import appRoutes from "routes";
 import appStyle from "variables/styles/appStyle";
 import { Route, Routes, Navigate } from "react-router-dom";
@@ -11,6 +10,8 @@ import WaitDialog from "components/WaitDialog";
 import NotificationSnackbar from "components/Snackbar/NotificationSnackbar";
 import RoutingAwareHeader from "components/RoutingAwareHeader";
 import signinRoute from "routes/users/signin";
+
+const useStyles = makeStyles(appStyle);
 
 const switchRoutes = (routes) => (
     <Routes>
@@ -39,9 +40,10 @@ const switchRoutes = (routes) => (
     </Routes>
 );
 
-const ThemedApp = props => {
+const ThemedApp = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
     const mainPanelRef = useRef();
+    const classes = useStyles();
 
     const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
     const handleSidebarNavigationItemClick = () => setMobileOpen(false);
@@ -51,7 +53,7 @@ const ThemedApp = props => {
     }, []);
 
     return (
-      <div className={props.classes.wrapper}>
+      <div className={classes.wrapper}>
           <CssBaseline />
           <WaitDialog />
           <NotificationSnackbar />
@@ -61,18 +63,14 @@ const ThemedApp = props => {
               handleSidebarNavigationItemClick={handleSidebarNavigationItemClick}
               open={mobileOpen}
           />
-          <div className={props.classes.mainPanel} ref={mainPanelRef}>
+          <div className={classes.mainPanel} ref={mainPanelRef}>
               <RoutingAwareHeader handleDrawerToggle={handleDrawerToggle} routes={appRoutes} />
-              <div className={props.classes.content}>
-                  <div className={props.classes.container}>{switchRoutes(appRoutes)}</div>
+              <div className={classes.content}>
+                  <div className={classes.container}>{switchRoutes(appRoutes)}</div>
               </div>
           </div>
       </div>
     );
 }
 
-ThemedApp.propTypes = {
-    classes: PropTypes.object.isRequired
-};
-
-export default withStyles(appStyle)(ThemedApp);
+export default ThemedApp;

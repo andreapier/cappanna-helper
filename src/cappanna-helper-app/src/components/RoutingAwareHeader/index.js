@@ -4,11 +4,14 @@ import { useLocation } from "react-router-dom";
 import { getActiveRoute } from "routes/helpers";
 import Menu from "@mui/icons-material/Menu";
 import { AppBar, Hidden, IconButton, Toolbar, Typography } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import headerStyle from "variables/styles/headerStyle";
 
+const useStyles = makeStyles(headerStyle);
+
 function RoutingAwareHeader(props) {
-    const { classes, handleDrawerToggle, routes } = props;
+    const classes = useStyles();
+    const { handleDrawerToggle, routes } = props;
     const location = useLocation();
     const selectedRoute = getActiveRoute(routes, location);
     let title = selectedRoute.headerTitle;
@@ -43,4 +46,4 @@ RoutingAwareHeader.propTypes = {
     handleDrawerToggle: PropTypes.func.isRequired,
 };
 
-export default withStyles(headerStyle)(RoutingAwareHeader);
+export default RoutingAwareHeader;

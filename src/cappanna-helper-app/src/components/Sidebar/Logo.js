@@ -1,23 +1,22 @@
-import PropTypes from "prop-types";
 import React from "react";
 import logoStyle from "variables/styles/logoStyle";
 import { Typography } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import logo from "assets/img/logo.png";
 
-const Logo = (props) => {
+const useStyles = makeStyles(logoStyle);
+
+const Logo = () => {
+    const classes = useStyles();
+
     return (
-        <div className={props.classes.logo}>
-            <div className={props.classes.logoImage}>
-                <img src={logo} alt="logo" className={props.classes.img} />
+        <div className={classes.logo}>
+            <div className={classes.logoImage}>
+                <img src={logo} alt="logo" className={classes.img} />
             </div>
-            <Typography className={props.classes.logoText}>Cappanna Helper</Typography>
+            <Typography className={classes.logoText}>Cappanna Helper</Typography>
         </div>
     );
 };
 
-Logo.propTypes = {
-    classes: PropTypes.object.isRequired
-};
-
-export default withStyles(logoStyle)(Logo);
+export default Logo;

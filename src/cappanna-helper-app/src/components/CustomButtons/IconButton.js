@@ -1,11 +1,14 @@
 import React from "react";
 import { IconButton } from "@mui/material";
-import { withStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import PropTypes from "prop-types";
 import iconButtonStyle from "variables/styles/iconButtonStyle";
 
+const useStyles = makeStyles(iconButtonStyle);
+
 const IconCustomButton = (props) => {
-    const { classes, color, children, customClass, ...rest } = props;
+    const classes = useStyles();
+    const { color, children, customClass, ...rest } = props;
     const colorWithDisabled = props.disabled ? "" : color;
 
     return (
@@ -23,10 +26,9 @@ IconCustomButton.defaultProps = {
 };
 
 IconCustomButton.propTypes = {
-    classes: PropTypes.object.isRequired,
     color: PropTypes.oneOf(["primary", "success", "warning", "danger", "white", "simple"]),
     customClass: PropTypes.string,
     disabled: PropTypes.bool
 };
 
-export default withStyles(iconButtonStyle)(IconCustomButton);
+export default IconCustomButton;
