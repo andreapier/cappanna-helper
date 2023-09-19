@@ -1,21 +1,25 @@
 import React from "react";
+import { styled } from '@mui/material/styles';
 import PropTypes from "prop-types";
 import { Toolbar } from "@mui/material";
-import { makeStyles } from '@mui/styles';
 import Assignment from "@mui/icons-material/Assignment";
 import IconButton from "components/CustomButtons/IconButton";
 
-const useStyles = makeStyles({
-    icon: {
+const PREFIX = 'Header';
+
+const classes = {
+    icon: `${PREFIX}-icon`
+};
+
+const StyledToolbar = styled(Toolbar)({
+    [`& .${classes.icon}`]: {
         marginRight: "20px"
     }
 });
 
-const Header = (props) => {
-    const classes = useStyles();
-
+const Header = props => {
     return (
-        <Toolbar>
+        <StyledToolbar>
             <IconButton
                 onClick={() => props.orderDetailsAggregationRequested(props.ordersId)}
                 customClass={classes.icon}
@@ -23,7 +27,7 @@ const Header = (props) => {
                 size="large">
                 <Assignment />
             </IconButton>
-        </Toolbar>
+        </StyledToolbar>
     );
 };
 

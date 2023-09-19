@@ -1,14 +1,27 @@
 import PropTypes from "prop-types";
+import { styled } from '@mui/material/styles';
 import React from "react";
 import SidebarNavigationItem from "./SidebarNavigationItem";
 import { List } from "@mui/material";
-import { makeStyles } from '@mui/styles';
-import sidebarStyle from "variables/styles/sidebarStyle";
+import { drawerWidth } from "variables/styles";
+const PREFIX = 'Links';
 
-const useStyles = makeStyles(sidebarStyle);
+const classes = {
+    sidebarWrapper: `${PREFIX}-sidebarWrapper`,
+    list: `${PREFIX}-list`,
+};
 
-const Links = (props) => {
-    const classes = useStyles();
+const Root = styled('div')({
+    [`& .${classes.sidebarWrapper}`]: {
+        height: "calc(100vh - 75px)",
+        overflow: "auto",
+        width: drawerWidth,
+        zIndex: "4",
+        overflowScrolling: "touch",
+    },
+});
+
+const Links = props => {
     const {
         routes,
         user,
@@ -16,7 +29,7 @@ const Links = (props) => {
     } = props;
 
     return (
-        <div className={classes.sidebarWrapper}>
+        <Root className={classes.sidebarWrapper}>
             <List className={classes.list}>
                 {routes.map((routeData, key) => {
                     const itemProps = {
@@ -28,7 +41,7 @@ const Links = (props) => {
                     return <SidebarNavigationItem {...itemProps} key={key} />;
                 })}
             </List>
-        </div>
+        </Root>
     );
 };
 

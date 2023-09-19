@@ -1,21 +1,26 @@
 import React, { useState } from "react";
+import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from "react-redux";
 import { TextField } from "@mui/material";
-import { makeStyles } from '@mui/styles';
 import { calculate } from "actions";
 import Button from "components/CustomButtons";
 import ItemGrid from "components/Grid/ItemGrid";
 import Grid from "components/Grid";
 
-const useStyles = makeStyles({
-    buttonContainer: {
+const PREFIX = 'Calculator';
+
+const classes = {
+    buttonContainer: `${PREFIX}-buttonContainer`
+};
+
+const Root = styled('form')({
+    [`& .${classes.buttonContainer}`]: {
         paddingTop: "40px",
         paddingBottom: "40px"
     }
 });
 
 const Calculator = () => {
-    const classes = useStyles();
     const calculator = useSelector(state => state.calculator);
     const dispatch = useDispatch();
 
@@ -34,7 +39,7 @@ const Calculator = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <Root onSubmit={handleSubmit}>
             <Grid>
                 <ItemGrid xs={12} md={4}>
                     <TextField
@@ -93,7 +98,7 @@ const Calculator = () => {
                         value={calculator.change} />
                 </ItemGrid>
             </Grid>
-        </form>
+        </Root>
     );
 }
 

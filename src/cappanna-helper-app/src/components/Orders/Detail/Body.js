@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from "react-redux";
 import { useMatch } from "react-router-dom";
 import { loadSelectedOrderRequested, loadMenuDetailsRequested } from "actions";
@@ -7,17 +8,21 @@ import buildFilledOrderDetails from "utils/buildFilledOrderDetails";
 import Table from "components/Table";
 import { formatAmount } from "utils/string";
 import { TextField } from "@mui/material";
-import { makeStyles } from '@mui/styles';
+const PREFIX = 'Body';
 
-const useStyles = makeStyles({
-    notes: {
+const classes = {
+    notes: `${PREFIX}-notes`
+};
+
+const Root = styled('div')({
+    [`& .${classes.notes}`]: {
         marginTop: "20px"
     }
 });
+
 const buildTableRow = (dish) => [dish.item.name, formatAmount(dish.item.price, false), dish.quantity];
 
 const Body = () => {
-    const classes = useStyles();
     const needsMenuDetailsLoading = useSelector(selectNeedsMenuDetailsLoading);
     const order = useSelector(state => state.selectedOrder);
     const menuDetails = useSelector(state => state.menuDetails);
@@ -39,7 +44,7 @@ const Body = () => {
     }, [dispatch, match]);
 
     return (
-        <div>
+        <Root>
             <Table tableHead={["Nome", "Prezzo (€)", "Quantità"]} tableData={dishList.map(buildTableRow)} />
             <TextField
                 variant="standard"
@@ -49,7 +54,7 @@ const Body = () => {
                 fullWidth
                 value={notes}
                 className={classes.notes} />
-        </div>
+        </Root>
     );
 };
 

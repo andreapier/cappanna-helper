@@ -1,17 +1,26 @@
 import React from "react";
+import { styled } from '@mui/material/styles';
 import PropTypes from "prop-types";
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-import { makeStyles } from '@mui/styles';
 import { NavLink } from "react-router-dom";
-import sidebarStyle from "variables/styles/sidebarStyle";
+import { item, itemLink, itemText } from "variables/styles/sidebarStyle";
 import Print from "@mui/icons-material/Print";
 import Done from "@mui/icons-material/Done";
 import PrintDisabled from "@mui/icons-material/PrintDisabled";
 
-const useStyles = makeStyles(sidebarStyle);
+const PREFIX = 'Preview';
 
-const Preview = (props) => {
-    const classes = useStyles();
+const classes = {
+    item: `${PREFIX}-item`,
+    itemLink: `${PREFIX}-itemLink`,
+    itemText: `${PREFIX}-itemText`
+};
+
+const StyledNavLink = styled(NavLink)(
+    { [`&.${classes.item}`]: item, [`& .${classes.itemLink}`]: itemLink, [`& .${classes.itemText}`]: itemText }
+);
+
+const Preview = props => {
     let text = `Ordine: ${props.order.shiftCounter}, Cliente: ${props.order.customer}, `;
     if (!props.filters.user) {
         text += `Cameriere: ${props.order.createdBy.userName}, `;
@@ -22,12 +31,12 @@ const Preview = (props) => {
     const closed = props.order.status === 4;
 
     return (
-        <NavLink to={`/order/${props.order.id}`} className={classes.item}>
+        <StyledNavLink to={`/order/${props.order.id}`} className={classes.item}>
             <ListItemButton className={classes.itemLink}>
                 <ListItemText primary={text} className={classes.itemText} disableTypography />
                 <ListItemIcon>{closed ? <Done /> : printed ? <Print /> : <PrintDisabled />}</ListItemIcon>
             </ListItemButton>
-        </NavLink>
+        </StyledNavLink>
     );
 };
 

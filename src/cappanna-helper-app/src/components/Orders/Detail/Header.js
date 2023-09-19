@@ -1,8 +1,8 @@
 import React from "react";
+import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { TextField, Toolbar } from "@mui/material";
-import { makeStyles } from '@mui/styles';
 import { printRequested, editOrder, deleteOrder, closeOrder, calculate } from "actions";
 import { selectIsAdmin, selectIsAdminOrDome, selectOrderTotalPrice } from "selectors";
 import AmountFormat from "components/AmountFormat";
@@ -15,27 +15,36 @@ import Done from "@mui/icons-material/Done";
 import isNotEditable from "utils/isOrderNotEditable";
 import { flex } from "variables/styles";
 
-const useStyles = makeStyles({
-    root: {
+const PREFIX = 'Header';
+
+const classes = {
+    root: `${PREFIX}-root`,
+    customerField: `${PREFIX}-customerField`,
+    textField: `${PREFIX}-textField`,
+    tableField: `${PREFIX}-tableField`,
+    icon: `${PREFIX}-icon`
+};
+
+const Root = styled('div')({
+    [`& .${classes.root}`]: {
         ...flex.alignCenter,
         justifyContent: "space-between"
     },
-    customerField: {
+    [`& .${classes.customerField}`]: {
         width: "90px"
     },
-    textField: {
+    [`& .${classes.textField}`]: {
         width: "55px"
     },
-    tableField: {
+    [`& .${classes.tableField}`]: {
         width: "70px"
     },
-    icon: {
+    [`& .${classes.icon}`]: {
         marginRight: "10px"
     }
 });
 
 const Header = () => {
-    const classes = useStyles();
     const userIsAdmin = useSelector(selectIsAdmin);
     const canCloseOrders = useSelector(selectIsAdminOrDome);
 
@@ -101,7 +110,7 @@ const Header = () => {
         };
 
     return (
-        <div>
+        <Root>
             <Toolbar>
                 <IconButton
                     onClick={doEditOrder}
@@ -170,7 +179,7 @@ const Header = () => {
                     Tot: <AmountFormat amount={totalPrice} />
                 </div>
             </div>
-        </div>
+        </Root>
     );
 };
 

@@ -1,21 +1,55 @@
 import React from "react";
-import logoStyle from "variables/styles/logoStyle";
+import { styled } from '@mui/material/styles';
+import { defaultFont } from "variables/styles";
 import { Typography } from "@mui/material";
-import { makeStyles } from '@mui/styles';
 import logo from "assets/img/logo.png";
 
-const useStyles = makeStyles(logoStyle);
+const PREFIX = 'Logo';
+
+const classes = {
+    logo: `${PREFIX}-logo`,
+    logoText: `${PREFIX}-logoText`,
+    logoImage: `${PREFIX}-logoImage`,
+    img: `${PREFIX}-img`
+};
+
+const Root = styled('div')({
+    [`&.${classes.logo}`]: {
+        position: "relative",
+        padding: "0 5px"
+    },
+    [`& .${classes.logoText}`]: {
+        ...defaultFont,
+        textTransform: "uppercase",
+        fontSize: "18px",
+        textAlign: "right",
+        lineHeight: "30px"
+    },
+    [`& .${classes.logoImage}`]: {
+        width: "30px",
+        display: "inline-block",
+        maxHeight: "30px",
+        marginLeft: "10px",
+        marginRight: "15px"
+    },
+    [`& .${classes.img}`]: {
+        width: "35px",
+        position: "absolute",
+        verticalAlign: "middle",
+        border: "0"
+    }
+});
 
 const Logo = () => {
-    const classes = useStyles();
+
 
     return (
-        <div className={classes.logo}>
+        <Root className={classes.logo}>
             <div className={classes.logoImage}>
                 <img src={logo} alt="logo" className={classes.img} />
             </div>
             <Typography className={classes.logoText}>Cappanna Helper</Typography>
-        </div>
+        </Root>
     );
 };
 

@@ -1,17 +1,25 @@
 import React from "react";
+import { styled } from '@mui/material/styles';
 import PropTypes from "prop-types";
 import { Checkbox } from "@mui/material";
-import { makeStyles } from '@mui/styles';
-import checkboxStyle from "variables/styles/checkboxStyle";
+import { primaryColor } from "variables/styles";
 
-const useStyles = makeStyles(checkboxStyle);
+const PREFIX = 'CustomCheckbox';
+const classes = {
+    root: `${PREFIX}-root`
+};
 
-const CustomCheckbox = (props) => {
-    const classes = useStyles();
+const StyledCheckbox = styled(Checkbox)({
+    [`& .${classes.root}`]: {
+        color: primaryColor
+    }
+});
+
+const CustomCheckbox = props => {
     const { id, ...inputProps } = props;
 
     return (
-        <Checkbox
+        <StyledCheckbox
             classes={{
                 root: classes.root
             }}

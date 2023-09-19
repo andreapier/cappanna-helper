@@ -1,17 +1,71 @@
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 import PropTypes from "prop-types";
 import React from "react";
-import tableStyle from "variables/styles/tableStyle";
+import { warningColor, primaryColor, dangerColor, successColor, grayColor, defaultFont } from "variables/styles";
 
-const useStyles = makeStyles(tableStyle);
+const PREFIX = 'CustomTable';
+
+const classes = {
+    warningTableHeader: `${PREFIX}-warningTableHeader`,
+    primaryTableHeader: `${PREFIX}-primaryTableHeader`,
+    dangerTableHeader: `${PREFIX}-dangerTableHeader`,
+    successTableHeader: `${PREFIX}-successTableHeader`,
+    grayTableHeader: `${PREFIX}-grayTableHeader`,
+    table: `${PREFIX}-table`,
+    tableHeadCell: `${PREFIX}-tableHeadCell`,
+    tableCell: `${PREFIX}-tableCell`,
+    tableResponsive: `${PREFIX}-tableResponsive`
+};
+
+const Root = styled('div')({
+    [`& .${classes.warningTableHeader}`]: {
+        color: warningColor
+    },
+    [`& .${classes.primaryTableHeader}`]: {
+        color: primaryColor
+    },
+    [`& .${classes.dangerTableHeader}`]: {
+        color: dangerColor
+    },
+    [`& .${classes.successTableHeader}`]: {
+        color: successColor
+    },
+    [`& .${classes.grayTableHeader}`]: {
+        color: grayColor
+    },
+    [`& .${classes.table}`]: {
+        marginBottom: "0",
+        width: "100%",
+        maxWidth: "100%",
+        backgroundColor: "transparent",
+        borderSpacing: "0",
+        borderCollapse: "collapse"
+    },
+    [`& .${classes.tableHeadCell}`]: {
+        color: "inherit",
+        ...defaultFont,
+        fontSize: "1em"
+    },
+    [`& .${classes.tableCell}`]: {
+        ...defaultFont,
+        padding: "6px 2px",
+        verticalAlign: "middle",
+        "&:last-child": {
+            paddingRight: "2px"
+        }
+    },
+    [`&.${classes.tableResponsive}`]: {
+        width: "100%",
+        overflowX: "auto"
+    }
+});
 
 const CustomTable = (props) => {
-    const classes = useStyles();
     const { tableHead, tableData } = props;
 
     return (
-        <div className={classes.tableResponsive}>
+        <Root className={classes.tableResponsive}>
             <Table className={classes.table}>
                 {tableHead !== undefined ? (
                     <TableHead className={classes.infoTableHeader}>
@@ -60,7 +114,7 @@ const CustomTable = (props) => {
                     })}
                 </TableBody>
             </Table>
-        </div>
+        </Root>
     );
 };
 

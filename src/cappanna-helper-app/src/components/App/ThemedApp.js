@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
+import { styled } from '@mui/material/styles';
 import { CssBaseline } from "@mui/material";
-import { makeStyles } from '@mui/styles';
 import appRoutes from "routes";
-import appStyle from "variables/styles/appStyle";
+import { drawerWidth, transition, container } from "variables/styles";
 import { Route, Routes, Navigate } from "react-router-dom";
 import RequireAuth from "components/RequireAuth";
 import Sidebar from "components/Sidebar";
@@ -11,7 +11,40 @@ import NotificationSnackbar from "components/Snackbar/NotificationSnackbar";
 import RoutingAwareHeader from "components/RoutingAwareHeader";
 import signinRoute from "routes/users/signin";
 
-const useStyles = makeStyles(appStyle);
+const PREFIX = 'ThemedApp';
+
+const classes = {
+    wrapper: `${PREFIX}-wrapper`,
+    mainPanel: `${PREFIX}-mainPanel`,
+    content: `${PREFIX}-content`,
+    container: `${PREFIX}-container`
+};
+
+const Root = styled('div')(({ theme }) => ({
+    [`&.${classes.wrapper}`]: {
+        position: "relative",
+        top: "0",
+        height: "100vh"
+    },
+    [`& .${classes.mainPanel}`]: {
+        [theme.breakpoints.up("md")]: {
+            width: `calc(100% - ${drawerWidth})`
+        },
+        overflow: "auto",
+        position: "relative",
+        float: "right",
+        ...transition,
+        maxHeight: "100%",
+        width: "100%",
+        overflowScrolling: "touch"
+    },
+    [`& .${classes.content}`]: {
+        padding: "10px 0px",
+        minHeight: "calc(100% - 123px)"
+    },
+
+    [`& .${classes.container}`]: container
+}));
 
 const switchRoutes = (routes) => (
     <Routes>
@@ -43,7 +76,7 @@ const switchRoutes = (routes) => (
 const ThemedApp = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
     const mainPanelRef = useRef();
-    const classes = useStyles();
+
 
     const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
     const handleSidebarNavigationItemClick = () => setMobileOpen(false);
@@ -53,23 +86,23 @@ const ThemedApp = () => {
     }, []);
 
     return (
-      <div className={classes.wrapper}>
-          <CssBaseline />
-          <WaitDialog />
-          <NotificationSnackbar />
-          <Sidebar
-              routes={appRoutes}
-              handleDrawerToggle={handleDrawerToggle}
-              handleSidebarNavigationItemClick={handleSidebarNavigationItemClick}
-              open={mobileOpen}
-          />
-          <div className={classes.mainPanel} ref={mainPanelRef}>
-              <RoutingAwareHeader handleDrawerToggle={handleDrawerToggle} routes={appRoutes} />
-              <div className={classes.content}>
-                  <div className={classes.container}>{switchRoutes(appRoutes)}</div>
-              </div>
-          </div>
-      </div>
+        <Root className={classes.wrapper}>
+            <CssBaseline />
+            <WaitDialog />
+            <NotificationSnackbar />
+            <Sidebar
+                routes={appRoutes}
+                handleDrawerToggle={handleDrawerToggle}
+                handleSidebarNavigationItemClick={handleSidebarNavigationItemClick}
+                open={mobileOpen}
+            />
+            <div className={classes.mainPanel} ref={mainPanelRef}>
+                <RoutingAwareHeader handleDrawerToggle={handleDrawerToggle} routes={appRoutes} />
+                <div className={classes.content}>
+                    <div className={classes.container}>{switchRoutes(appRoutes)}</div>
+                </div>
+            </div>
+        </Root>
     );
 }
 

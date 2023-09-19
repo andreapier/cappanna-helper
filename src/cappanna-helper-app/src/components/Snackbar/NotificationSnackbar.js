@@ -7,7 +7,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import Snackbar from "components/Snackbar/Snackbar";
 import SlideUpTransition from "components/Snackbar/SlideUpTransition";
 
-const NotificationSnackbar = (props) => {
+const NotificationSnackbar = () => {
     const type = useSelector(state => state.message.type);
     const message = useSelector(state => state.message.message);
     const dispatch = useDispatch();

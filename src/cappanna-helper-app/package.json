@@ -12,7 +12,6 @@
     "@microsoft/signalr": "^7.0.11",
     "@mui/icons-material": "^5.14.9",
     "@mui/material": "^5.14.9",
-    "@mui/styles": "^5.14.9",
     "classnames": "^2.3.2",
     "localforage": "^1.10.0",
     "react": "^18.2.0",

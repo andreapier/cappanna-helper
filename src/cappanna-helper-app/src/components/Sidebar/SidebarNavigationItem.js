@@ -1,17 +1,27 @@
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import React from "react";
-import sidebarStyle from "variables/styles/sidebarStyle";
+import { item, itemIcon, itemLink, itemText } from "variables/styles/sidebarStyle";
 
-const useStyles = makeStyles(sidebarStyle);
+const PREFIX = 'SidebarNavigationItem';
 
-const signinRoute = (routeName) => routeName === "signin";
+const classes = {
+    item: `${PREFIX}-item`,
+    itemIcon: `${PREFIX}-itemIcon`,
+    itemLink: `${PREFIX}-itemLink`,
+    itemText: `${PREFIX}-itemText`
+};
 
-const SidebarNavigationItem = (props) => {
-    const classes = useStyles();
-    const { routeData, user, handleSidebarNavigationItemClick, active } = props;
+const StyledNavLink = styled(NavLink)(
+    { [`&.${classes.item}`]: item, [`& .${classes.itemIcon}`]: itemIcon, [`& .${classes.itemLink}`]: itemLink, [`& .${classes.itemText}`]: itemText }
+);
+
+const signinRoute = routeName => routeName === "signin";
+
+const SidebarNavigationItem = props => {
+    const { routeData, user, handleSidebarNavigationItemClick } = props;
 
     if (routeData.redirect) {
         return null;
@@ -33,17 +43,15 @@ const SidebarNavigationItem = (props) => {
         return null;
     }
 
-    const selectedItemLinkClasses = active ? classes.selectedItemLink : "";
-
     return (
-        <NavLink to={routeData.path} className={classes.item} onClick={handleSidebarNavigationItemClick}>
-            <ListItemButton className={classes.itemLink + selectedItemLinkClasses}>
+        <StyledNavLink to={routeData.path} className={classes.item} onClick={handleSidebarNavigationItemClick}>
+            <ListItemButton className={classes.itemLink}>
                 <ListItemIcon className={classes.itemIcon}>
                     <routeData.icon />
                 </ListItemIcon>
                 <ListItemText primary={routeData.sidebarName} className={classes.itemText} disableTypography />
             </ListItemButton>
-        </NavLink>
+        </StyledNavLink>
     );
 };
 

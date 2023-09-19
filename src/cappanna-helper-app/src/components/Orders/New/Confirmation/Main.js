@@ -1,18 +1,23 @@
 import React from "react";
+import { styled } from '@mui/material/styles';
 import { useSelector } from "react-redux";
-import { makeStyles } from '@mui/styles';
 import Table from "components/Table";
 import { formatAmount } from "utils/string";
 import buildFilledOrderDetails from "utils/buildFilledOrderDetails";
 
-const useStyles = makeStyles({
-    table: {
+const PREFIX = 'Main';
+
+const classes = {
+    table: `${PREFIX}-table`
+};
+
+const Root = styled('div')({
+    [`&.${classes.table}`]: {
         margin: "16px 0px"
     }
 });
 
 const Main = () => {
-    const classes = useStyles();
     const newOrderDetails = useSelector(state => state.newOrderDetails);
     const menuDetails = useSelector(state => state.menuDetails);
 
@@ -22,12 +27,12 @@ const Main = () => {
     );
 
     return (
-        <div className={classes.table}>
+        <Root className={classes.table}>
             <Table
                 tableHead={["Nome", "Prezzo (€)", "Qta", "Tot (€)"]}
                 tableData={details.map((e) => [e.item.name, formatAmount(e.item.price, false), e.quantity, formatAmount(e.subtotal, false)])}
             />
-        </div>
+        </Root>
     );
 };
 

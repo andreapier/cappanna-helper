@@ -1,16 +1,25 @@
 import React from "react";
+import { styled } from '@mui/material/styles';
 import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
 import { getActiveRoute } from "routes/helpers";
 import Menu from "@mui/icons-material/Menu";
 import { AppBar, Hidden, IconButton, Toolbar, Typography } from "@mui/material";
-import { makeStyles } from '@mui/styles';
-import headerStyle from "variables/styles/headerStyle";
 
-const useStyles = makeStyles(headerStyle);
+const PREFIX = 'RoutingAwareHeader';
 
-function RoutingAwareHeader(props) {
-    const classes = useStyles();
+const classes = {
+    appBar: `${PREFIX}-appBar`,
+};
+
+const StyledAppBar = styled(AppBar)({
+    [`&.${classes.appBar}`]: {
+        backgroundColor: "transparent",
+        color: "#555555"
+    },
+});
+
+const RoutingAwareHeader = props => {
     const { handleDrawerToggle, routes } = props;
     const location = useLocation();
     const selectedRoute = getActiveRoute(routes, location);
@@ -21,8 +30,7 @@ function RoutingAwareHeader(props) {
     }
 
     return (
-        <div className={classes.flex.root}>
-            <AppBar position="static" className={classes.appBar}>
+            <StyledAppBar position="static" className={classes.appBar}>
                 <Toolbar>
                     <Hidden mdUp>
                         <IconButton
@@ -33,12 +41,11 @@ function RoutingAwareHeader(props) {
                             <Menu />
                         </IconButton>
                     </Hidden>
-                    <Typography variant="h6" color="inherit" className={classes.flex.flex}>
+                    <Typography variant="h6" color="inherit">
                         {title}
                     </Typography>
                 </Toolbar>
-            </AppBar>
-        </div>
+            </StyledAppBar>
     );
 }
 

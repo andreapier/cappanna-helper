@@ -1,14 +1,60 @@
 import cx from "classnames";
+import { styled } from '@mui/material/styles';
 import { Card, CardActions, CardContent, CardHeader } from "@mui/material";
-import { makeStyles } from '@mui/styles';
 import PropTypes from "prop-types";
 import React from "react";
-import regularCardStyle from "variables/styles/regularCardStyle";
+import { blueCardHeader, card, cardHeader, defaultFont } from "variables/styles";
 
-const useStyles = makeStyles(regularCardStyle);
+const PREFIX = 'RegularCard';
+
+const classes = {
+    card: `${PREFIX}-card`,
+    cardPlain: `${PREFIX}-cardPlain`,
+    cardHeader: `${PREFIX}-cardHeader`,
+    cardPlainHeader: `${PREFIX}-cardPlainHeader`,
+    blueCardHeader: `${PREFIX}-blueCardHeader`,
+    cardTitle: `${PREFIX}-cardTitle`,
+    cardSubtitle: `${PREFIX}-cardSubtitle`,
+    cardActions: `${PREFIX}-cardActions`
+};
+
+const StyledCard = styled(Card)({
+    [`& .${classes.card}`]: card,
+    [`& .${classes.cardPlain}`]: {
+        background: "transparent",
+        boxShadow: "none"
+    },
+    [`& .${classes.cardHeader}`]: {
+        ...cardHeader,
+        ...defaultFont
+    },
+    [`& .${classes.cardPlainHeader}`]: {
+        marginLeft: 0,
+        marginRight: 0
+    },
+    [`& .${classes.blueCardHeader}`]: blueCardHeader,
+    [`& .${classes.cardTitle}`]: {
+        color: "#FFFFFF",
+        marginTop: "0",
+        marginBottom: "5px",
+        ...defaultFont,
+        fontSize: "1.125em"
+    },
+    [`& .${classes.cardSubtitle}`]: {
+        ...defaultFont,
+        marginBottom: "0",
+        color: "rgba(255, 255, 255, 0.62)",
+        margin: "0 0 10px"
+    },
+    [`& .${classes.cardActions}`]: {
+        padding: "14px",
+        display: "block",
+        height: "auto"
+    }
+});
 
 const RegularCard = (props) => {
-    const classes = useStyles();
+
     const { plainCard, cardTitle, cardSubtitle, children, footer } = props;
     const plainCardClasses = cx({
         [" " + classes.cardPlain]: plainCard
@@ -18,7 +64,7 @@ const RegularCard = (props) => {
     });
 
     return (
-        <Card className={classes.card + plainCardClasses}>
+        <StyledCard className={classes.card + plainCardClasses}>
             <CardHeader
                 classes={{
                     root: classes.cardHeader + " " + classes.blueCardHeader + cardPlainHeaderClasses,
@@ -30,7 +76,7 @@ const RegularCard = (props) => {
             />
             <CardContent>{children}</CardContent>
             {footer !== undefined ? <CardActions className={classes.cardActions}>{footer}</CardActions> : null}
-        </Card>
+        </StyledCard>
     );
 };
 

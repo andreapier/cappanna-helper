@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from "react-redux";
 import { loadDashboardDataRequested, resetOrder } from "actions";
 import Grid from "components/Grid";
@@ -6,16 +7,19 @@ import ItemGrid from "components/Grid/ItemGrid";
 import OrderStatCard from "components/Dashboard/OrderStatCard";
 import OrdersIncomeStartCard from "components/Dashboard/OrdersIncomeStartCard";
 import WaitersStatCard from "components/Dashboard/WaitersStatCard";
-import { makeStyles } from '@mui/styles';
+const PREFIX = 'Dashboard';
 
-const useStyles = makeStyles({
-    container: {
+const classes = {
+    container: `${PREFIX}-container`
+};
+
+const StyledGrid = styled(Grid)({
+    [`& .${classes.container}`]: {
         padding: "8px"
     }
 });
 
 const Dashboard = () => {
-    const classes = useStyles();
     const orderStats = useSelector(state => state.dashboard.orderStats);
     const income = useSelector(state => state.dashboard.income);
     const waitersStats = useSelector(state => state.dashboard.waitersStats);
@@ -30,7 +34,7 @@ const Dashboard = () => {
     }, [dispatch]);
 
     return (
-        <Grid>
+        <StyledGrid>
             <ItemGrid xs={12} sm={6} lg={4}>
                 <div className={classes.container}>
                     <OrderStatCard data={orderStats} />
@@ -46,7 +50,7 @@ const Dashboard = () => {
                     <OrdersIncomeStartCard income={income} />
                 </div>
             </ItemGrid>
-        </Grid>
+        </StyledGrid>
     );
 };
 

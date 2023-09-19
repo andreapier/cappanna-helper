@@ -1,7 +1,7 @@
 import React from "react";
+import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { makeStyles } from '@mui/styles';
 import { confirmOrder } from "actions";
 import { selectCanConfirmOrder } from "selectors";
 import Button from "components/CustomButtons";
@@ -11,10 +11,15 @@ import Grid from "components/Grid";
 import ItemGrid from "components/Grid/ItemGrid";
 import { flex } from "variables/styles";
 
-const useStyles = makeStyles(flex);
+const PREFIX = 'Footer';
+
+const classes = {
+    flex: `${PREFIX}-flex`
+};
+
+const StyledGrid = styled(Grid)({ [`& .${classes.flex}`]: flex });
 
 const Footer = () => {
-    const classes = useStyles();
     const standId = useSelector(state => state.user.settings.standId);
     const order = {
         ...useSelector(state => state.newOrderHeader),
@@ -29,7 +34,7 @@ const Footer = () => {
     const doConfirmOrder = () => dispatch(confirmOrder(order));
 
     return (
-        <Grid className={classes.root} justifyContent="space-between">
+        <StyledGrid className={classes.root} justifyContent="space-between">
             <ItemGrid>
                 <Button variant="contained" onClick={goBack}>
                     <Create />
@@ -42,7 +47,7 @@ const Footer = () => {
                     Conferma
                 </Button>
             </ItemGrid>
-        </Grid>
+        </StyledGrid>
     );
 };
 

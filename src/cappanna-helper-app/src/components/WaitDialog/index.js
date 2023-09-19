@@ -1,13 +1,29 @@
 import React from "react";
+import { styled } from '@mui/material/styles';
 import { useSelector } from "react-redux";
 import { Dialog, CircularProgress, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
-import { makeStyles } from '@mui/styles';
-import waitDialogStyle from "variables/styles/waitDialogStyle";
+const PREFIX = 'WaitDialog';
 
-const useStyles = makeStyles(waitDialogStyle);
+const classes = {
+    title: `${PREFIX}-title`,
+    paper: `${PREFIX}-paper`,
+    content: `${PREFIX}-content`
+};
+
+const StyledDialog = styled(Dialog)({
+    [`& .${classes.title}`]: {
+        textAlign: "center"
+    },
+    [`& .${classes.paper}`]: {
+        width: "300px",
+        height: "300px"
+    },
+    [`& .${classes.content}`]: {
+        textAlign: "center"
+    }
+});
 
 const WaitDialog = () => {
-    const classes = useStyles();
     const loading = useSelector(state => state.api.loading);
     const message = useSelector(state => state.api.message);
 
@@ -18,13 +34,13 @@ const WaitDialog = () => {
     };
 
     return (
-        <Dialog open={loading} onClose={onClose} disableEscapeKeyDown className={classes.root}>
+        <StyledDialog open={loading} onClose={onClose} disableEscapeKeyDown className={classes.root}>
             <DialogTitle className={classes.title}>{"Attendere"}</DialogTitle>
             <DialogContent className={classes.content}>
                 <CircularProgress size={60} thickness={7} />
                 <DialogContentText>{message}</DialogContentText>
             </DialogContent>
-        </Dialog>
+        </StyledDialog>
     );
 };
 

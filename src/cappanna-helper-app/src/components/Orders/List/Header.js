@@ -1,10 +1,10 @@
 import React from "react";
+import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { resetOrder, loadOrdersListRequested, toggleOrdersListFilterByUser, toggleOrdersListFilterByStand, toggleOrdersListFilterByStatus } from "actions";
 import { selectIsAdmin, selectIsAdminOrDome } from "selectors";
 import { Toolbar } from "@mui/material";
-import { makeStyles } from '@mui/styles';
 import ContentAdd from "@mui/icons-material/Add";
 import IconButton from "components/CustomButtons/IconButton";
 import PermIdentity from "@mui/icons-material/PermIdentity";
@@ -15,14 +15,19 @@ import LockOpen from "@mui/icons-material/LockOpen";
 import SupervisorAccount from "@mui/icons-material/SupervisorAccount";
 import NavigationRefresh from "@mui/icons-material/Refresh";
 
-const useStyles = makeStyles({
-    icon: {
+const PREFIX = 'Header';
+
+const classes = {
+    icon: `${PREFIX}-icon`
+};
+
+const StyledToolbar = styled(Toolbar)({
+    [`& .${classes.icon}`]: {
         marginRight: "20px"
     }
 });
 
 const Header = () => {
-    const classes = useStyles();
     const filters =  useSelector(state => state.orders.filters);
     const showToggleOrdersListFilterByStand = useSelector(selectIsAdminOrDome);
     const showToggleOrdersListFilterByStatus = useSelector(selectIsAdmin);
@@ -39,7 +44,7 @@ const Header = () => {
     const doToggleOrdersListFilterByStatus = () => dispatch(toggleOrdersListFilterByStatus());
 
     return (
-        <Toolbar>
+        <StyledToolbar>
             <IconButton onClick={goToNewOrder} customClass={classes.icon} size="large">
                 <ContentAdd />
             </IconButton>
@@ -71,7 +76,7 @@ const Header = () => {
                     {filters.status ? <LockOpen /> : <Lock />}
                 </IconButton>
             ) : null}
-        </Toolbar>
+        </StyledToolbar>
     );
 };
 

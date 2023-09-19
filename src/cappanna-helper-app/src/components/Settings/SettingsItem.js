@@ -1,13 +1,18 @@
 import React from "react";
+import { styled } from '@mui/material/styles';
 import PropTypes from "prop-types";
 import { FormControlLabel, ListItem, Switch, TextField } from "@mui/material";
-import { makeStyles } from '@mui/styles';
-import sidebarStyle from "variables/styles/sidebarStyle";
+import { item } from "variables/styles/sidebarStyle";
 
-const useStyles = makeStyles(sidebarStyle);
+const PREFIX = 'SettingsItem';
 
-const SettingsItem = (props) => {
-    const classes = useStyles();
+const classes = {
+    item: `${PREFIX}-item`
+};
+
+const StyledListItem = styled(ListItem)({ [`&.${classes.item}`]: item });
+
+const SettingsItem = props => {
     let element;
 
     if (props.setting.type === "Boolean") {
@@ -22,9 +27,9 @@ const SettingsItem = (props) => {
     }
 
     return (
-        <ListItem className={classes.item}>
+        <StyledListItem className={classes.item}>
             <FormControlLabel control={element} label={props.setting.name} labelPlacement="start" />
-        </ListItem>
+        </StyledListItem>
     );
 };
 

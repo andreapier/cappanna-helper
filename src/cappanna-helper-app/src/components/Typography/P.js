@@ -1,13 +1,28 @@
 import React from "react";
-import { makeStyles } from '@mui/styles';
-import typographyStyle from "variables/styles/typographyStyle";
+import { styled } from '@mui/material/styles';
+import { defaultFont } from "variables/styles";
 
-const useStyles = makeStyles(typographyStyle);
+const PREFIX = 'P';
+
+const classes = {
+    defaultFontStyle: `${PREFIX}-defaultFontStyle`,
+    pStyle: `${PREFIX}-pStyle`
+};
+
+const Root = styled('p')({
+    [`& .${classes.defaultFontStyle}`]: {
+        ...defaultFont,
+        fontSize: "14px"
+    },
+    [`& .${classes.pStyle}`]: {
+        margin: "0 0 10px"
+    }
+});
 
 const P = ({ children }) => {
-    const classes = useStyles();
+
     
-    return <p className={classes.defaultFontStyle + " " + classes.pStyle}>{children}</p>;
+    return <Root className={classes.defaultFontStyle + " " + classes.pStyle}>{children}</Root>;
 }
 
 export default P;
