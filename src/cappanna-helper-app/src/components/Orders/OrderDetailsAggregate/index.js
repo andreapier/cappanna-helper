@@ -40,12 +40,12 @@ const OrderDetailsAggregate = (props) => {
     return (
         <div>
             <Header
-                orderDetailsAggregationRequested={handleToggleOrderSelectionForAggregation}
-                ordersId={filteredOrders.filter((o) => o.selected).map((o) => o.id)}
+                orderDetailsAggregationRequested={handleOrderDetailsAggregationRequested}
+                ordersId={filteredOrders.filter(o => o.selected).map(o => o.id)}
             />
             <List>
-                {filteredOrders.map((o) => (
-                    <Preview order={o} key={o.id} toggleOrderSelectionForAggregation={handleOrderDetailsAggregationRequested} />
+                {filteredOrders.map(o => (
+                    <Preview order={o} key={o.id} toggleOrderSelectionForAggregation={handleToggleOrderSelectionForAggregation} />
                 ))}
             </List>
         </div>
