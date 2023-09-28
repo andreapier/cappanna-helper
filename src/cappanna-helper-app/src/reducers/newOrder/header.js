@@ -11,7 +11,7 @@ import {
 
 export const initialState = {
     id: 0,
-    seats: 2,
+    seats: 0,
     chTable: "",
     customer: "",
     notes: "",

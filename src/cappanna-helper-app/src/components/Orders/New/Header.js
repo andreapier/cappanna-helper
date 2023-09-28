@@ -34,7 +34,7 @@ const Header = () => {
     const seats = useSelector(state => state.newOrderHeader.seats);
     const customer = useSelector(state => state.newOrderHeader.customer);
     const canConfirm = useSelector(selectCanConfirmOrder);
-    
+
     const location = useLocation();
     const navigate = useNavigate();
     const newOrder = isNewOrder(location);
@@ -64,7 +64,7 @@ const Header = () => {
                         variant="standard"
                         label="N° pers"
                         style={textFieldStyle}
-                        value={isNaN(seats) ? "" : seats}
+                        value={isNaN(seats) || seats === 0 ? "" : seats}
                         onChange={(e) => setSeats(parseInt(e.target.value, 10))}
                         InputLabelProps={{
                             shrink: true
