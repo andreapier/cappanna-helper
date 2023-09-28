@@ -11,12 +11,12 @@ import { List } from "@mui/material";
 import Header from "components/Orders/OrderDetailsAggregate/Header";
 import Preview from "components/Orders/OrderDetailsAggregate/Preview";
 
-const OrderDetailsAggregate = (props) => {
+const OrderDetailsAggregate = () => {
     const orders = useSelector(state => state.orders.items);
     const aggregation = useSelector(state => state.aggregation);
     const filteredOrders = orders
-        .filter((o) => o.status === 3)
-        .map((o) => {
+        .filter(o => o.status === 3)
+        .map(o => {
             const selected = aggregation.indexOf(o.id);
 
             return {
@@ -25,8 +25,8 @@ const OrderDetailsAggregate = (props) => {
             };
         });
     const dispatch = useDispatch();
-    const handleToggleOrderSelectionForAggregation = (orderId) => dispatch(toggleOrderSelectionForAggregation(orderId));
-    const handleOrderDetailsAggregationRequested = (ordersId) => dispatch(orderDetailsAggregationRequested(ordersId));
+    const handleToggleOrderSelectionForAggregation = orderId => dispatch(toggleOrderSelectionForAggregation(orderId));
+    const handleOrderDetailsAggregationRequested = ordersId => dispatch(orderDetailsAggregationRequested(ordersId));
 
     useEffect(() => {
         dispatch(loadOrdersListRequested());

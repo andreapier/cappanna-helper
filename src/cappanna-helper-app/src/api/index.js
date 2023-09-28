@@ -38,16 +38,16 @@ const post = (url, data, jsonResponse = true) =>
         headers: getHeaders(),
         body: JSON.stringify(data)
     })
-    .then(checkStatus)
-    .then((json) => (jsonResponse ? parseJSON(json) : json));
+        .then(checkStatus)
+        .then((json) => (jsonResponse ? parseJSON(json) : json));
 
 const get = (url) =>
     fetch(url, {
         method: "GET",
         headers: getHeaders()
     })
-    .then(checkStatus)
-    .then(parseJSON);
+        .then(checkStatus)
+        .then(parseJSON);
 
 const patch = (url, data) =>
     fetch(url, {
@@ -166,7 +166,7 @@ class Api {
     }
 
     aggregateOrderDetails(ordersId) {
-        return get(`${PRINT}/order/aggregate?${ordersId.map((o) => "ordersId=" + o).join("&")}`);
+        return get(`${PRINT}/order/aggregate?${ordersId.map(o => "ordersId=" + o).join("&")}`);
     }
 
     getNotifications() {
