@@ -21,7 +21,7 @@ const classes = {
     iconMessage: `${PREFIX}-iconMessage`
 };
 
-const Root = styled('div')({
+const StyledSnackbar = styled(Snackbar)({
     [`& .${classes.root}`]: {
         ...defaultFont,
         position: "relative",
@@ -32,7 +32,7 @@ const Root = styled('div')({
         backgroundColor: "white",
         color: "#555555",
         borderRadius: "3px",
-        boxShadow: "0 12px 20px -10px rgba(255, 255, 255, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(255, 255, 255, 0.2)"
+        boxShadow: "0 12px 20px -10px rgba(255, 255, 255, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(255, 255, 255, 0.2)",
     },
     [`& .${classes.success}`]: {
         backgroundColor: "#5cb860",
@@ -84,7 +84,7 @@ const Root = styled('div')({
 
 const CustomSnackbar = props => {
     const { message, color, close, icon, place, open, autoHideDuration, onClose } = props;
-    var action = [];
+    let action = [];
     const messageClasses = cx({
         [classes.iconMessage]: icon !== undefined
     });
@@ -106,14 +106,14 @@ const CustomSnackbar = props => {
     }
 
     return (
-        <Snackbar
+        <StyledSnackbar
             anchorOrigin={{
                 vertical: place.indexOf("t") === -1 ? "bottom" : "top",
                 horizontal: place.indexOf("l") !== -1 ? "left" : place.indexOf("c") !== -1 ? "center" : "right"
             }}
             open={open}
             message={
-                <Root>
+                <div>
                     {icon !== undefined ? <props.icon className={classes.icon} /> : null}
                     {actualMessage.map ? (
                         actualMessage.map((e, i) => (
@@ -124,7 +124,7 @@ const CustomSnackbar = props => {
                     ) : (
                         <span className={messageClasses}>{actualMessage}</span>
                     )}
-                </Root>
+                </div>
             }
             action={action}
             ContentProps={{
