@@ -16,7 +16,7 @@ const Root = styled('div')({
         height: "calc(100vh - 75px)",
         overflow: "auto",
         width: drawerWidth,
-        zIndex: "4",
+        //zIndex: "4",
         overflowScrolling: "touch",
     },
 });

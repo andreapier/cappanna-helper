@@ -8,7 +8,7 @@ import { drawerWidth, transition, boxShadow } from "variables/styles";
 
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
     border: "none",
-    zIndex: "1",
+    //zIndex: "1",
     ...boxShadow,
     width: drawerWidth,
     [theme.breakpoints.up("md")]: {
@@ -20,8 +20,8 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
         width: drawerWidth,
         ...boxShadow,
         height: "100vh",
-        zIndex: "1032",
-        visibility: "visible",
+        //zIndex: "1032",
+        //visibility: "visible",
         overflowY: "visible",
         borderTop: "none",
         textAlign: "left",
@@ -34,18 +34,18 @@ const Sidebar = props => {
     const { routes, handleSidebarNavigationItemClick } = props;
 
     return [
-            <Hidden key="drawerMdUp" mdUp>
-                <StyledDrawer open={props.open} PaperProps={{ style: { width: drawerWidth } }} onClose={props.handleDrawerToggle} ModalProps={{ keepMounted: true }}>
-                    <Logo />
-                    <Links routes={routes} user={user} handleSidebarNavigationItemClick={handleSidebarNavigationItemClick} />
-                </StyledDrawer>
-            </Hidden>,
-            <Hidden key="drawerMdDown" mdDown>
-                <StyledDrawer variant="permanent" open PaperProps={{ style: { width: drawerWidth } }} >
-                    <Logo />
-                    <Links routes={routes} user={user} handleSidebarNavigationItemClick={handleSidebarNavigationItemClick} />
-                </StyledDrawer>
-            </Hidden>
+        <Hidden key="drawerMdUp" mdUp>
+            <StyledDrawer open={props.open} PaperProps={{ style: { width: drawerWidth } }} onClose={props.handleDrawerToggle} ModalProps={{ keepMounted: true }}>
+                <Logo />
+                <Links routes={routes} user={user} handleSidebarNavigationItemClick={handleSidebarNavigationItemClick} />
+            </StyledDrawer>
+        </Hidden>,
+        <Hidden key="drawerMdDown" mdDown>
+            <StyledDrawer variant="permanent" open PaperProps={{ style: { width: drawerWidth } }} >
+                <Logo />
+                <Links routes={routes} user={user} handleSidebarNavigationItemClick={handleSidebarNavigationItemClick} />
+            </StyledDrawer>
+        </Hidden>
     ];
 };
 
