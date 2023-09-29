@@ -22,10 +22,16 @@ const Body = () => {
         title: "Dolci"
     }, {
         group: "Vini Bianchi",
-        title: "Vini Bianchi"
+        title: "Vini Bianchi Bottiglia"
+    }, {
+        group: "Vini Bianchi Bicchiere",
+        title: "Vini Bianchi Bicchiere"
     }, {
         group: "Vini Rossi",
-        title: "Vini Rossi"
+        title: "Vini Rossi Bottiglia"
+    }, {
+        group: "Vini Rossi Bicchiere",
+        title: "Vini Rossi Bicchiere"
     }, {
         group: "Acqua",
         title: "Acqua"

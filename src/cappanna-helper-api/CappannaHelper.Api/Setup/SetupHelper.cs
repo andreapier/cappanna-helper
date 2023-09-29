@@ -237,14 +237,15 @@ namespace CappannaHelper.Api.Setup
         private async Task SetupDrinksAsync(List<string> errors)
         {
             await SetupWhiteWinesAsync(errors);
+            await SetupWhiteWineGlassesAsync(errors);
             await SetupRedWinesAsync(errors);
+            await SetupRedWineGlassesAsync(errors);
             await SetupWaterAsync(errors);
             await SetupDrinkDetailsAsync(errors);
         }
 
         private async Task SetupWhiteWinesAsync(List<string> errors)
         {
-            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Vino al bicchiere (Verdicchio)", 1.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Verdicchio doc 1 L", 6.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Verdicchio doc 0,5 L", 3M, errors);
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Berso", 8.0M, errors);
@@ -263,16 +264,41 @@ namespace CappannaHelper.Api.Setup
             await SetupMenuDetailAsync(MenuDetail.WHITE_WINE, "Spumante Cuvee", 12.0M, errors);
         }
 
+        private async Task SetupWhiteWineGlassesAsync(List<string> errors)
+        {
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE_GLASS, "Verdicchio", 1.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE_GLASS, "Berso", 2.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE_GLASS, "Lyricus", 2.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE_GLASS, "Cuprese", 3.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE_GLASS, "San Michele", 3.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE_GLASS, "Vale", 3.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE_GLASS, "Il Priore", 3.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE_GLASS, "Salerna", 3.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE_GLASS, "Capovolto", 3.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE_GLASS, "Valde", 3.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE_GLASS, "Raggi d'uva (Bio)", 3.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE_GLASS, "Oinochoe (Bio)", 3.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE_GLASS, "Le Vele", 3.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.WHITE_WINE_GLASS, "Brecciole", 3.0M, errors);
+        }
+
         private async Task SetupRedWinesAsync(List<string> errors)
         {
-            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Vino al bicchiere (Lacrima)", 1.5M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Vino rosso doc 1 L", 6.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Vino rosso doc 0,5 L", 3.0M, errors);
-            await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Visciola al bicchiere", 2.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Visciola  0,5 L", 13.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Lyricus (Rosso Piceno)", 9.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Bastian Contrario", 15.0M, errors);
             await SetupMenuDetailAsync(MenuDetail.RED_WINE, "Superbo (Lacrima)", 15.0M, errors);
+        }
+
+        private async Task SetupRedWineGlassesAsync(List<string> errors)
+        {
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE_GLASS, "Vino (Lacrima)", 1.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE_GLASS, "Visciola", 2.0M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE_GLASS, "Lyricus (Rosso Piceno)", 2.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE_GLASS, "Bastian Contrario", 3.5M, errors);
+            await SetupMenuDetailAsync(MenuDetail.RED_WINE_GLASS, "Superbo (Lacrima)", 3.5M, errors);
         }
 
         private async Task SetupWaterAsync(List<string> errors)

@@ -288,6 +288,10 @@ namespace CappannaHelper.Api.Printing
             foreach (var detail in orderedDetails)
             {
                 var name = detail.Item.Name;
+                if (detail.Item.Group == MenuDetail.WHITE_WINE_GLASS || detail.Item.Group == MenuDetail.RED_WINE_GLASS)
+                {
+                    name = $"{name} (bicc.)";
+                }
                 var dotsLength = 30 - detail.Item.Name.Length;
                 var dots = string.Empty.PadLeft(dotsLength > 0 ? dotsLength : 0, '.');
                 var section = _document.LastPage.CreateSection();
