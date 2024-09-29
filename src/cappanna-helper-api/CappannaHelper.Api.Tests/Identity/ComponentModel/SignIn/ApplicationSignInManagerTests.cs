@@ -10,7 +10,7 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace CappannaHelper.Api.Tests.Identity.ComponentModel.Sign
+namespace CappannaHelper.Api.Tests.Identity.ComponentModel.SignIn
 {
     public class ApplicationSignInManagerTests
     {

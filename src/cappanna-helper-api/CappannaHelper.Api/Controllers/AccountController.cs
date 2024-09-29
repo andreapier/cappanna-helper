@@ -57,7 +57,7 @@ namespace CappannaHelper.Api.Controllers
                 Settings = new UserSetting
                 {
                     StandId = model.StandId
-                }
+                },
             };
             var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -105,7 +105,7 @@ namespace CappannaHelper.Api.Controllers
                     Username = user.UserName,
                     Roles = user.UserRoles.Select(ur => ur.Role).Select(r => r.Name),
                     Token = jwt,
-                    Settings = user.Settings
+                    Settings = user.Settings,
                 });
             }
             
@@ -145,9 +145,9 @@ namespace CappannaHelper.Api.Controllers
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new(JwtRegisteredClaimNames.Sub, user.UserName),
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
 
             foreach (var role in user.UserRoles)

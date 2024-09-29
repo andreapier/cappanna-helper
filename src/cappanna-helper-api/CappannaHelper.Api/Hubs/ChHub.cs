@@ -24,7 +24,7 @@ namespace CappannaHelper.Api.Hubs
         public override async Task OnConnectedAsync()
         {
             var roles = Context.User.FindAll(ClaimTypes.Role);
-            
+
             if (roles.Any(r => ApplicationRole.APPLICATION_ROLE_ADMIN.Equals(r.Value, StringComparison.OrdinalIgnoreCase)))
             {
                 await Groups.AddToGroupAsync(Context.ConnectionId, ApplicationRole.APPLICATION_ROLE_ADMIN);

@@ -10,7 +10,7 @@ namespace CappannaHelper.Api.Common.ErrorManagement
 {
     public class ErrorHandlingMiddleware
     {
-        private readonly static JsonSerializerSettings _jsonSettings = new JsonSerializerSettings
+        private readonly static JsonSerializerSettings _jsonSettings = new()
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         };

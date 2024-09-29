@@ -1,4 +1,4 @@
-﻿using CappannaHelper.Api.Common.ErrorManagement;
+using CappannaHelper.Api.Common.ErrorManagement;
 using CappannaHelper.Api.Hubs;
 using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Identity.Extensions;
@@ -68,7 +68,7 @@ namespace CappannaHelper.Api
                         ValidIssuer = authorithy,
                         ValidAudience = audience,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"])),
-                        ClockSkew = TimeSpan.Zero
+                        ClockSkew = TimeSpan.Zero,
                     };
 
                     cfg.Events = new JwtBearerEvents
@@ -116,7 +116,7 @@ namespace CappannaHelper.Api
                 .AddChServices();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public static void Configure(IApplicationBuilder app)
         {
             app
                 .UseDefaultFiles()

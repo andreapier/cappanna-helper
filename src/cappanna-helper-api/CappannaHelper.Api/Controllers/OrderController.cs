@@ -7,13 +7,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CappannaHelper.Api.Controllers
@@ -161,10 +159,10 @@ namespace CappannaHelper.Api.Controllers
                     .Include(o => o.Details)
                     .ThenInclude(d => d.Item)
                     .SingleAsync(o => o.Id == dbOrder.Entity.Id);
-                    
+
                 shift.Income += result.Details.Sum(d => d.Quantity * d.Item.Price);
 
-                foreach(var detail in result.Details)
+                foreach (var detail in result.Details)
                 {
                     if (detail.Item.UnitsInStock.HasValue)
                     {
@@ -185,7 +183,7 @@ namespace CappannaHelper.Api.Controllers
                     {
                         await _printService.PrintAsync(result);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         throw new Exception("Impossibile stampare l'ordine", e);
                     }
@@ -202,7 +200,7 @@ namespace CappannaHelper.Api.Controllers
                         });
                         result.Status = printOperation;
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         throw new Exception("Impossibile salvare l'operazione di stampa dell'ordine", e);
                     }
@@ -311,18 +309,18 @@ namespace CappannaHelper.Api.Controllers
                 foreach (var detail in order.Details)
                 {
                     var dbDetail = dbOrder.Details.FirstOrDefault(d => d.ItemId == detail.ItemId);
-                        
+
                     if (dbDetail == null)
                     {
                         dbOrder.Details.Add(detail);
 
                         var dbItem = await _context.MenuDetails.FirstAsync(d => d.Id == detail.ItemId);
 
-                        if(dbItem.UnitsInStock.HasValue)
+                        if (dbItem.UnitsInStock.HasValue)
                         {
                             dbItem.UnitsInStock -= detail.Quantity;
 
-                            if(dbItem.UnitsInStock.Value < 0)
+                            if (dbItem.UnitsInStock.Value < 0)
                             {
                                 dbItem.UnitsInStock = 0;
                             }
@@ -335,11 +333,11 @@ namespace CappannaHelper.Api.Controllers
                         var changedQuantity = detail.Quantity - dbDetail.Quantity;
                         dbDetail.Quantity = detail.Quantity;
 
-                        if(dbDetail.Item.UnitsInStock.HasValue)
+                        if (dbDetail.Item.UnitsInStock.HasValue)
                         {
                             dbDetail.Item.UnitsInStock -= changedQuantity;
 
-                            if(dbDetail.Item.UnitsInStock.Value < 0)
+                            if (dbDetail.Item.UnitsInStock.Value < 0)
                             {
                                 dbDetail.Item.UnitsInStock = 0;
                             }
@@ -359,20 +357,20 @@ namespace CappannaHelper.Api.Controllers
                     }
                 }
 
-                foreach(var detail in toBeRemoveDetails)
+                foreach (var detail in toBeRemoveDetails)
                 {
                     var dbDetail = dbOrder.Details.Single(d => d.ItemId == detail.ItemId);
 
-                    if(dbDetail.Item.UnitsInStock.HasValue)
+                    if (dbDetail.Item.UnitsInStock.HasValue)
                     {
                         dbDetail.Item.UnitsInStock += detail.Quantity;
 
-                        if(dbDetail.Item.UnitsInStock.Value < 0)
+                        if (dbDetail.Item.UnitsInStock.Value < 0)
                         {
                             detail.Item.UnitsInStock = 0;
                         }
 
-                        if (!limitedStockMenuDetails.Any(d => d.Id == dbDetail.ItemId))
+                        if (!limitedStockMenuDetails.Exists(d => d.Id == dbDetail.ItemId))
                         {
                             limitedStockMenuDetails.Add(dbDetail.Item);
                         }
@@ -409,7 +407,7 @@ namespace CappannaHelper.Api.Controllers
 
             await _hub.NotifyOrderChangedAsync(ChHub.NOTIFY_ORDER_CHANGED, result);
 
-            if(limitedStockMenuDetails.Any())
+            if (limitedStockMenuDetails.Any())
             {
                 await _hub.NotifyMenuChangedAsync(limitedStockMenuDetails);
             }
@@ -505,24 +503,24 @@ namespace CappannaHelper.Api.Controllers
                 .ThenInclude(d => d.Item)
                 .SingleOrDefaultAsync(o => o.Id == id);
 
-            if(result == null)
+            if (result == null)
             {
                 return NotFound(new { Message = $"L'ordine con Id '{id}' non esiste" });
             }
 
-            if(!result.Operations.Any(o => o.Type == OperationTypes.Print))
+            if (!result.Operations.Any(o => o.Type == OperationTypes.Print))
             {
                 await transaction.RollbackAsync();
                 return BadRequest(new { Message = "Impossibile chiudere un ordine non stampato" });
             }
 
-            if(result.Operations.Any(o => o.Type == OperationTypes.Close))
+            if (result.Operations.Any(o => o.Type == OperationTypes.Close))
             {
                 await transaction.RollbackAsync();
                 return BadRequest(new { Message = "Impossibile chiudere un ordine gi� chiuso" });
             }
 
-            if(result.ShiftId != shift.Id)
+            if (result.ShiftId != shift.Id)
             {
                 await transaction.RollbackAsync();
                 return BadRequest(new { Message = "Impossibile chiudere un ordine creato in un altro turno" });
