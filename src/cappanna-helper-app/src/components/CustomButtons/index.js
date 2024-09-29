@@ -128,6 +128,10 @@ const RegularButton = (props) => {
   );
 };
 
+RegularButton.defaultProps = {
+    color: "primary"
+};
+
 RegularButton.propTypes = {
   color: PropTypes.oneOf(["primary", "success", "warning", "danger", "white", "simple", "transparent"]),
   round: PropTypes.bool,

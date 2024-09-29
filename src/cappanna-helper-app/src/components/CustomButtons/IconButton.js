@@ -109,6 +109,10 @@ const IconCustomButton = (props) => {
   );
 };
 
+IconCustomButton.defaultProps = {
+    color: "primary"
+};
+
 IconCustomButton.propTypes = {
   color: PropTypes.oneOf(["primary", "success", "warning", "danger", "white", "simple"]),
   customClass: PropTypes.string,

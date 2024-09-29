@@ -79,6 +79,10 @@ const RegularCard = (props) => {
   );
 };
 
+RegularCard.defaultProps = {
+    headerColor: "blue"
+};
+
 RegularCard.propTypes = {
   plainCard: PropTypes.bool,
   cardTitle: PropTypes.node.isRequired,
