@@ -12,11 +12,11 @@ class SignalR {
       .withAutomaticReconnect()
       .build();
 
-    this.chHubConnection.on("NotifyOrderCreated", (data) => this.dispatch(orderCreated(data)));
-    this.chHubConnection.on("NotifyOrderChanged", (data) => this.dispatch(orderChanged(data)));
-    this.chHubConnection.on("NotifyOrderPrinted", (data) => this.dispatch(orderPrinted(data)));
-    this.chHubConnection.on("NotifyOrderDeleted", (data) => this.dispatch(orderDeleted(data)));
-    this.chHubConnection.on("NotifyOrderClosed", (data) => this.dispatch(orderClosed(data)));
+    this.chHubConnection.on("NotifyOrderCreated", (data) => { this.dispatch(orderCreated(data)); });
+    this.chHubConnection.on("NotifyOrderChanged", (data) => { this.dispatch(orderChanged(data)); });
+    this.chHubConnection.on("NotifyOrderPrinted", (data) => { this.dispatch(orderPrinted(data)); });
+    this.chHubConnection.on("NotifyOrderDeleted", (data) => { this.dispatch(orderDeleted(data)); });
+    this.chHubConnection.on("NotifyOrderClosed", (data) => { this.dispatch(orderClosed(data)); });
     this.chHubConnection.on("NotifyMenuDetailsChanged", (data) => this.dispatch(menuDetailsChanged(data)));
 
     this.chHubConnection.onclose((err) => {

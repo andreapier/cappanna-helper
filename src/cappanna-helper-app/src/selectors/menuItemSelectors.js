@@ -8,7 +8,8 @@ const makeSelectMenuItemsByGroup = () => {
 }
 
 const selectNeedsMenuDetailsLoading = state => {
-  return state.menuDetails.length === 0;
+  //return state.menuDetails.length === 0;
+  return true;
 }
 
 export { makeSelectMenuItemsByGroup, selectNeedsMenuDetailsLoading };

@@ -1,4 +1,8 @@
-﻿using CappannaHelper.Api.Hubs;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using CappannaHelper.Api.Hubs;
 using CappannaHelper.Api.Models;
 using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Persistence.Modelling;
@@ -7,11 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace CappannaHelper.Api.Controllers
 {
