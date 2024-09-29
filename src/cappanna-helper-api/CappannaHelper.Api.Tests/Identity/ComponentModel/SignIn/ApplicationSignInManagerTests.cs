@@ -55,7 +55,7 @@ namespace CappannaHelper.Api.Tests.Identity.ComponentModel.SignIn
 
             try
             {
-                await userManager.PasswordSignInAsync(new ApplicationUser(), string.Empty, false, false);
+                await userManager.PasswordSignInAsync(new ApplicationUser(), string.Empty, false);
             }
             catch
             { }

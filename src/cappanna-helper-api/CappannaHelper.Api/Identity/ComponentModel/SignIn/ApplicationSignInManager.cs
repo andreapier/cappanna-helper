@@ -16,7 +16,7 @@ namespace CappannaHelper.Api.Identity.ComponentModel.SignIn
 
         public async Task SignInAsync(ApplicationUser user, bool isPersistent, string authenticationMethod = null) => await _signInManager.SignInAsync(user, isPersistent, authenticationMethod);
 
-        public async Task<SignInResult> PasswordSignInAsync(ApplicationUser user, string password, bool isPersistent, bool lockoutOnFailure) => await _signInManager.PasswordSignInAsync(user, password, isPersistent, lockoutOnFailure);
+        public async Task<SignInResult> PasswordSignInAsync(ApplicationUser user, string password, bool isPersistent) => await _signInManager.PasswordSignInAsync(user, password, isPersistent, false);
 
         public async Task SignOutAsync() => await _signInManager.SignOutAsync();
     }

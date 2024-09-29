@@ -1,4 +1,4 @@
-using CappannaHelper.Api.Common.ErrorManagement;
+﻿using CappannaHelper.Api.Common.ErrorManagement;
 using CappannaHelper.Api.Hubs;
 using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Identity.Extensions;
@@ -35,7 +35,7 @@ namespace CappannaHelper.Api
             services.AddDbContext<ApplicationDbContext>(o =>
                 o.UseSqlite(_configuration.GetConnectionString(nameof(ApplicationDbContext))
                 , o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
-            );
+                );
 
             services.AddControllers();
 
@@ -59,8 +59,6 @@ namespace CappannaHelper.Api
                     var authorithy = _configuration["JwtIssuer"];
                     var audience = _configuration["JwtAudience"];
 
-                    //cfg.Authority = authorithy;
-                    //cfg.Audience = audience;
                     cfg.RequireHttpsMetadata = false;
                     cfg.SaveToken = true;
                     cfg.TokenValidationParameters = new TokenValidationParameters
@@ -94,14 +92,6 @@ namespace CappannaHelper.Api
                 options.Password.RequiredLength = 5;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
-            });
-
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.Cookie.Name = "CappannaHelper";
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromDays(int.Parse(_configuration["JwtExpireDays"]));
-                options.SlidingExpiration = true;
             });
 
             services

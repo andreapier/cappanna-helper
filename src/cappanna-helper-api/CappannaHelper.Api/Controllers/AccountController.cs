@@ -80,7 +80,7 @@ namespace CappannaHelper.Api.Controllers
             {
                 return BadRequest(new
                 {
-                    Message = "Nome utente o password non validi"
+                    Message = "Nome utente o password non validi",
                 });
             }
 
@@ -93,7 +93,7 @@ namespace CappannaHelper.Api.Controllers
                 });
             }
 
-            var signInResult = await _signInManager.PasswordSignInAsync(user, signinData.Password, signinData.RememberMe, true);
+            var signInResult = await _signInManager.PasswordSignInAsync(user, signinData.Password, signinData.RememberMe);
 
             if (signInResult.Succeeded)
             {
