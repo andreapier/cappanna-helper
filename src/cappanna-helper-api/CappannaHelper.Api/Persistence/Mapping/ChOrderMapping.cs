@@ -24,7 +24,7 @@ namespace CappannaHelper.Api.Persistence.Mapping
                 .IsRequired()
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasConversion(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
-            entityBuilder.Property(o => o.Status).IsRequired().HasDefaultValue(OperationTypes.Creation);
+            entityBuilder.Property(o => o.Status).IsRequired().HasDefaultValue(OperationTypes.Creation).HasSentinel(OperationTypes.Invalid);
             entityBuilder.Property(o => o.ShiftId).IsRequired();
             entityBuilder.Property(o => o.Notes).HasMaxLength(2048);
             entityBuilder.Property(o => o.ShiftCounter).IsRequired();
