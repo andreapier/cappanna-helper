@@ -126,7 +126,7 @@ namespace CappannaHelper.Api.Controllers
             try
             {
                 var creationOperation = OperationTypes.Creation;
-                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                var userId = GetUserId();
                 var shift = await _shiftManager.GetCurrentAsync();
 
                 autoPrint = await _settingManager.GetSettingValue<bool>(Setting.AUTO_PRINT);
@@ -135,11 +135,11 @@ namespace CappannaHelper.Api.Controllers
 
                 order.Operations = new List<ChOrderOperation>
                 {
-                    new ChOrderOperation
+                    new()
                     {
                         OperationTimestamp = DateTime.Now,
                         Type = creationOperation,
-                        UserId = userId
+                        UserId = userId,
                     }
                 };
 
@@ -196,7 +196,7 @@ namespace CappannaHelper.Api.Controllers
                         {
                             OperationTimestamp = DateTime.Now,
                             Type = printOperation,
-                            UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                            UserId = GetUserId(),
                         });
                         result.Status = printOperation;
                     }
@@ -229,6 +229,11 @@ namespace CappannaHelper.Api.Controllers
             }
 
             return Ok(result);
+        }
+
+        private int GetUserId()
+        {
+            return int.Parse(User.FindFirst("chUserId").Value);
         }
 
         [HttpPatch]
@@ -276,7 +281,7 @@ namespace CappannaHelper.Api.Controllers
             try
             {
                 var editOperation = OperationTypes.Edit;
-                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                var userId = GetUserId();
                 var shift = await _shiftManager.GetCurrentAsync();
 
                 var dbOrder = await _context.Orders
@@ -492,7 +497,7 @@ namespace CappannaHelper.Api.Controllers
         {
             var transaction = await _context.Database.BeginTransactionAsync();
             var closeOperation = OperationTypes.Close;
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var userId = GetUserId();
             var shift = await _shiftManager.GetCurrentAsync();
 
             var result = await _context

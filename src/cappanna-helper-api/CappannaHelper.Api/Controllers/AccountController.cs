@@ -147,7 +147,7 @@ namespace CappannaHelper.Api.Controllers
             {
                 new(JwtRegisteredClaimNames.Sub, user.UserName),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new("chUserId", user.Id.ToString()),
             };
 
             foreach (var role in user.UserRoles)

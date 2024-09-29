@@ -65,7 +65,7 @@ namespace CappannaHelper.Api.Controllers
                 {
                     OperationTimestamp = DateTime.Now,
                     Type = printOperation,
-                    UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                    UserId = GetUserId(),
                 });
                 result.Status = printOperation;
 
@@ -123,6 +123,11 @@ namespace CappannaHelper.Api.Controllers
             }
 
             return Ok(result);
+        }
+
+        private int GetUserId()
+        {
+            return int.Parse(User.FindFirst("chUserId").Value);
         }
     }
 }
