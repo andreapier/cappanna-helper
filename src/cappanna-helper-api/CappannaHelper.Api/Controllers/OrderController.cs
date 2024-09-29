@@ -50,7 +50,7 @@ namespace CappannaHelper.Api.Controllers
         public async Task<IActionResult> Get()
         {
             var transaction = await _context.Database.BeginTransactionAsync();
-            var currentShift = await _shiftManager.GetOrCreateCurrentAsync();
+            var currentShift = await _shiftManager.GetCurrentAsync();
             var result = await _context.Orders
                 .Include(e => e.CreatedBy)
                 .Where(o => o.ShiftId == currentShift.Id)
@@ -129,7 +129,7 @@ namespace CappannaHelper.Api.Controllers
             {
                 var creationOperation = OperationTypes.Creation;
                 var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                var shift = await _shiftManager.GetOrCreateCurrentAsync();
+                var shift = await _shiftManager.GetCurrentAsync();
 
                 autoPrint = await _settingManager.GetSettingValue<bool>(Setting.AUTO_PRINT);
 
@@ -279,7 +279,7 @@ namespace CappannaHelper.Api.Controllers
             {
                 var editOperation = OperationTypes.Edit;
                 var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                var shift = await _shiftManager.GetOrCreateCurrentAsync();
+                var shift = await _shiftManager.GetCurrentAsync();
 
                 var dbOrder = await _context.Orders
                     .Include(o => o.Operations)
@@ -423,7 +423,7 @@ namespace CappannaHelper.Api.Controllers
             var limitedStockMenuDetails = new List<MenuDetail>();
 
             var transaction = await _context.Database.BeginTransactionAsync();
-            var shift = await _shiftManager.GetOrCreateCurrentAsync();
+            var shift = await _shiftManager.GetCurrentAsync();
 
             var result = await _context
                 .Orders
@@ -495,7 +495,7 @@ namespace CappannaHelper.Api.Controllers
             var transaction = await _context.Database.BeginTransactionAsync();
             var closeOperation = OperationTypes.Close;
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var shift = await _shiftManager.GetOrCreateCurrentAsync();
+            var shift = await _shiftManager.GetCurrentAsync();
 
             var result = await _context
                 .Orders
@@ -519,7 +519,7 @@ namespace CappannaHelper.Api.Controllers
             if(result.Operations.Any(o => o.Type == OperationTypes.Close))
             {
                 await transaction.RollbackAsync();
-                return BadRequest(new { Message = "Impossibile chiudere un ordine già chiuso" });
+                return BadRequest(new { Message = "Impossibile chiudere un ordine giï¿½ chiuso" });
             }
 
             if(result.ShiftId != shift.Id)
@@ -565,7 +565,7 @@ namespace CappannaHelper.Api.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Impossibile calcolare stand automaticamente per ordine {Id}. Verrà usato lo stand nativo dell'ordine: {description}", order.Id, order.Stand?.Description);
+                _logger.LogError(e, "Impossibile calcolare stand automaticamente per ordine {Id}. Verrï¿½ usato lo stand nativo dell'ordine: {description}", order.Id, order.Stand?.Description);
             }
         }
     }

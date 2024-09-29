@@ -28,7 +28,7 @@ namespace CappannaHelper.Api.Controllers
         public async Task<IActionResult> Get()
         {
             var transaction = await _context.Database.BeginTransactionAsync();
-            var currentShift = await _shiftManager.GetOrCreateCurrentAsync();
+            var currentShift = await _shiftManager.GetCurrentAsync();
             var result = await _context
                 .Orders
                 .Include(o => o.CreatedBy)

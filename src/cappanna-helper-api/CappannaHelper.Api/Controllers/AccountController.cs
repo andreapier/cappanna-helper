@@ -4,6 +4,7 @@ using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Models;
 using CappannaHelper.Api.Persistence;
 using CappannaHelper.Api.Persistence.Modelling;
+using CappannaHelper.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,17 +27,20 @@ namespace CappannaHelper.Api.Controllers
         private readonly IApplicationUserManager _userManager;
         private readonly IApplicationSignInManager _signInManager;
         private readonly ApplicationDbContext _context;
+        private readonly IShiftManager _shiftManager;
         private readonly IConfiguration _configuration;
 
         public AccountController(
             IApplicationUserManager userManager,
             IApplicationSignInManager signInManager,
             ApplicationDbContext context,
+            IShiftManager shiftManager,
             IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _shiftManager = shiftManager;
             _configuration = configuration;
         }
 
@@ -93,7 +97,8 @@ namespace CappannaHelper.Api.Controllers
 
             if (signInResult.Succeeded)
             {
-                var jwt = GenerateJwtToken(user);
+                var shift = await _shiftManager.GetCurrentAsync();
+                var jwt = GenerateJwtToken(user, shift);
                 return Ok(new SigninResultModel
                 {
                     UserId = user.Id,
@@ -136,7 +141,7 @@ namespace CappannaHelper.Api.Controllers
             return Ok(result);
         }
 
-        private string GenerateJwtToken(ApplicationUser user)
+        private string GenerateJwtToken(ApplicationUser user, Shift shift)
         {
             var claims = new List<Claim>
             {
@@ -152,7 +157,7 @@ namespace CappannaHelper.Api.Controllers
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["JwtExpireDays"]));
+            var expires = shift.CloseTimestamp;
 
             var token = new JwtSecurityToken(
                 _configuration["JwtIssuer"],

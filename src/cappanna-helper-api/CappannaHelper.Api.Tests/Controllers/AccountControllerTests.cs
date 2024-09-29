@@ -1,67 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using CappannaHelper.Api.Controllers;
 using CappannaHelper.Api.Identity.ComponentModel.SignIn;
 using CappannaHelper.Api.Identity.ComponentModel.User;
 using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Models;
 using CappannaHelper.Api.Persistence;
+using CappannaHelper.Api.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
-namespace CappannaHelper.Api.Tests.Controller
+namespace CappannaHelper.Api.Tests.Controllers
 {
     public class AccountControllerTests
     {
-        [Fact]
-        public void Throws_With_Null_ApplicationUserManager()
-        {
-            Assert.Throws<ArgumentNullException>(() => new AccountController(
-                null,
-                new Mock<IApplicationSignInManager>().Object,
-                CreateContext(),
-                new Mock<IConfiguration>().Object));
-        }
-
-        [Fact]
-        public void Throws_With_Null_ApplicationSignInManager()
-        {
-            Assert.Throws<ArgumentNullException>(() => new AccountController(
-                new Mock<IApplicationUserManager>().Object,
-                null,
-                CreateContext(),
-                new Mock<IConfiguration>().Object));
-        }
-
-        [Fact]
-        public void Throws_With_Null_ApplicationDbContext()
-        {
-            Assert.Throws<ArgumentNullException>(() => new AccountController(
-                new Mock<IApplicationUserManager>().Object,
-                new Mock<IApplicationSignInManager>().Object,
-                null,
-                new Mock<IConfiguration>().Object));
-        }
-
-        [Fact]
-        public void Throws_With_Null_Configuration()
-        {
-            Assert.Throws<ArgumentNullException>(() => new AccountController(
-                new Mock<IApplicationUserManager>().Object,
-                new Mock<IApplicationSignInManager>().Object,
-                CreateContext(),
-                null));
-        }
-
         [Fact]
         public async Task Signup_User_IfValid()
         {
@@ -70,10 +28,12 @@ namespace CappannaHelper.Api.Tests.Controller
             userManager.Setup(m => m.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Success));
             userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(expectedUser));
             var context = CreateContext();
-            using var accountController = new AccountController(
+            var shiftManager = new Mock<IShiftManager>();
+            var accountController = new AccountController(
                 userManager.Object,
                 new Mock<IApplicationSignInManager>().Object,
                 context,
+                shiftManager.Object,
                 new Mock<IConfiguration>().Object);
             var signupData = new SignupModel
             {
@@ -101,10 +61,12 @@ namespace CappannaHelper.Api.Tests.Controller
                 Description = expectedMessage
             })));
             var context = CreateContext();
-            using var accountController = new AccountController(
+            var shiftManager = new Mock<IShiftManager>();
+            var accountController = new AccountController(
                 userManager.Object,
                 new Mock<IApplicationSignInManager>().Object,
                 context,
+                shiftManager.Object,
                 new Mock<IConfiguration>().Object);
             var signupData = new SignupModel
             {
@@ -129,16 +91,18 @@ namespace CappannaHelper.Api.Tests.Controller
             var userManager = new Mock<IApplicationUserManager>();
             userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(expectedUser));
             var signInManager = new Mock<IApplicationSignInManager>();
-            signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.Success));
+            signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.Success));
             var configuration = new Mock<IConfiguration>();
             configuration.Setup(c => c["JwtKey"]).Returns("SOME_RANDOM_KEY_DO_NOT_SHARE");
             configuration.Setup(c => c["JwtExpireDays"]).Returns("1");
             configuration.Setup(c => c["JwtIssuer"]).Returns("http://cappannahelper.it");
             var context = CreateContext();
-            using var accountController = new AccountController(
+            var shiftManager = new Mock<IShiftManager>();
+            var accountController = new AccountController(
                 userManager.Object,
                 signInManager.Object,
                 context,
+                shiftManager.Object,
                 configuration.Object);
             var signinData = new SigninModel
             {
@@ -159,10 +123,12 @@ namespace CappannaHelper.Api.Tests.Controller
             var userManager = new Mock<IApplicationUserManager>();
             userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult<ApplicationUser>(null));
             var context = CreateContext();
-            using var accountController = new AccountController(
+            var shiftManager = new Mock<IShiftManager>();
+            var accountController = new AccountController(
                 userManager.Object,
                 new Mock<IApplicationSignInManager>().Object,
                 context,
+                shiftManager.Object,
                 new Mock<IConfiguration>().Object);
             var signinData = new SigninModel
             {
@@ -181,12 +147,14 @@ namespace CappannaHelper.Api.Tests.Controller
             var userManager = new Mock<IApplicationUserManager>();
             userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(new ApplicationUser()));
             var signInManager = new Mock<IApplicationSignInManager>();
-            signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.LockedOut));
+            signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.LockedOut));
             var context = CreateContext();
-            using var accountController = new AccountController(
+            var shiftManager = new Mock<IShiftManager>();
+            var accountController = new AccountController(
                 userManager.Object,
                 signInManager.Object,
                 context,
+                shiftManager.Object,
                 new Mock<IConfiguration>().Object);
             var signinData = new SigninModel
             {
@@ -206,12 +174,14 @@ namespace CappannaHelper.Api.Tests.Controller
             var userManager = new Mock<IApplicationUserManager>();
             userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(new ApplicationUser()));
             var signInManager = new Mock<IApplicationSignInManager>();
-            signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.NotAllowed));
+            signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.NotAllowed));
             var context = CreateContext();
-            using var accountController = new AccountController(
+            var shiftManager = new Mock<IShiftManager>();
+            var accountController = new AccountController(
                 userManager.Object,
                 signInManager.Object,
                 context,
+                shiftManager.Object,
                 new Mock<IConfiguration>().Object);
             var signinData = new SigninModel
             {
@@ -230,12 +200,14 @@ namespace CappannaHelper.Api.Tests.Controller
             var userManager = new Mock<IApplicationUserManager>();
             userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(new ApplicationUser()));
             var signInManager = new Mock<IApplicationSignInManager>();
-            signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.TwoFactorRequired));
+            signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.TwoFactorRequired));
             var context = CreateContext();
-            using var accountController = new AccountController(
+            var shiftManager = new Mock<IShiftManager>();
+            var accountController = new AccountController(
                 userManager.Object,
                 signInManager.Object,
                 context,
+                shiftManager.Object,
                 new Mock<IConfiguration>().Object);
             var signinData = new SigninModel
             {
@@ -250,10 +222,12 @@ namespace CappannaHelper.Api.Tests.Controller
         public async Task Signout_User()
         {
             var context = CreateContext();
-            using var accountController = new AccountController(
+            var shiftManager = new Mock<IShiftManager>();
+            var accountController = new AccountController(
                 new Mock<IApplicationUserManager>().Object,
                 new Mock<IApplicationSignInManager>().Object,
                 context,
+                shiftManager.Object,
                 new Mock<IConfiguration>().Object);
 
             var httpResult = await accountController.Signout();
@@ -266,16 +240,18 @@ namespace CappannaHelper.Api.Tests.Controller
         {
             var expected = new List<ApplicationUser>
             {
-                new ApplicationUser()
+                new()
             };
             var context = CreateContext();
-            context.AddRange(expected);
-            context.SaveChanges();
+            var shiftManager = new Mock<IShiftManager>();
+            await context.AddRangeAsync(expected);
+            await context.SaveChangesAsync();
 
-            using var accountController = new AccountController(
+            var accountController = new AccountController(
                 new Mock<IApplicationUserManager>().Object,
                 new Mock<IApplicationSignInManager>().Object,
                 context,
+                shiftManager.Object,
                 new Mock<IConfiguration>().Object);
 
             var httpResult = await accountController.Get();

@@ -35,13 +35,15 @@ namespace CappannaHelper.Api.Setup
             try
             {
                 using var transaction = await _context.Database.BeginTransactionAsync();
+
                 await SetupStandsAsync(errors);
                 await SetupRolesAsync(errors);
                 await SetupUsersAsync(errors);
                 await SetupMenuAsync(errors);
                 await SetupSettingsAsync(errors);
+                await SetupShiftsAsync(errors);
 
-                transaction.Commit();
+                await transaction.CommitAsync();
             }
             catch (Exception e)
             {
@@ -504,6 +506,80 @@ namespace CappannaHelper.Api.Setup
                         Description = description,
                         PrintLabel = printLabel
                     });
+                }
+            }
+            catch (Exception e)
+            {
+                errors.Add(e.Message);
+            }
+        }
+
+        private async Task SetupShiftsAsync(List<string> errors)
+        {
+            var now = DateTime.Now;
+            var year = now.Year;
+            var firstOctober = new DateTime(year, 10, 01, 0, 0, 0, DateTimeKind.Local);
+            var firstOctoberSunday = firstOctober;
+
+            while (firstOctoberSunday.DayOfWeek != DayOfWeek.Sunday)
+            {
+                firstOctoberSunday = firstOctoberSunday.AddDays(1);
+            }
+
+            var wednesday = firstOctoberSunday.AddDays(-4);
+            var thursday = firstOctoberSunday.AddDays(-3);
+            var friday = firstOctoberSunday.AddDays(-2);
+            var saturday = firstOctoberSunday.AddDays(-1);
+
+            var lunchStartTime = TimeSpan.FromHours(10);
+            var lunchEndTime = TimeSpan.FromHours(17);
+            var dinnerStartTime = lunchEndTime;
+            var dinnerEndTime = TimeSpan.FromHours(02);
+
+            await SetupShiftsAsyncSetupShiftsAsync(wednesday.Add(dinnerStartTime), wednesday.Add(dinnerEndTime), "Mercoledì Cena", errors);
+            await SetupShiftsAsyncSetupShiftsAsync(thursday.Add(dinnerStartTime), thursday.Add(dinnerEndTime), "Giovedì Cena", errors);
+            await SetupShiftsAsyncSetupShiftsAsync(friday.Add(lunchStartTime), friday.Add(lunchEndTime), "Venerdì Cena", errors);
+            await SetupShiftsAsyncSetupShiftsAsync(friday.Add(dinnerStartTime), friday.Add(dinnerEndTime), "Venerdì Cena", errors);
+            await SetupShiftsAsyncSetupShiftsAsync(saturday.Add(lunchStartTime), saturday.Add(lunchEndTime), "Sabato Cena", errors);
+            await SetupShiftsAsyncSetupShiftsAsync(saturday.Add(dinnerStartTime), saturday.Add(dinnerEndTime), "Sabato Cena", errors);
+            await SetupShiftsAsyncSetupShiftsAsync(firstOctoberSunday.Add(lunchStartTime), firstOctoberSunday.Add(lunchEndTime), "Domenica Cena", errors);
+            await SetupShiftsAsyncSetupShiftsAsync(firstOctoberSunday.Add(dinnerStartTime), firstOctoberSunday.Add(dinnerEndTime), "Domenica Cena", errors);
+
+            var currentShift = await _context.Shifts.AnyAsync(x => x.OpenTimestamp <= now && x.CloseTimestamp >= now);
+            if (!currentShift)
+            {
+                await _context.AddAsync(new Shift
+                {
+                    OpenTimestamp = now.AddHours(-1),
+                    CloseTimestamp = now.AddHours(4),
+                    Description = "Turno di test/sviluppo",
+                });
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                errors.Add(e.Message);
+            }
+        }
+
+        private async Task SetupShiftsAsyncSetupShiftsAsync(DateTime start, DateTime end, string description, List<string> errors)
+        {
+            try
+            {
+                if (!await _context.Shifts.AnyAsync(x => x.OpenTimestamp == start && x.CloseTimestamp == end))
+                {
+                    await _context.AddAsync(new Shift
+                    {
+                        OpenTimestamp = start,
+                        CloseTimestamp = end,
+                        Description = description,
+                    });
+
+                    await _context.SaveChangesAsync();
                 }
             }
             catch (Exception e)

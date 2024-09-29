@@ -27,7 +27,7 @@ namespace CappannaHelper.Api.Controllers
         public async Task<IActionResult> Get()
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
-            var shift = await _shiftManager.GetOrCreateCurrentAsync();
+            var shift = await _shiftManager.GetCurrentAsync();
             var waitersStats = await _context.Orders
                 .Where(o => o.ShiftId == shift.Id)
                 .GroupBy(o => o.CreatedById)
