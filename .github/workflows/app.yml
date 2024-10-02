@@ -30,6 +30,6 @@ jobs:
     - name: Archive FE artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: Filter files
+        name: App
         overwrite: true
         path: ./src/cappanna-helper-app/build
