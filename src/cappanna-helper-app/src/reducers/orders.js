@@ -2,6 +2,7 @@ import {
   LOAD_ORDERS_LIST_COMPLETED,
   ORDER_CREATED,
   ORDER_CHANGED,
+  ORDER_CLOSED,
   ORDER_PRINTED,
   TOGGLE_ORDERS_LIST_FILTER_BY_USER,
   TOGGLE_ORDERS_LIST_FILTER_BY_STAND,
@@ -41,7 +42,8 @@ const orders = (state = initialState, action) => {
       return { ...state, items: [action.payload].concat(state.items) };
 
     case ORDER_CHANGED:
-    case ORDER_PRINTED: {
+    case ORDER_PRINTED:
+    case ORDER_CLOSED: {
       let found = false;
 
       return {
