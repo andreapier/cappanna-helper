@@ -11,7 +11,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CappannaHelper.Api.Controllers
@@ -19,7 +18,7 @@ namespace CappannaHelper.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderController : Controller
+    public class OrderController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly IPrintService _printService;

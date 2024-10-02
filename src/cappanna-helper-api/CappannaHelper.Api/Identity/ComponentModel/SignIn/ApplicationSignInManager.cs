@@ -1,6 +1,5 @@
 using CappannaHelper.Api.Identity.DataModel;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Threading.Tasks;
 
 namespace CappannaHelper.Api.Identity.ComponentModel.SignIn

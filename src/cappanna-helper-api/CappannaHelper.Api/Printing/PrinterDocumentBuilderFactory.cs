@@ -1,8 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using CappannaHelper.Api.Models;
 using CappannaHelper.Api.Persistence.Modelling;
+using System;
+using System.Collections.Generic;
 
 namespace CappannaHelper.Api.Printing
 {
@@ -12,23 +11,23 @@ namespace CappannaHelper.Api.Printing
         {
             if (typeof(T) == typeof(ChOrder))
             {
-                return (IPrinterDocumentBuilder<T>) CreateChOrderDocumentBuilder<ChOrder>();
+                return (IPrinterDocumentBuilder<T>) CreateChOrderDocumentBuilder();
             }
 
             if(typeof(T) == typeof(List<OrderDetailsAggregateModel>))
             {
-                return (IPrinterDocumentBuilder<T>) CreateOrderAggregateDocumentBuilder<List<OrderDetailsAggregateModel>>();
+                return (IPrinterDocumentBuilder<T>) CreateOrderAggregateDocumentBuilder();
             }
 
             throw new NotImplementedException($"Document type not implemented: {typeof(T)}");
         }
 
-        private OrderDocumentBuilder CreateChOrderDocumentBuilder<T>()
+        private static OrderDocumentBuilder CreateChOrderDocumentBuilder()
         {
             return new OrderDocumentBuilder();
         }
 
-        private OrderDetailsAggregateDocumentBuilder CreateOrderAggregateDocumentBuilder<T>()
+        private static OrderDetailsAggregateDocumentBuilder CreateOrderAggregateDocumentBuilder()
         {
             return new OrderDetailsAggregateDocumentBuilder();
         }

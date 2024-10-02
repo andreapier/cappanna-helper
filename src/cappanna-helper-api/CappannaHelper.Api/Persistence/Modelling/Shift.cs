@@ -1,5 +1,4 @@
-﻿using CappannaHelper.Api.Identity.DataModel;
-using System;
+﻿using System;
 
 namespace CappannaHelper.Api.Persistence.Modelling
 {

@@ -22,7 +22,7 @@ namespace CappannaHelper.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : Controller
+    public class AccountController : ControllerBase
     {
         private readonly IApplicationUserManager _userManager;
         private readonly IApplicationSignInManager _signInManager;

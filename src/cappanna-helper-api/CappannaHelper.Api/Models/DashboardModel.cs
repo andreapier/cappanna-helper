@@ -10,8 +10,8 @@ namespace CappannaHelper.Api.Models
 
         public DashboardModel()
         {
-            OrderStats = new List<OrderStat>();
-            WaitersStats = new List<WaiterStats>();
+            OrderStats = [];
+            WaitersStats = [];
         }
     }
 }

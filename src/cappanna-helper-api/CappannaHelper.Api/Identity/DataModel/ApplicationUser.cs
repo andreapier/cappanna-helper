@@ -16,7 +16,7 @@ namespace CappannaHelper.Api.Identity.DataModel
 
         public ApplicationUser()
         {
-            UserRoles = new HashSet<ApplicationUserRole>();
+            UserRoles = [];
         }
     }
 }

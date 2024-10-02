@@ -12,7 +12,7 @@ namespace CappannaHelper.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class DashboardController : Controller
+    public class DashboardController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly IShiftManager _shiftManager;

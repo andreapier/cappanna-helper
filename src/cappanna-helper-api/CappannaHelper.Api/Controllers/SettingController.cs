@@ -11,7 +11,7 @@ namespace CappannaHelper.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class SettingController : Controller
+    public class SettingController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 

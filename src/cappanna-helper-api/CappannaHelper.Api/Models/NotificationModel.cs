@@ -1,6 +1,4 @@
-﻿using CappannaHelper.Printing;
-
-namespace CappannaHelper.Api.Models
+﻿namespace CappannaHelper.Api.Models
 {
     public class NotificationModel
     {

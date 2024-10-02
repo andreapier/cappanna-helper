@@ -13,7 +13,7 @@ namespace CappannaHelper.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class NotificationController : Controller
+    public class NotificationController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly IShiftManager _shiftManager;

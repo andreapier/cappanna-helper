@@ -1,4 +1,4 @@
-using CappannaHelper.Api.Printing;
+namespace CappannaHelper.Api.Printing;
 
 public interface IPrinterDocumentBuilderFactory
 {

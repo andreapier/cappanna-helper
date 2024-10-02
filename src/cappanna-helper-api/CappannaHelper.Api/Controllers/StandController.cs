@@ -9,7 +9,7 @@ namespace CappannaHelper.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class StandController : Controller
+    public class StandController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 

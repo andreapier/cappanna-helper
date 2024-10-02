@@ -53,13 +53,13 @@ namespace CappannaHelper.Api.Printing
             var name = aggregation.Name;
             var dotsLength = 30 - aggregation.Name.Length;
             var dots = string.Empty.PadLeft(dotsLength > 0 ? dotsLength : 0, '.');
-            var dotsSection = _document.LastPage.CreateSection();
+            _ = _document.LastPage.CreateSection();
             var section = _document.LastPage.CreateSection();
 
             section.SetSize(16);
             section.CreateLabel().SetContent(name);
             section.CreateLabel().SetContent($"{dots}");
-            section.CreateLabel().SetContent($"{aggregation.Quantity.ToString().PadLeft(2, ' ')}");
+            section.CreateLabel().SetContent($"{aggregation.Quantity,2}");
             section.NewLine();
         }
 

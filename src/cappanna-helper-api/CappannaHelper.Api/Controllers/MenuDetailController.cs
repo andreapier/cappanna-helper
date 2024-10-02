@@ -15,7 +15,7 @@ namespace CappannaHelper.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class MenuDetailController : Controller
+    public class MenuDetailController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly IHubContext<ChHub> _hub;

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using CappannaHelper.Api.Persistence.Modelling;
+using Microsoft.AspNetCore.SignalR;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using CappannaHelper.Api.Persistence.Modelling;
-using Microsoft.AspNetCore.SignalR;
 
 namespace CappannaHelper.Api.Hubs
 {
