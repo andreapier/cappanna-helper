@@ -1,0 +1,38 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+       run:
+         working-directory: ./src/cappanna-helper-api/
+    strategy:
+      matrix:
+        dotnet-version: [ '8.0.x' ]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+        cache: true
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Publish
+      run: dotnet publish --no-build --output publish/
+    - name: Package Api
+      uses: actions/upload-artifact@v4
+      with:
+        name: Api
+        path: ./src/cappanna-helper-api/publish
