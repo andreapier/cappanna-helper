@@ -26,6 +26,7 @@ jobs:
     - name: Install dependencies and build project
       run: |
         npm ci
+        npm run build
     - name: Archive FE artifacts
       uses: actions/upload-artifact@v4
       with:
