@@ -26,15 +26,7 @@ jobs:
     - name: Install dependencies and build project
       run: |
         npm ci
-        npm run build
-    
-  archive:
-    runs-on: ubuntu-latest
-    defaults:
-       run:
-         working-directory: ./src/cappanna-helper-app/
-    steps:
-    - name: Archive production artifacts
+    - name: Archive FE artifacts
       uses: actions/upload-artifact@v4
       with:
         name: Filter files
