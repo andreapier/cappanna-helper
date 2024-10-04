@@ -91,18 +91,11 @@ public class PrintController : ControllerBase
         }
 
         var transaction = await _context.Database.BeginTransactionAsync();
-
         var firstDishItems = await GetOrderDetails(ordersId, MenuDetail.FIRST_DISH);
         var appetizerItems = await GetOrderDetails(ordersId, MenuDetail.APPETIZER);
         var secondDishItems = await GetOrderDetails(ordersId, MenuDetail.SECOND_DISH);
         var sideDishItems = await GetOrderDetails(ordersId, MenuDetail.SIDE_DISH);
-
         await transaction.CommitAsync();
-
-        if (firstDishItems.Count == 0)
-        {
-            return NoContent();
-        }
 
         try
         {
@@ -136,6 +129,11 @@ public class PrintController : ControllerBase
 
     private async Task PrintAggregate(string title, List<OrderDetailsAggregateItem> orderDetails)
     {
+        if (orderDetails.Count == 0)
+        {
+            return;
+        }
+
         var aggregate = new OrderDetailsAggregateModel
         {
             Title = title,
