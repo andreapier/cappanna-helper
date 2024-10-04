@@ -527,20 +527,21 @@ public class SetupHelper : ISetupHelper
         var thursday = firstOctoberSunday.AddDays(-3);
         var friday = firstOctoberSunday.AddDays(-2);
         var saturday = firstOctoberSunday.AddDays(-1);
+        var monday = firstOctoberSunday.AddDays(1);
 
         var lunchStartTime = TimeSpan.FromHours(10);
         var lunchEndTime = TimeSpan.FromHours(17);
         var dinnerStartTime = lunchEndTime;
         var dinnerEndTime = TimeSpan.FromHours(02);
 
-        await SetupShiftsAsyncSetupShiftsAsync(wednesday.Add(dinnerStartTime), wednesday.Add(dinnerEndTime), "Mercoledì Cena", errors);
-        await SetupShiftsAsyncSetupShiftsAsync(thursday.Add(dinnerStartTime), thursday.Add(dinnerEndTime), "Giovedì Cena", errors);
-        await SetupShiftsAsyncSetupShiftsAsync(friday.Add(lunchStartTime), friday.Add(lunchEndTime), "Venerdì Cena", errors);
-        await SetupShiftsAsyncSetupShiftsAsync(friday.Add(dinnerStartTime), friday.Add(dinnerEndTime), "Venerdì Cena", errors);
-        await SetupShiftsAsyncSetupShiftsAsync(saturday.Add(lunchStartTime), saturday.Add(lunchEndTime), "Sabato Cena", errors);
-        await SetupShiftsAsyncSetupShiftsAsync(saturday.Add(dinnerStartTime), saturday.Add(dinnerEndTime), "Sabato Cena", errors);
-        await SetupShiftsAsyncSetupShiftsAsync(firstOctoberSunday.Add(lunchStartTime), firstOctoberSunday.Add(lunchEndTime), "Domenica Cena", errors);
-        await SetupShiftsAsyncSetupShiftsAsync(firstOctoberSunday.Add(dinnerStartTime), firstOctoberSunday.Add(dinnerEndTime), "Domenica Cena", errors);
+        await SetupShiftsAsyncSetupShiftsAsync(wednesday.Add(dinnerStartTime), thursday.Add(dinnerEndTime), "Mercoledì Cena", errors);
+        await SetupShiftsAsyncSetupShiftsAsync(thursday.Add(dinnerStartTime), friday.Add(dinnerEndTime), "Giovedì Cena", errors);
+        await SetupShiftsAsyncSetupShiftsAsync(friday.Add(lunchStartTime), friday.Add(lunchEndTime), "Venerdì Pranzo", errors);
+        await SetupShiftsAsyncSetupShiftsAsync(friday.Add(dinnerStartTime), saturday.Add(dinnerEndTime), "Venerdì Cena", errors);
+        await SetupShiftsAsyncSetupShiftsAsync(saturday.Add(lunchStartTime), saturday.Add(lunchEndTime), "Sabato Pranzo", errors);
+        await SetupShiftsAsyncSetupShiftsAsync(saturday.Add(dinnerStartTime), firstOctoberSunday.Add(dinnerEndTime), "Sabato Cena", errors);
+        await SetupShiftsAsyncSetupShiftsAsync(firstOctoberSunday.Add(lunchStartTime), firstOctoberSunday.Add(lunchEndTime), "Domenica Pranzo", errors);
+        await SetupShiftsAsyncSetupShiftsAsync(firstOctoberSunday.Add(dinnerStartTime), monday.Add(dinnerEndTime), "Domenica Cena", errors);
 
         var currentShift = await _context.Shifts.AnyAsync(x => x.OpenTimestamp <= now && x.CloseTimestamp >= now);
         if (!currentShift)
