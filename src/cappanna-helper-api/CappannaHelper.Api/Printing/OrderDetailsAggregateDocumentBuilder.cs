@@ -6,7 +6,7 @@ using CappannaHelper.Printing.EscPos;
 
 namespace CappannaHelper.Api.Printing
 {
-    public class OrderDetailsAggregateDocumentBuilder: IPrinterDocumentBuilder<List<OrderDetailsAggregateModel>>
+    public class OrderDetailsAggregateDocumentBuilder: IPrinterDocumentBuilder<OrderDetailsAggregateModel>
     {
         private readonly Document _document;
 
@@ -15,10 +15,10 @@ namespace CappannaHelper.Api.Printing
             _document = new Document();
         }
 
-        public IPrinterDocumentBuilder<List<OrderDetailsAggregateModel>> SetData(List<OrderDetailsAggregateModel> aggregation)
+        public IPrinterDocumentBuilder<OrderDetailsAggregateModel> SetData(OrderDetailsAggregateModel aggregation)
         {
-            SetTitle("Primi piatti");
-            SetAggregates(aggregation);
+            SetTitle(aggregation.Title);
+            SetAggregates(aggregation.Details);
             BlankFeed(12);
             
             return this;
@@ -34,9 +34,10 @@ namespace CappannaHelper.Api.Printing
             section.NewLine();
         }
 
-        private void SetAggregates(IList<OrderDetailsAggregateModel> aggregation)
+        private void SetAggregates(List<OrderDetailsAggregateItem> aggregation)
         {
-            if(aggregation.Count == 0) {
+            if(aggregation.Count == 0)
+            {
                 return;
             }
 
@@ -48,7 +49,7 @@ namespace CappannaHelper.Api.Printing
             }
         }
 
-        private void SetAggregate(OrderDetailsAggregateModel aggregation)
+        private void SetAggregate(OrderDetailsAggregateItem aggregation)
         {
             var name = aggregation.Name;
             var dotsLength = 30 - aggregation.Name.Length;

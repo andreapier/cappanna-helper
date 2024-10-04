@@ -1,7 +1,6 @@
 using CappannaHelper.Api.Models;
 using CappannaHelper.Api.Persistence.Modelling;
 using System;
-using System.Collections.Generic;
 
 namespace CappannaHelper.Api.Printing
 {
@@ -14,7 +13,7 @@ namespace CappannaHelper.Api.Printing
                 return (IPrinterDocumentBuilder<T>) CreateChOrderDocumentBuilder();
             }
 
-            if(typeof(T) == typeof(List<OrderDetailsAggregateModel>))
+            if(typeof(T) == typeof(OrderDetailsAggregateModel))
             {
                 return (IPrinterDocumentBuilder<T>) CreateOrderAggregateDocumentBuilder();
             }
