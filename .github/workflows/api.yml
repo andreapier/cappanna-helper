@@ -30,7 +30,7 @@ jobs:
       run: dotnet publish -c Release --no-build --output publish/ CappannaHelper.Api
     - name: Create empty wwwroot folder
       run: |
-        mkdir publish/wwroot
+        mkdir publish/wwwroot
     - name: Create empty Persistence folder
       run: |
         mkdir publish/Persistence
