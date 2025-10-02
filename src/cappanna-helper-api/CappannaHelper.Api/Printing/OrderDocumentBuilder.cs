@@ -282,7 +282,7 @@ namespace CappannaHelper.Api.Printing
                 {
                     name = $"{name} (bicc.)";
                 }
-                var dotsLength = 30 - detail.Item.Name.Length;
+                var dotsLength = 30 - name.Length;
                 var dots = string.Empty.PadLeft(dotsLength > 0 ? dotsLength : 0, '.');
                 var section = _document.LastPage.CreateSection();
 
