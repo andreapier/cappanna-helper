@@ -14,7 +14,7 @@ jobs:
          working-directory: ./src/cappanna-helper-api/
     strategy:
       matrix:
-        dotnet-version: [ '9.0.x' ]
+        dotnet-version: [ '10.0.x' ]
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET

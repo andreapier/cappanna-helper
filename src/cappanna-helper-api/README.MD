@@ -15,8 +15,8 @@ Then, you can launch the compiled dll using `dotnet` command line tool or start 
 
 ### Prerequisites
 
-- [.NET Core 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
-- [EF Tools 8.0](https://learn.microsoft.com/en-us/ef/core/cli/dotnet)
+- [.NET 10.0](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
+- [EF Tools 10.0](https://learn.microsoft.com/en-us/ef/core/cli/dotnet)
 
 ## Running the tests
 
@@ -34,7 +34,7 @@ Run migrations: `dotnet ef database update`
 
 ## Built With
 
-- [.NET Core 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- [.NET 10.0](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 - [SQLite](https://www.sqlite.org/) - Persistence
 - [Entity Framework Core](https://docs.microsoft.com/en-us/ef/#pivot=efcore) - ORM
 - [xUnit](https://xunit.github.io/) - Tests

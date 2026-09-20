@@ -21,7 +21,7 @@ Additional steps are described in specific projects.
 
 ## Build prerequisites
 
-- [.NET Core 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- [.NET 10.0](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 - [Node.js 20.11.0+](https://nodejs.org/dist/v8.6.0/)
 - [npm 10.5.0+](https://www.npmjs.com/get-npm)
 - [create-react-app](https://github.com/facebookincubator/create-react-app)

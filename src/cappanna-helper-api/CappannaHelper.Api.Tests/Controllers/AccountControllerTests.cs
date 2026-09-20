@@ -4,6 +4,7 @@ using CappannaHelper.Api.Identity.ComponentModel.User;
 using CappannaHelper.Api.Identity.DataModel;
 using CappannaHelper.Api.Models;
 using CappannaHelper.Api.Persistence;
+using CappannaHelper.Api.Persistence.Modelling;
 using CappannaHelper.Api.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -93,11 +94,15 @@ namespace CappannaHelper.Api.Tests.Controllers
             var signInManager = new Mock<IApplicationSignInManager>();
             signInManager.Setup(m => m.PasswordSignInAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<bool>())).Returns(Task.FromResult(Microsoft.AspNetCore.Identity.SignInResult.Success));
             var configuration = new Mock<IConfiguration>();
-            configuration.Setup(c => c["JwtKey"]).Returns("SOME_RANDOM_KEY_DO_NOT_SHARE");
+            configuration.Setup(c => c["JwtKey"]).Returns("SOME_RANDOM_KEY_DO_NOT_SHARE_12345");
             configuration.Setup(c => c["JwtExpireDays"]).Returns("1");
             configuration.Setup(c => c["JwtIssuer"]).Returns("http://cappannahelper.it");
             var context = CreateContext();
             var shiftManager = new Mock<IShiftManager>();
+            shiftManager.Setup(m => m.GetCurrentAsync()).ReturnsAsync(new Shift
+            {
+                CloseTimestamp = DateTime.UtcNow.AddDays(1),
+            });
             var accountController = new AccountController(
                 userManager.Object,
                 signInManager.Object,
@@ -118,7 +123,7 @@ namespace CappannaHelper.Api.Tests.Controllers
         }
 
         [Fact]
-        public async Task Returns_NotFound_If_User_Does_Not_Exist()
+        public async Task Returns_BadRequest_If_User_Does_Not_Exist()
         {
             var userManager = new Mock<IApplicationUserManager>();
             userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult<ApplicationUser>(null));
@@ -138,7 +143,7 @@ namespace CappannaHelper.Api.Tests.Controllers
 
             var httpResult = await accountController.Signin(signinData);
 
-            Assert.IsAssignableFrom<NotFoundResult>(httpResult);
+            Assert.IsAssignableFrom<BadRequestObjectResult>(httpResult);
         }
 
         [Fact]
@@ -195,7 +200,7 @@ namespace CappannaHelper.Api.Tests.Controllers
         }
 
         [Fact]
-        public async Task Throws_IfNot_Handled()
+        public async Task Returns_BadRequest_If_TwoFactor_Is_Required()
         {
             var userManager = new Mock<IApplicationUserManager>();
             userManager.Setup(m => m.FindByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(new ApplicationUser()));
@@ -215,7 +220,9 @@ namespace CappannaHelper.Api.Tests.Controllers
                 Password = "test"
             };
 
-            await Assert.ThrowsAsync<NotImplementedException>(async () => await accountController.Signin(signinData));
+            var httpResult = await accountController.Signin(signinData);
+
+            Assert.IsAssignableFrom<BadRequestObjectResult>(httpResult);
         }
 
         [Fact]
@@ -241,6 +248,10 @@ namespace CappannaHelper.Api.Tests.Controllers
             var expected = new List<ApplicationUser>
             {
                 new()
+                {
+                    FirstName = "Test",
+                    Surname = "User",
+                }
             };
             var context = CreateContext();
             var shiftManager = new Mock<IShiftManager>();

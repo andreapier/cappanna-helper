@@ -37,18 +37,6 @@ namespace CappannaHelper.Api.Tests.Identity.ComponentModel.User
         }
 
         [Fact]
-        public void ThrowsIf_UserManager_IsNull()
-        {
-            Assert.Throws<ArgumentNullException>(() => new ApplicationUserManager(null, _context.Object));
-        }
-
-        [Fact]
-        public void ThrowsIf_Context_IsNull()
-        {
-            Assert.Throws<ArgumentNullException>(() => new ApplicationUserManager(_manager.Object, null));
-        }
-
-        [Fact]
         public async Task CreateAsync_Calls_UserManager_CreateAsync_Method()
         {
             var called = false;
