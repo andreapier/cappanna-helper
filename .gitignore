@@ -1,3 +1,4 @@
 .vscode/chrome/
 .vs/
 **/Logs/*.*
+**/publish/*

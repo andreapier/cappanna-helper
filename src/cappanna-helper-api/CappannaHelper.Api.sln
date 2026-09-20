@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29209.62
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36511.14 d17.14
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappannaHelper.Api", "CappannaHelper.Api\CappannaHelper.Api.csproj", "{2EE9D88E-CA9A-41F3-9605-32CE37D59B52}"
 EndProject
@@ -12,9 +12,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappannaHelper.Printing.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappannaHelper.Printing.Examples", "CappannaHelper.Printing.Examples\CappannaHelper.Printing.Examples.csproj", "{60560FF6-DB70-4C88-A252-6972D7D384B8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI", "CI", "{5ACDB47B-C9CF-43EC-93DE-C1A2DD87A012}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Github", "Github", "{6C83A596-D32D-B35F-00DD-F0C99B673980}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\.gitlab-ci.yml = ..\..\.gitlab-ci.yml
+		..\..\.github\workflows\api.yml = ..\..\.github\workflows\api.yml
+		..\..\.github\workflows\app.yml = ..\..\.github\workflows\app.yml
 	EndProjectSection
 EndProject
 Global
