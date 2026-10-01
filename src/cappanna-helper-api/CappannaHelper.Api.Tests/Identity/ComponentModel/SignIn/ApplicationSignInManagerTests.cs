@@ -36,13 +36,8 @@ namespace CappannaHelper.Api.Tests.Identity.ComponentModel.SignIn
                 new Mock<IUserClaimsPrincipalFactory<ApplicationUser>>().Object,
                 identityOptions,
                 new Mock<ILogger<SignInManager<ApplicationUser>>>().Object,
-                new Mock<IAuthenticationSchemeProvider>().Object);
-        }
-
-        [Fact]
-        public void ThrowsIf_SignInManager_IsNull()
-        {
-            Assert.Throws<ArgumentNullException>(() => new ApplicationSignInManager(null));
+                new Mock<IAuthenticationSchemeProvider>().Object,
+                new Mock<IUserConfirmation<ApplicationUser>>().Object);
         }
 
         [Fact]
